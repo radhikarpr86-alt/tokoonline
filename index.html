@@ -2146,4 +2146,236 @@ function inputTokoMarketing() { alert('✅ Toko diinput!'); }
 function inputCodSellerMarketing() { alert('✅ CODSeller diinput!'); }
 function sendChatMarketing() { const s=getSession();const target=document.getElementById('chatTargetMarketing').value;const pesan=document.getElementById('chatInputMarketing').value;if(!target||!pesan)return;if(sendMessage(s.marketingId,target,pesan)){document.getElementById('chatInputMarketing').value='';renderChatMessages('chatMessagesMarketing',s.marketingId,target);} }
 </script>
+  <script>
+// ============================================================
+// CHAT SYSTEM (GLOBAL)
+// ============================================================
+function getChatUsers(userId) {
+  const chatData = getChatData(); const users = new Set();
+  chatData.forEach(msg => { if(msg.from === userId) users.add(msg.to); if(msg.to === userId) users.add(msg.from); });
+  const allUsers = [];
+  getTokoList().forEach(t => { allUsers.push({ id:t.id, name:t.namaToko||t.username, role:'toko', label:'🏬', username:t.username }); });
+  getOjekList().forEach(o => { allUsers.push({ id:o.id, name:o.nama||o.username, role:'ojek', label:'🛵', username:o.username }); });
+  getPelangganList().forEach(p => { allUsers.push({ id:p.id, name:p.nama||p.username, role:'pelanggan', label:'👤', username:p.username }); });
+  getMarketingList().forEach(m => { allUsers.push({ id:m.id, name:m.nama||m.username, role:'marketing', label:'📊', username:m.username }); });
+  getCodSellerList().forEach(c => { allUsers.push({ id:c.id, name:c.nama||c.username, role:'codseller', label:'🏷️', username:c.username }); });
+  allUsers.push({ id:'SUPER_ADMIN', name:'Super Admin', role:'super', label:'⭐', username:'super' });
+  const existingUsers = new Set(); chatData.forEach(msg => { if(msg.from===userId) existingUsers.add(msg.to); if(msg.to===userId) existingUsers.add(msg.from); });
+  const result = []; allUsers.forEach(u => { if(u.id!==userId&&u.id!=='undefined'&&u.id!==null) { result.push({...u, hasChat:existingUsers.has(u.id)}); } });
+  result.sort((a,b)=>(b.hasChat?1:0)-(a.hasChat?1:0)); return result;
+}
+function renderChatUsers(containerId, userId, onSelect) {
+  const users = getChatUsers(userId); const container = document.getElementById(containerId);
+  if(!container) return;
+  container.innerHTML = users.length===0 ? '<p style="text-align:center;color:var(--text-secondary);padding:20px;">Belum ada user lain.</p>' :
+    users.map(u => `<div class="chat-user-item" id="chat-user-${u.id}"><div class="avatar">${u.label}</div><div class="info"><div class="name">${escapeHtml(u.name)} ${u.hasChat?'💬':''}</div><div class="role-badge">${u.role} • ${u.id}</div></div><button class="chat-select-btn" onclick="(${onSelect})('${u.id}')">Chat</button></div>`).join('');
+  users.forEach(async u => { try { const blob = await ambilFotoDariDB(u.id); if(blob) { const avatar = document.querySelector(`#chat-user-${u.id} .avatar`); if(avatar) avatar.innerHTML = `<img src="${URL.createObjectURL(blob)}" alt="Foto">`; } } catch(e) {} });
+}
+function sendMessage(from, to, pesan) {
+  if(!pesan||!pesan.trim()) return false; if(!to||to==='') { alert('Pilih user tujuan!'); return false; }
+  const blocked = getBlockedUsers(); if(blocked.includes(from)||blocked.includes(to)) { alert('⚠️ Salah satu pengguna diblokir.'); return false; }
+  const kataTerlarang = ['sara','judi','obat terlarang','bugil','sex','porno','narkoba','narkotika'];
+  const pesanLower = pesan.toLowerCase();
+  for(const kata of kataTerlarang) { if(pesanLower.includes(kata)) { suspendUserOtomatis(from, 'Mengirim pesan mengandung kata terlarang: '+kata); alert('⚠️ Anda tersuspend!'); return false; } }
+  const chatData = getChatData(); chatData.push({ id:Date.now().toString(), from, to, pesan:pesan.trim(), waktu:Date.now(), dibaca:false, tipe:'text' }); saveChatData(chatData); return true;
+}
+function sendChatMessage() {
+  const s = getSession(); if(!s) return; const userId = getUserIdFromSession(); if(!userId) { alert('Session tidak valid.'); return; }
+  const target = document.getElementById('chatTarget').value, pesan = document.getElementById('chatInput').value;
+  if(!target||target==='') { alert('Pilih user tujuan!'); return; } if(!pesan||!pesan.trim()) { alert('Tulis pesan!'); return; }
+  if(sendMessage(userId, target, pesan)) { document.getElementById('chatInput').value=''; renderChatMessages('chatMessages', userId, target); }
+}
+function renderChatMessages(containerId, from, to) {
+  const container = document.getElementById(containerId); if(!container) return;
+  if(!to||to==='') { container.innerHTML='<p style="text-align:center;color:var(--text-secondary);padding:20px;">Pilih user untuk chat.</p>'; return; }
+  const chatData = getChatData(); const msgs = chatData.filter(msg=>(msg.from===from&&msg.to===to)||(msg.from===to&&msg.to===from));
+  if(msgs.length===0) { container.innerHTML='<p style="text-align:center;color:var(--text-secondary);padding:20px;">Belum ada pesan.</p>'; return; }
+  container.innerHTML = msgs.map(msg=>{ const isSent=msg.from===from; let mediaHtml=''; if(msg.tipe==='image'&&msg.mediaUrl) mediaHtml=`<img src="${msg.mediaUrl}" style="max-width:100%;max-height:200px;border-radius:8px;margin-top:5px;">`; return `<div class="chat-msg ${isSent?'sent':'received'}">${!isSent?`<span class="sender">${escapeHtml(msg.from)}</span>`:''}${escapeHtml(msg.pesan)}${mediaHtml}<span class="time">${formatDateTime(msg.waktu)}</span></div>`; }).join('');
+  container.scrollTop = container.scrollHeight;
+}
+
+// ============================================================
+// DIREKTORI COD (NEW v4.3)
+// ============================================================
+function bukaDirektoriCod() { hideAll(); document.getElementById('direktoriCodPage').classList.remove('hidden'); renderDirektoriCod(); }
+function renderDirektoriCod(query='', kondisiFilter='') {
+  const codList = getCodSellerList().filter(c=>c.status==='aktif'); const container = document.getElementById('daftarCodDirektori');
+  let filtered = codList;
+  if(query) { const q=query.toLowerCase(); filtered=filtered.filter(c=>{ const barang=getBarangCod(c.id); return (c.nama+' '+c.desa+' '+c.kecamatan).toLowerCase().includes(q)||barang.some(b=>b.nama.toLowerCase().includes(q)); }); }
+  if(kondisiFilter) { filtered=filtered.filter(c=>getBarangCod(c.id).some(b=>b.kondisi===kondisiFilter)); }
+  if(filtered.length===0) { container.innerHTML='<p style="text-align:center;padding:20px;">Tidak ada CODSeller ditemukan.</p>'; return; }
+  container.innerHTML = filtered.map(c=>{ const barang=getBarangCod(c.id); return `<div class="direktori-toko-card" style="border-left:5px solid #e67e22;"><h3>🏷️ ${escapeHtml(c.nama)}</h3><p>📍 ${escapeHtml(c.desa)}, ${escapeHtml(c.kecamatan)}, ${escapeHtml(c.kabupaten)}</p><p>📞 ${escapeHtml(c.noHp)}</p><p>📦 Total Barang: ${barang.length}</p><div style="display:flex;gap:10px;flex-wrap:wrap;"><button class="btn-sm btn-cod" onclick="bukaKatalogCod('${c.id}')">🛒 Lihat Barang</button><button class="btn-sm btn-success" onclick="hubungiCodSeller('${c.id}')">💬 WA</button></div></div>`; }).join('');
+}
+function filterCodDirektori() { renderDirektoriCod(document.getElementById('cariCodDirektori').value, document.getElementById('filterKondisiCod').value); }
+function hubungiCodSeller(codId) { const c=getCodSellerList().find(c=>c.id===codId); if(!c)return; window.open('https://wa.me/62'+c.noHp.replace(/[^0-9]/g,'').replace(/^0/,''),'_blank'); }
+function kembaliKeDirektoriCod() { hideAll(); document.getElementById('direktoriCodPage').classList.remove('hidden'); renderDirektoriCod(); }
+
+// ============================================================
+// KATALOG COD PUBLIK (NEW v4.3)
+// ============================================================
+function bukaKatalogCod(codId) { hideAll(); document.getElementById('katalogCodPage').classList.remove('hidden'); sessionStorage.setItem('katalog_aktif_cod',codId); renderKatalogCodPublik(codId); }
+function renderKatalogCodPublik(codId, query='') {
+  const cod = getCodSellerList().find(c=>c.id===codId); if(!cod) return;
+  const barang = getBarangCod(codId); document.getElementById('katalogCodHeader').innerHTML = `<div class="cod-header"><h1>🏷️ ${escapeHtml(cod.nama)}</h1><p>📍 ${escapeHtml(cod.desa)}, ${escapeHtml(cod.kecamatan)} | 📞 ${escapeHtml(cod.noHp)}</p></div>`;
+  let filtered = query?barang.filter(b=>b.nama.toLowerCase().includes(query.toLowerCase())):barang;
+  const grid = document.getElementById('katalogCodContent');
+  if(filtered.length===0) { grid.innerHTML='<p style="text-align:center;padding:20px;">Tidak ada barang.</p>'; }
+  else { grid.innerHTML = filtered.map(b=>`<div class="produk-katalog-item" onclick="tambahKeKeranjangCod('${codId}','${b.id}');renderKatalogCodPublik('${codId}')"><div style="width:100%;height:120px;background:#f3f4f6;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:40px;">📦</div><h4>${escapeHtml(b.nama)}</h4><p style="color:#e67e22;font-weight:700;">Rp ${b.harga.toLocaleString('id-ID')}</p><p><span class="badge badge-${b.kondisi}">${b.kondisi}</span></p><p style="font-size:12px;color:var(--text-secondary);">${escapeHtml(b.deskripsi||'')}</p></div>`).join(''); }
+  renderKeranjangCod(codId);
+}
+function tambahKeKeranjangCod(codId, barangId) { const barang=getBarangCod(codId).find(b=>b.id===barangId); if(!barang){alert('Barang tidak ditemukan.');return;} const keranjang=getKeranjangCod(codId); keranjang.push({barangId:barang.id,nama:barang.nama,harga:barang.harga,kondisi:barang.kondisi}); saveKeranjangCod(codId,keranjang); }
+function renderKeranjangCod(codId) { const keranjang=getKeranjangCod(codId); const container=document.getElementById('keranjangCod'); if(keranjang.length===0){container.classList.add('hidden');return;} container.classList.remove('hidden'); const total=keranjang.reduce((s,i)=>s+i.harga,0); container.innerHTML='<h3>🛒 Keranjang</h3>'+keranjang.map((item,i)=>`<div class="keranjang-item"><span>${escapeHtml(item.nama)}</span><span>Rp ${item.harga.toLocaleString('id-ID')}</span><button class="btn-sm btn-danger" onclick="hapusDariKeranjangCod('${codId}',${i});renderKatalogCodPublik('${codId}')">✕</button></div>`).join('')+`<div class="keranjang-total">Total: Rp ${total.toLocaleString('id-ID')}</div><button class="wa-order-btn" onclick="kirimPesananCod('${codId}')">💬 Konfirmasi via WhatsApp</button>`; }
+function hapusDariKeranjangCod(codId,idx) { const keranjang=getKeranjangCod(codId); keranjang.splice(idx,1); saveKeranjangCod(codId,keranjang); }
+function kirimPesananCod(codId) {
+  const keranjang=getKeranjangCod(codId); if(keranjang.length===0){alert('Keranjang kosong!');return;}
+  const cod=getCodSellerList().find(c=>c.id===codId); if(!cod)return;
+  const total=keranjang.reduce((s,i)=>s+i.harga,0);
+  const pesanan={id:Date.now().toString(),tanggal:Date.now(),items:keranjang.map(i=>({...i})),total,status:'menunggu'};
+  const list=getPesananCod(codId); list.push(pesanan); savePesananCod(codId,list); saveKeranjangCod(codId,[]);
+  const noWA=cod.noHp.replace(/[^0-9]/g,''); let pesan='Halo, saya mau beli barang bekas:%0A'; keranjang.forEach((item,i)=>{pesan+=`${i+1}. ${item.nama} - Rp ${item.harga.toLocaleString('id-ID')}%0A`;}); pesan+=`%0ATOTAL: Rp ${total.toLocaleString('id-ID')}%0A%0AMohon info COD + Ojek.`;
+  window.open('https://wa.me/62'+noWA.replace(/^0/,'')+'?text='+pesan,'_blank'); renderKatalogCodPublik(codId); alert('✅ Pesanan dikirim via WA!');
+}
+function filterProdukCod() { const codId=sessionStorage.getItem('katalog_aktif_cod'); const query=document.getElementById('cariProdukCod').value; if(codId) renderKatalogCodPublik(codId,query); }
+
+// ============================================================
+// DIREKTORI TOKO (EXISTING)
+// ============================================================
+function bukaDirektori() { hideAll(); document.getElementById('direktoriPage').classList.remove('hidden'); renderDirektoriToko(); }
+function renderDirektoriToko(query='', kecFilter='', statusFilter='') {
+  const tokoList = getTokoList().filter(t=>isTokoActive(t)); const dirData = getDirektoriData(); const container = document.getElementById('daftarTokoDirektori');
+  let filtered = tokoList;
+  if(query){const q=query.toLowerCase();filtered=filtered.filter(t=>{const p=dirData[t.id]||{};return(t.namaToko+' '+t.pemilik+' '+p.namaDesa+' '+p.namaKecamatan).toLowerCase().includes(q)||getProdukToko(t.id).some(pr=>pr.nama.toLowerCase().includes(q));});}
+  if(kecFilter) filtered=filtered.filter(t=>(dirData[t.id]||{}).namaKecamatan===kecFilter);
+  if(statusFilter) filtered=filtered.filter(t=>(dirData[t.id]||{}).status===statusFilter);
+  if(filtered.length===0){container.innerHTML='<p style="text-align:center;padding:20px;">Tidak ada toko.</p>';return;}
+  container.innerHTML = filtered.map(t=>{const p=dirData[t.id]||{};const alamat=[p.namaDesa,p.namaKecamatan,p.namaKabupaten].filter(Boolean).join(', ')||t.alamat||'-';return`<div class="direktori-toko-card"><h3>🏬 ${escapeHtml(t.namaToko)}</h3><p>📍 ${escapeHtml(alamat)}</p><p>📞 ${escapeHtml(t.noHp)}</p><p>${p.status==='online'?'🟢 Online':'🔴 Offline'}</p><button class="btn-lihat-katalog" onclick="bukaKatalogToko('${t.id}')">🛒 Lihat Katalog</button></div>`;}).join('');
+}
+function filterTokoDirektori(){renderDirektoriToko(document.getElementById('cariTokoDirektori').value,document.getElementById('filterKecamatanDirektori').value,document.getElementById('filterStatusTokoDirektori').value);}
+
+// ============================================================
+// KATALOG TOKO PUBLIK
+// ============================================================
+function bukaKatalogToko(tokoId){hideAll();document.getElementById('katalogTokoPage').classList.remove('hidden');sessionStorage.setItem('katalog_aktif_toko',tokoId);renderKatalogTokoPublik(tokoId);}
+async function renderKatalogTokoPublik(tokoId,query=''){const toko=getTokoList().find(t=>t.id===tokoId);if(!toko)return;const produk=getProdukToko(tokoId).filter(p=>p.stok>0);document.getElementById('katalogTokoHeader').innerHTML=`<div class="online-order-header"><h1>🛒 ${escapeHtml(toko.namaToko)}</h1><p>${escapeHtml(toko.alamat||'')} | 📞 ${escapeHtml(toko.noHp)}</p></div>`;let filtered=query?produk.filter(p=>p.nama.toLowerCase().includes(query.toLowerCase())):produk;const grid=document.getElementById('katalogTokoContent');grid.innerHTML=filtered.length===0?'<p>Tidak ada produk.</p>':filtered.map(p=>`<div class="produk-katalog-item" onclick="tambahKeKeranjangOnline('${tokoId}','${p.id}');renderKatalogTokoPublik('${tokoId}')"><div style="width:100%;height:120px;background:#f3f4f6;display:flex;align-items:center;justify-content:center;">📦</div><h4>${escapeHtml(p.nama)}</h4><p style="color:#059669;font-weight:700;">Rp ${p.harga.toLocaleString('id-ID')}</p></div>`).join('');renderKeranjangKatalog(tokoId);}
+function filterProdukKatalog(){const tokoId=sessionStorage.getItem('katalog_aktif_toko');if(tokoId)renderKatalogTokoPublik(tokoId,document.getElementById('cariProdukKatalog').value);}
+function kembaliKeDirektori(){hideAll();document.getElementById('direktoriPage').classList.remove('hidden');renderDirektoriToko();}
+
+// ============================================================
+// BACKUP OTOMATIS (NEW v4.3)
+// ============================================================
+function jalankanBackupOtomatis(tipe) {
+  const allData = {}; for(let i=0;i<localStorage.length;i++){const key=localStorage.key(i);try{allData[key]=JSON.parse(localStorage.getItem(key));}catch(e){allData[key]=localStorage.getItem(key);}}
+  const log = getAutoBackupLog(); log.push({id:'bak_'+Date.now(),tipe,tanggal:Date.now(),size:JSON.stringify(allData).length});
+  if(log.length > 50) log.shift(); saveAutoBackupLog(log);
+  localStorage.setItem('auto_backup_'+tipe, JSON.stringify({data:allData,tanggal:Date.now()}));
+}
+function cekJadwalBackupOtomatis() {
+  const now = new Date(); const jam = now.getHours(), menit = now.getMinutes(), hari = now.getDay(), tanggal = now.getDate();
+  // Harian (23:00)
+  if(jam===23 && menit===0) { const lastBackup = JSON.parse(localStorage.getItem('last_backup_harian')||'0'); if(Date.now()-lastBackup > 23*60*60*1000) { jalankanBackupOtomatis('harian'); localStorage.setItem('last_backup_harian',Date.now().toString()); } }
+  // Mingguan (Minggu 00:00)
+  if(hari===0 && jam===0 && menit===0) { const lastBackup = JSON.parse(localStorage.getItem('last_backup_mingguan')||'0'); if(Date.now()-lastBackup > 6*24*60*60*1000) { jalankanBackupOtomatis('mingguan'); localStorage.setItem('last_backup_mingguan',Date.now().toString()); } }
+  // Bulanan (Tgl 1, 02:00)
+  if(tanggal===1 && jam===2 && menit===0) { const lastBackup = JSON.parse(localStorage.getItem('last_backup_bulanan')||'0'); if(Date.now()-lastBackup > 28*24*60*60*1000) { jalankanBackupOtomatis('bulanan'); localStorage.setItem('last_backup_bulanan',Date.now().toString()); } }
+}
+
+// ============================================================
+// AUTO DELETE CHAT >3 BULAN (NEW v4.3)
+// ============================================================
+function cekHapusChatOtomatis() {
+  const now = new Date(); const tanggal = now.getDate(), jam = now.getHours();
+  if(tanggal===5 && jam===0) {
+    const lastRun = JSON.parse(localStorage.getItem('last_hapus_chat')||'0');
+    if(Date.now()-lastRun > 23*60*60*1000) {
+      const chatData = getChatData(); const tigaBulan = 90*24*60*60*1000; const batas = Date.now()-tigaBulan;
+      const filtered = chatData.filter(msg=>msg.waktu>batas); const terhapus = chatData.length-filtered.length;
+      saveChatData(filtered);
+      const history = getHistoryPembaruan(); history.push({id:'pem_'+Date.now(),tanggal:Date.now(),jumlahPesan:terhapus,status:'Auto-delete >3 bulan'}); saveHistoryPembaruan(history);
+      localStorage.setItem('last_hapus_chat',Date.now().toString());
+    }
+  }
+}
+function kirimNotifikasiHapusChat() {
+  const now = new Date(); const tanggal = now.getDate();
+  if(tanggal===4) {
+    const lastNotif = JSON.parse(localStorage.getItem('last_notif_hapus_chat')||'0');
+    if(Date.now()-lastNotif > 23*60*60*1000) {
+      const allUsers = []; getTokoList().forEach(t=>allUsers.push(t.id)); getOjekList().forEach(o=>allUsers.push(o.id)); getPelangganList().forEach(p=>allUsers.push(p.id)); getMarketingList().forEach(m=>allUsers.push(m.id)); getCodSellerList().forEach(c=>allUsers.push(c.id));
+      allUsers.forEach(userId=>{ sendMessage('SUPER_ADMIN',userId,'🔔 PEMBERITAHUAN: Besok malam pukul 24:00, pesan chat yang berusia lebih dari 3 bulan akan dihapus otomatis. Harap simpan pesan penting Anda.'); });
+      localStorage.setItem('last_notif_hapus_chat',Date.now().toString());
+    }
+  }
+}
+
+// ============================================================
+// HUBUNGI ADMIN
+// ============================================================
+function bukaHubungiAdmin() { document.getElementById('modalHubungiAdmin').classList.remove('hidden'); document.getElementById('hubungiAdminPesan').value=''; }
+function kirimPesanHubungiAdmin() {
+  const s=getSession(); if(!s){alert('Login dulu.');return;}
+  const pesan=document.getElementById('hubungiAdminPesan').value.trim(); if(!pesan){alert('Tulis pesan.');return;}
+  const from=getUserIdFromSession(); const pesanAdmin=getPesanAdmin(); pesanAdmin.push({id:Date.now().toString(),from,fromName:getUserNameFromSession(),role:getUserRoleFromSession(),pesan,waktu:Date.now(),dibaca:false,status:'baru'}); savePesanAdmin(pesanAdmin);
+  document.getElementById('hubungiAdminResult').classList.remove('hidden'); document.getElementById('hubungiAdminResult').innerHTML='<div class="success">✅ Pesan terkirim!</div>';
+  setTimeout(()=>document.getElementById('modalHubungiAdmin').classList.add('hidden'),2000);
+}
+
+// ============================================================
+// INSTALL & ONLINE
+// ============================================================
+let deferredPrompt = null;
+function installApp(){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(r=>{if(r.outcome==='accepted')document.getElementById('installBanner').classList.remove('show');deferredPrompt=null;});}else{alert('📲 Buka menu browser → "Install Aplikasi".');}}
+function closeInstallBanner(){document.getElementById('installBanner').classList.remove('show');}
+function updateOnlineStatus(){isOnline=navigator.onLine;const banner=document.getElementById('offlineBanner');if(!isOnline)banner.classList.add('show');else banner.classList.remove('show');const status=document.getElementById('syncStatus');if(status){status.textContent=isOnline?'🟢 Online':'🔴 Offline';status.className='sync-status '+(isOnline?'online':'offline');}}
+window.addEventListener('online',updateOnlineStatus);window.addEventListener('offline',updateOnlineStatus);
+window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();deferredPrompt=e;document.getElementById('installBanner').classList.add('show');});
+
+// ============================================================
+// INIT APP
+// ============================================================
+function initApp() {
+  initTheme();
+  if(!localStorage.getItem('super_admin')) localStorage.setItem('super_admin',JSON.stringify(SUPER_ADMIN));
+  if(!localStorage.getItem('landing_data')) localStorage.setItem('landing_data',JSON.stringify(DEFAULT_LANDING));
+  if(!localStorage.getItem('hubungi_admin')) localStorage.setItem('hubungi_admin',JSON.stringify(DEFAULT_HUBUNGI_ADMIN));
+  if(!localStorage.getItem('komisi')) localStorage.setItem('komisi',JSON.stringify(DEFAULT_KOMISI));
+  if(!localStorage.getItem('last_nmo')) localStorage.setItem('last_nmo','00000');
+  if(!localStorage.getItem('stok_minimum')) localStorage.setItem('stok_minimum',JSON.stringify({global:5}));
+  if(!localStorage.getItem('maintenance_mode')) localStorage.setItem('maintenance_mode','false');
   
+  if(getTokoList().length===0){const t=[{id:generateNMO(),namaToko:'Toko Trial',pemilik:'Pemilik Trial',noHp:'081234567890',email:'toko@trial.com',alamat:'Jl. Merdeka No.1',username:'user',password:'user',aktivasi:{status:'aktif',tipe:'gratis',mulai:Date.now(),berakhir:Date.now()+3*24*60*60*1000},kasir:[{username:'kasir1',password:'kasir123'}],fitur:'lengkap'}];saveTokoList(t);const dir={};dir[t[0].id]={tokoId:t[0].id,namaDesa:'',namaKecamatan:'',namaKabupaten:'',namaProvinsi:'',status:'online'};saveDirektoriData(dir);}
+  if(getOjekList().length===0) saveOjekList([{id:generateNMO(),nama:'Ojek Trial',noHp:'081234567890',email:'ojek@trial.com',noKendaraan:'B 1234 XYZ',desa:'Sukamaju',kecamatan:'Cibadak',kabupaten:'Lebak',username:'ojek1',password:'ojek123',status:'offline',rating:0,totalOrder:0}]);
+  if(getPelangganList().length===0) savePelangganList([{id:generateNMO(),nama:'Pelanggan Trial',noHp:'081298765432',email:'pelanggan@trial.com',alamat:'Jl. Mawar No.12',desa:'Sukamaju',kecamatan:'Cibadak',kabupaten:'Lebak',username:'cust001',password:'pelanggan123',status:'aktif'}]);
+  if(getMarketingList().length===0) saveMarketingList([{id:generateNMO(),nama:'Marketing Trial',noHp:'081234567891',email:'marketing@trial.com',wilayah:'Lebak',username:'marketing1',password:'marketing123',status:'aktif',totalToko:0,totalPelanggan:0,totalOjek:0}]);
+  if(getCodSellerList().length===0) saveCodSellerList([{id:generateNMO(),nama:'CODSeller Trial',noHp:'081234567892',email:'cod@trial.com',alamat:'Jl. Melati No.5',desa:'Sukamaju',kecamatan:'Cibadak',kabupaten:'Lebak',username:'codseller1',password:'cod123',status:'aktif',totalBarang:0,totalTerjual:0}]);
+
+  const tokoId = new URLSearchParams(window.location.search).get('toko');
+  if(tokoId) { hideAll(); document.getElementById('katalogTokoPage').classList.remove('hidden'); sessionStorage.setItem('katalog_aktif_toko',tokoId); renderKatalogTokoPublik(tokoId); return; }
+
+  const s = getSession();
+  if(s) {
+    if(s.role==='super'||s.role==='staf') showSuperDashboard();
+    else if(s.role==='pemilik'||s.role==='kasir') { const t=getTokoList().find(t=>t.id===s.tokoId); if(t&&isTokoActive(t)) showTokoDashboard(); else { clearSession(); goToLanding(); } }
+    else if(s.role==='ojek') { const o=getOjekList().find(o=>o.id===s.ojekId); if(o&&o.status!=='suspended') showOjekDashboard(); else { clearSession(); goToLanding(); } }
+    else if(s.role==='pelanggan') { const p=getPelangganList().find(p=>p.id===s.pelangganId); if(p&&p.status!=='suspended') showPelangganDashboard(); else { clearSession(); goToLanding(); } }
+    else if(s.role==='marketing') { const m=getMarketingList().find(m=>m.id===s.marketingId); if(m&&m.status!=='suspended') showMarketingDashboard(); else { clearSession(); goToLanding(); } }
+    else if(s.role==='codseller') { const c=getCodSellerList().find(c=>c.id===s.codSellerId); if(c&&c.status!=='suspended') showCodSellerDashboard(); else { clearSession(); goToLanding(); } }
+    else goToLanding();
+  } else { goToLanding(); renderLandingPrices(); renderHubungiAdminDisplay(); }
+  
+  updateOnlineStatus(); checkMaintenanceMode();
+  setInterval(refreshSession,30*60*1000);
+  setInterval(cekJadwalBackupOtomatis,60*1000);
+  setInterval(cekHapusChatOtomatis,60*60*1000);
+  setInterval(kirimNotifikasiHapusChat,60*60*1000);
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  initApp();
+  console.log('✅ Toko Online App v4.3 - CODSeller + Security Edition Loaded!');
+  console.log('🆕 v4.3: CODSeller, Security Center, Maintenance Mode, Auto Backup, Auto Delete Chat');
+  console.log('⭐ Super Admin: super / admin123');
+  console.log('🏷️ CODSeller: codseller1 / cod123');
+});
+</script>
+</body>
+</html>
