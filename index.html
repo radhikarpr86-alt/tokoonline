@@ -3,360 +3,343 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Superadmin Dashboard - Toko Online</title>
+  <title>Toko Online App</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family: 'Segoe UI', sans-serif; background: #f7fafc; }
+    /* Tampilan Login */
+    .login-screen {
+      display: flex; align-items:center; justify-content:center; min-height:100vh;
+      background: linear-gradient(135deg, #4facfe, #00f2fe); padding:20px;
     }
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f7fafc;
-      display: flex;
-      min-height: 100vh;
+    .login-box {
+      background: white; border-radius:20px; padding:40px 30px; width:100%; max-width:400px;
+      box-shadow:0 15px 35px rgba(0,0,0,0.2);
     }
-    .sidebar {
-      width: 250px;
-      background: #2d3748;
-      color: white;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 30px;
-    }
-    .sidebar h2 {
-      font-size: 1.5rem;
-      text-align: center;
-      margin-bottom: 10px;
-    }
-    .sidebar ul {
-      list-style: none;
-      flex-grow: 1;
-    }
-    .sidebar ul li {
-      margin-bottom: 8px;
-    }
-    .sidebar ul li a {
-      color: #cbd5e0;
-      text-decoration: none;
-      display: block;
-      padding: 10px 15px;
-      border-radius: 8px;
-      transition: background 0.3s;
-    }
-    .sidebar ul li a.active,
-    .sidebar ul li a:hover {
-      background: #4a5568;
-      color: white;
-    }
-    .logout-btn {
-      background: #e53e3e;
-      color: white;
-      border: none;
-      padding: 12px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    .main-content {
-      flex: 1;
-      padding: 30px;
-      overflow-y: auto;
-    }
-    .card {
-      background: white;
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-      margin-bottom: 20px;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 15px;
-    }
-    th, td {
-      border: 1px solid #e2e8f0;
-      padding: 10px;
-      text-align: left;
-    }
-    th {
-      background: #edf2f7;
-    }
-    button {
-      padding: 6px 12px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 600;
-    }
-    .btn-approve {
-      background: #48bb78;
-      color: white;
-    }
-    .btn-suspend {
-      background: #ecc94b;
-      color: black;
-    }
-    .btn-unsuspend {
-      background: #4299e1;
-      color: white;
-    }
-    .alert {
-      padding: 10px;
-      border-radius: 6px;
-      margin-bottom: 15px;
-    }
-    .alert-info {
-      background: #bee3f8;
-      color: #2b6cb0;
-    }
-    .hidden {
-      display: none;
-    }
-    .nav-menu {
-      display: flex;
-      gap: 15px;
-      margin-bottom: 20px;
-    }
-    .nav-menu button {
-      background: transparent;
-      border: 2px solid #a0aec0;
-      color: #4a5568;
-    }
-    .nav-menu button.active {
-      background: #4299e1;
-      color: white;
-      border-color: #4299e1;
-    }
+    .login-box h1 { text-align:center; margin-bottom:5px; color:#2d3748; }
+    .login-box p { text-align:center; color:#718096; margin-bottom:25px; }
+    .input-group { margin-bottom:15px; }
+    .input-group label { display:block; font-weight:600; color:#4a5568; margin-bottom:5px; }
+    .input-group input { width:100%; padding:12px 15px; border:2px solid #e2e8f0; border-radius:8px; font-size:1rem; }
+    .input-group input:focus { border-color:#4facfe; outline:none; }
+    .btn { width:100%; padding:14px; border:none; border-radius:8px; font-weight:bold; cursor:pointer; }
+    .btn-primary { background: linear-gradient(135deg, #667eea, #764ba2); color:white; }
+    .btn-primary:hover { opacity:0.9; }
+    .alert { padding:10px; border-radius:6px; margin-bottom:15px; display:none; }
+    .alert-error { background:#fff5f5; color:#c53030; border:1px solid #feb2b2; display:block; }
+    .alert-success { background:#f0fff4; color:#276749; border:1px solid #9ae6b4; display:block; }
+    .forgot-link { text-align:right; margin-bottom:10px; }
+    .forgot-link a { color:#4facfe; font-size:0.9rem; }
+    .register-hint { text-align:center; margin-top:20px; color:#718096; }
+
+    /* Dashboard */
+    .app-screen { display:flex; min-height:100vh; }
+    .sidebar { width:250px; background:#2d3748; color:white; padding:20px; display:flex; flex-direction:column; }
+    .sidebar h2 { font-size:1.5rem; margin-bottom:20px; }
+    .sidebar ul { list-style:none; flex:1; }
+    .sidebar ul li a { color:#cbd5e0; text-decoration:none; display:block; padding:10px 15px; border-radius:8px; margin-bottom:5px; }
+    .sidebar ul li a.active, .sidebar ul li a:hover { background:#4a5568; color:white; }
+    .logout-btn { background:#e53e3e; color:white; border:none; padding:12px; border-radius:8px; cursor:pointer; font-weight:bold; }
+    .main-content { flex:1; padding:30px; overflow-y:auto; }
+    .card { background:white; border-radius:12px; padding:20px; box-shadow:0 4px 6px rgba(0,0,0,0.05); margin-bottom:20px; }
+    table { width:100%; border-collapse:collapse; margin-top:15px; }
+    th, td { border:1px solid #e2e8f0; padding:10px; text-align:left; }
+    th { background:#edf2f7; }
+    .btn-sm { padding:6px 12px; border:none; border-radius:6px; cursor:pointer; font-weight:600; }
+    .btn-approve { background:#48bb78; color:white; }
+    .btn-suspend { background:#ecc94b; color:black; }
+    .btn-unsuspend { background:#4299e1; color:white; }
+    .hidden { display:none !important; }
+    .stats { display:grid; grid-template-columns:repeat(auto-fit, minmax(180px,1fr)); gap:20px; }
+    .stat-card { background:white; border-radius:12px; padding:20px; }
   </style>
 </head>
 <body>
-  <div class="sidebar">
-    <h2>🛡️ Superadmin</h2>
-    <ul>
-      <li><a href="#" class="active" data-page="dashboard">📊 Dashboard</a></li>
-      <li><a href="#" data-page="users">👥 Manajemen User</a></li>
-      <li><a href="#" data-page="laporan">📋 Laporan Riwayat</a></li>
-    </ul>
-    <button class="logout-btn" onclick="logout()">🚪 Logout</button>
+  <!-- Layar Login -->
+  <div id="loginScreen" class="login-screen">
+    <div class="login-box">
+      <h1>🔐 Toko Online</h1>
+      <p>Masuk ke akun Anda</p>
+      <div id="alertBox" class="alert"></div>
+      <form id="loginForm">
+        <div class="input-group">
+          <label>Username</label>
+          <input type="text" id="username" placeholder="Username" required>
+        </div>
+        <div class="input-group">
+          <label>Password</label>
+          <input type="password" id="password" placeholder="••••••••" required>
+        </div>
+        <div class="forgot-link"><a href="#" id="lupaPasswordLink">Lupa Password?</a></div>
+        <button type="submit" class="btn btn-primary">Masuk</button>
+      </form>
+      <div class="register-hint">Belum punya akun? Daftar di sini (segera hadir)</div>
+    </div>
   </div>
 
-  <div class="main-content" id="mainContent">
-    <!-- Konten dinamis -->
+  <!-- Layar Dashboard (semua role) -->
+  <div id="appScreen" class="app-screen hidden">
+    <div class="sidebar" id="sidebar">
+      <!-- Diisi oleh JS sesuai role -->
+    </div>
+    <div class="main-content" id="mainContent"></div>
   </div>
 
   <script>
-    // Cek otorisasi
-    const userRole = localStorage.getItem('user_role');
-    if (userRole !== 'superadmin') {
-      alert('Akses ditolak. Hanya superadmin yang bisa mengakses halaman ini.');
-      window.location.href = '/index.html';
-    }
-
-    // Data dummy user (nantinya dari API)
-    let dummyUsers = [
-      { id: 1, username: 'superadmin', role: 'superadmin', is_approved: true, is_suspended: false },
-      { id: 2, username: 'pelanggan1', role: 'customer', is_approved: true, is_suspended: false },
-      { id: 3, username: 'toko1', role: 'seller', is_approved: true, is_suspended: false },
-      { id: 4, username: 'staff1', role: 'staff', is_approved: true, is_suspended: false },
-      { id: 5, username: 'codseller1', role: 'cod_seller', is_approved: false, is_suspended: false },
-      { id: 6, username: 'ojeg1', role: 'driver', is_approved: true, is_suspended: false },
-      { id: 7, username: 'codseller2', role: 'cod_seller', is_approved: false, is_suspended: false },
-      { id: 8, username: 'ojeg2', role: 'driver', is_approved: false, is_suspended: false },
+    // ========== DATA DUMMY & STATE ==========
+    const dummyUsers = [
+      { id:1, username:'superadmin', password:'admin123', role:'superadmin', is_approved:true, is_suspended:false },
+      { id:2, username:'pelanggan1', password:'pelanggan123', role:'customer', is_approved:true, is_suspended:false },
+      { id:3, username:'toko1', password:'toko123', role:'seller', is_approved:true, is_suspended:false },
+      { id:4, username:'staff1', password:'staff123', role:'staff', is_approved:true, is_suspended:false },
+      { id:5, username:'codseller1', password:'cod123', role:'cod_seller', is_approved:false, is_suspended:false },
+      { id:6, username:'ojeg1', password:'ojeg123', role:'driver', is_approved:true, is_suspended:false },
+      { id:7, username:'codseller2', password:'cod123', role:'cod_seller', is_approved:false, is_suspended:false },
+      { id:8, username:'ojeg2', password:'ojeg123', role:'driver', is_approved:false, is_suspended:false }
     ];
 
-    // Data dummy laporan (contoh)
     const dummyLaporan = [
-      { id: 1, pesanan: 'Pesanan #1', toko: 'Toko A', total_produk: 50000, ongkir: 10000, komisi: 1000, status: 'Selesai' },
-      { id: 2, pesanan: 'Pesanan #2', toko: 'Toko B', total_produk: 75000, ongkir: 15000, komisi: 1500, status: 'Disetujui Ojeg' },
+      { id:1, pesanan:'Pesanan #1', toko:'Toko A', total:50000, ongkir:10000, komisi:1000, status:'Selesai' },
+      { id:2, pesanan:'Pesanan #2', toko:'Toko B', total:75000, ongkir:15000, komisi:1500, status:'Disetujui Ojeg' }
     ];
 
-    // Simpan data user di localStorage agar perubahan tersimpan selama sesi (opsional)
-    if (!localStorage.getItem('dummyUsers')) {
-      localStorage.setItem('dummyUsers', JSON.stringify(dummyUsers));
-    } else {
-      dummyUsers = JSON.parse(localStorage.getItem('dummyUsers'));
+    let currentUser = null; // { id, username, role, ... }
+
+    // ========== FUNGSI TAMPILAN ==========
+    const loginScreen = document.getElementById('loginScreen');
+    const appScreen = document.getElementById('appScreen');
+    const alertBox = document.getElementById('alertBox');
+    const loginForm = document.getElementById('loginForm');
+    const sidebar = document.getElementById('sidebar');
+    const mainContent = document.getElementById('mainContent');
+
+    function showAlert(msg, type='error') {
+      alertBox.textContent = msg;
+      alertBox.className = 'alert';
+      if (type === 'error') alertBox.classList.add('alert-error');
+      else if (type === 'success') alertBox.classList.add('alert-success');
+      alertBox.style.display = 'block';
     }
 
-    const mainContent = document.getElementById('mainContent');
-    const navLinks = document.querySelectorAll('.sidebar a[data-page]');
+    function hideAlert() {
+      alertBox.style.display = 'none';
+    }
 
-    // Fungsi render halaman
-    function renderDashboard() {
-      const totalUser = dummyUsers.length;
+    // Login Process
+    loginForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      hideAlert();
+      const uname = document.getElementById('username').value.trim();
+      const pass = document.getElementById('password').value;
+      if (!uname || !pass) {
+        showAlert('Username dan password wajib diisi.');
+        return;
+      }
+
+      // Cari user di dummyUsers
+      const user = dummyUsers.find(u => u.username === uname && u.password === pass);
+      if (!user) {
+        showAlert('Username atau password salah.');
+        return;
+      }
+
+      if (user.is_suspended) {
+        showAlert('Akun Anda telah dinonaktifkan. Hubungi admin.');
+        return;
+      }
+
+      if ((user.role === 'cod_seller' || user.role === 'driver') && !user.is_approved) {
+        showAlert('Akun Anda belum disetujui oleh superadmin.');
+        return;
+      }
+
+      // Login sukses
+      currentUser = { id: user.id, username: user.username, role: user.role };
+      localStorage.setItem('currentUser', JSON.stringify(currentUser));
+      // Tampilkan dashboard
+      loginScreen.classList.add('hidden');
+      appScreen.classList.remove('hidden');
+      buildSidebar();
+      navigateTo('dashboard');
+    });
+
+    function logout() {
+      localStorage.removeItem('currentUser');
+      currentUser = null;
+      appScreen.classList.add('hidden');
+      loginScreen.classList.remove('hidden');
+      document.getElementById('username').value = '';
+      document.getElementById('password').value = '';
+      hideAlert();
+    }
+
+    // Cek localStorage untuk auto login
+    (function() {
+      const stored = localStorage.getItem('currentUser');
+      if (stored) {
+        try {
+          currentUser = JSON.parse(stored);
+          // Validasi role
+          if (currentUser.role && dummyUsers.find(u => u.id === currentUser.id)) {
+            loginScreen.classList.add('hidden');
+            appScreen.classList.remove('hidden');
+            buildSidebar();
+            navigateTo('dashboard');
+          } else {
+            localStorage.removeItem('currentUser');
+          }
+        } catch(e) {
+          localStorage.removeItem('currentUser');
+        }
+      }
+    })();
+
+    // ========== SIDEBAR & NAVIGASI ==========
+    function buildSidebar() {
+      if (!currentUser) return;
+      let menu = '';
+      switch(currentUser.role) {
+        case 'superadmin':
+          menu = `
+            <h2>🛡️ Superadmin</h2>
+            <ul>
+              <li><a href="#" data-page="dashboard" class="active">📊 Dashboard</a></li>
+              <li><a href="#" data-page="users">👥 Manajemen User</a></li>
+              <li><a href="#" data-page="laporan">📋 Laporan Riwayat</a></li>
+            </ul>`;
+          break;
+        case 'customer':
+          menu = `<h2>👤 Pelanggan</h2><ul><li><a href="#" data-page="dashboard">🏠 Beranda</a></li></ul>`;
+          break;
+        case 'seller':
+          menu = `<h2>🏪 Pemilik Toko</h2><ul><li><a href="#" data-page="dashboard">📦 Pesanan Masuk</a></li></ul>`;
+          break;
+        case 'staff':
+          menu = `<h2>👔 Staf</h2><ul><li><a href="#" data-page="dashboard">📋 Laporan</a></li></ul>`;
+          break;
+        case 'cod_seller':
+          menu = `<h2>🛒 COD Seller</h2><ul><li><a href="#" data-page="dashboard">📦 Katalog & Pesanan</a></li></ul>`;
+          break;
+        case 'driver':
+          menu = `<h2>🛵 Ojeg</h2><ul><li><a href="#" data-page="dashboard">📋 Orderan & Ongkir</a></li></ul>`;
+          break;
+        default:
+          menu = `<h2>User</h2><ul><li><a href="#" data-page="dashboard">Home</a></li></ul>`;
+      }
+      sidebar.innerHTML = menu + `<button class="logout-btn" onclick="logout()">🚪 Logout</button>`;
+      // Event listener untuk link sidebar
+      document.querySelectorAll('.sidebar a[data-page]').forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          document.querySelectorAll('.sidebar a').forEach(l => l.classList.remove('active'));
+          this.classList.add('active');
+          navigateTo(this.dataset.page);
+        });
+      });
+    }
+
+    function navigateTo(page) {
+      if (!currentUser) return;
+      // Reset konten
+      mainContent.innerHTML = '';
+      switch(currentUser.role) {
+        case 'superadmin':
+          if (page === 'dashboard') renderSuperDashboard();
+          else if (page === 'users') renderManajemenUser();
+          else if (page === 'laporan') renderLaporan();
+          break;
+        // Role lain sementara dashboard sederhana
+        default:
+          mainContent.innerHTML = `<h1>Dashboard ${currentUser.role}</h1><p>Fitur akan segera hadir.</p>`;
+      }
+    }
+
+    // ========== SUPERADMIN ==========
+    function renderSuperDashboard() {
+      const total = dummyUsers.length;
       const pending = dummyUsers.filter(u => !u.is_approved).length;
       const suspended = dummyUsers.filter(u => u.is_suspended).length;
       mainContent.innerHTML = `
         <h1>Dashboard Superadmin</h1>
-        <div class="alert alert-info">Selamat datang, Superadmin. Kelola aplikasi dari sini.</div>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
-          <div class="card">
-            <h3>Total User</h3>
-            <p style="font-size: 2rem; font-weight: bold;">${totalUser}</p>
-          </div>
-          <div class="card">
-            <h3>Pending Persetujuan</h3>
-            <p style="font-size: 2rem; font-weight: bold;">${pending}</p>
-          </div>
-          <div class="card">
-            <h3>User Dinonaktifkan</h3>
-            <p style="font-size: 2rem; font-weight: bold;">${suspended}</p>
-          </div>
+        <div class="stats">
+          <div class="stat-card"><h3>Total User</h3><p style="font-size:2rem;">${total}</p></div>
+          <div class="stat-card"><h3>Pending</h3><p style="font-size:2rem;">${pending}</p></div>
+          <div class="stat-card"><h3>Disuspend</h3><p style="font-size:2rem;">${suspended}</p></div>
         </div>
       `;
     }
 
     function renderManajemenUser() {
-      const userRows = dummyUsers.map(user => `
+      const rows = dummyUsers.map(u => `
         <tr>
-          <td>${user.id}</td>
-          <td>${user.username}</td>
-          <td>${user.role}</td>
-          <td>${user.is_approved ? '✅' : '⏳'}</td>
-          <td>${user.is_suspended ? '❌' : '✅'}</td>
+          <td>${u.id}</td>
+          <td>${u.username}</td>
+          <td>${u.role}</td>
+          <td>${u.is_approved ? '✅' : '⏳'}</td>
+          <td>${u.is_suspended ? '❌ Nonaktif' : '✅ Aktif'}</td>
           <td>
-            ${!user.is_approved && (user.role === 'cod_seller' || user.role === 'driver') ? 
-              `<button class="btn-approve" onclick="approveUser(${user.id})">Setujui</button>` : ''}
-            ${!user.is_suspended ? 
-              `<button class="btn-suspend" onclick="suspendUser(${user.id})">Nonaktifkan</button>` :
-              `<button class="btn-unsuspend" onclick="unsuspendUser(${user.id})">Aktifkan</button>`}
+            ${(u.role==='cod_seller'||u.role==='driver') && !u.is_approved ? `<button class="btn-sm btn-approve" onclick="approveUser(${u.id})">Setujui</button>` : ''}
+            ${!u.is_suspended ? `<button class="btn-sm btn-suspend" onclick="suspendUser(${u.id})">Nonaktifkan</button>` : `<button class="btn-sm btn-unsuspend" onclick="unsuspendUser(${u.id})">Aktifkan</button>`}
           </td>
         </tr>
       `).join('');
-
       mainContent.innerHTML = `
         <h1>Manajemen User</h1>
-        <p>Daftar semua akun terdaftar. Superadmin dapat menyetujui atau menonaktifkan akun.</p>
         <div class="card">
           <table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Username</th>
-                <th>Role</th>
-                <th>Disetujui?</th>
-                <th>Status</th>
-                <th>Aksi</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${userRows}
-            </tbody>
+            <thead><tr><th>ID</th><th>Username</th><th>Role</th><th>Disetujui</th><th>Status</th><th>Aksi</th></tr></thead>
+            <tbody>${rows}</tbody>
           </table>
         </div>
       `;
     }
 
     function renderLaporan() {
-      let laporanRows = dummyLaporan.map(l => `
+      const rows = dummyLaporan.map(l => `
         <tr>
-          <td>${l.id}</td>
-          <td>${l.pesanan}</td>
-          <td>${l.toko}</td>
-          <td>Rp ${l.total_produk.toLocaleString()}</td>
-          <td>Rp ${l.ongkir.toLocaleString()}</td>
-          <td>Rp ${l.komisi.toLocaleString()}</td>
-          <td>${l.status}</td>
+          <td>${l.id}</td><td>${l.pesanan}</td><td>${l.toko}</td>
+          <td>Rp ${l.total.toLocaleString()}</td><td>Rp ${l.ongkir.toLocaleString()}</td>
+          <td>Rp ${l.komisi.toLocaleString()}</td><td>${l.status}</td>
         </tr>
       `).join('');
-
       mainContent.innerHTML = `
-        <h1>Laporan Riwayat Transaksi & Komisi</h1>
+        <h1>Laporan Riwayat</h1>
         <div class="card">
           <table>
-            <thead>
-              <tr>
-                <th>ID Laporan</th>
-                <th>Pesanan</th>
-                <th>Toko</th>
-                <th>Total Produk</th>
-                <th>Ongkir</th>
-                <th>Komisi</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${laporanRows}
-            </tbody>
+            <thead><tr><th>ID</th><th>Pesanan</th><th>Toko</th><th>Total Produk</th><th>Ongkir</th><th>Komisi</th><th>Status</th></tr></thead>
+            <tbody>${rows}</tbody>
           </table>
-          <p style="margin-top: 15px; color: #718096;"><i>* Data ini contoh statis, nanti akan live dari backend.</i></p>
         </div>
       `;
     }
 
-    // Fungsi aksi
-    function approveUser(id) {
-      const index = dummyUsers.findIndex(u => u.id === id);
-      if (index !== -1) {
-        dummyUsers[index].is_approved = true;
-        localStorage.setItem('dummyUsers', JSON.stringify(dummyUsers));
-        alert('Akun berhasil disetujui!');
-        renderManajemenUser(); // refresh tabel
+    // Aksi superadmin (didefinisikan global)
+    window.approveUser = function(id) {
+      const idx = dummyUsers.findIndex(u => u.id === id);
+      if (idx !== -1) {
+        dummyUsers[idx].is_approved = true;
+        alert('Akun disetujui.');
+        renderManajemenUser();
       }
-    }
-
-    function suspendUser(id) {
+    };
+    window.suspendUser = function(id) {
       if (confirm('Nonaktifkan akun ini?')) {
-        const index = dummyUsers.findIndex(u => u.id === id);
-        if (index !== -1) {
-          dummyUsers[index].is_suspended = true;
-          localStorage.setItem('dummyUsers', JSON.stringify(dummyUsers));
-          renderManajemenUser();
-        }
+        const idx = dummyUsers.findIndex(u => u.id === id);
+        if (idx !== -1) { dummyUsers[idx].is_suspended = true; renderManajemenUser(); }
       }
-    }
-
-    function unsuspendUser(id) {
-      if (confirm('Aktifkan kembali akun ini?')) {
-        const index = dummyUsers.findIndex(u => u.id === id);
-        if (index !== -1) {
-          dummyUsers[index].is_suspended = false;
-          localStorage.setItem('dummyUsers', JSON.stringify(dummyUsers));
-          renderManajemenUser();
-        }
+    };
+    window.unsuspendUser = function(id) {
+      if (confirm('Aktifkan kembali?')) {
+        const idx = dummyUsers.findIndex(u => u.id === id);
+        if (idx !== -1) { dummyUsers[idx].is_suspended = false; renderManajemenUser(); }
       }
-    }
+    };
 
-    function logout() {
-      localStorage.removeItem('auth_token');
-      localStorage.removeItem('user_role');
-      localStorage.removeItem('user_id');
-      window.location.href = '/index.html';
-    }
-
-    // Navigasi sidebar
-    navLinks.forEach(link => {
-      link.addEventListener('click', function(e) {
-        e.preventDefault();
-        // Hapus class active semua
-        navLinks.forEach(l => l.classList.remove('active'));
-        this.classList.add('active');
-        const page = this.dataset.page;
-        switch(page) {
-          case 'dashboard':
-            renderDashboard();
-            break;
-          case 'users':
-            renderManajemenUser();
-            break;
-          case 'laporan':
-            renderLaporan();
-            break;
-          default:
-            renderDashboard();
-        }
-      });
+    // Link lupa password
+    document.getElementById('lupaPasswordLink').addEventListener('click', function(e) {
+      e.preventDefault();
+      alert('Fitur lupa password akan tersedia setelah integrasi backend.');
     });
-
-    // Render dashboard pertama kali
-    renderDashboard();
-
-    // Ekspose fungsi global
-    window.approveUser = approveUser;
-    window.suspendUser = suspendUser;
-    window.unsuspendUser = unsuspendUser;
   </script>
 </body>
 </html>
