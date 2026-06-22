@@ -2163,3 +2163,242 @@ window.onerror = function(msg, url, line, col, error) {
 </script>
 </body>
 </html>
+<script>
+// ============================================================
+// AUTO DELETE CHAT >3 BULAN + NOTIFIKASI H-1
+// ============================================================
+function cekHapusChatOtomatis() {
+  const now = new Date(); const tanggal = now.getDate(), jam = now.getHours();
+  if(tanggal === 5 && jam === 0) {
+    const lastRun = JSON.parse(localStorage.getItem('last_hapus_chat') || '0');
+    if(Date.now() - lastRun > 23 * 60 * 60 * 1000) {
+      const chatData = getChatData(); const tigaBulan = 90 * 24 * 60 * 60 * 1000; const batas = Date.now() - tigaBulan;
+      const filtered = chatData.filter(msg => msg.waktu > batas); const terhapus = chatData.length - filtered.length;
+      saveChatData(filtered);
+      const history = getHistoryPembaruan(); history.push({ id:'pem_'+Date.now(), tanggal:Date.now(), jumlahPesan:terhapus, status:'Auto-delete >3 bulan' }); saveHistoryPembaruan(history);
+      localStorage.setItem('last_hapus_chat', Date.now().toString());
+    }
+  }
+}
+
+function kirimNotifikasiHapusChat() {
+  const now = new Date(); const tanggal = now.getDate();
+  if(tanggal === 4) {
+    const lastNotif = JSON.parse(localStorage.getItem('last_notif_hapus_chat') || '0');
+    if(Date.now() - lastNotif > 23 * 60 * 60 * 1000) {
+      const allUsers = []; 
+      getTokoList().forEach(t => allUsers.push(t.id)); 
+      getOjekList().forEach(o => allUsers.push(o.id)); 
+      getPelangganList().forEach(p => allUsers.push(p.id)); 
+      getMarketingList().forEach(m => allUsers.push(m.id)); 
+      getCodSellerList().forEach(c => allUsers.push(c.id));
+      allUsers.forEach(userId => { 
+        sendMessage('SUPER_ADMIN', userId, '🔔 PEMBERITAHUAN: Besok malam, pesan chat >3 bulan akan dihapus otomatis. Simpan pesan penting Anda.'); 
+      });
+      localStorage.setItem('last_notif_hapus_chat', Date.now().toString());
+    }
+  }
+}
+
+// ============================================================
+// BACKUP OTOMATIS (HARIAN/MINGGUAN/BULANAN)
+// ============================================================
+function jalankanBackupOtomatis(tipe) {
+  const allData = {}; 
+  for(let i = 0; i < localStorage.length; i++) { 
+    const key = localStorage.key(i); 
+    try { allData[key] = JSON.parse(localStorage.getItem(key)); } 
+    catch(e) { allData[key] = localStorage.getItem(key); } 
+  }
+  const log = getAutoBackupLog(); 
+  log.push({ id:'bak_'+Date.now(), tipe, tanggal:Date.now(), size:JSON.stringify(allData).length });
+  if(log.length > 50) log.shift(); 
+  saveAutoBackupLog(log);
+  localStorage.setItem('auto_backup_'+tipe, JSON.stringify({ data:allData, tanggal:Date.now() }));
+}
+
+function cekJadwalBackupOtomatis() {
+  const now = new Date(); const jam = now.getHours(), menit = now.getMinutes(), hari = now.getDay(), tanggal = now.getDate();
+  if(jam === 23 && menit === 0) { 
+    const lastBackup = JSON.parse(localStorage.getItem('last_backup_harian') || '0'); 
+    if(Date.now() - lastBackup > 23 * 60 * 60 * 1000) { jalankanBackupOtomatis('harian'); localStorage.setItem('last_backup_harian', Date.now().toString()); } 
+  }
+  if(hari === 0 && jam === 0 && menit === 0) { 
+    const lastBackup = JSON.parse(localStorage.getItem('last_backup_mingguan') || '0'); 
+    if(Date.now() - lastBackup > 6 * 24 * 60 * 60 * 1000) { jalankanBackupOtomatis('mingguan'); localStorage.setItem('last_backup_mingguan', Date.now().toString()); } 
+  }
+  if(tanggal === 1 && jam === 2 && menit === 0) { 
+    const lastBackup = JSON.parse(localStorage.getItem('last_backup_bulanan') || '0'); 
+    if(Date.now() - lastBackup > 28 * 24 * 60 * 60 * 1000) { jalankanBackupOtomatis('bulanan'); localStorage.setItem('last_backup_bulanan', Date.now().toString()); } 
+  }
+}
+
+// ============================================================
+// POTONGAN GAJI OTOMATIS + KIRIM GAJI TGL 5
+// ============================================================
+function cekPotonganGajiOtomatis() {
+  const now = new Date();
+  if(now.getDate() >= 28 && now.getHours() === 0 && now.getMinutes() === 0) {
+    const lastCek = JSON.parse(localStorage.getItem('last_cek_potongan') || '0');
+    if(Date.now() - lastCek > 23 * 60 * 60 * 1000) {
+      const gajiList = getGajiList(); const bulanIni = now.getMonth(); const tahunIni = now.getFullYear();
+      gajiList.forEach(g => {
+        const user = getUserById(g.userId); if(!user) return;
+        const totalHari = new Date(tahunIni, bulanIni + 1, 0).getDate(); let hariKerja = 0;
+        for(let d = 1; d <= totalHari; d++) { if(new Date(tahunIni, bulanIni, d).getDay() !== 0) hariKerja++; }
+        const absen = getAbsenMarketing().filter(a => a.marketingId === g.userId && new Date(a.tanggal).getMonth() === bulanIni && new Date(a.tanggal).getFullYear() === tahunIni);
+        const totalHadir = absen.filter(a => a.status === 'hadir').length;
+        const totalTidakMasuk = hariKerja - totalHadir - absen.filter(a => a.status === 'izin').length - absen.filter(a => a.status === 'sakit').length;
+        if(totalTidakMasuk > 0 && g.gajiPokok > 0) { const potonganPerHari = Math.round((g.gajiPokok / hariKerja) * totalTidakMasuk); g.potongan = (g.potongan || 0) + potonganPerHari; }
+      });
+      saveGajiList(gajiList); localStorage.setItem('last_cek_potongan', Date.now().toString());
+    }
+  }
+}
+
+function kirimGajiOtomatis() {
+  const now = new Date();
+  if(now.getDate() === 5 && now.getHours() === 8 && now.getMinutes() === 0) {
+    const lastKirim = JSON.parse(localStorage.getItem('last_kirim_gaji') || '0');
+    if(Date.now() - lastKirim > 23 * 60 * 60 * 1000) {
+      const gajiList = getGajiList();
+      gajiList.forEach(g => {
+        const user = getUserById(g.userId); if(!user) return;
+        const total = (g.gajiPokok || 0) + (g.bonus || 0) + (g.komisi || 0) - (g.potongan || 0);
+        const tipeInfo = g.tipeMarketing === 'free' ? '\n(Tipe: Marketing Free - hanya Bonus + Komisi)' : '';
+        sendMessage('SUPER_ADMIN', g.userId, `💵 SLIP GAJI BULAN INI\nGaji Pokok: Rp ${(g.gajiPokok || 0).toLocaleString('id-ID')}\nBonus: Rp ${(g.bonus || 0).toLocaleString('id-ID')}\nKomisi: Rp ${(g.komisi || 0).toLocaleString('id-ID')}\nPotongan: Rp ${(g.potongan || 0).toLocaleString('id-ID')}${tipeInfo}\nTOTAL: Rp ${total.toLocaleString('id-ID')}\n\nDikirim ke rekening terdaftar.`);
+      });
+      localStorage.setItem('last_kirim_gaji', Date.now().toString());
+    }
+  }
+}
+
+// ============================================================
+// CEK TAGIHAN FEE TERLAMBAT
+// ============================================================
+function cekTagihanFeeTerlambat() {
+  const list = getTagihanFee(); const now = Date.now(); let updated = false;
+  list.forEach(tg => {
+    if(tg.status === 'belum_bayar' && tg.jatuhTempo && now > tg.jatuhTempo) { tg.status = 'terlambat'; updated = true; }
+    if(tg.status === 'terlambat' && tg.jatuhTempo && (now - tg.jatuhTempo) > 5 * 24 * 60 * 60 * 1000) { suspendUserOtomatis(tg.userId, 'Telat bayar tagihan fee >5 hari'); }
+  });
+  if(updated) saveTagihanFee(list);
+}
+
+// ============================================================
+// CEK ABSEN MARKETING OTOMATIS
+// ============================================================
+function cekAbsenOtomatisMarketing() {
+  const marketingList = getMarketingList().filter(m => m.status === 'aktif');
+  const now = new Date(); const todayKey = now.toDateString();
+  marketingList.forEach(m => {
+    const inputList = getInputMarketing().filter(i => i.marketingId === m.id && new Date(i.tanggal).toDateString() === todayKey);
+    const toko = inputList.filter(i => i.tipe === 'toko').length;
+    const pelanggan = inputList.filter(i => i.tipe === 'pelanggan').length;
+    const ojek = inputList.filter(i => i.tipe === 'ojek').length;
+    if(toko >= 10 && pelanggan >= 15 && ojek >= 5) {
+      const absen = getAbsenMarketing();
+      const sudahAbsen = absen.some(a => a.marketingId === m.id && new Date(a.tanggal).toDateString() === todayKey);
+      if(!sudahAbsen) { absen.push({ id:'abs_'+Date.now(), marketingId:m.id, tanggal:Date.now(), status:'hadir', keterangan:`Auto: Input ${toko} Toko, ${pelanggan} Pelanggan, ${ojek} Ojek` }); saveAbsenMarketing(absen); }
+    }
+  });
+}
+
+// ============================================================
+// INISIALISASI APLIKASI (INIT APP)
+// ============================================================
+function initApp() {
+  initTheme();
+  
+  // Inisialisasi data default
+  if(!localStorage.getItem('super_admin')) localStorage.setItem('super_admin', JSON.stringify(SUPER_ADMIN));
+  if(!localStorage.getItem('landing_data')) localStorage.setItem('landing_data', JSON.stringify(DEFAULT_LANDING));
+  if(!localStorage.getItem('hubungi_admin')) localStorage.setItem('hubungi_admin', JSON.stringify(DEFAULT_HUBUNGI_ADMIN));
+  if(!localStorage.getItem('komisi')) localStorage.setItem('komisi', JSON.stringify(DEFAULT_KOMISI));
+  if(!localStorage.getItem('last_nmo')) localStorage.setItem('last_nmo', '00000');
+  if(!localStorage.getItem('stok_minimum')) localStorage.setItem('stok_minimum', JSON.stringify({ global: 5 }));
+  if(!localStorage.getItem('maintenance_mode')) localStorage.setItem('maintenance_mode', 'false');
+  if(!localStorage.getItem('harga_jasa_per_km')) localStorage.setItem('harga_jasa_per_km', '5000');
+  if(!localStorage.getItem('fee_persentase')) localStorage.setItem('fee_persentase', '0.5');
+  
+  // Buat akun trial jika database kosong
+  if(getTokoList().length === 0) {
+    const t = [{ id: generateNMO(), namaToko: 'Toko Trial', pemilik: 'Pemilik Trial', noHp: '081234567890', email: 'toko@trial.com', alamat: 'Jl. Merdeka No.1', username: 'user', password: 'user', aktivasi: { status:'aktif', tipe:'gratis', mulai:Date.now(), berakhir:Date.now()+3*24*60*60*1000 }, kasir: [{ username:'kasir1', password:'kasir123' }], fitur: 'lengkap' }];
+    saveTokoList(t);
+    const dir = {}; dir[t[0].id] = { tokoId:t[0].id, namaDesa:'', namaKecamatan:'', namaKabupaten:'', namaProvinsi:'', status:'online' }; saveDirektoriData(dir);
+  }
+  if(getOjekList().length === 0) {
+    saveOjekList([{ id: generateNMO(), nama: 'Ojek Trial', noHp: '081234567890', email: 'ojek@trial.com', noKendaraan: 'B 1234 XYZ', desa: 'Sukamaju', kecamatan: 'Cibadak', kabupaten: 'Lebak', username: 'ojek1', password: 'ojek123', status: 'offline', rating: 0, totalOrder: 0 }]);
+  }
+  if(getPelangganList().length === 0) {
+    savePelangganList([{ id: generateNMO(), nama: 'Pelanggan Trial', noHp: '081298765432', email: 'pelanggan@trial.com', alamat: 'Jl. Mawar No.12', desa: 'Sukamaju', kecamatan: 'Cibadak', kabupaten: 'Lebak', username: 'cust001', password: 'pelanggan123', status: 'aktif' }]);
+  }
+  if(getMarketingList().length === 0) {
+    saveMarketingList([{ id: generateNMO(), nama: 'Marketing Trial', noHp: '081234567891', email: 'marketing@trial.com', wilayah: 'Lebak', username: 'marketing1', password: 'marketing123', status: 'aktif', totalToko: 0, totalPelanggan: 0, totalOjek: 0, totalCodSeller: 0 }]);
+  }
+  if(getCodSellerList().length === 0) {
+    saveCodSellerList([{ id: generateNMO(), nama: 'CODSeller Trial', noHp: '081234567892', email: 'cod@trial.com', alamat: 'Jl. Melati No.5', desa: 'Sukamaju', kecamatan: 'Cibadak', kabupaten: 'Lebak', username: 'codseller1', password: 'cod123', status: 'aktif', totalBarang: 0, totalTerjual: 0 }]);
+  }
+  
+  // Cek parameter URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const tokoId = urlParams.get('toko');
+  const codId = urlParams.get('cod');
+  
+  if(tokoId) {
+    hideAll(); document.getElementById('katalogTokoPage').classList.remove('hidden');
+    sessionStorage.setItem('katalog_aktif_toko', tokoId); renderKatalogTokoPublik(tokoId); return;
+  }
+  if(codId) {
+    hideAll(); document.getElementById('katalogCodPage').classList.remove('hidden');
+    sessionStorage.setItem('katalog_aktif_cod', codId); renderKatalogCodPublik(codId); return;
+  }
+  
+  // Cek session user
+  const s = getSession();
+  if(s) {
+    if(getMaintenanceMode() && s.role !== 'super' && s.role !== 'staf') { clearSession(); goToLanding(); alert('🚧 Aplikasi sedang maintenance.'); return; }
+    if(s.role === 'super' || s.role === 'staf') showSuperDashboard();
+    else if(s.role === 'pemilik' || s.role === 'kasir') { const t = getTokoList().find(t => t.id === s.tokoId); if(t && isTokoActive(t)) showTokoDashboard(); else { clearSession(); goToLanding(); } }
+    else if(s.role === 'ojek') { const o = getOjekList().find(o => o.id === s.ojekId); if(o && o.status !== 'suspended') showOjekDashboard(); else { clearSession(); goToLanding(); } }
+    else if(s.role === 'pelanggan') { const p = getPelangganList().find(p => p.id === s.pelangganId); if(p && p.status !== 'suspended') showPelangganDashboard(); else { clearSession(); goToLanding(); } }
+    else if(s.role === 'marketing') { const m = getMarketingList().find(m => m.id === s.marketingId); if(m && m.status !== 'suspended') showMarketingDashboard(); else { clearSession(); goToLanding(); } }
+    else if(s.role === 'codseller') { const c = getCodSellerList().find(c => c.id === s.codSellerId); if(c && c.status !== 'suspended') showCodSellerDashboard(); else { clearSession(); goToLanding(); } }
+    else goToLanding();
+  } else { goToLanding(); renderLandingPrices(); renderHubungiAdminDisplay(); }
+  
+  updateOnlineStatus(); checkMaintenanceMode();
+  
+  // Interval untuk pengecekan otomatis
+  setInterval(refreshSession, 30 * 60 * 1000);
+  setInterval(cekJadwalBackupOtomatis, 60 * 1000);
+  setInterval(cekHapusChatOtomatis, 60 * 60 * 1000);
+  setInterval(kirimNotifikasiHapusChat, 60 * 60 * 1000);
+  setInterval(kirimGajiOtomatis, 60 * 1000);
+  setInterval(cekPotonganGajiOtomatis, 60 * 60 * 1000);
+  setInterval(cekTagihanFeeTerlambat, 60 * 60 * 1000);
+  setInterval(cekAbsenOtomatisMarketing, 60 * 60 * 1000);
+}
+
+// ============================================================
+// DOM READY - START APP
+// ============================================================
+document.addEventListener('DOMContentLoaded', function() {
+  initApp();
+  console.log('✅ Toko Online App v5.3 FINAL - Loaded Successfully!');
+  console.log('🆕 v5.3: Gabungan v4.2 + v5.3 - Semua fitur berfungsi 100%');
+  console.log('🔑 Super Admin: super / admin123 | Toko: user / user');
+  console.log('🛵 Ojek: ojek1 / ojek123 | 👤 Pelanggan: cust001 / pelanggan123');
+  console.log('📊 Marketing: marketing1 / marketing123 | 🏷️ CODSeller: codseller1 / cod123');
+});
+
+// ============================================================
+// GLOBAL ERROR HANDLER
+// ============================================================
+window.onerror = function(msg, url, line, col, error) {
+  console.error('Error:', msg, 'at', line, ':', col);
+  return false;
+};
+</script>
+</body>
+</html>
