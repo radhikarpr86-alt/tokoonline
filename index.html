@@ -8,7 +8,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Toko Online App">
     <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIlRva28gT25saW5lIEFwcCIsCiAgInNob3J0X25hbWUiOiAiVG9rbyBBcHAiLAogICJzdGFydF91cmwiOiAiLiIsCiAgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsCiAgImJhY2tncm91bmRfY29sb3IiOiAiIzFhNTZkYiIsCiAgInRoZW1lX2NvbG9yIjogIiMxYTU2ZGIiLAogICJpY29ucyI6IFtdCn0=">
-    <title>Toko Online App - v6.0</title>
+    <title>Toko Online App - v6.1</title>
     <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js">
     </script>
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js">
@@ -953,6 +953,33 @@
             border-left: 4px solid #4f46e5
         }
 
+        .tutorial-step {
+            display: flex;
+            gap: 15px;
+            padding: 12px 0;
+            border-bottom: 1px solid #e5e7eb
+        }
+        .tutorial-step .number {
+            background: #1a56db;
+            color: #fff;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0
+        }
+        .tutorial-step .content h4 {
+            color: #1a56db;
+            margin-bottom: 4px
+        }
+        .tutorial-step .content p {
+            font-size: 14px;
+            color: #6b7280
+        }
+
         @media(max-width:768px) {
             .dashboard {
                 flex-direction: column
@@ -1053,7 +1080,7 @@
                 <p style="margin-top:5px;font-size:13px;color:#6b7280;">✉️ dedesugiono.ai@gmail.com</p>
             </div>
         </div>
-        <p style="text-align:center;font-size:12px;color:#9ca3af;margin:20px 0;">© 2025 Toko Online App • v6.0 • All Rights Reserved</p>
+        <p style="text-align:center;font-size:12px;color:#9ca3af;margin:20px 0;">© 2025 Toko Online App • v6.1 • All Rights Reserved</p>
     </div>
 
     <!-- ==================== LOGIN PAGE ==================== -->
@@ -1148,7 +1175,6 @@
             <label><input type="radio" name="dtFitur" value="lengkap" checked> Lengkap</label>
             <label><input type="radio" name="dtFitur" value="penjualan"> Hanya Penjualan</label>
         </div>
-        <!-- Rekening Toko -->
         <div style="margin-top:10px;padding:10px;background:#e0f2fe;border-radius:8px;font-size:13px;">
             <p><strong>🏦 Rekening Pembayaran (opsional):</strong></p>
             <input type="text" id="dtRekeningNomor" placeholder="Nomor Rekening" style="margin-bottom:5px;">
@@ -1529,7 +1555,7 @@
 
     <div id="modalPilihProduk" class="modal hidden"><div class="modal-content" style="max-width:400px;"><h3>Pilih Produk</h3><input type="text" id="cariProdukTransaksi" placeholder="Cari..." oninput="filterProdukTransaksi()"><div id="listProdukTransaksi" style="max-height:300px;overflow-y:auto;"></div><button onclick="document.getElementById('modalPilihProduk').classList.add('hidden')" class="btn-sm btn-gray">Tutup</button></div></div>
 
-    <div id="modalBayarKasbon" class="modal hidden"><div class="modal-content" style="max-width:400px;"><h3>💵 Bayar Kasbon</h3><p id="infoKasbonBayar"></p><input type="hidden" id="bayarKasbonId"><input type="number" id="jumlahBayarKasbon" placeholder="Jumlah (Rp)"><div style="display:flex;gap:10px;"><button onclick="bayarKasbon()" class="btn-sm btn-success">✅ Bayar</button><button onclick="document.getElementById('modalBayarKasbon').classList.add('hidden')" class="btn-sm btn-gray">Batal</button></div></div></div>
+    <div id="modalBayarKasbon" class="modal hidden"><div class="modal-content" style="max-width:400px;"><h3>💵 Bayar Kasbon</h3><p id="infoKasbonBayar"></p><input type="hidden" id="bayarKasbonId"><input type="number" id="jumlahBayarKasbon" placeholder="Jumlah (Rp)"><div style="display:flex;gap:10px;"><button onclick="bayarKasbonAction()" class="btn-sm btn-success">✅ Bayar</button><button onclick="document.getElementById('modalBayarKasbon').classList.add('hidden')" class="btn-sm btn-gray">Batal</button></div></div></div>
 
     <div id="modalScan" class="modal hidden"><div class="modal-content" style="max-width:400px;text-align:center;"><h3>📷 Scan</h3><div id="reader"></div><p id="scanResult"></p><button onclick="stopScan()" class="btn-sm btn-gray">Tutup</button><button onclick="scanFromFile()" class="btn-sm btn-blue">Pilih Gambar</button><input type="file" id="scanFileInput" accept="image/*" onchange="handleScanFile(this)" class="hidden"></div></div>
 
@@ -1578,6 +1604,7 @@
 
     <div id="modalProfilToko" class="modal hidden"><div class="modal-content" style="max-width:500px;"><h3>🏬 Profil Toko</h3><div id="profilTokoContent"></div><div style="display:flex;gap:10px;margin-top:15px;"><button onclick="chatTokoDariProfil()" class="btn-sm btn-teal">💬 Chat</button><button onclick="hubungiTokoDariProfil()" class="btn-sm btn-success">📞 WA</button><button onclick="belanjaTokoDariProfil()" class="btn-sm btn-orange">🛒 Belanja</button><button onclick="document.getElementById('modalProfilToko').classList.add('hidden')" class="btn-sm btn-gray">Tutup</button></div></div></div>
 
+    <!-- ==================== SCRIPT ==================== -->
     <script>
         // ============================================================
         //  SUPER ADMIN & DEFAULTS
@@ -1611,6 +1638,7 @@
         let currentStrukText = '';
         let deferredPrompt = null;
         let featuresVisible = false;
+        let html5QrCode = null;
 
         // ============================================================
         //  LOCALSTORAGE GETTERS & SETTERS
@@ -2055,6 +2083,31 @@
             document.getElementById('featuresContainer').classList.toggle('hidden', !featuresVisible);
             document.getElementById('featureToggleBtn').textContent = featuresVisible ? '📋 Sembunyikan Fitur' :
                 '📋 Tampilkan Semua Kelebihan Fitur (150+)';
+        }
+
+        // ============================================================
+        //  RESTART & HAPUS SEMUA DATA
+        // ============================================================
+        function restartHapusSemuaData() {
+            if (!confirm('⚠️ PERINGATAN! Ini akan menghapus SEMUA data termasuk akun, produk, transaksi, chat, dll.\nYakin ingin melanjutkan?'
+                )) return;
+            if (!confirm('KONFIRMASI AKHIR: Semua data akan hilang permanen. Lanjutkan?')) return;
+            const keysToRemove = [];
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key && !['super_admin', 'landing_data', 'hubungi_admin', 'komisi', 'rekening', 'last_nmo',
+                        'keamanan_aktif', 'anti_virus_aktif', 'app_off', 'harga_per_km'
+                    ].includes(key)) {
+                    keysToRemove.push(key);
+                }
+            }
+            keysToRemove.forEach(key => localStorage.removeItem(key));
+            // Reset indexdb
+            hapusSemuaGambar().catch(() => {});
+            // Reset session
+            clearSession();
+            alert('✅ Semua data berhasil dihapus! Aplikasi akan direset ke kondisi awal.');
+            window.location.reload();
         }
 
         // ============================================================
@@ -2833,7 +2886,6 @@
         function showTambahOjekForm() {
             document.getElementById('formOjekSuper').classList.remove('hidden');
             document.getElementById('editOjekId').value = '';
-            document.getElementById('judulFormOjek').textContent = 'Tambah Ojek';
             ['namaOjek', 'emailOjekInput', 'noHpOjek', 'noKendaraanOjek', 'desaOjek', 'kecamatanOjek', 'kabupatenOjek',
                 'usernameOjek'
             ].forEach(id => document.getElementById(id).value = '');
@@ -2950,7 +3002,6 @@
         function showTambahMarketingForm() {
             document.getElementById('formMarketingSuper').classList.remove('hidden');
             document.getElementById('editMarketingId').value = '';
-            document.getElementById('judulFormMarketing').textContent = 'Tambah Marketing';
             ['namaMarketing', 'emailMarketingInput', 'noHpMarketing', 'wilayahMarketing', 'usernameMarketing'].forEach(
                 id => document.getElementById(id).value = '');
             document.getElementById('passwordMarketing').value = 'marketing123';
@@ -3026,7 +3077,6 @@
         function showTambahMarketingFreeForm() {
             document.getElementById('formMarketingFreeSuper').classList.remove('hidden');
             document.getElementById('editMarketingFreeId').value = '';
-            document.getElementById('judulFormMarketingFree').textContent = 'Tambah Marketing Free';
             ['namaMarketingFree', 'emailMarketingFreeInput', 'noHpMarketingFree', 'wilayahMarketingFree',
                 'usernameMarketingFree'
             ].forEach(id => document.getElementById(id).value = '');
@@ -3144,7 +3194,6 @@
         function showTambahCODForm() {
             document.getElementById('formCODSuper').classList.remove('hidden');
             document.getElementById('editCODId').value = '';
-            document.getElementById('judulFormCOD').textContent = 'Tambah Akun COD';
             ['namaCOD', 'emailCODInput', 'noHpCOD', 'alamatCODInput', 'desaCOD', 'kecamatanCOD', 'kabupatenCOD',
                 'usernameCOD'
             ].forEach(id => document.getElementById(id).value = '');
@@ -3201,7 +3250,6 @@
         function showTambahStafForm() {
             document.getElementById('formStafSuper').classList.remove('hidden');
             document.getElementById('editStafId').value = '';
-            document.getElementById('judulFormStaf').textContent = 'Tambah Staf';
             ['namaStaf', 'emailStafInput', 'usernameStaf'].forEach(id => document.getElementById(id).value = '');
             document.getElementById('passwordStaf').value = 'staf123';
         }
@@ -4839,7 +4887,7 @@
                     gajiOtomatis: localStorage.getItem('gaji_otomatis') || 'on',
                     hargaPerKm: getHargaPerKm(),
                     exportedAt: new Date().toISOString(),
-                    version: '6.0',
+                    version: '6.1',
                     totalUsers: 0
                 };
                 data.totalUsers = data.tokoList.length + data.ojekList.length + data.pelangganList.length + data
@@ -5104,11 +5152,6 @@
             const banner = document.getElementById('offlineBanner');
             if (!isOnline) banner.classList.add('show');
             else banner.classList.remove('show');
-            const status = document.getElementById('syncStatus');
-            if (status) {
-                status.textContent = isOnline ? '🟢 Online' : '🔴 Offline';
-                status.className = 'sync-status ' + (isOnline ? 'online' : 'offline');
-            }
         }
 
         window.addEventListener('online', updateOnlineStatus);
@@ -5585,7 +5628,7 @@
         function belanjaTokoDariProfil() { alert('Fitur belanja akan segera hadir.'); }
 
         // ============================================================
-        //  TOKO DASHBOARD FUNCTIONS (STUB)
+        //  TOKO DASHBOARD FUNCTIONS
         // ============================================================
         function showTokoDashboard() {
             const s = getSession();
@@ -5630,7 +5673,7 @@
         }
 
         // ============================================================
-        //  OJEK DASHBOARD FUNCTIONS (STUB)
+        //  OJEK DASHBOARD FUNCTIONS
         // ============================================================
         function showOjekDashboard() {
             const s = getSession();
@@ -5667,7 +5710,7 @@
         }
 
         // ============================================================
-        //  PELANGGAN DASHBOARD FUNCTIONS (STUB)
+        //  PELANGGAN DASHBOARD FUNCTIONS
         // ============================================================
         function showPelangganDashboard() {
             const s = getSession();
@@ -5705,7 +5748,7 @@
         }
 
         // ============================================================
-        //  MARKETING DASHBOARD FUNCTIONS (STUB)
+        //  MARKETING DASHBOARD FUNCTIONS
         // ============================================================
         function showMarketingDashboard() {
             const s = getSession();
@@ -5742,7 +5785,7 @@
         }
 
         // ============================================================
-        //  MARKETING FREE DASHBOARD FUNCTIONS (STUB)
+        //  MARKETING FREE DASHBOARD FUNCTIONS
         // ============================================================
         function showMarketingFreeDashboard() {
             const s = getSession();
@@ -5779,7 +5822,7 @@
         }
 
         // ============================================================
-        //  COD DASHBOARD FUNCTIONS (STUB)
+        //  COD DASHBOARD FUNCTIONS
         // ============================================================
         function showCODDashboard() {
             const s = getSession();
@@ -5817,7 +5860,7 @@
         }
 
         // ============================================================
-        //  TOKO DASHBOARD - STUB FUNCTIONS (MISSING)
+        //  TOKO DASHBOARD - IMPLEMENTATIONS
         // ============================================================
         function renderOwnerDasbor() {
             const s = getSession();
@@ -5888,6 +5931,22 @@
         <p><strong>Total:</strong> Rp ${(pesanan[idx].total || 0).toLocaleString('id-ID')}</p>
         <p><strong>Status:</strong> ${pesanan[idx].status || 'Menunggu'}</p>
       `;
+        }
+
+        function konfirmasiPesananOnlineAction() {
+            const id = document.getElementById('konfirmasiPesananId').value;
+            const s = getSession();
+            const toko = getTokoList().find(t => t.id === s.tokoId);
+            if (!toko) return;
+            const pesanan = getPesananOnlineToko(toko.id);
+            const idx = pesanan.findIndex(p => p.id === id);
+            if (idx === -1) return;
+            pesanan[idx].status = 'selesai';
+            pesanan[idx].tanggalSelesai = Date.now();
+            savePesananOnlineToko(toko.id, pesanan);
+            document.getElementById('modalKonfirmasiOnline').classList.add('hidden');
+            renderOnlineOrder();
+            alert('✅ Pesanan dikonfirmasi selesai!');
         }
 
         function renderAmbilKeuntungan() {
@@ -6010,6 +6069,16 @@
         }
 
         function hideFormProduk() { document.getElementById('formProduk').classList.add('hidden'); }
+
+        function previewFoto(input) {
+            const file = input.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) { const preview = document.getElementById('previewGambar');
+                preview.src = e.target.result;
+                preview.classList.remove('hidden'); };
+            reader.readAsDataURL(file);
+        }
 
         function simpanProduk() {
             const s = getSession();
@@ -6181,6 +6250,15 @@
             saveKeranjang(toko.id, keranjang);
             renderPesanan();
             document.getElementById('modalPilihProduk').classList.add('hidden');
+        }
+
+        function filterProdukTransaksi() {
+            const search = document.getElementById('cariProdukTransaksi').value.toLowerCase();
+            const items = document.querySelectorAll('#listProdukTransaksi > div');
+            items.forEach(item => {
+                const text = item.textContent.toLowerCase();
+                item.style.display = text.includes(search) ? '' : 'none';
+            });
         }
 
         function hitungKembalian() {
@@ -6462,7 +6540,6 @@
         }
 
         function renderLaporan() {
-            // Tab switching handled by switchTabLaporan
             switchTabLaporan('riwayat');
         }
 
@@ -6710,7 +6787,7 @@
         }
 
         // ============================================================
-        //  OJEK DASHBOARD FUNCTIONS (STUB CONTINUED)
+        //  OJEK DASHBOARD IMPLEMENTATIONS
         // ============================================================
         function renderOrderMasuk() {
             const s = getSession();
@@ -6779,13 +6856,11 @@
             if (idx === -1) return;
             pemesanan[idx].status = status;
             if (status === 'selesai') {
-                // Tambah ke history ojek
                 const history = getHistoryOjek();
                 history.push({ id: 'hist_' + Date.now(), pelangganId: pemesanan[idx].pelangganId, ojekId: pemesanan[
                         idx].ojekId, rute: '-', harga: pemesanan[idx].total || 0, tanggal: Date.now(),
                     status: 'selesai' });
                 saveHistoryOjek(history);
-                // Update total order ojek
                 const s = getSession();
                 const ojek = getOjekList().find(o => o.id === s.ojekId);
                 if (ojek) { ojek.totalOrder = (ojek.totalOrder || 0) + 1;
@@ -6803,16 +6878,16 @@
             if (!ojek) return;
             const penawaran = getPenawaranOjek().filter(p => p.status === 'aktif');
             const container = document.getElementById('daftarPenawaranOjek');
-            if (penawaran.length === 0) { container.innerHTML = '<p>Belum ada penawaran ojek.</p>'; return; }
-            container.innerHTML = penawaran.map(p => `
-        <div class="card" style="border-left:4px solid #059669;">
-          <h4>🛵 ${escapeHtml(p.deskripsi)}</h4>
-          <p>Harga: Rp ${(p.harga || 0).toLocaleString('id-ID')}</p>
-          <p>Rute: ${escapeHtml(p.rute)}</p>
-          <button class="btn-sm btn-success" onclick="ambilPenawaranOjek('${p.id}')">📤 Ambil</button>
-        </div>
-      `).join('');
-            // History ojek saya
+            if (penawaran.length === 0) { container.innerHTML = '<p>Belum ada penawaran ojek.</p>'; } else {
+                container.innerHTML = penawaran.map(p => `
+          <div class="card" style="border-left:4px solid #059669;">
+            <h4>🛵 ${escapeHtml(p.deskripsi)}</h4>
+            <p>Harga: Rp ${(p.harga || 0).toLocaleString('id-ID')}</p>
+            <p>Rute: ${escapeHtml(p.rute)}</p>
+            <button class="btn-sm btn-success" onclick="ambilPenawaranOjek('${p.id}')">📤 Ambil</button>
+          </div>
+        `).join('');
+            }
             const history = getHistoryOjek().filter(h => h.ojekId === ojek.id);
             const histContainer = document.getElementById('historyOjekSaya');
             if (history.length === 0) { histContainer.innerHTML = '<p>Belum ada history pengiriman.</p>'; return; }
@@ -6829,7 +6904,6 @@
             const s = getSession();
             const ojek = getOjekList().find(o => o.id === s.ojekId);
             if (!ojek) return;
-            // Cari permintaan yang cocok
             const permintaan = getPermintaanOjek().find(p => p.status === 'menunggu' && !p.ojekId);
             if (!permintaan) { alert('Tidak ada permintaan ojek yang menunggu.'); return; }
             permintaan.ojekId = ojek.id;
@@ -6857,7 +6931,48 @@
         }
 
         function renderChatOjek() {
-            // Placeholder - similar to generic chat
+            const s = getSession();
+            const ojek = getOjekList().find(o => o.id === s.ojekId);
+            if (!ojek) return;
+            const container = document.getElementById('chatUserListOjek');
+            const chatData = getChatData();
+            const users = new Set();
+            chatData.forEach(msg => {
+                if (msg.from === ojek.id) users.add(msg.to);
+                if (msg.to === ojek.id) users.add(msg.from);
+            });
+            if (users.size === 0) { container.innerHTML = '<p>Belum ada kontak chat.</p>'; return; }
+            container.innerHTML = [...users].map(id => {
+                const user = getUserById(id);
+                return `<div class="chat-user-item" onclick="pilihChatOjek('${id}')">
+          ${user ? escapeHtml(user.nama || user.namaToko || id) : id}
+        </div>`;
+            }).join('');
+        }
+
+        function pilihChatOjek(targetId) {
+            const s = getSession();
+            const ojek = getOjekList().find(o => o.id === s.ojekId);
+            if (!ojek) return;
+            document.getElementById('chatTargetOjek').value = targetId;
+            renderChatMessages('chatMessagesOjek', ojek.id, targetId);
+            document.getElementById('chatInputOjek').onkeypress = function(e) {
+                if (e.key === 'Enter') sendChatOjek();
+            };
+        }
+
+        function sendChatOjek() {
+            const s = getSession();
+            const ojek = getOjekList().find(o => o.id === s.ojekId);
+            if (!ojek) return;
+            const target = document.getElementById('chatTargetOjek').value;
+            const input = document.getElementById('chatInputOjek');
+            const pesan = input.value.trim();
+            if (!target || !pesan) return;
+            if (sendMessage(ojek.id, target, pesan)) {
+                input.value = '';
+                renderChatMessages('chatMessagesOjek', ojek.id, target);
+            }
         }
 
         function renderProfilOjek() {
@@ -6896,7 +7011,7 @@
         }
 
         // ============================================================
-        //  PELANGGAN DASHBOARD FUNCTIONS (STUB CONTINUED)
+        //  PELANGGAN DASHBOARD IMPLEMENTATIONS
         // ============================================================
         function renderPesananSaya() {
             const s = getSession();
@@ -6921,7 +7036,6 @@
             const s = getSession();
             const pelanggan = getPelangganList().find(p => p.id === s.pelangganId);
             if (!pelanggan) return;
-            // Penawaran ojek
             const penawaran = getPenawaranOjek().filter(p => p.status === 'aktif');
             const container = document.getElementById('daftarPenawaranOjekPelanggan');
             if (penawaran.length === 0) { container.innerHTML = '<p>Belum ada penawaran ojek.</p>'; } else {
@@ -6934,7 +7048,6 @@
           </div>
         `).join('');
             }
-            // History ojek pelanggan
             const history = getHistoryOjek().filter(h => h.pelangganId === pelanggan.id);
             const histContainer = document.getElementById('historyOjekPelanggan');
             if (history.length === 0) { histContainer.innerHTML = '<p>Belum ada history jasa ojek.</p>'; return; }
@@ -6953,7 +7066,6 @@
             if (!pelanggan) return;
             const penawaran = getPenawaranOjek().find(p => p.id === id);
             if (!penawaran) return;
-            // Buat permintaan
             const permintaan = getPermintaanOjek();
             permintaan.push({
                 id: 'per_' + Date.now(),
@@ -7046,7 +7158,48 @@
         }
 
         function renderChatPelanggan() {
-            // Placeholder
+            const s = getSession();
+            const pelanggan = getPelangganList().find(p => p.id === s.pelangganId);
+            if (!pelanggan) return;
+            const container = document.getElementById('chatUserListPelanggan');
+            const chatData = getChatData();
+            const users = new Set();
+            chatData.forEach(msg => {
+                if (msg.from === pelanggan.id) users.add(msg.to);
+                if (msg.to === pelanggan.id) users.add(msg.from);
+            });
+            if (users.size === 0) { container.innerHTML = '<p>Belum ada kontak chat.</p>'; return; }
+            container.innerHTML = [...users].map(id => {
+                const user = getUserById(id);
+                return `<div class="chat-user-item" onclick="pilihChatPelanggan('${id}')">
+          ${user ? escapeHtml(user.nama || user.namaToko || id) : id}
+        </div>`;
+            }).join('');
+        }
+
+        function pilihChatPelanggan(targetId) {
+            const s = getSession();
+            const pelanggan = getPelangganList().find(p => p.id === s.pelangganId);
+            if (!pelanggan) return;
+            document.getElementById('chatTargetPelanggan').value = targetId;
+            renderChatMessages('chatMessagesPelanggan', pelanggan.id, targetId);
+            document.getElementById('chatInputPelanggan').onkeypress = function(e) {
+                if (e.key === 'Enter') sendChatPelanggan();
+            };
+        }
+
+        function sendChatPelanggan() {
+            const s = getSession();
+            const pelanggan = getPelangganList().find(p => p.id === s.pelangganId);
+            if (!pelanggan) return;
+            const target = document.getElementById('chatTargetPelanggan').value;
+            const input = document.getElementById('chatInputPelanggan');
+            const pesan = input.value.trim();
+            if (!target || !pesan) return;
+            if (sendMessage(pelanggan.id, target, pesan)) {
+                input.value = '';
+                renderChatMessages('chatMessagesPelanggan', pelanggan.id, target);
+            }
         }
 
         function renderTokoTerdekatPelanggan() {
@@ -7110,7 +7263,7 @@
         }
 
         // ============================================================
-        //  MARKETING DASHBOARD FUNCTIONS (STUB CONTINUED)
+        //  MARKETING DASHBOARD IMPLEMENTATIONS
         // ============================================================
         function renderDashboardMarketing() {
             const s = getSession();
@@ -7163,7 +7316,7 @@
             const today = new Date().toDateString();
             const absen = getAbsenMarketing();
             const existing = absen.find(a => a.marketingId === marketing.id && new Date(a.tanggal).toDateString() ===
-            today);
+                today);
             if (existing) { alert('Anda sudah absen hari ini.'); return; }
             absen.push({ id: 'abs_' + Date.now(), marketingId: marketing.id, status, tanggal: Date.now() });
             saveAbsenMarketing(absen);
@@ -7186,7 +7339,6 @@
         <p>🛵 Ojek: ${hariIni.ojek || 0} / 5</p>
         </div>
       `;
-            // Target belum tercapai
             const belum = [];
             if ((hariIni.toko || 0) < 10) belum.push('🏬 Toko (target 10)');
             if ((hariIni.pelanggan || 0) < 15) belum.push('👥 Pelanggan (target 15)');
@@ -7199,9 +7351,7 @@
       `;
         }
 
-        function renderInputMarketing() {
-            // Form already in HTML, just show result if any
-        }
+        function renderInputMarketing() {}
 
         function inputTokoMarketing() {
             const s = getSession();
@@ -7217,7 +7367,6 @@
             input.push({ id: 'inp_' + Date.now(), marketingId: marketing.id, tipe: 'toko', dataId: id, dataNama: nama,
                 tanggal: Date.now() });
             saveInputMarketing(input);
-            // Tambah ke toko list
             const tokoList = getTokoList();
             const newId = generateNMO();
             tokoList.push({ id: newId, namaToko: nama, pemilik, noHp, alamat, username: nama.toLowerCase() + '_' + Date
@@ -7295,7 +7444,50 @@
             renderDashboardMarketing();
         }
 
-        function renderChatMarketing() { /* Placeholder */ }
+        function renderChatMarketing() {
+            const s = getSession();
+            const marketing = getMarketingList().find(m => m.id === s.marketingId);
+            if (!marketing) return;
+            const container = document.getElementById('chatUserListMarketing');
+            const chatData = getChatData();
+            const users = new Set();
+            chatData.forEach(msg => {
+                if (msg.from === marketing.id) users.add(msg.to);
+                if (msg.to === marketing.id) users.add(msg.from);
+            });
+            if (users.size === 0) { container.innerHTML = '<p>Belum ada kontak chat.</p>'; return; }
+            container.innerHTML = [...users].map(id => {
+                const user = getUserById(id);
+                return `<div class="chat-user-item" onclick="pilihChatMarketing('${id}')">
+          ${user ? escapeHtml(user.nama || user.namaToko || id) : id}
+        </div>`;
+            }).join('');
+        }
+
+        function pilihChatMarketing(targetId) {
+            const s = getSession();
+            const marketing = getMarketingList().find(m => m.id === s.marketingId);
+            if (!marketing) return;
+            document.getElementById('chatTargetMarketing').value = targetId;
+            renderChatMessages('chatMessagesMarketing', marketing.id, targetId);
+            document.getElementById('chatInputMarketing').onkeypress = function(e) {
+                if (e.key === 'Enter') sendChatMarketing();
+            };
+        }
+
+        function sendChatMarketing() {
+            const s = getSession();
+            const marketing = getMarketingList().find(m => m.id === s.marketingId);
+            if (!marketing) return;
+            const target = document.getElementById('chatTargetMarketing').value;
+            const input = document.getElementById('chatInputMarketing');
+            const pesan = input.value.trim();
+            if (!target || !pesan) return;
+            if (sendMessage(marketing.id, target, pesan)) {
+                input.value = '';
+                renderChatMessages('chatMessagesMarketing', marketing.id, target);
+            }
+        }
 
         function renderProfilMarketing() {
             const s = getSession();
@@ -7316,7 +7508,7 @@
         function toggleHadirMarketing() { absenHadir(); }
 
         // ============================================================
-        //  MARKETING FREE DASHBOARD FUNCTIONS (STUB)
+        //  MARKETING FREE DASHBOARD IMPLEMENTATIONS
         // ============================================================
         function renderDashboardMarketingFree() {
             const s = getSession();
@@ -7359,7 +7551,7 @@
             const today = new Date().toDateString();
             const absen = getAbsenMarketingFree();
             const existing = absen.find(a => a.marketingFreeId === mf.id && new Date(a.tanggal).toDateString() ===
-            today);
+                today);
             if (existing) { alert('Anda sudah absen hari ini.'); return; }
             absen.push({ id: 'abs_' + Date.now(), marketingFreeId: mf.id, status, tanggal: Date.now() });
             saveAbsenMarketingFree(absen);
@@ -7458,7 +7650,50 @@
             renderDashboardMarketingFree();
         }
 
-        function renderChatMarketingFree() { /* Placeholder */ }
+        function renderChatMarketingFree() {
+            const s = getSession();
+            const mf = getMarketingFreeList().find(m => m.id === s.marketingFreeId);
+            if (!mf) return;
+            const container = document.getElementById('chatUserListMarketingFree');
+            const chatData = getChatData();
+            const users = new Set();
+            chatData.forEach(msg => {
+                if (msg.from === mf.id) users.add(msg.to);
+                if (msg.to === mf.id) users.add(msg.from);
+            });
+            if (users.size === 0) { container.innerHTML = '<p>Belum ada kontak chat.</p>'; return; }
+            container.innerHTML = [...users].map(id => {
+                const user = getUserById(id);
+                return `<div class="chat-user-item" onclick="pilihChatMarketingFree('${id}')">
+          ${user ? escapeHtml(user.nama || user.namaToko || id) : id}
+        </div>`;
+            }).join('');
+        }
+
+        function pilihChatMarketingFree(targetId) {
+            const s = getSession();
+            const mf = getMarketingFreeList().find(m => m.id === s.marketingFreeId);
+            if (!mf) return;
+            document.getElementById('chatTargetMarketingFree').value = targetId;
+            renderChatMessages('chatMessagesMarketingFree', mf.id, targetId);
+            document.getElementById('chatInputMarketingFree').onkeypress = function(e) {
+                if (e.key === 'Enter') sendChatMarketingFree();
+            };
+        }
+
+        function sendChatMarketingFree() {
+            const s = getSession();
+            const mf = getMarketingFreeList().find(m => m.id === s.marketingFreeId);
+            if (!mf) return;
+            const target = document.getElementById('chatTargetMarketingFree').value;
+            const input = document.getElementById('chatInputMarketingFree');
+            const pesan = input.value.trim();
+            if (!target || !pesan) return;
+            if (sendMessage(mf.id, target, pesan)) {
+                input.value = '';
+                renderChatMessages('chatMessagesMarketingFree', mf.id, target);
+            }
+        }
 
         function renderProfilMarketingFree() {
             const s = getSession();
@@ -7479,7 +7714,7 @@
         function toggleHadirMarketingFree() { absenHadirFree(); }
 
         // ============================================================
-        //  COD DASHBOARD FUNCTIONS (STUB)
+        //  COD DASHBOARD IMPLEMENTATIONS
         // ============================================================
         function renderDasborCOD() {
             const s = getSession();
@@ -7495,7 +7730,6 @@
           <div class="card" style="text-align:center;"><h4>🔄 Status</h4><p style="font-size:16px;"><span class="badge ${cod.status === 'aktif' ? 'badge-active' : 'badge-inactive'}">${cod.status}</span></p></div>
         </div>
       `;
-            // Etalase produk COD
             const etalase = document.getElementById('codEtalase');
             if (produk.length === 0) { etalase.innerHTML = '<p>Belum ada produk COD.</p>'; return; }
             etalase.innerHTML = produk.map(p => `
@@ -7506,7 +7740,6 @@
         }
 
         function renderOnlineOrderCOD() {
-            // Placeholder - similar to toko online order but for COD
             document.getElementById('codPesananOnline').innerHTML = '<p>Fitur online order COD dalam pengembangan.</p>';
         }
 
@@ -7591,7 +7824,50 @@
       `).join('');
         }
 
-        function renderChatCOD() { /* Placeholder */ }
+        function renderChatCOD() {
+            const s = getSession();
+            const cod = getCODList().find(c => c.id === s.codId);
+            if (!cod) return;
+            const container = document.getElementById('chatUserListCOD');
+            const chatData = getChatData();
+            const users = new Set();
+            chatData.forEach(msg => {
+                if (msg.from === cod.id) users.add(msg.to);
+                if (msg.to === cod.id) users.add(msg.from);
+            });
+            if (users.size === 0) { container.innerHTML = '<p>Belum ada kontak chat.</p>'; return; }
+            container.innerHTML = [...users].map(id => {
+                const user = getUserById(id);
+                return `<div class="chat-user-item" onclick="pilihChatCOD('${id}')">
+          ${user ? escapeHtml(user.nama || user.namaToko || id) : id}
+        </div>`;
+            }).join('');
+        }
+
+        function pilihChatCOD(targetId) {
+            const s = getSession();
+            const cod = getCODList().find(c => c.id === s.codId);
+            if (!cod) return;
+            document.getElementById('chatTargetCOD').value = targetId;
+            renderChatMessages('chatMessagesCOD', cod.id, targetId);
+            document.getElementById('chatInputCOD').onkeypress = function(e) {
+                if (e.key === 'Enter') sendChatCOD();
+            };
+        }
+
+        function sendChatCOD() {
+            const s = getSession();
+            const cod = getCODList().find(c => c.id === s.codId);
+            if (!cod) return;
+            const target = document.getElementById('chatTargetCOD').value;
+            const input = document.getElementById('chatInputCOD');
+            const pesan = input.value.trim();
+            if (!target || !pesan) return;
+            if (sendMessage(cod.id, target, pesan)) {
+                input.value = '';
+                renderChatMessages('chatMessagesCOD', cod.id, target);
+            }
+        }
 
         function renderProfilCOD() {
             const s = getSession();
@@ -7612,8 +7888,6 @@
         // ============================================================
         //  SCAN FUNCTIONS
         // ============================================================
-        let html5QrCode = null;
-
         function scanForPesanan() {
             document.getElementById('modalScan').classList.remove('hidden');
             document.getElementById('scanResult').textContent = 'Menunggu scan...';
@@ -7630,10 +7904,9 @@
             html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess, onScanError);
         }
 
-        function onScanSuccess(decodedText, decodedResult) {
+        function onScanSuccess(decodedText) {
             document.getElementById('scanResult').textContent = '✅ Ditemukan: ' + decodedText;
             stopScan();
-            // Cari produk dengan kode yang sama
             const s = getSession();
             const toko = getTokoList().find(t => t.id === s.tokoId);
             if (toko) {
@@ -7648,7 +7921,7 @@
         }
 
         function onScanError(err) {
-            // Ignore scan errors
+            // Ignore
         }
 
         function stopScan() {
@@ -7678,11 +7951,16 @@
                     const ctx = canvas.getContext('2d');
                     ctx.drawImage(img, 0, 0);
                     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-                    const code = jsQR(imageData.data, imageData.width, imageData.height);
-                    if (code) {
-                        onScanSuccess(code.data, null);
+                    if (typeof jsQR !== 'undefined') {
+                        const code = jsQR(imageData.data, imageData.width, imageData.height);
+                        if (code) {
+                            onScanSuccess(code.data);
+                        } else {
+                            document.getElementById('scanResult').textContent = '❌ Tidak ditemukan QR Code.';
+                        }
                     } else {
-                        document.getElementById('scanResult').textContent = '❌ Tidak ditemukan QR Code.';
+                        document.getElementById('scanResult').textContent =
+                            '⚠️ Library jsQR tidak tersedia. Gunakan kamera.';
                     }
                 };
                 img.src = e.target.result;
@@ -7692,9 +7970,175 @@
         }
 
         // ============================================================
-        //  LUPA PASSWORD & RESET (MOVED UP)
+        //  ADDITIONAL MODAL HANDLERS
         // ============================================================
-        // Already defined above
+        window.konfirmasiPesananOnlineAction = konfirmasiPesananOnlineAction;
+
+        // Fix untuk konfirmasiPesananOnline yang mungkin dipanggil dari modal
+        window.konfirmasiPesananOnline = function(id) {
+            if (id) {
+                // Langsung konfirmasi
+                const s = getSession();
+                const toko = getTokoList().find(t => t.id === s.tokoId);
+                if (!toko) return;
+                const pesanan = getPesananOnlineToko(toko.id);
+                const idx = pesanan.findIndex(p => p.id === id);
+                if (idx === -1) return;
+                pesanan[idx].status = 'selesai';
+                pesanan[idx].tanggalSelesai = Date.now();
+                savePesananOnlineToko(toko.id, pesanan);
+                renderOnlineOrder();
+                alert('✅ Pesanan dikonfirmasi selesai!');
+            } else {
+                // Buka modal
+                konfirmasiPesananOnline(document.getElementById('konfirmasiPesananId').value);
+            }
+        };
+
+        // Fix untuk bayarKasbon yang mungkin dipanggil dari modal
+        window.bayarKasbon = function(id) {
+            if (id) {
+                bayarKasbon(id);
+            } else {
+                bayarKasbonAction();
+            }
+        };
+
+        // ============================================================
+        //  HELLO FRIENDS STUB FUNCTIONS
+        // ============================================================
+        function loginHelloOjek() { alert('Fitur Hello Friends akan segera hadir.'); }
+
+        function buatPostHelloOjek() { alert('Fitur posting akan segera hadir.'); }
+
+        function loginHelloPelanggan() { alert('Fitur Hello Friends akan segera hadir.'); }
+
+        function buatPostHelloPelanggan() { alert('Fitur posting akan segera hadir.'); }
+
+        function loginHelloMarketing() { alert('Fitur Hello Friends akan segera hadir.'); }
+
+        function buatPostHelloMarketing() { alert('Fitur posting akan segera hadir.'); }
+
+        function loginHelloMarketingFree() { alert('Fitur Hello Friends akan segera hadir.'); }
+
+        function buatPostHelloMarketingFree() { alert('Fitur posting akan segera hadir.'); }
+
+        function loginHelloCOD() { alert('Fitur Hello Friends akan segera hadir.'); }
+
+        function buatPostHelloCOD() { alert('Fitur posting akan segera hadir.'); }
+
+        function bukaJasaOjekKatalog() { alert('Fitur pesan ojek di katalog akan segera hadir.'); }
+
+        function kembaliKeDirektori() {
+            hideAll();
+            document.getElementById('direktoriPage').classList.remove('hidden');
+            renderDirektoriToko();
+        }
+
+        function filterProdukKatalog() {
+            const search = document.getElementById('cariProdukKatalog').value.toLowerCase();
+            const items = document.querySelectorAll('#katalogTokoContent .produk-katalog-item');
+            items.forEach(item => {
+                const text = item.textContent.toLowerCase();
+                item.style.display = text.includes(search) ? '' : 'none';
+            });
+        }
+
+        function uploadFotoOjek(input) {
+            const s = getSession();
+            const ojek = getOjekList().find(o => o.id === s.ojekId);
+            if (!ojek) return;
+            uploadFotoUser(ojek.id, input, 'ojekFotoPreview');
+        }
+
+        function gantiPasswordOjek() {
+            const s = getSession();
+            const ojek = getOjekList().find(o => o.id === s.ojekId);
+            if (!ojek) return;
+            const newPass = document.getElementById('ojekNewPass').value.trim();
+            const confirm = document.getElementById('ojekConfirmPass').value.trim();
+            if (newPass.length < 4) { alert('Password minimal 4 karakter.'); return; }
+            if (newPass !== confirm) { alert('Password tidak sama.'); return; }
+            const list = getOjekList();
+            const idx = list.findIndex(o => o.id === ojek.id);
+            if (idx !== -1) { list[idx].password = newPass;
+                saveOjekList(list);
+                alert('✅ Password berhasil diubah!');
+                document.getElementById('ojekNewPass').value = '';
+                document.getElementById('ojekConfirmPass').value = ''; }
+        }
+
+        function uploadFotoMarketing(input) {
+            const s = getSession();
+            const marketing = getMarketingList().find(m => m.id === s.marketingId);
+            if (!marketing) return;
+            uploadFotoUser(marketing.id, input, 'marketingFotoPreview');
+        }
+
+        function gantiPasswordMarketing() {
+            const s = getSession();
+            const marketing = getMarketingList().find(m => m.id === s.marketingId);
+            if (!marketing) return;
+            const newPass = document.getElementById('marketingNewPass').value.trim();
+            const confirm = document.getElementById('marketingConfirmPass').value.trim();
+            if (newPass.length < 4) { alert('Password minimal 4 karakter.'); return; }
+            if (newPass !== confirm) { alert('Password tidak sama.'); return; }
+            const list = getMarketingList();
+            const idx = list.findIndex(m => m.id === marketing.id);
+            if (idx !== -1) { list[idx].password = newPass;
+                saveMarketingList(list);
+                alert('✅ Password berhasil diubah!');
+                document.getElementById('marketingNewPass').value = '';
+                document.getElementById('marketingConfirmPass').value = ''; }
+        }
+
+        function uploadFotoMarketingFree(input) {
+            const s = getSession();
+            const mf = getMarketingFreeList().find(m => m.id === s.marketingFreeId);
+            if (!mf) return;
+            uploadFotoUser(mf.id, input, 'marketingFreeFotoPreview');
+        }
+
+        function gantiPasswordMarketingFree() {
+            const s = getSession();
+            const mf = getMarketingFreeList().find(m => m.id === s.marketingFreeId);
+            if (!mf) return;
+            const newPass = document.getElementById('marketingFreeNewPass').value.trim();
+            const confirm = document.getElementById('marketingFreeConfirmPass').value.trim();
+            if (newPass.length < 4) { alert('Password minimal 4 karakter.'); return; }
+            if (newPass !== confirm) { alert('Password tidak sama.'); return; }
+            const list = getMarketingFreeList();
+            const idx = list.findIndex(m => m.id === mf.id);
+            if (idx !== -1) { list[idx].password = newPass;
+                saveMarketingFreeList(list);
+                alert('✅ Password berhasil diubah!');
+                document.getElementById('marketingFreeNewPass').value = '';
+                document.getElementById('marketingFreeConfirmPass').value = ''; }
+        }
+
+        function uploadFotoCOD(input) {
+            const s = getSession();
+            const cod = getCODList().find(c => c.id === s.codId);
+            if (!cod) return;
+            uploadFotoUser(cod.id, input, 'codFotoPreview');
+        }
+
+        function gantiPasswordCOD() {
+            const s = getSession();
+            const cod = getCODList().find(c => c.id === s.codId);
+            if (!cod) return;
+            const newPass = document.getElementById('codNewPass').value.trim();
+            const confirm = document.getElementById('codConfirmPass').value.trim();
+            if (newPass.length < 4) { alert('Password minimal 4 karakter.'); return; }
+            if (newPass !== confirm) { alert('Password tidak sama.'); return; }
+            const list = getCODList();
+            const idx = list.findIndex(c => c.id === cod.id);
+            if (idx !== -1) { list[idx].password = newPass;
+                saveCODList(list);
+                alert('✅ Password berhasil diubah!');
+                document.getElementById('codNewPass').value = '';
+                document.getElementById('codConfirmPass').value = ''; }
+        }
 
         // ============================================================
         //  INIT APP
@@ -7836,25 +8280,25 @@
         };
 
         // ============================================================
-        //  CONSOLE LOG
+        //  GLOBAL FUNCTIONS FOR HTML ONCLICK
         // ============================================================
-        console.log('✅ Toko Online App v6.0 - Loaded Successfully!');
-        console.log(
-            '📱 Fitur: Multi Role, Chat, Jasa Ojek, Online Order, PWA, Marketing, Keinginan, Tagihan, Gaji, Hello Friends, Toko Terdekat, Rekening, COD, Keamanan, Backup & Restore'
-            );
-        console.log('⭐ Super Admin: super / admin123 (TIDAK ditampilkan di landing page)');
-        console.log('🏬 Demo Toko: user / user');
-        console.log('🛵 Demo Ojek: ojek1 / ojek123');
-        console.log('👤 Demo Pelanggan: cust001 / pelanggan123');
-        console.log('📊 Demo Marketing: marketing1 / marketing123');
-        console.log('🔄 Demo COD: cod1 / cod123');
-        console.log('🛡️ Keamanan Aktif: ' + getKeamananStatus());
-
-        // Add missing functions for modal buttons
         window.tutupModal = tutupModal;
         window.aktivasiToko = aktivasiToko;
-        window.konfirmasiPesananOnline = konfirmasiPesananOnline;
-        window.bayarKasbon = bayarKasbonAction;
+        window.konfirmasiPesananOnline = function(id) {
+            if (id) {
+                konfirmasiPesananOnlineAction();
+            } else {
+                const pesananId = document.getElementById('konfirmasiPesananId').value;
+                if (pesananId) konfirmasiPesananOnlineAction();
+            }
+        };
+        window.bayarKasbon = function(id) {
+            if (id) {
+                bayarKasbon(id);
+            } else {
+                bayarKasbonAction();
+            }
+        };
         window.kirimPermintaanOjek = kirimPermintaanOjek;
         window.stopScan = stopScan;
         window.scanFromFile = scanFromFile;
@@ -7862,21 +8306,9 @@
         window.downloadStruk = downloadStruk;
         window.cetakStrukLangsung = cetakStrukLangsung;
         window.kirimMediaChat = kirimMediaChat;
-        window.bukaJasaOjekKatalog = function() { alert('Fitur pesan ojek di katalog akan segera hadir.'); };
-        window.kembaliKeDirektori = function() {
-            hideAll();
-            document.getElementById('direktoriPage').classList.remove('hidden');
-            renderDirektoriToko();
-        };
-        window.filterProdukKatalog = function() {
-            // Simple filter for katalog
-            const search = document.getElementById('cariProdukKatalog').value.toLowerCase();
-            const items = document.querySelectorAll('#katalogTokoContent .produk-katalog-item');
-            items.forEach(item => {
-                const text = item.textContent.toLowerCase();
-                item.style.display = text.includes(search) ? '' : 'none';
-            });
-        };
+        window.bukaJasaOjekKatalog = bukaJasaOjekKatalog;
+        window.kembaliKeDirektori = kembaliKeDirektori;
+        window.filterProdukKatalog = filterProdukKatalog;
         window.ajukanBukaAkun = ajukanBukaAkun;
         window.toggleAppOff = toggleAppOff;
         window.installApp = installApp;
@@ -7897,6 +8329,40 @@
         window.bukaRestoreDialog = bukaRestoreDialog;
         window.backupAllData = backupAllData;
         window.backupDatabaseExcel = backupDatabaseExcel;
+        window.uploadFotoOjek = uploadFotoOjek;
+        window.gantiPasswordOjek = gantiPasswordOjek;
+        window.uploadFotoMarketing = uploadFotoMarketing;
+        window.gantiPasswordMarketing = gantiPasswordMarketing;
+        window.uploadFotoMarketingFree = uploadFotoMarketingFree;
+        window.gantiPasswordMarketingFree = gantiPasswordMarketingFree;
+        window.uploadFotoCOD = uploadFotoCOD;
+        window.gantiPasswordCOD = gantiPasswordCOD;
+        window.uploadFotoSuper = uploadFotoSuper;
+        window.uploadFotoToko = uploadFotoToko;
+        window.uploadFotoPelanggan = uploadFotoPelanggan;
+        window.loginHelloOjek = loginHelloOjek;
+        window.buatPostHelloOjek = buatPostHelloOjek;
+        window.loginHelloPelanggan = loginHelloPelanggan;
+        window.buatPostHelloPelanggan = buatPostHelloPelanggan;
+        window.loginHelloMarketing = loginHelloMarketing;
+        window.buatPostHelloMarketing = buatPostHelloMarketing;
+        window.loginHelloMarketingFree = loginHelloMarketingFree;
+        window.buatPostHelloMarketingFree = buatPostHelloMarketingFree;
+        window.loginHelloCOD = loginHelloCOD;
+        window.buatPostHelloCOD = buatPostHelloCOD;
+
+        // ============================================================
+        //  CONSOLE LOG
+        // ============================================================
+        console.log('✅ Toko Online App v6.1 - Loaded Successfully!');
+        console.log('📱 Fitur: Multi Role, Chat, Jasa Ojek, Online Order, PWA, Marketing, Keinginan, Tagihan, Gaji, Hello Friends, Toko Terdekat, Rekening, COD, Keamanan, Backup & Restore');
+        console.log('⭐ Super Admin: super / admin123');
+        console.log('🏬 Demo Toko: user / user');
+        console.log('🛵 Demo Ojek: ojek1 / ojek123');
+        console.log('👤 Demo Pelanggan: cust001 / pelanggan123');
+        console.log('📊 Demo Marketing: marketing1 / marketing123');
+        console.log('🔄 Demo COD: cod1 / cod123');
+        console.log('🛡️ Keamanan Aktif: ' + getKeamananStatus());
     </script>
 </body>
 </html>
