@@ -783,8 +783,9 @@
     </div>
 </nav>
 <!-- ============ AKHIR BLOK 7 R1 NAVBAR ============ -->
-<!-- ============ BLOK 8 R9 TOP NAVIGATION MARKUP ============ -->
-<nav class="topnav" id="mainTopnav">
+<!-- ============ BLOK 8 R10 TOP NAVIGATION MARKUP ============ -->
+<!-- Perbaikan: tambahkan class "hidden" agar tidak muncul di halaman login -->
+<nav class="topnav hidden" id="mainTopnav">
     <ul class="topnav-menu">
         <!-- Menu Utama -->
         <li class="topnav-item active" data-page="dashboard">
@@ -800,7 +801,6 @@
                 <button type="button" class="dropdown-item" onclick="navigasiHalaman('profile'); setTimeout(function(){ var el=document.getElementById('daftarDokumen'); if(el)el.scrollIntoView(); },200); document.getElementById('dropdownProfil').style.display='none';"><i class="fas fa-folder-open"></i> Dokumen</button>
             </div>
         </li>
-        <!-- Menu lainnya tetap sama -->
         <li class="topnav-item" data-page="lihatToko">
             <a class="topnav-link" href="javascript:void(0)" onclick="navigasiHalaman('lihatToko')"><i class="fas fa-store"></i> Lihat Semua Toko</a>
         </li>
@@ -813,6 +813,7 @@
         <li class="topnav-item" data-page="chat">
             <a class="topnav-link" href="javascript:void(0)" onclick="navigasiHalaman('chat')"><i class="fas fa-comments"></i> Chat</a>
         </li>
+        <!-- Menu Admin -->
         <li class="topnav-item" data-page="daftarAkun">
             <a class="topnav-link" href="javascript:void(0)" onclick="navigasiHalaman('daftarAkun')"><i class="fas fa-user-plus"></i> Daftar Akun Baru</a>
         </li>
@@ -849,7 +850,7 @@
         }
     });
 </script>
-<!-- ============ AKHIR BLOK 8 R9 ============ -->
+<!-- ============ AKHIR BLOK 8 R10 ============ -->
 <!-- ============ BLOK 9.1 R1 CONTENT AREA SA DASH ============ -->
 <main class="content-area expanded hidden" id="contentArea">
 
