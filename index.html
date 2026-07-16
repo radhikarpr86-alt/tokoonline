@@ -1532,17 +1532,49 @@
 <!-- ============ AKHIR BLOK 10.2 R7 SCRIPT UTAMA ============ -->
 
 <!-- ============ BLOK 10.3 R1 NAVIGASI & HELPER ============ -->
-    <script>
-        function navigasiHalaman(page) {
-            document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
-            const target = document.getElementById('page' + page.charAt(0).toUpperCase() + page.slice(1));
-            if (target) { target.classList.remove('hidden'); setActiveMenu(page); }
-            else tampilkanToast('Halaman belum tersedia', 'warning');
+<script>
+    // ============================================
+    // FUNGSI NAVIGASI HALAMAN
+    // ============================================
+    function navigasiHalaman(page) {
+        var semuaHalaman = document.querySelectorAll('.page');
+        semuaHalaman.forEach(function(halaman) {
+            halaman.classList.add('hidden');
+        });
+        var target = document.getElementById('page' + page.charAt(0).toUpperCase() + page.slice(1));
+        if (target) {
+            target.classList.remove('hidden');
+            setActiveMenu(page); // fungsi ini sudah ada di Blok 10.2
+
+            // Jika menuju halaman profil, muat data terbaru
+            if (page === 'profile' && typeof loadProfil === 'function') {
+                loadProfil();
+            }
+        } else {
+            tampilkanToast('Halaman ' + page + ' belum tersedia', 'warning');
         }
-        function toggleSidebar() { document.getElementById('mainSidebar').classList.toggle('closed'); document.getElementById('sidebarOverlay').classList.toggle('active'); }
-        function bukaModal(id) { document.getElementById(id).classList.add('active'); }
-        function tutupModal(id) { document.getElementById(id).classList.remove('active'); }
-    </script>
+    }
+
+    function toggleSidebar() {
+        var sidebar = document.getElementById('mainSidebar');
+        var overlay = document.getElementById('sidebarOverlay');
+        sidebar.classList.toggle('closed');
+        overlay.classList.toggle('active');
+    }
+
+    function logout() {
+        localStorage.removeItem('2r_user');
+        location.reload();
+    }
+
+    function bukaModal(id) {
+        document.getElementById(id).classList.add('active');
+    }
+
+    function tutupModal(id) {
+        document.getElementById(id).classList.remove('active');
+    }
+</script>
 <!-- ============ AKHIR BLOK 10.3 R1 NAVIGASI & HELPER ============ -->
 </body>
 </html>
