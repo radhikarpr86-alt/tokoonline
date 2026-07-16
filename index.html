@@ -394,7 +394,7 @@
 </head>
 <body>
 <!-- ============ AKHIR BLOK 1 R1 HEAD & CSS ============ -->
-    <!-- ============ BLOK 2 R1 CSS TOP NAVIGATION ============ -->
+<!-- ============ BLOK 2 R2 CSS TOP NAVIGATION ============ -->
 <style>
     /* ========== TOP NAVIGATION CONTAINER ========== */
     .topnav {
@@ -412,6 +412,19 @@
         border-bottom: 1px solid var(--gray-200);
         overflow-x: auto;
         white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Sembunyikan scrollbar di menu (opsional) */
+    .topnav::-webkit-scrollbar {
+        height: 4px;
+    }
+    .topnav::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    .topnav::-webkit-scrollbar-thumb {
+        background: var(--gray-300);
+        border-radius: 4px;
     }
 
     /* ========== MENU LIST (HORIZONTAL) ========== */
@@ -423,6 +436,7 @@
         margin: 0;
         padding: 0;
         height: 100%;
+        min-width: max-content;     /* agar semua item tetap dalam satu baris */
     }
 
     /* ========== MENU ITEM ========== */
@@ -431,6 +445,7 @@
         display: flex;
         align-items: center;
         height: 100%;
+        flex-shrink: 0;              /* mencegah item mengecil */
     }
 
     /* ========== MENU LINK ========== */
@@ -445,15 +460,19 @@
         color: var(--gray-700);
         text-decoration: none;
         cursor: pointer;
-        transition: var(--transition-fast);
+        transition: background 0.2s ease, color 0.2s ease;
         border-radius: var(--radius-sm);
         white-space: nowrap;
+        background: transparent;
+        border: none;
+        font-family: inherit;
     }
 
     .topnav-link i {
         font-size: 16px;
         width: 18px;
         text-align: center;
+        pointer-events: none;        /* ikon tidak mengganggu klik */
     }
 
     .topnav-link:hover {
@@ -470,21 +489,27 @@
     /* ========== DROPDOWN SUBMENU ========== */
     .dropdown-menu {
         position: absolute;
-        top: 100%;
+        top: calc(100% + 4px);      /* sedikit jarak dari menu induk */
         left: 0;
-        min-width: 200px;
+        min-width: 220px;
         background: var(--white);
         border-radius: var(--radius-md);
         box-shadow: var(--shadow-lg);
         padding: 8px 0;
-        display: none;                /* tersembunyi default */
+        display: none;               /* tersembunyi default */
         flex-direction: column;
-        z-index: 1000;
+        z-index: 1001;               /* di atas elemen lain */
         border: 1px solid var(--gray-200);
+        animation: dropdownFadeIn 0.2s ease;
     }
 
     .dropdown-menu.show {
-        display: flex;                /* tampil saat kelas show ditambahkan */
+        display: flex;               /* tampil saat kelas show ditambahkan */
+    }
+
+    @keyframes dropdownFadeIn {
+        from { opacity: 0; transform: translateY(-8px); }
+        to { opacity: 1; transform: translateY(0); }
     }
 
     .dropdown-menu a,
@@ -497,8 +522,13 @@
         color: var(--gray-700);
         text-decoration: none;
         cursor: pointer;
-        transition: var(--transition-fast);
+        transition: background 0.15s ease, color 0.15s ease;
         white-space: nowrap;
+        border: none;
+        background: transparent;
+        font-family: inherit;
+        width: 100%;
+        text-align: left;
     }
 
     .dropdown-menu a:hover,
@@ -512,6 +542,7 @@
         width: 18px;
         text-align: center;
         font-size: 14px;
+        pointer-events: none;
     }
 
     /* ========== SIDEBAR LAMA DIHAPUS ========== */
@@ -520,7 +551,6 @@
     .sidebar-menu-title,
     .sidebar-menu-item,
     .sidebar-overlay {
-        /* Seluruh style sidebar lama tidak digunakan lagi */
         display: none !important;
     }
 
@@ -528,14 +558,24 @@
     @media (max-width: 768px) {
         .topnav {
             padding: 0 10px;
+            height: 44px;
         }
         .topnav-link {
             padding: 0 12px;
             font-size: 13px;
         }
+        .dropdown-menu {
+            position: fixed;
+            top: auto;
+            left: 10px;
+            right: 10px;
+            min-width: auto;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-xl);
+        }
     }
 </style>
-<!-- ============ AKHIR BLOK 2 R1 CSS TOP NAVIGATION ============ -->
+<!-- ============ AKHIR BLOK 2 R2 CSS TOP NAVIGATION ============ -->
 <!-- ============ BLOK 3 R1 CSS CONTENT AREA & RESPONSIVE ============ -->
 <style>
     /* ========== CONTENT AREA ========== */
@@ -733,62 +773,62 @@
     </div>
 </nav>
 <!-- ============ AKHIR BLOK 7 R1 NAVBAR ============ -->
-
-<!-- ============ BLOK 8 R1 TOP NAVIGATION MARKUP ============ -->
+<!-- ============ BLOK 8 R2 TOP NAVIGATION MARKUP ============ -->
 <nav class="topnav" id="mainTopnav">
     <ul class="topnav-menu">
         <!-- Menu Utama -->
         <li class="topnav-item active" data-page="dashboard">
-            <a class="topnav-link" onclick="navigasiHalaman('dashboard')"><i class="fas fa-th-large"></i> Dasbor</a>
+            <a class="topnav-link" href="javascript:void(0)" onclick="navigasiHalaman('dashboard')"><i class="fas fa-th-large"></i> Dasbor</a>
         </li>
         <li class="topnav-item" data-page="profile">
             <a class="topnav-link" href="javascript:void(0)"><i class="fas fa-user-circle"></i> Profil <i class="fas fa-chevron-down" style="font-size:10px; margin-left:4px;"></i></a>
-                <a data-page="profile" onclick="navigasiHalaman('profile')"><i class="fas fa-eye"></i> Lihat Profil</a>
-                <a data-action="bukaModalEditProfil" onclick="bukaModalEditProfil()"><i class="fas fa-edit"></i> Edit Profil</a>
-                <a data-page="profile" onclick="navigasiHalaman('profile'); setTimeout(function(){ document.getElementById('daftarDokumen').scrollIntoView(); }, 200)"><i class="fas fa-folder-open"></i> Dokumen</a>
+            <div class="dropdown-menu">
+                <a href="javascript:void(0)" data-page="profile" onclick="navigasiHalaman('profile')"><i class="fas fa-eye"></i> Lihat Profil</a>
+                <a href="javascript:void(0)" data-action="bukaModalEditProfil" onclick="bukaModalEditProfil()"><i class="fas fa-edit"></i> Edit Profil</a>
+                <a href="javascript:void(0)" data-page="profile" onclick="navigasiHalaman('profile'); setTimeout(function(){ var el = document.getElementById('daftarDokumen'); if(el) el.scrollIntoView(); }, 200)"><i class="fas fa-folder-open"></i> Dokumen</a>
             </div>
         </li>
         <li class="topnav-item" data-page="lihatToko">
-            <a class="topnav-link" onclick="navigasiHalaman('lihatToko')"><i class="fas fa-store"></i> Lihat Semua Toko</a>
+            <a class="topnav-link" href="javascript:void(0)" onclick="navigasiHalaman('lihatToko')"><i class="fas fa-store"></i> Lihat Semua Toko</a>
         </li>
         <li class="topnav-item" data-page="lihatOjek">
-            <a class="topnav-link" onclick="navigasiHalaman('lihatOjek')"><i class="fas fa-motorcycle"></i> Lihat Semua Ojek</a>
+            <a class="topnav-link" href="javascript:void(0)" onclick="navigasiHalaman('lihatOjek')"><i class="fas fa-motorcycle"></i> Lihat Semua Ojek</a>
         </li>
         <li class="topnav-item" data-page="lihatProduk">
-            <a class="topnav-link" onclick="navigasiHalaman('lihatProduk')"><i class="fas fa-box"></i> Lihat Semua Produk</a>
+            <a class="topnav-link" href="javascript:void(0)" onclick="navigasiHalaman('lihatProduk')"><i class="fas fa-box"></i> Lihat Semua Produk</a>
         </li>
         <li class="topnav-item" data-page="chat">
-            <a class="topnav-link" onclick="navigasiHalaman('chat')"><i class="fas fa-comments"></i> Chat</a>
+            <a class="topnav-link" href="javascript:void(0)" onclick="navigasiHalaman('chat')"><i class="fas fa-comments"></i> Chat</a>
         </li>
         <!-- Menu Admin -->
         <li class="topnav-item" data-page="daftarAkun">
-            <a class="topnav-link" onclick="navigasiHalaman('daftarAkun')"><i class="fas fa-user-plus"></i> Daftar Akun Baru</a>
+            <a class="topnav-link" href="javascript:void(0)" onclick="navigasiHalaman('daftarAkun')"><i class="fas fa-user-plus"></i> Daftar Akun Baru</a>
         </li>
         <li class="topnav-item" data-page="transferMenu">
-            <a class="topnav-link" onclick="navigasiHalaman('transferMenu')"><i class="fas fa-exchange-alt"></i> Transfer Menu</a>
+            <a class="topnav-link" href="javascript:void(0)" onclick="navigasiHalaman('transferMenu')"><i class="fas fa-exchange-alt"></i> Transfer Menu</a>
         </li>
         <li class="topnav-item" data-page="kelolaAkun">
-            <a class="topnav-link" onclick="navigasiHalaman('kelolaAkun')"><i class="fas fa-users-cog"></i> Kelola Semua Akun</a>
+            <a class="topnav-link" href="javascript:void(0)" onclick="navigasiHalaman('kelolaAkun')"><i class="fas fa-users-cog"></i> Kelola Semua Akun</a>
         </li>
         <li class="topnav-item" data-page="penagihan">
-            <a class="topnav-link" onclick="navigasiHalaman('penagihan')"><i class="fas fa-file-invoice-dollar"></i> Penagihan</a>
+            <a class="topnav-link" href="javascript:void(0)" onclick="navigasiHalaman('penagihan')"><i class="fas fa-file-invoice-dollar"></i> Penagihan</a>
         </li>
         <li class="topnav-item" data-page="settingRekening">
-            <a class="topnav-link" onclick="navigasiHalaman('settingRekening')"><i class="fas fa-university"></i> Setting Rekening</a>
+            <a class="topnav-link" href="javascript:void(0)" onclick="navigasiHalaman('settingRekening')"><i class="fas fa-university"></i> Setting Rekening</a>
         </li>
         <li class="topnav-item" data-page="kelolaUpgrade">
-            <a class="topnav-link" onclick="navigasiHalaman('kelolaUpgrade')"><i class="fas fa-crown"></i> Kelola Upgrade</a>
+            <a class="topnav-link" href="javascript:void(0)" onclick="navigasiHalaman('kelolaUpgrade')"><i class="fas fa-crown"></i> Kelola Upgrade</a>
         </li>
         <li class="topnav-item" data-page="settingTarifOjek">
-            <a class="topnav-link" onclick="navigasiHalaman('settingTarifOjek')"><i class="fas fa-cogs"></i> Setting Tarif Ojek</a>
+            <a class="topnav-link" href="javascript:void(0)" onclick="navigasiHalaman('settingTarifOjek')"><i class="fas fa-cogs"></i> Setting Tarif Ojek</a>
         </li>
         <li class="topnav-item" data-page="kelolaIklan">
-            <a class="topnav-link" onclick="navigasiHalaman('kelolaIklan')"><i class="fas fa-ad"></i> Kelola Iklan</a>
+            <a class="topnav-link" href="javascript:void(0)" onclick="navigasiHalaman('kelolaIklan')"><i class="fas fa-ad"></i> Kelola Iklan</a>
         </li>
     </ul>
 </nav>
-<!-- Hapus sidebar lama karena sudah tidak digunakan -->
-<!-- ============ AKHIR BLOK 8 R1 TOP NAVIGATION MARKUP ============ -->
+<!-- Hapus sidebar lama jika masih ada -->
+<!-- ============ AKHIR BLOK 8 R2 TOP NAVIGATION MARKUP ============ -->
 <!-- ============ BLOK 9.1 R1 CONTENT AREA SA DASH ============ -->
 <main class="content-area expanded hidden" id="contentArea">
 
