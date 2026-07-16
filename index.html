@@ -394,7 +394,7 @@
 </head>
 <body>
 <!-- ============ AKHIR BLOK 1 R1 HEAD & CSS ============ -->
-<!-- ============ BLOK 2 R3 CSS TOP NAVIGATION ============ -->
+<!-- ============ BLOK 2 R4 CSS TOP NAVIGATION (FIX DROPDOWN KLIK) ============ -->
 <style>
     /* ========== TOP NAVIGATION CONTAINER ========== */
     .topnav {
@@ -466,14 +466,14 @@
         border: none;
         font-family: inherit;
         position: relative;
-        z-index: 1;               /* pastikan link di atas dropdown */
+        z-index: 2;               /* pastikan link di atas dropdown */
     }
 
     .topnav-link i {
         font-size: 16px;
         width: 18px;
         text-align: center;
-        pointer-events: none;
+        pointer-events: none;      /* biarkan klik menembus ikon ke link */
     }
 
     .topnav-link:hover {
@@ -499,15 +499,15 @@
         padding: 8px 0;
         display: none;               /* tersembunyi default */
         flex-direction: column;
-        z-index: 1001;
+        z-index: 10001;              /* lebih tinggi dari elemen lain */
         border: 1px solid var(--gray-200);
         animation: dropdownFadeIn 0.2s ease;
-        pointer-events: none;        /* ✅ mencegah klik pada area dropdown tersembunyi */
+        pointer-events: none;        /* tidak menerima klik saat tersembunyi */
     }
 
     .dropdown-menu.show {
         display: flex;
-        pointer-events: auto;        /* ✅ aktifkan klik saat terlihat */
+        pointer-events: auto;        /* klik berfungsi saat tampil */
     }
 
     @keyframes dropdownFadeIn {
@@ -545,7 +545,13 @@
         width: 18px;
         text-align: center;
         font-size: 14px;
-        pointer-events: none;
+        pointer-events: none;      /* biarkan klik menembus ikon ke teks/link */
+    }
+
+    /* ========== PASTIKAN TIDAK ADA ELEMEN MENUTUPI DROPDOWN ========== */
+    .content-area {
+        z-index: auto;             /* tidak menimpa dropdown */
+        position: relative;
     }
 
     /* ========== SIDEBAR LAMA DIHAPUS ========== */
@@ -575,10 +581,11 @@
             min-width: auto;
             border-radius: var(--radius-md);
             box-shadow: var(--shadow-xl);
+            z-index: 10001;
         }
     }
 </style>
-<!-- ============ AKHIR BLOK 2 R3 CSS TOP NAVIGATION ============ -->
+<!-- ============ AKHIR BLOK 2 R4 CSS TOP NAVIGATION ============ -->
 <!-- ============ BLOK 3 R1 CSS CONTENT AREA & RESPONSIVE ============ -->
 <style>
     /* ========== CONTENT AREA ========== */
