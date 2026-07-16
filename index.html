@@ -394,7 +394,45 @@
 </head>
 <body>
 <!-- ============ AKHIR BLOK 1 R1 HEAD & CSS ============ -->
+<!-- ============ BLOK 3 R1 CSS CONTENT AREA & RESPONSIVE ============ -->
+<style>
+    /* ========== CONTENT AREA ========== */
+    .content-area {
+        /* Tidak ada margin-left untuk sidebar */
+        margin-left: 0;
+        /* Padding atas: navbar (64px) + topnav (48px) + ruang (20px) = 132px */
+        padding: 132px 25px 25px 25px;
+        min-height: 100vh;
+        transition: padding-top var(--transition-normal);
+        background: #FFF8F3;
+    }
 
+    /* Tidak diperlukan lagi .content-area.expanded karena sidebar dihapus */
+    .content-area.expanded {
+        margin-left: 0;
+    }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 768px) {
+        .content-area {
+            padding: 132px 15px 15px 15px;
+        }
+    }
+
+    /* ========== SEMUA ATURAN SIDEBAR & OVERLAY DIHAPUS ========== */
+    /* Karena sidebar sudah diganti topnav, aturan di bawah ini
+       tidak diperlukan lagi dan dinonaktifkan. */
+    .sidebar,
+    .sidebar.closed,
+    .sidebar-overlay {
+        display: none !important;
+    }
+
+    /* Responsive sidebar rules dihapus */
+    /* @media (max-width: 768px) { ... } */
+    /* @media (min-width: 769px) { ... } */
+</style>
+<!-- ============ AKHIR BLOK 3 R1 CSS CONTENT AREA & RESPONSIVE ============ -->
 <!-- ============ BLOK 5 PRELOADER & TOAST ============ -->
     <div id="preloader"><div class="loader"></div></div>
     <div class="toast-container" id="toastContainer"></div>
@@ -926,7 +964,7 @@
     </div>
 <!-- ============ AKHIR BLOK 10.1 MODALS ============ -->
 
-<!-- ============ BLOK 10.2 R6 SCRIPT UTAMA ============ -->
+<!-- ============ BLOK 10.2 R7 SCRIPT UTAMA ============ -->
 <script>
     // ============================================
     // DATA AKUN DI LOCALSTORAGE
@@ -956,14 +994,11 @@
     // ============================================
     function inisialisasiSuperAdmin() {
         var daftarAkun = getDataAkun();
-
-        // Cari apakah sudah ada akun dengan role 'superadmin'
         var superAdmin = daftarAkun.find(function(akun) {
             return akun.role === 'superadmin';
         });
 
         if (!superAdmin) {
-            // Jika belum ada, buat baru dengan password terenkripsi
             var akunBaru = {
                 id: 'SA-001',
                 role: 'superadmin',
@@ -982,22 +1017,14 @@
             daftarAkun.push(akunBaru);
             simpanDataAkun(daftarAkun);
         } else {
-            // Jika sudah ada, periksa apakah password masih plain text (belum terenkripsi)
-            // Ciri password terenkripsi: hasil encode Base64, panjangnya > password asli
             var passwordTersimpan = superAdmin.password;
-            // Jika password bukan string Base64 yang valid untuk "MyHand0286", kita perbaiki
             try {
                 var decoded = atob(passwordTersimpan);
-                // Jika decoded berhasil dan bukan "MyHand0286", mungkin password lama yang salah
-                // Tapi kita pastikan password yang benar adalah "MyHand0286"
                 if (decoded !== 'MyHand0286') {
-                    // Password lama tidak sesuai, kita ganti dengan yang baru (terenkripsi)
                     superAdmin.password = encodePassword('MyHand0286');
                     simpanDataAkun(daftarAkun);
                 }
             } catch (e) {
-                // Jika atob gagal, berarti password masih plain text (contoh: "MyHand0286")
-                // Enkripsi sekarang
                 superAdmin.password = encodePassword(passwordTersimpan);
                 simpanDataAkun(daftarAkun);
             }
@@ -1208,7 +1235,6 @@
     });
 
     window.addEventListener('DOMContentLoaded', function() {
-        // Jalankan inisialisasi superadmin (perbaiki password jika perlu)
         inisialisasiSuperAdmin();
 
         var storedUser = localStorage.getItem('2r_user');
@@ -1217,19 +1243,87 @@
             tampilkanDashboard(user);
         }
         updateIdPreview();
+        setupTopNavigation();
     });
 
     // ============================================
-    // FUNGSI SET ACTIVE MENU
+    // SETUP TOP NAVIGATION & DROPDOWN
+    // ============================================
+    function setupTopNavigation() {
+        // Tutup semua dropdown saat klik di luar
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.topnav-item')) {
+                document.querySelectorAll('.dropdown-menu.show').forEach(function(d) {
+                    d.classList.remove('show');
+                });
+            }
+        });
+
+        // Event listener untuk setiap item menu
+        document.querySelectorAll('.topnav-item').forEach(function(item) {
+            var link = item.querySelector('.topnav-link');
+            if (!link) return;
+
+            link.addEventListener('click', function(event) {
+                var dropdown = item.querySelector('.dropdown-menu');
+                var page = item.dataset.page;
+
+                if (dropdown) {
+                    // Toggle dropdown
+                    event.preventDefault();
+                    event.stopPropagation();
+                    var isShown = dropdown.classList.contains('show');
+                    // Tutup semua dropdown lain
+                    document.querySelectorAll('.dropdown-menu.show').forEach(function(d) {
+                        d.classList.remove('show');
+                    });
+                    if (!isShown) {
+                        dropdown.classList.add('show');
+                    }
+                } else if (page) {
+                    // Navigasi biasa
+                    navigasiHalaman(page);
+                    // Tutup semua dropdown
+                    document.querySelectorAll('.dropdown-menu.show').forEach(function(d) {
+                        d.classList.remove('show');
+                    });
+                }
+            });
+
+            // Klik pada submenu item
+            var subItems = item.querySelectorAll('.dropdown-menu a, .dropdown-menu .dropdown-item');
+            subItems.forEach(function(sub) {
+                sub.addEventListener('click', function(event) {
+                    event.stopPropagation();
+                    var subPage = sub.dataset.page;
+                    var action = sub.dataset.action;
+                    if (subPage) {
+                        navigasiHalaman(subPage);
+                    }
+                    if (action && typeof window[action] === 'function') {
+                        window[action]();
+                    }
+                    // Tutup dropdown
+                    document.querySelectorAll('.dropdown-menu.show').forEach(function(d) {
+                        d.classList.remove('show');
+                    });
+                });
+            });
+        });
+    }
+
+    // ============================================
+    // FUNGSI SET ACTIVE MENU (TOPNAV VERSION)
     // ============================================
     function setActiveMenu(page) {
-        var semuaItem = document.querySelectorAll('.sidebar-menu-item');
-        semuaItem.forEach(function(item) {
+        // Hapus active dari semua item
+        document.querySelectorAll('.topnav-item').forEach(function(item) {
             item.classList.remove('active');
         });
-        var menuItem = document.getElementById('menu' + page.charAt(0).toUpperCase() + page.slice(1));
-        if (menuItem) {
-            menuItem.classList.add('active');
+        // Cari item dengan data-page yang sesuai
+        var activeItem = document.querySelector('.topnav-item[data-page="' + page + '"]');
+        if (activeItem) {
+            activeItem.classList.add('active');
         }
     }
 
@@ -1243,9 +1337,7 @@
 
         document.getElementById('pageAuth').style.display = 'none';
         document.getElementById('mainNavbar').classList.remove('hidden');
-        var sidebar = document.getElementById('mainSidebar');
-        sidebar.classList.remove('hidden');
-        sidebar.classList.remove('closed');
+        // Top navigation sudah tidak memerlukan class hidden/closed seperti sidebar
         document.getElementById('contentArea').classList.remove('hidden');
 
         var avatar = document.getElementById('navbarAvatar');
@@ -1278,30 +1370,16 @@
         }
         setActiveMenu('dashboard');
 
-        document.getElementById('btnSidebarToggle').addEventListener('click', toggleSidebar);
-        document.getElementById('sidebarOverlay').addEventListener('click', toggleSidebar);
-
+        // Event listener logout (tidak ada tombol sidebar lagi)
         document.getElementById('btnLogout').addEventListener('click', function() {
             if (confirm('Apakah Anda yakin ingin keluar?')) {
                 localStorage.removeItem('2r_user');
                 location.reload();
             }
         });
-
-        document.querySelectorAll('.sidebar-menu-item').forEach(function(item) {
-            item.addEventListener('click', function() {
-                var halamanTujuan = this.dataset.page;
-                if (halamanTujuan) {
-                    navigasiHalaman(halamanTujuan);
-                    if (window.innerWidth <= 768) {
-                        toggleSidebar();
-                    }
-                }
-            });
-        });
     }
 </script>
-<!-- ============ AKHIR BLOK 10.2 R6 SCRIPT UTAMA ============ -->
+<!-- ============ AKHIR BLOK 10.2 R7 SCRIPT UTAMA ============ -->
 
 <!-- ============ BLOK 10.3 R1 NAVIGASI & HELPER ============ -->
     <script>
