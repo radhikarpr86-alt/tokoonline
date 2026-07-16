@@ -532,316 +532,381 @@
         </div>
     </aside>
 <!-- ============ AKHIR BLOK 8 SIDEBAR ============ -->
+<!-- ============ BLOK 9.1 R1 CONTENT AREA SA DASH ============ -->
+<main class="content-area expanded hidden" id="contentArea">
 
-<!-- ============ BLOK 9.1 CONTENT AREA SA DASH (KOSONG) ============ -->
-    <main class="content-area expanded hidden" id="contentArea">
-        <div class="page" id="pageDashboard">
-            <div class="page-header">
-                <div class="breadcrumb">
-                    <i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Dasbor</span>
+    <!-- ========== DASBOR ========== -->
+    <div class="page" id="pageDashboard">
+        <div class="page-header">
+            <div class="breadcrumb">
+                <i class="fas fa-home"></i> <span>Home</span>
+                <i class="fas fa-chevron-right"></i> <span class="active">Dasbor</span>
+            </div>
+            <h2>Dasbor SuperAdmin</h2>
+            <p>Selamat datang, <strong id="dashboardNama">SuperAdmin</strong> — Anda memiliki kendali penuh atas sistem</p>
+        </div>
+        <div class="card">
+            <div class="card-body text-center" style="padding: 60px 20px;">
+                <i class="fas fa-tachometer-alt" style="font-size: 64px; color: var(--gray-400); margin-bottom: 20px; display: block;"></i>
+                <h3 style="color: var(--gray-700); margin-bottom: 8px;">Dasbor Siap Digunakan</h3>
+                <p style="color: var(--gray-500);">Tambahkan widget dan fitur di sini sesuai kebutuhan.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== PROFIL (LENGKAP) ========== -->
+    <!-- Diambil dari Blok SA DASH - PROFIL 01 yang sudah dibuat sebelumnya -->
+    <div class="page" id="pageProfile">
+        <div class="page-header">
+            <div class="breadcrumb">
+                <i class="fas fa-home"></i> <span>Home</span>
+                <i class="fas fa-chevron-right"></i> <span class="active">Profil SuperAdmin</span>
+            </div>
+            <h2>Profil SuperAdmin</h2>
+            <p>Kelola data profil dan dokumen perusahaan <strong>Toko Online 2R</strong></p>
+        </div>
+
+        <!-- Profil Utama -->
+        <div class="card">
+            <div class="card-header">
+                <h3><i class="fas fa-user-circle" style="color:var(--orange-primary)"></i> Informasi Profil</h3>
+                <button class="btn btn-primary btn-sm" onclick="bukaModalEditProfil()"><i class="fas fa-edit"></i> Edit Profil</button>
+            </div>
+            <div class="card-body">
+                <div class="profile-details" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap:15px;">
+                    <div class="profile-detail-item"><div class="profile-detail-icon"><i class="fas fa-user"></i></div><div class="profile-detail-text"><h4>Nama Lengkap</h4><p id="profilNama">-</p></div></div>
+                    <div class="profile-detail-item"><div class="profile-detail-icon"><i class="fas fa-map-marker-alt"></i></div><div class="profile-detail-text"><h4>Alamat</h4><p id="profilAlamat">-</p></div></div>
+                    <div class="profile-detail-item"><div class="profile-detail-icon"><i class="fas fa-envelope"></i></div><div class="profile-detail-text"><h4>Email</h4><p id="profilEmail">-</p></div></div>
+                    <div class="profile-detail-item"><div class="profile-detail-icon"><i class="fas fa-phone"></i></div><div class="profile-detail-text"><h4>Nomor HP</h4><p id="profilHp">-</p></div></div>
+                    <div class="profile-detail-item"><div class="profile-detail-icon"><i class="fas fa-briefcase"></i></div><div class="profile-detail-text"><h4>Jabatan</h4><p id="profilJabatan">-</p></div></div>
+                    <div class="profile-detail-item"><div class="profile-detail-icon"><i class="fas fa-building"></i></div><div class="profile-detail-text"><h4>Nama Perusahaan Penerbit</h4><p id="profilPerusahaan">-</p></div></div>
                 </div>
-                <h2>Dasbor SuperAdmin</h2>
-                <p>Selamat datang, <strong id="dashboardNama">SuperAdmin</strong> — Anda memiliki kendali penuh atas sistem</p>
             </div>
-            <div class="card">
-                <div class="card-body text-center" style="padding:60px 20px;">
-                    <i class="fas fa-tachometer-alt" style="font-size:64px; color:var(--gray-400); margin-bottom:20px; display:block;"></i>
-                    <h3 style="color:var(--gray-700); margin-bottom:8px;">Dasbor Siap Digunakan</h3>
-                    <p style="color:var(--gray-500);">Tambahkan widget dan fitur di sini sesuai kebutuhan.</p>
+        </div>
+
+        <!-- Dokumen Perusahaan -->
+        <div class="card">
+            <div class="card-header">
+                <h3><i class="fas fa-folder-open" style="color:var(--orange-primary)"></i> Dokumen Perusahaan</h3>
+                <button class="btn btn-primary btn-sm" onclick="document.getElementById('inputDokumen').click()"><i class="fas fa-upload"></i> Unggah Dokumen</button>
+                <input type="file" id="inputDokumen" multiple accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png" style="display:none" onchange="uploadDokumen(event)">
+            </div>
+            <div class="card-body">
+                <div id="daftarDokumen" class="empty-state">
+                    <i class="fas fa-cloud-upload-alt" style="font-size:40px; color:var(--gray-400);"></i>
+                    <h3>Belum ada dokumen</h3>
+                    <p>Klik tombol "Unggah Dokumen" untuk menambahkan.</p>
                 </div>
             </div>
         </div>
-<!-- ============ BLOK SA DASH - PROFIL 01 ============ -->
-<div class="page" id="pageProfile">
-    <div class="page-header">
-        <div class="breadcrumb">
-            <i class="fas fa-home"></i> <span>Home</span>
-            <i class="fas fa-chevron-right"></i> <span class="active">Profil SuperAdmin</span>
-        </div>
-        <h2>Profil SuperAdmin</h2>
-        <p>Kelola data profil dan dokumen perusahaan <strong>Toko Online 2R</strong></p>
-    </div>
 
-    <!-- Profil Utama -->
-    <div class="card">
-        <div class="card-header">
-            <h3><i class="fas fa-user-circle" style="color:var(--orange-primary)"></i> Informasi Profil</h3>
-            <button class="btn btn-primary btn-sm" onclick="bukaModalEditProfil()">
-                <i class="fas fa-edit"></i> Edit Profil
-            </button>
-        </div>
-        <div class="card-body">
-            <div class="profile-details" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap:15px;">
-                <div class="profile-detail-item"><div class="profile-detail-icon"><i class="fas fa-user"></i></div><div class="profile-detail-text"><h4>Nama Lengkap</h4><p id="profilNama">-</p></div></div>
-                <div class="profile-detail-item"><div class="profile-detail-icon"><i class="fas fa-map-marker-alt"></i></div><div class="profile-detail-text"><h4>Alamat</h4><p id="profilAlamat">-</p></div></div>
-                <div class="profile-detail-item"><div class="profile-detail-icon"><i class="fas fa-envelope"></i></div><div class="profile-detail-text"><h4>Email</h4><p id="profilEmail">-</p></div></div>
-                <div class="profile-detail-item"><div class="profile-detail-icon"><i class="fas fa-phone"></i></div><div class="profile-detail-text"><h4>Nomor HP</h4><p id="profilHp">-</p></div></div>
-                <div class="profile-detail-item"><div class="profile-detail-icon"><i class="fas fa-briefcase"></i></div><div class="profile-detail-text"><h4>Jabatan</h4><p id="profilJabatan">-</p></div></div>
-                <div class="profile-detail-item"><div class="profile-detail-icon"><i class="fas fa-building"></i></div><div class="profile-detail-text"><h4>Nama Perusahaan Penerbit</h4><p id="profilPerusahaan">-</p></div></div>
+        <!-- Keterangan -->
+        <div class="card">
+            <div class="card-header"><h3><i class="fas fa-sticky-note" style="color:var(--orange-primary)"></i> Keterangan</h3></div>
+            <div class="card-body">
+                <textarea id="textKeterangan" rows="5" style="width:100%; padding:12px; border-radius:8px; border:1px solid var(--gray-300); font-family:inherit; resize:vertical;" placeholder="Isi keterangan perusahaan..."></textarea>
+                <button class="btn btn-primary mt-10" onclick="simpanKeterangan()"><i class="fas fa-save"></i> Simpan Keterangan</button>
             </div>
         </div>
     </div>
 
-    <!-- Dokumen Perusahaan -->
-    <div class="card">
-        <div class="card-header">
-            <h3><i class="fas fa-folder-open" style="color:var(--orange-primary)"></i> Dokumen Perusahaan</h3>
-            <button class="btn btn-primary btn-sm" onclick="document.getElementById('inputDokumen').click()">
-                <i class="fas fa-upload"></i> Unggah Dokumen
-            </button>
-            <input type="file" id="inputDokumen" multiple accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png" style="display:none" onchange="uploadDokumen(event)">
-        </div>
-        <div class="card-body">
-            <div id="daftarDokumen" class="empty-state">
-                <i class="fas fa-cloud-upload-alt" style="font-size:40px; color:var(--gray-400);"></i>
-                <h3>Belum ada dokumen</h3>
-                <p>Klik tombol "Unggah Dokumen" untuk menambahkan.</p>
+    <!-- Modal Edit Profil -->
+    <div class="modal-overlay" id="modalEditProfil">
+        <div class="modal">
+            <div class="modal-header"><h3>Edit Profil SuperAdmin</h3><button class="modal-close" onclick="tutupModal('modalEditProfil')"><i class="fas fa-times"></i></button></div>
+            <div class="modal-body">
+                <div class="form-group"><label>Nama Lengkap</label><input type="text" id="editNama"></div>
+                <div class="form-group"><label>Alamat</label><input type="text" id="editAlamat"></div>
+                <div class="form-group"><label>Email</label><input type="email" id="editEmail"></div>
+                <div class="form-group"><label>Nomor HP</label><input type="tel" id="editHp"></div>
+                <div class="form-group"><label>Jabatan</label><input type="text" id="editJabatan"></div>
+                <div class="form-group"><label>Nama Perusahaan Penerbit</label><input type="text" id="editPerusahaan"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="tutupModal('modalEditProfil')">Batal</button>
+                <button class="btn btn-primary" onclick="simpanProfil()"><i class="fas fa-save"></i> Simpan</button>
             </div>
         </div>
     </div>
 
-    <!-- Keterangan -->
-    <div class="card">
-        <div class="card-header">
-            <h3><i class="fas fa-sticky-note" style="color:var(--orange-primary)"></i> Keterangan</h3>
-        </div>
-        <div class="card-body">
-            <textarea id="textKeterangan" rows="5" style="width:100%; padding:12px; border-radius:8px; border:1px solid var(--gray-300); font-family:inherit; resize:vertical;" placeholder="Isi keterangan perusahaan atau catatan penting..."></textarea>
-            <button class="btn btn-primary mt-10" onclick="simpanKeterangan()"><i class="fas fa-save"></i> Simpan Keterangan</button>
-        </div>
-    </div>
-</div>
-
-<!-- Modal Edit Profil -->
-<div class="modal-overlay" id="modalEditProfil">
-    <div class="modal">
-        <div class="modal-header">
-            <h3>Edit Profil SuperAdmin</h3>
-            <button class="modal-close" onclick="tutupModal('modalEditProfil')"><i class="fas fa-times"></i></button>
-        </div>
-        <div class="modal-body">
-            <div class="form-group"><label>Nama Lengkap</label><input type="text" id="editNama"></div>
-            <div class="form-group"><label>Alamat</label><input type="text" id="editAlamat"></div>
-            <div class="form-group"><label>Email</label><input type="email" id="editEmail"></div>
-            <div class="form-group"><label>Nomor HP</label><input type="tel" id="editHp"></div>
-            <div class="form-group"><label>Jabatan</label><input type="text" id="editJabatan"></div>
-            <div class="form-group"><label>Nama Perusahaan Penerbit</label><input type="text" id="editPerusahaan"></div>
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-secondary" onclick="tutupModal('modalEditProfil')">Batal</button>
-            <button class="btn btn-primary" onclick="simpanProfil()"><i class="fas fa-save"></i> Simpan</button>
+    <!-- Modal Edit Dokumen -->
+    <div class="modal-overlay" id="modalEditDokumen">
+        <div class="modal">
+            <div class="modal-header"><h3>Edit Dokumen</h3><button class="modal-close" onclick="tutupModal('modalEditDokumen')"><i class="fas fa-times"></i></button></div>
+            <div class="modal-body">
+                <input type="hidden" id="editDocId">
+                <div class="form-group"><label>Nama File</label><input type="text" id="editDocName"></div>
+                <div class="form-group"><label>Keterangan</label><input type="text" id="editDocKeterangan"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="tutupModal('modalEditDokumen')">Batal</button>
+                <button class="btn btn-primary" onclick="simpanEditDokumen()"><i class="fas fa-save"></i> Simpan</button>
+            </div>
         </div>
     </div>
-</div>
 
-<!-- Modal Edit Dokumen -->
-<div class="modal-overlay" id="modalEditDokumen">
-    <div class="modal">
-        <div class="modal-header">
-            <h3>Edit Dokumen</h3>
-            <button class="modal-close" onclick="tutupModal('modalEditDokumen')"><i class="fas fa-times"></i></button>
-        </div>
-        <div class="modal-body">
-            <input type="hidden" id="editDocId">
-            <div class="form-group"><label>Nama File</label><input type="text" id="editDocName"></div>
-            <div class="form-group"><label>Keterangan</label><input type="text" id="editDocKeterangan"></div>
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-secondary" onclick="tutupModal('modalEditDokumen')">Batal</button>
-            <button class="btn btn-primary" onclick="simpanEditDokumen()"><i class="fas fa-save"></i> Simpan</button>
-        </div>
-    </div>
-</div>
+    <!-- Script Profil (dari SA DASH - PROFIL 01) -->
+    <script>
+        const PROFILE_KEY = '2r_superadmin_profile';
+        const DOCUMENTS_KEY = '2r_superadmin_documents';
 
-<script>
-    // ========== DATA PROFILE SUPERADMIN ==========
-    const PROFILE_KEY = '2r_superadmin_profile';
-    const DOCUMENTS_KEY = '2r_superadmin_documents';
-
-    function loadProfil() {
-        const stored = localStorage.getItem(PROFILE_KEY);
-        if (stored) {
-            const p = JSON.parse(stored);
-            document.getElementById('profilNama').textContent = p.nama || '-';
-            document.getElementById('profilAlamat').textContent = p.alamat || '-';
-            document.getElementById('profilEmail').textContent = p.email || '-';
-            document.getElementById('profilHp').textContent = p.hp || '-';
-            document.getElementById('profilJabatan').textContent = p.jabatan || '-';
-            document.getElementById('profilPerusahaan').textContent = p.perusahaan || '-';
-            document.getElementById('textKeterangan').value = p.keterangan || '';
+        function loadProfil() {
+            const stored = localStorage.getItem(PROFILE_KEY);
+            if (stored) {
+                const p = JSON.parse(stored);
+                document.getElementById('profilNama').textContent = p.nama || '-';
+                document.getElementById('profilAlamat').textContent = p.alamat || '-';
+                document.getElementById('profilEmail').textContent = p.email || '-';
+                document.getElementById('profilHp').textContent = p.hp || '-';
+                document.getElementById('profilJabatan').textContent = p.jabatan || '-';
+                document.getElementById('profilPerusahaan').textContent = p.perusahaan || '-';
+                document.getElementById('textKeterangan').value = p.keterangan || '';
+            }
+            renderDokumen();
         }
-        renderDokumen();
-    }
 
-    function bukaModalEditProfil() {
-        const stored = localStorage.getItem(PROFILE_KEY);
-        const p = stored ? JSON.parse(stored) : {};
-        document.getElementById('editNama').value = p.nama || '';
-        document.getElementById('editAlamat').value = p.alamat || '';
-        document.getElementById('editEmail').value = p.email || '';
-        document.getElementById('editHp').value = p.hp || '';
-        document.getElementById('editJabatan').value = p.jabatan || '';
-        document.getElementById('editPerusahaan').value = p.perusahaan || '';
-        bukaModal('modalEditProfil');
-    }
-
-    function simpanProfil() {
-        const profil = {
-            nama: document.getElementById('editNama').value.trim(),
-            alamat: document.getElementById('editAlamat').value.trim(),
-            email: document.getElementById('editEmail').value.trim(),
-            hp: document.getElementById('editHp').value.trim(),
-            jabatan: document.getElementById('editJabatan').value.trim(),
-            perusahaan: document.getElementById('editPerusahaan').value.trim(),
-            keterangan: document.getElementById('textKeterangan').value
-        };
-        if (!profil.nama) {
-            tampilkanToast('Nama tidak boleh kosong!', 'error');
-            return;
+        function bukaModalEditProfil() {
+            const stored = localStorage.getItem(PROFILE_KEY);
+            const p = stored ? JSON.parse(stored) : {};
+            document.getElementById('editNama').value = p.nama || '';
+            document.getElementById('editAlamat').value = p.alamat || '';
+            document.getElementById('editEmail').value = p.email || '';
+            document.getElementById('editHp').value = p.hp || '';
+            document.getElementById('editJabatan').value = p.jabatan || '';
+            document.getElementById('editPerusahaan').value = p.perusahaan || '';
+            bukaModal('modalEditProfil');
         }
-        localStorage.setItem(PROFILE_KEY, JSON.stringify(profil));
-        loadProfil();
-        tutupModal('modalEditProfil');
-        tampilkanToast('Profil berhasil disimpan!', 'success');
-    }
 
-    function simpanKeterangan() {
-        let profil = localStorage.getItem(PROFILE_KEY);
-        profil = profil ? JSON.parse(profil) : {};
-        profil.keterangan = document.getElementById('textKeterangan').value;
-        localStorage.setItem(PROFILE_KEY, JSON.stringify(profil));
-        tampilkanToast('Keterangan disimpan!', 'success');
-    }
+        function simpanProfil() {
+            const profil = {
+                nama: document.getElementById('editNama').value.trim(),
+                alamat: document.getElementById('editAlamat').value.trim(),
+                email: document.getElementById('editEmail').value.trim(),
+                hp: document.getElementById('editHp').value.trim(),
+                jabatan: document.getElementById('editJabatan').value.trim(),
+                perusahaan: document.getElementById('editPerusahaan').value.trim(),
+                keterangan: document.getElementById('textKeterangan').value
+            };
+            if (!profil.nama) { tampilkanToast('Nama tidak boleh kosong!', 'error'); return; }
+            localStorage.setItem(PROFILE_KEY, JSON.stringify(profil));
+            loadProfil();
+            tutupModal('modalEditProfil');
+            tampilkanToast('Profil berhasil disimpan!', 'success');
+        }
 
-    // ========== DOKUMEN ==========
-    function getDocuments() {
-        return JSON.parse(localStorage.getItem(DOCUMENTS_KEY) || '[]');
-    }
+        function simpanKeterangan() {
+            let profil = localStorage.getItem(PROFILE_KEY);
+            profil = profil ? JSON.parse(profil) : {};
+            profil.keterangan = document.getElementById('textKeterangan').value;
+            localStorage.setItem(PROFILE_KEY, JSON.stringify(profil));
+            tampilkanToast('Keterangan disimpan!', 'success');
+        }
 
-    function saveDocuments(docs) {
-        localStorage.setItem(DOCUMENTS_KEY, JSON.stringify(docs));
-    }
+        function getDocuments() { return JSON.parse(localStorage.getItem(DOCUMENTS_KEY) || '[]'); }
+        function saveDocuments(docs) { localStorage.setItem(DOCUMENTS_KEY, JSON.stringify(docs)); }
 
-    function uploadDokumen(event) {
-        const files = event.target.files;
-        if (!files.length) return;
-        const docs = getDocuments();
-        let loaded = 0;
-        Array.from(files).forEach(file => {
-            if (file.size > 10 * 1024 * 1024) { // batas 10MB per file
-                tampilkanToast(`File ${file.name} terlalu besar (max 10MB)`, 'warning');
+        function uploadDokumen(event) {
+            const files = event.target.files;
+            if (!files.length) return;
+            const docs = getDocuments();
+            let loaded = 0;
+            Array.from(files).forEach(file => {
+                if (file.size > 10 * 1024 * 1024) { tampilkanToast(`File ${file.name} terlalu besar`, 'warning'); return; }
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    docs.push({ id: Date.now() + Math.random(), name: file.name, type: file.type, data: e.target.result, keterangan: '' });
+                    loaded++;
+                    if (loaded === files.length) { saveDocuments(docs); renderDokumen(); tampilkanToast(`${loaded} dokumen berhasil diunggah`, 'success'); }
+                };
+                reader.readAsDataURL(file);
+            });
+            event.target.value = '';
+        }
+
+        function renderDokumen() {
+            const docs = getDocuments();
+            const container = document.getElementById('daftarDokumen');
+            if (docs.length === 0) {
+                container.innerHTML = `<div class="empty-state"><i class="fas fa-cloud-upload-alt" style="font-size:40px; color:var(--gray-400);"></i><h3>Belum ada dokumen</h3><p>Klik tombol "Unggah Dokumen" untuk menambahkan.</p></div>`;
                 return;
             }
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                docs.push({
-                    id: Date.now() + Math.random(),
-                    name: file.name,
-                    type: file.type,
-                    data: e.target.result,
-                    keterangan: ''
-                });
-                loaded++;
-                if (loaded === files.length || loaded === Array.from(files).filter(f => f.size <= 10*1024*1024).length) {
-                    saveDocuments(docs);
-                    renderDokumen();
-                    tampilkanToast(`${loaded} dokumen berhasil diunggah`, 'success');
-                }
-            };
-            reader.readAsDataURL(file);
-        });
-        event.target.value = ''; // reset input
-    }
-
-    function renderDokumen() {
-        const docs = getDocuments();
-        const container = document.getElementById('daftarDokumen');
-        if (docs.length === 0) {
-            container.innerHTML = `<div class="empty-state">
-                <i class="fas fa-cloud-upload-alt" style="font-size:40px; color:var(--gray-400);"></i>
-                <h3>Belum ada dokumen</h3>
-                <p>Klik tombol "Unggah Dokumen" untuk menambahkan.</p>
-            </div>`;
-            return;
-        }
-        container.className = ''; // hapus empty-state
-        container.innerHTML = docs.map((doc, index) => `
-            <div class="profile-detail-item" style="justify-content:space-between; align-items:center;">
-                <div style="display:flex; align-items:center; gap:12px; flex:1;">
-                    <div class="profile-detail-icon" style="background:var(--orange-pale); color:var(--orange-primary); font-size:20px;">
-                        <i class="fas fa-file-alt"></i>
+            container.innerHTML = docs.map(doc => `
+                <div class="profile-detail-item" style="justify-content:space-between; align-items:center;">
+                    <div style="display:flex; align-items:center; gap:12px; flex:1;">
+                        <div class="profile-detail-icon" style="background:var(--orange-pale); color:var(--orange-primary);"><i class="fas fa-file-alt"></i></div>
+                        <div class="profile-detail-text"><h4>${doc.name}</h4><p>${doc.keterangan || 'Tidak ada keterangan'}</p></div>
                     </div>
-                    <div class="profile-detail-text">
-                        <h4>${doc.name}</h4>
-                        <p>${doc.keterangan || 'Tidak ada keterangan'}</p>
+                    <div style="display:flex; gap:6px;">
+                        <button class="btn btn-sm btn-secondary" onclick="editDokumen('${doc.id}')"><i class="fas fa-edit"></i></button>
+                        <a href="${doc.data}" download="${doc.name}" class="btn btn-sm btn-primary"><i class="fas fa-download"></i></a>
+                        <button class="btn btn-sm btn-danger" onclick="hapusDokumen('${doc.id}')"><i class="fas fa-trash"></i></button>
                     </div>
                 </div>
-                <div style="display:flex; gap:6px;">
-                    <button class="btn btn-sm btn-secondary" onclick="editDokumen('${doc.id}')"><i class="fas fa-edit"></i></button>
-                    <a href="${doc.data}" download="${doc.name}" class="btn btn-sm btn-primary"><i class="fas fa-download"></i></a>
-                    <button class="btn btn-sm btn-danger" onclick="hapusDokumen('${doc.id}')"><i class="fas fa-trash"></i></button>
-                </div>
-            </div>
-        `).join('');
-    }
-
-    function editDokumen(id) {
-        const docs = getDocuments();
-        const doc = docs.find(d => d.id == id);
-        if (!doc) return;
-        document.getElementById('editDocId').value = id;
-        document.getElementById('editDocName').value = doc.name;
-        document.getElementById('editDocKeterangan').value = doc.keterangan || '';
-        bukaModal('modalEditDokumen');
-    }
-
-    function simpanEditDokumen() {
-        const id = document.getElementById('editDocId').value;
-        const newName = document.getElementById('editDocName').value.trim();
-        const newKet = document.getElementById('editDocKeterangan').value.trim();
-        if (!newName) {
-            tampilkanToast('Nama file tidak boleh kosong!', 'error');
-            return;
+            `).join('');
         }
-        const docs = getDocuments();
-        const doc = docs.find(d => d.id == id);
-        if (doc) {
-            doc.name = newName;
-            doc.keterangan = newKet;
+
+        function editDokumen(id) {
+            const docs = getDocuments();
+            const doc = docs.find(d => d.id == id);
+            if (!doc) return;
+            document.getElementById('editDocId').value = id;
+            document.getElementById('editDocName').value = doc.name;
+            document.getElementById('editDocKeterangan').value = doc.keterangan || '';
+            bukaModal('modalEditDokumen');
+        }
+
+        function simpanEditDokumen() {
+            const id = document.getElementById('editDocId').value;
+            const newName = document.getElementById('editDocName').value.trim();
+            const newKet = document.getElementById('editDocKeterangan').value.trim();
+            if (!newName) { tampilkanToast('Nama file tidak boleh kosong!', 'error'); return; }
+            const docs = getDocuments();
+            const doc = docs.find(d => d.id == id);
+            if (doc) { doc.name = newName; doc.keterangan = newKet; saveDocuments(docs); renderDokumen(); tutupModal('modalEditDokumen'); tampilkanToast('Dokumen diperbarui!', 'success'); }
+        }
+
+        function hapusDokumen(id) {
+            if (!confirm('Yakin ingin menghapus dokumen ini?')) return;
+            let docs = getDocuments().filter(d => d.id != id);
             saveDocuments(docs);
             renderDokumen();
-            tutupModal('modalEditDokumen');
-            tampilkanToast('Dokumen diperbarui!', 'success');
+            tampilkanToast('Dokumen dihapus!', 'success');
         }
-    }
 
-    function hapusDokumen(id) {
-        if (!confirm('Yakin ingin menghapus dokumen ini?')) return;
-        let docs = getDocuments();
-        docs = docs.filter(d => d.id != id);
-        saveDocuments(docs);
-        renderDokumen();
-        tampilkanToast('Dokumen dihapus!', 'success');
-    }
+        document.addEventListener('DOMContentLoaded', loadProfil);
+        (function() {
+            const originalNavigasi = window.navigasiHalaman;
+            if (originalNavigasi) {
+                window.navigasiHalaman = function(page) {
+                    originalNavigasi(page);
+                    if (page === 'profile' && typeof loadProfil === 'function') loadProfil();
+                };
+            }
+        })();
+    </script>
 
-    // Inisialisasi saat halaman profil dibuka
-    document.addEventListener('DOMContentLoaded', loadProfil);
-    // Pastikan loadProfil dipanggil juga saat navigasi ke halaman profil
-    (function() {
-        const originalNavigasi = window.navigasiHalaman;
-        if (originalNavigasi) {
-            window.navigasiHalaman = function(page) {
-                originalNavigasi(page);
-                if (page === 'profile' && typeof loadProfil === 'function') {
-                    loadProfil();
-                }
-            };
-        }
-    })();
-</script>
-<!-- ============ AKHIR BLOK SA DASH - PROFIL 01 ============ -->
-    </main>
-<!-- ============ AKHIR BLOK 9.1 CONTENT AREA SA DASH ============ -->
+    <!-- ========== HALAMAN LAINNYA (PLACEHOLDER) ========== -->
+    <!-- Lihat Semua Toko -->
+    <div class="page" id="pageLihatToko">
+        <div class="page-header">
+            <div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Lihat Semua Toko</span></div>
+            <h2>Daftar Toko</h2>
+            <p>Halaman untuk menampilkan semua toko yang terdaftar.</p>
+        </div>
+        <div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-store" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div>
+    </div>
+
+    <!-- Lihat Semua Ojek -->
+    <div class="page" id="pageLihatOjek">
+        <div class="page-header">
+            <div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Lihat Semua Ojek</span></div>
+            <h2>Daftar Ojek</h2>
+            <p>Halaman untuk menampilkan semua ojek yang terdaftar.</p>
+        </div>
+        <div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-motorcycle" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div>
+    </div>
+
+    <!-- Lihat Semua Produk -->
+    <div class="page" id="pageLihatProduk">
+        <div class="page-header">
+            <div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Lihat Semua Produk</span></div>
+            <h2>Daftar Produk</h2>
+            <p>Halaman untuk menampilkan semua produk yang tersedia.</p>
+        </div>
+        <div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-box" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div>
+    </div>
+
+    <!-- Chat -->
+    <div class="page" id="pageChat">
+        <div class="page-header">
+            <div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Chat</span></div>
+            <h2>Percakapan</h2>
+            <p>Halaman untuk berkomunikasi dengan pengguna lain.</p>
+        </div>
+        <div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-comments" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div>
+    </div>
+
+    <!-- Daftar Akun Baru -->
+    <div class="page" id="pageDaftarAkun">
+        <div class="page-header">
+            <div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Daftar Akun Baru</span></div>
+            <h2>Pendaftaran Akun</h2>
+            <p>SuperAdmin dapat membuat akun untuk staf, owner, dan peran lainnya.</p>
+        </div>
+        <div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-user-plus" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div>
+    </div>
+
+    <!-- Transfer Menu -->
+    <div class="page" id="pageTransferMenu">
+        <div class="page-header">
+            <div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Transfer Menu</span></div>
+            <h2>Transfer Menu</h2>
+            <p>Halaman untuk memindahkan menu atau akses antar pengguna.</p>
+        </div>
+        <div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-exchange-alt" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div>
+    </div>
+
+    <!-- Kelola Semua Akun -->
+    <div class="page" id="pageKelolaAkun">
+        <div class="page-header">
+            <div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Kelola Semua Akun</span></div>
+            <h2>Manajemen Akun</h2>
+            <p>Kelola, edit, atau hapus semua akun yang terdaftar.</p>
+        </div>
+        <div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-users-cog" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div>
+    </div>
+
+    <!-- Penagihan -->
+    <div class="page" id="pagePenagihan">
+        <div class="page-header">
+            <div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Penagihan</span></div>
+            <h2>Penagihan</h2>
+            <p>Halaman untuk mengelola invoice dan penagihan.</p>
+        </div>
+        <div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-file-invoice-dollar" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div>
+    </div>
+
+    <!-- Setting Rekening -->
+    <div class="page" id="pageSettingRekening">
+        <div class="page-header">
+            <div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Setting Rekening</span></div>
+            <h2>Pengaturan Rekening</h2>
+            <p>Atur rekening bank untuk transaksi.</p>
+        </div>
+        <div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-university" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div>
+    </div>
+
+    <!-- Kelola Upgrade -->
+    <div class="page" id="pageKelolaUpgrade">
+        <div class="page-header">
+            <div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Kelola Upgrade</span></div>
+            <h2>Kelola Upgrade</h2>
+            <p>Halaman untuk mengatur paket upgrade layanan.</p>
+        </div>
+        <div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-crown" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div>
+    </div>
+
+    <!-- Setting Tarif Ojek -->
+    <div class="page" id="pageSettingTarifOjek">
+        <div class="page-header">
+            <div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Setting Tarif Ojek</span></div>
+            <h2>Pengaturan Tarif Ojek</h2>
+            <p>Atur tarif per kilometer atau per zona.</p>
+        </div>
+        <div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-cogs" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div>
+    </div>
+
+    <!-- Kelola Iklan -->
+    <div class="page" id="pageKelolaIklan">
+        <div class="page-header">
+            <div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Kelola Iklan</span></div>
+            <h2>Kelola Iklan</h2>
+            <p>Atur tampilan iklan di platform.</p>
+        </div>
+        <div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-ad" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div>
+    </div>
+</main>
+<!-- ============ AKHIR BLOK 9.1 R1 CONTENT AREA SA DASH ============ -->
 
 <!-- ============ BLOK 10.1 MODALS ============ -->
     <div class="modal-overlay" id="modalKonfirmasi">
