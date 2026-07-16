@@ -783,7 +783,7 @@
     </div>
 </nav>
 <!-- ============ AKHIR BLOK 7 R1 NAVBAR ============ -->
-<!-- ============ BLOK 8 R7 TOP NAVIGATION MARKUP ============ -->
+<!-- ============ BLOK 8 R8 TOP NAVIGATION MARKUP (BUTTON-BASED) ============ -->
 <nav class="topnav" id="mainTopnav">
     <ul class="topnav-menu">
         <!-- Menu Utama -->
@@ -791,10 +791,10 @@
             <a class="topnav-link" href="javascript:void(0)" onclick="navigasiHalaman('dashboard')"><i class="fas fa-th-large"></i> Dasbor</a>
         </li>
         <li class="topnav-item" data-page="profile">
-            <!-- Langsung toggle dropdown via onclick -->
-            <a class="topnav-link" href="javascript:void(0)" onclick="var dd=document.getElementById('dropdownProfil'); if(dd){ dd.classList.toggle('show'); }">
+            <!-- Ganti <a> menjadi <button> agar klik tidak terhambat oleh href -->
+            <button class="topnav-link" onclick="var dd=document.getElementById('dropdownProfil'); if(dd){ dd.classList.toggle('show'); }">
                 <i class="fas fa-user-circle"></i> Profil <i class="fas fa-chevron-down" style="font-size:10px; margin-left:4px;"></i>
-            </a>
+            </button>
             <div class="dropdown-menu" id="dropdownProfil">
                 <button type="button" class="dropdown-item" onclick="navigasiHalaman('profile'); document.getElementById('dropdownProfil').classList.remove('show');"><i class="fas fa-eye"></i> Lihat Profil</button>
                 <button type="button" class="dropdown-item" onclick="if(typeof bukaModalEditProfil==='function'){bukaModalEditProfil()}else{alert('Fungsi edit belum tersedia')}; document.getElementById('dropdownProfil').classList.remove('show');"><i class="fas fa-edit"></i> Edit Profil</button>
@@ -842,7 +842,7 @@
 </nav>
 
 <script>
-    // Tutup dropdown saat klik di luar (pelengkap)
+    // Tutup dropdown saat klik di luar
     document.addEventListener('click', function(event) {
         if (!event.target.closest('.topnav-item')) {
             var dropdown = document.getElementById('dropdownProfil');
@@ -850,7 +850,7 @@
         }
     });
 </script>
-<!-- ============ AKHIR BLOK 8 R7 ============ -->
+<!-- ============ AKHIR BLOK 8 R8 ============ -->
 <!-- ============ BLOK 9.1 R1 CONTENT AREA SA DASH ============ -->
 <main class="content-area expanded hidden" id="contentArea">
 
