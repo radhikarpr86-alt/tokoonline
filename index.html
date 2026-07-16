@@ -5,12 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Toko Online 2R - Login & Daftar</title>
-
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-
     <style>
         /* ============ RESET & GLOBAL ============ */
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -23,747 +21,234 @@
             align-items: center;
             overflow-x: hidden;
         }
-
         :root {
-            --orange-primary: #FF6B00;
-            --orange-secondary: #FF8C32;
-            --orange-light: #FFA95C;
-            --orange-pale: #FFF0E5;
-            --orange-dark: #CC5500;
-            --orange-gradient: linear-gradient(135deg, #FF6B00, #FF8C32);
-            --white: #FFFFFF;
-            --gray-50: #FAFAFA;
-            --gray-100: #F5F5F5;
-            --gray-200: #EEEEEE;
-            --gray-300: #E0E0E0;
-            --gray-400: #BDBDBD;
-            --gray-500: #9E9E9E;
-            --gray-600: #757575;
-            --gray-700: #616161;
-            --gray-800: #424242;
-            --gray-900: #333333;
-            --success: #4CAF50;
-            --error: #F44336;
-            --warning: #FF9800;
-            --info: #2196F3;
-            --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
-            --shadow-md: 0 4px 6px rgba(0,0,0,0.15);
-            --shadow-lg: 0 10px 25px rgba(0,0,0,0.2);
-            --shadow-xl: 0 20px 50px rgba(0,0,0,0.3);
-            --radius-sm: 8px;
-            --radius-md: 12px;
-            --radius-lg: 16px;
-            --radius-full: 50px;
-            --transition-fast: 0.2s ease;
-            --transition-normal: 0.3s ease;
+            --orange-primary: #FF6B00; --orange-secondary: #FF8C32; --orange-light: #FFA95C;
+            --orange-pale: #FFF0E5; --orange-dark: #CC5500; --orange-gradient: linear-gradient(135deg, #FF6B00, #FF8C32);
+            --white: #FFFFFF; --gray-50: #FAFAFA; --gray-100: #F5F5F5;
+            --gray-200: #EEEEEE; --gray-300: #E0E0E0; --gray-400: #BDBDBD;
+            --gray-500: #9E9E9E; --gray-600: #757575; --gray-700: #616161;
+            --gray-800: #424242; --gray-900: #333333;
+            --success: #4CAF50; --error: #F44336; --warning: #FF9800; --info: #2196F3;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.12); --shadow-md: 0 4px 6px rgba(0,0,0,0.15);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.2); --shadow-xl: 0 20px 50px rgba(0,0,0,0.3);
+            --radius-sm: 8px; --radius-md: 12px; --radius-lg: 16px; --radius-full: 50px;
+            --transition-fast: 0.2s ease; --transition-normal: 0.3s ease;
         }
-
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: var(--gray-200); border-radius: 10px; }
         ::-webkit-scrollbar-thumb { background: var(--orange-light); border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--orange-primary); }
 
         /* ============ PRELOADER ============ */
-        #preloader {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: var(--white);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 99999;
-            transition: opacity 0.5s, visibility 0.5s;
-        }
+        #preloader { position: fixed; top:0; left:0; width:100%; height:100%; background:var(--white); display:flex; justify-content:center; align-items:center; z-index:99999; transition: opacity 0.5s, visibility 0.5s; }
         #preloader.hidden { opacity: 0; visibility: hidden; }
-        .loader {
-            width: 50px; height: 50px;
-            border: 5px solid var(--orange-pale);
-            border-top: 5px solid var(--orange-primary);
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
+        .loader { width: 50px; height: 50px; border: 5px solid var(--orange-pale); border-top: 5px solid var(--orange-primary); border-radius: 50%; animation: spin 0.8s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
         /* ============ TOAST ============ */
-        .toast-container {
-            position: fixed;
-            top: 20px; right: 20px;
-            z-index: 10000;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .toast {
-            padding: 15px 20px;
-            border-radius: var(--radius-md);
-            color: var(--white);
-            font-weight: 500;
-            font-size: 14px;
-            min-width: 280px;
-            max-width: 400px;
-            box-shadow: var(--shadow-lg);
-            animation: slideInRight 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .toast.success { background: var(--success); }
-        .toast.error { background: var(--error); }
-        .toast.warning { background: var(--warning); }
-        @keyframes slideInRight {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
+        .toast-container { position: fixed; top:20px; right:20px; z-index:10000; display:flex; flex-direction:column; gap:10px; }
+        .toast { padding: 15px 20px; border-radius:var(--radius-md); color:white; font-weight:500; font-size:14px; min-width:280px; max-width:400px; box-shadow:var(--shadow-lg); animation:slideInRight 0.3s; display:flex; align-items:center; gap:10px; }
+        .toast.success { background: var(--success); } .toast.error { background: var(--error); } .toast.warning { background: var(--warning); }
+        @keyframes slideInRight { from { transform: translateX(100%); opacity:0; } to { transform: translateX(0); opacity:1; } }
 
         /* ============ AUTH (LOGIN/REGISTER) ============ */
-        .auth-container { width: 100%; max-width: 480px; padding: 20px; }
-        .auth-box {
-            background: var(--white);
-            border-radius: var(--radius-lg);
-            padding: 40px 30px;
-            box-shadow: var(--shadow-lg);
-            border: 1px solid #f0f0f0;
-        }
-        .auth-logo { text-align: center; margin-bottom: 30px; }
-        .auth-logo i { font-size: 48px; color: var(--orange-primary); display: block; margin-bottom: 10px; }
-        .auth-logo h1 { font-size: 28px; font-weight: 800; color: var(--gray-900); }
-        .auth-logo h1 span { color: var(--orange-primary); }
-        .auth-logo p { color: var(--gray-500); font-size: 14px; margin-top: 5px; }
-        .auth-error {
-            display: none;
-            background: #FFEBEE;
-            color: var(--error);
-            padding: 12px;
-            border-radius: var(--radius-md);
-            margin-bottom: 20px;
-            font-size: 14px;
-            font-weight: 500;
-            align-items: center;
-            gap: 10px;
-        }
-        .auth-error i { font-size: 18px; }
-        .form-group { margin-bottom: 20px; }
-        .form-group label { display: block; font-weight: 600; font-size: 14px; color: var(--gray-900); margin-bottom: 6px; }
-        .input-group {
-            display: flex;
-            align-items: center;
-            background: #f5f5f5;
-            border-radius: var(--radius-md);
-            padding: 0 15px;
-            border: 2px solid transparent;
-            transition: 0.3s;
-        }
-        .input-group:focus-within { border-color: var(--orange-primary); background: var(--white); }
-        .input-group i { color: var(--gray-500); font-size: 18px; }
-        .input-group input, .input-group select {
-            border: none; background: transparent;
-            padding: 15px 12px; font-size: 16px;
-            width: 100%; outline: none; font-family: inherit;
-        }
-        .input-group select { padding: 15px 0; }
-        .input-group input::placeholder { color: #bbb; }
-        .btn-submit {
-            width: 100%; padding: 16px;
-            background: var(--orange-gradient);
-            color: var(--white); border: none;
-            border-radius: var(--radius-md);
-            font-size: 18px; font-weight: 700;
-            cursor: pointer; transition: 0.3s;
-            display: flex; justify-content: center; align-items: center; gap: 10px;
-        }
-        .btn-submit:hover { transform: scale(1.02); box-shadow: 0 4px 15px rgba(255,107,0,0.4); }
-        .auth-footer { text-align: center; margin-top: 25px; font-size: 14px; color: var(--gray-500); }
-        .auth-footer a { color: var(--orange-primary); font-weight: 600; cursor: pointer; text-decoration: none; }
-        .auth-footer a:hover { text-decoration: underline; }
-        .hidden-form { display: none !important; }
-        @media (max-width: 480px) { .auth-box { padding: 30px 20px; } }
+        .auth-container { width:100%; max-width:480px; padding:20px; }
+        .auth-box { background:white; border-radius:var(--radius-lg); padding:40px 30px; box-shadow:var(--shadow-lg); border:1px solid #f0f0f0; }
+        .auth-logo { text-align:center; margin-bottom:30px; }
+        .auth-logo i { font-size:48px; color:var(--orange-primary); display:block; margin-bottom:10px; }
+        .auth-logo h1 { font-size:28px; font-weight:800; color:var(--gray-900); }
+        .auth-logo h1 span { color:var(--orange-primary); }
+        .auth-logo p { color:var(--gray-500); font-size:14px; margin-top:5px; }
+        .auth-error { display:none; background:#FFEBEE; color:var(--error); padding:12px; border-radius:var(--radius-md); margin-bottom:20px; font-size:14px; font-weight:500; align-items:center; gap:10px; }
+        .auth-error i { font-size:18px; }
+        .form-group { margin-bottom:20px; }
+        .form-group label { display:block; font-weight:600; font-size:14px; color:var(--gray-900); margin-bottom:6px; }
+        .input-group { display:flex; align-items:center; background:#f5f5f5; border-radius:var(--radius-md); padding:0 15px; border:2px solid transparent; transition:0.3s; }
+        .input-group:focus-within { border-color:var(--orange-primary); background:white; }
+        .input-group i { color:var(--gray-500); font-size:18px; }
+        .input-group input, .input-group select { border:none; background:transparent; padding:15px 12px; font-size:16px; width:100%; outline:none; font-family:inherit; }
+        .input-group select { padding:15px 0; }
+        .input-group input::placeholder { color:#bbb; }
+        .btn-submit { width:100%; padding:16px; background:var(--orange-gradient); color:white; border:none; border-radius:var(--radius-md); font-size:18px; font-weight:700; cursor:pointer; transition:0.3s; display:flex; justify-content:center; align-items:center; gap:10px; }
+        .btn-submit:hover { transform:scale(1.02); box-shadow:0 4px 15px rgba(255,107,0,0.4); }
+        .auth-footer { text-align:center; margin-top:25px; font-size:14px; color:var(--gray-500); }
+        .auth-footer a { color:var(--orange-primary); font-weight:600; cursor:pointer; text-decoration:none; }
+        .auth-footer a:hover { text-decoration:underline; }
+        .hidden-form { display:none !important; }
+        @media (max-width:480px) { .auth-box { padding:30px 20px; } }
 
         /* ============ NAVBAR ============ */
-        .navbar {
-            position: fixed; top: 0; left: 0; right: 0;
-            height: 64px; background: var(--white);
-            box-shadow: var(--shadow-sm); z-index: 1000;
-            padding: 0 20px; display: flex;
-            align-items: center; justify-content: space-between;
-            border-bottom: 2px solid var(--orange-pale);
-        }
-        .navbar-brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 20px; color: var(--orange-primary); }
-        .navbar-brand i { font-size: 24px; }
-        .navbar-brand span { color: var(--gray-900); }
-        .navbar-user { display: flex; align-items: center; gap: 12px; }
-        .navbar-user-avatar {
-            width: 40px; height: 40px; border-radius: 50%;
-            background: var(--orange-gradient); color: white;
-            display: flex; align-items: center; justify-content: center;
-            font-weight: 600; font-size: 16px;
-        }
-        .navbar-user-info { display: flex; flex-direction: column; line-height: 1.2; }
-        .navbar-user-name { font-weight: 600; font-size: 14px; color: var(--gray-900); }
-        .navbar-user-role { font-size: 11px; color: var(--gray-500); }
-        .navbar-actions { display: flex; align-items: center; gap: 8px; }
-        .btn-icon {
-            background: transparent; border: none;
-            font-size: 20px; color: var(--gray-600);
-            cursor: pointer; padding: 8px; border-radius: 50%;
-            transition: var(--transition-fast); position: relative;
-        }
-        .btn-icon:hover { background: var(--gray-100); }
-        .btn-icon .badge {
-            position: absolute; top: -4px; right: -4px;
-            background: var(--error); color: white;
-            font-size: 10px; padding: 2px 6px; border-radius: 10px; font-weight: 700;
-        }
-        .btn-logout {
-            background: transparent; border: 1px solid var(--gray-300);
-            padding: 6px 14px; border-radius: var(--radius-sm);
-            font-weight: 500; color: var(--gray-700);
-            cursor: pointer; transition: var(--transition-fast);
-            font-size: 13px; display: flex; align-items: center; gap: 6px;
-        }
-        .btn-logout:hover { background: var(--error); color: white; border-color: var(--error); }
+        .navbar { position:fixed; top:0; left:0; right:0; height:64px; background:white; box-shadow:var(--shadow-sm); z-index:1000; padding:0 20px; display:flex; align-items:center; justify-content:space-between; border-bottom:2px solid var(--orange-pale); }
+        .navbar-brand { display:flex; align-items:center; gap:10px; font-weight:700; font-size:20px; color:var(--orange-primary); }
+        .navbar-brand i { font-size:24px; } .navbar-brand span { color:var(--gray-900); }
+        .navbar-user { display:flex; align-items:center; gap:12px; }
+        .navbar-user-avatar { width:40px; height:40px; border-radius:50%; background:var(--orange-gradient); color:white; display:flex; align-items:center; justify-content:center; font-weight:600; font-size:16px; }
+        .navbar-user-info { display:flex; flex-direction:column; line-height:1.2; }
+        .navbar-user-name { font-weight:600; font-size:14px; color:var(--gray-900); }
+        .navbar-user-role { font-size:11px; color:var(--gray-500); }
+        .navbar-actions { display:flex; align-items:center; gap:8px; }
+        .btn-icon { background:transparent; border:none; font-size:20px; color:var(--gray-600); cursor:pointer; padding:8px; border-radius:50%; transition:var(--transition-fast); position:relative; }
+        .btn-icon:hover { background:var(--gray-100); }
+        .btn-icon .badge { position:absolute; top:-4px; right:-4px; background:var(--error); color:white; font-size:10px; padding:2px 6px; border-radius:10px; font-weight:700; }
+        .btn-logout { background:transparent; border:1px solid var(--gray-300); padding:6px 14px; border-radius:var(--radius-sm); font-weight:500; color:var(--gray-700); cursor:pointer; transition:var(--transition-fast); font-size:13px; display:flex; align-items:center; gap:6px; }
+        .btn-logout:hover { background:var(--error); color:white; border-color:var(--error); }
 
         /* ============ SIDEBAR ============ */
-        .sidebar {
-            position: fixed; top: 64px; left: 0; bottom: 0;
-            width: 260px; background: var(--white);
-            box-shadow: var(--shadow-sm); overflow-y: auto;
-            z-index: 999; transition: transform var(--transition-normal);
-            padding: 20px 0;
-        }
-        .sidebar.closed { transform: translateX(-100%); }
-        .sidebar-menu-title {
-            font-size: 12px; text-transform: uppercase;
-            color: var(--gray-400); font-weight: 700;
-            padding: 10px 20px; letter-spacing: 1px; margin-top: 10px;
-        }
-        .sidebar-menu-item {
-            display: flex; align-items: center; gap: 12px;
-            padding: 12px 20px; cursor: pointer;
-            transition: var(--transition-fast);
-            color: var(--gray-700); font-size: 14px; font-weight: 500;
-            position: relative;
-        }
-        .sidebar-menu-item:hover { background: var(--orange-pale); color: var(--orange-primary); }
-        .sidebar-menu-item.active {
-            background: var(--orange-pale); color: var(--orange-primary);
-            border-right: 3px solid var(--orange-primary);
-        }
-        .sidebar-menu-item i { width: 20px; text-align: center; font-size: 16px; }
-        .sidebar-overlay {
-            position: fixed; top: 64px; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.3); z-index: 998;
-            display: none;
-        }
-        .sidebar-overlay.active { display: block; }
+        .sidebar { position:fixed; top:64px; left:0; bottom:0; width:260px; background:white; box-shadow:var(--shadow-sm); overflow-y:auto; z-index:999; transition:transform var(--transition-normal); padding:20px 0; }
+        .sidebar.closed { transform:translateX(-100%); }
+        .sidebar-menu-title { font-size:12px; text-transform:uppercase; color:var(--gray-400); font-weight:700; padding:10px 20px; letter-spacing:1px; margin-top:10px; }
+        .sidebar-menu-item { display:flex; align-items:center; gap:12px; padding:12px 20px; cursor:pointer; transition:var(--transition-fast); color:var(--gray-700); font-size:14px; font-weight:500; position:relative; }
+        .sidebar-menu-item:hover { background:var(--orange-pale); color:var(--orange-primary); }
+        .sidebar-menu-item.active { background:var(--orange-pale); color:var(--orange-primary); border-right:3px solid var(--orange-primary); }
+        .sidebar-menu-item i { width:20px; text-align:center; font-size:16px; }
+        .sidebar-overlay { position:fixed; top:64px; left:0; right:0; bottom:0; background:rgba(0,0,0,0.3); z-index:998; display:none; }
+        .sidebar-overlay.active { display:block; }
 
         /* ============ CONTENT AREA ============ */
-        .content-area {
-            margin-left: 260px; padding: 84px 25px 25px 25px;
-            min-height: 100vh; transition: margin-left var(--transition-normal);
-            background: #FFF8F3;
+        .content-area { margin-left:260px; padding:84px 25px 25px 25px; min-height:100vh; transition:margin-left var(--transition-normal); background:#FFF8F3; }
+        .content-area.expanded { margin-left:0; }
+        @media (max-width:768px) {
+            .sidebar:not(.closed) + .sidebar-overlay.active { display:block; }
+            .sidebar.closed { transform:translateX(-100%); }
+            .sidebar:not(.closed) { transform:translateX(0); }
+            .content-area { margin-left:0; }
         }
-        .content-area.expanded { margin-left: 0; }
-
-        @media (max-width: 768px) {
-            .sidebar:not(.closed) + .sidebar-overlay.active { display: block; }
-            .sidebar.closed { transform: translateX(-100%); }
-            .sidebar:not(.closed) { transform: translateX(0); }
-            .content-area { margin-left: 0; }
-        }
-        @media (min-width: 769px) {
-            .sidebar-overlay { display: none !important; }
-            .sidebar.closed { transform: translateX(0); }
-            .sidebar { width: 260px; }
+        @media (min-width:769px) {
+            .sidebar-overlay { display:none !important; }
+            .sidebar.closed { transform:translateX(0); }
+            .sidebar { width:260px; }
         }
 
         /* ============ PAGE HEADER ============ */
-        .page-header { margin-bottom: 25px; }
-        .page-header .breadcrumb {
-            display: flex; align-items: center; gap: 8px;
-            font-size: 13px; color: var(--gray-500); margin-bottom: 8px;
-        }
-        .page-header .breadcrumb i { font-size: 12px; }
-        .page-header .breadcrumb .active { color: var(--gray-900); font-weight: 500; }
-        .page-header h2 { font-size: 24px; font-weight: 700; color: var(--gray-900); margin-bottom: 4px; }
-        .page-header p { color: var(--gray-500); font-size: 14px; }
+        .page-header { margin-bottom:25px; }
+        .page-header .breadcrumb { display:flex; align-items:center; gap:8px; font-size:13px; color:var(--gray-500); margin-bottom:8px; }
+        .page-header .breadcrumb i { font-size:12px; }
+        .page-header .breadcrumb .active { color:var(--gray-900); font-weight:500; }
+        .page-header h2 { font-size:24px; font-weight:700; color:var(--gray-900); margin-bottom:4px; }
+        .page-header p { color:var(--gray-500); font-size:14px; }
 
         /* ============ CARDS & STATS ============ */
-        .card {
-            background: var(--white); border-radius: var(--radius-md);
-            box-shadow: var(--shadow-sm); margin-bottom: 20px; overflow: hidden;
-        }
-        .card-header {
-            padding: 18px 20px; border-bottom: 1px solid var(--gray-200);
-            display: flex; justify-content: space-between; align-items: center;
-            flex-wrap: wrap; gap: 10px;
-        }
-        .card-header h3 {
-            font-size: 16px; font-weight: 600; color: var(--gray-900);
-            display: flex; align-items: center; gap: 8px;
-        }
-        .card-body { padding: 20px; }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px; margin-bottom: 25px;
-        }
-        .stat-card {
-            background: var(--white); border-radius: var(--radius-md);
-            padding: 20px; box-shadow: var(--shadow-sm);
-            display: flex; align-items: center; gap: 15px;
-            cursor: pointer; transition: var(--transition-fast);
-        }
-        .stat-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
-        .stat-card-icon {
-            width: 50px; height: 50px; border-radius: var(--radius-sm);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 24px; flex-shrink: 0;
-        }
-        .stat-card-icon.orange { background: var(--orange-pale); color: var(--orange-primary); }
-        .stat-card-icon.green { background: #E8F5E9; color: var(--success); }
-        .stat-card-icon.blue { background: #E3F2FD; color: var(--info); }
-        .stat-card-icon.yellow { background: #FFF3E0; color: var(--warning); }
-        .stat-card-content h3 { font-size: 13px; font-weight: 500; color: var(--gray-500); margin-bottom: 4px; }
-        .stat-number { font-size: 28px; font-weight: 700; color: var(--gray-900); }
-        .stat-change { font-size: 12px; margin-top: 4px; display: flex; align-items: center; gap: 4px; }
-        .stat-change.up { color: var(--success); }
-        .stat-change.down { color: var(--error); }
+        .card { background:white; border-radius:var(--radius-md); box-shadow:var(--shadow-sm); margin-bottom:20px; overflow:hidden; }
+        .card-header { padding:18px 20px; border-bottom:1px solid var(--gray-200); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; }
+        .card-header h3 { font-size:16px; font-weight:600; color:var(--gray-900); display:flex; align-items:center; gap:8px; }
+        .card-body { padding:20px; }
+        .stats-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:20px; margin-bottom:25px; }
+        .stat-card { background:white; border-radius:var(--radius-md); padding:20px; box-shadow:var(--shadow-sm); display:flex; align-items:center; gap:15px; cursor:pointer; transition:var(--transition-fast); }
+        .stat-card:hover { transform:translateY(-3px); box-shadow:var(--shadow-md); }
+        .stat-card-icon { width:50px; height:50px; border-radius:var(--radius-sm); display:flex; align-items:center; justify-content:center; font-size:24px; flex-shrink:0; }
+        .stat-card-icon.orange { background:var(--orange-pale); color:var(--orange-primary); }
+        .stat-card-icon.green { background:#E8F5E9; color:var(--success); }
+        .stat-card-icon.blue { background:#E3F2FD; color:var(--info); }
+        .stat-card-icon.yellow { background:#FFF3E0; color:var(--warning); }
+        .stat-card-content h3 { font-size:13px; font-weight:500; color:var(--gray-500); margin-bottom:4px; }
+        .stat-number { font-size:28px; font-weight:700; color:var(--gray-900); }
+        .stat-change { font-size:12px; margin-top:4px; display:flex; align-items:center; gap:4px; }
+        .stat-change.up { color:var(--success); } .stat-change.down { color:var(--error); }
 
         /* ============ BUTTONS ============ */
-        .btn {
-            display: inline-block; padding: 8px 18px;
-            border-radius: var(--radius-sm); font-weight: 500; font-size: 14px;
-            cursor: pointer; border: none; transition: var(--transition-fast);
-            font-family: inherit; text-decoration: none; text-align: center;
-        }
-        .btn-primary { background: var(--orange-gradient); color: white; }
-        .btn-primary:hover { opacity: 0.9; transform: scale(1.02); }
-        .btn-secondary { background: var(--gray-300); color: var(--gray-700); }
-        .btn-secondary:hover { background: var(--gray-400); }
-        .btn-sm { padding: 5px 12px; font-size: 12px; }
+        .btn { display:inline-block; padding:8px 18px; border-radius:var(--radius-sm); font-weight:500; font-size:14px; cursor:pointer; border:none; transition:var(--transition-fast); font-family:inherit; text-decoration:none; text-align:center; }
+        .btn-primary { background:var(--orange-gradient); color:white; }
+        .btn-primary:hover { opacity:0.9; transform:scale(1.02); }
+        .btn-secondary { background:var(--gray-300); color:var(--gray-700); }
+        .btn-secondary:hover { background:var(--gray-400); }
+        .btn-sm { padding:5px 12px; font-size:12px; }
 
         /* ============ MODALS ============ */
-        .modal-overlay {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 10000;
-            display: none;               /* ✅ Wajib: modal tersembunyi default */
-            justify-content: center;
-            align-items: center;
-        }
-        .modal-overlay.active {
-            display: flex;               /* hanya muncul jika class active ditambahkan */
-        }
-        .modal {
-            background: var(--white);
-            border-radius: var(--radius-lg);
-            max-width: 600px; width: 90%;
-            max-height: 90vh; overflow-y: auto;
-            box-shadow: var(--shadow-xl);
-            animation: modalFadeIn 0.3s ease;
-        }
-        @keyframes modalFadeIn {
-            from { opacity: 0; transform: translateY(-20px) scale(0.95); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
-        }
-        .modal-header {
-            padding: 18px 20px; border-bottom: 1px solid var(--gray-200);
-            display: flex; justify-content: space-between; align-items: center;
-        }
-        .modal-header h3 { font-size: 18px; font-weight: 600; color: var(--gray-900); }
-        .modal-close {
-            background: transparent; border: none;
-            font-size: 20px; cursor: pointer; color: var(--gray-500);
-            transition: var(--transition-fast);
-        }
-        .modal-close:hover { color: var(--error); transform: rotate(90deg); }
-        .modal-body { padding: 20px; }
-        .modal-footer {
-            padding: 15px 20px; border-top: 1px solid var(--gray-200);
-            display: flex; justify-content: flex-end; gap: 10px;
-        }
+        .modal-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:10000; display:none; justify-content:center; align-items:center; }
+        .modal-overlay.active { display:flex; }
+        .modal { background:white; border-radius:var(--radius-lg); max-width:600px; width:90%; max-height:90vh; overflow-y:auto; box-shadow:var(--shadow-xl); animation:modalFadeIn 0.3s ease; }
+        @keyframes modalFadeIn { from { opacity:0; transform:translateY(-20px) scale(0.95); } to { opacity:1; transform:translateY(0) scale(1); } }
+        .modal-header { padding:18px 20px; border-bottom:1px solid var(--gray-200); display:flex; justify-content:space-between; align-items:center; }
+        .modal-header h3 { font-size:18px; font-weight:600; color:var(--gray-900); }
+        .modal-close { background:transparent; border:none; font-size:20px; cursor:pointer; color:var(--gray-500); transition:var(--transition-fast); }
+        .modal-close:hover { color:var(--error); transform:rotate(90deg); }
+        .modal-body { padding:20px; }
+        .modal-footer { padding:15px 20px; border-top:1px solid var(--gray-200); display:flex; justify-content:flex-end; gap:10px; }
 
         /* ============ UTILITY ============ */
-        .hidden { display: none !important; }
-        .text-center { text-align: center; }
+        .hidden { display:none !important; }
+        .text-center { text-align:center; }
+
+        /* ============ PRODUCT GRID & EMPTY STATE ============ */
+        .product-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(180px, 1fr)); gap:15px; }
+        @media (max-width:600px) { .product-grid { grid-template-columns:repeat(auto-fill, minmax(140px, 1fr)); } }
+        .empty-state { text-align:center; padding:40px 20px; color:var(--gray-500); }
+        .empty-state i { font-size:50px; color:var(--gray-400); display:block; margin-bottom:15px; }
+        .empty-state h3 { font-size:18px; font-weight:600; margin-bottom:5px; color:var(--gray-700); }
+        .empty-state p { font-size:14px; }
     </style>
 </head>
 <body>
-<!-- ============ AKHIR BLOK 1 R1 HEAD & CSS ============ -->
-<!-- ============ BLOK 2 R4 CSS TOP NAVIGATION (FIX DROPDOWN KLIK) ============ -->
-<style>
-    /* ========== TOP NAVIGATION CONTAINER ========== */
-    .topnav {
-        position: fixed;
-        top: 64px;                  /* tepat di bawah navbar utama */
-        left: 0;
-        right: 0;
-        height: 48px;
-        background: var(--white);
-        box-shadow: var(--shadow-sm);
-        z-index: 999;
-        display: flex;
-        align-items: center;
-        padding: 0 20px;
-        border-bottom: 1px solid var(--gray-200);
-        overflow-x: auto;
-        white-space: nowrap;
-        -webkit-overflow-scrolling: touch;
-    }
+<!-- ============ PRELOADER & TOAST ============ -->
+<div id="preloader"><div class="loader"></div></div>
+<div class="toast-container" id="toastContainer"></div>
 
-    .topnav::-webkit-scrollbar {
-        height: 4px;
-    }
-    .topnav::-webkit-scrollbar-track {
-        background: transparent;
-    }
-    .topnav::-webkit-scrollbar-thumb {
-        background: var(--gray-300);
-        border-radius: 4px;
-    }
-
-    /* ========== MENU LIST (HORIZONTAL) ========== */
-    .topnav-menu {
-        display: flex;
-        align-items: center;
-        gap: 4px;
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        height: 100%;
-        min-width: max-content;
-    }
-
-    /* ========== MENU ITEM ========== */
-    .topnav-item {
-        position: relative;
-        display: flex;
-        align-items: center;
-        height: 100%;
-        flex-shrink: 0;
-    }
-
-    /* ========== MENU LINK ========== */
-    .topnav-link {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        padding: 0 16px;
-        height: 100%;
-        font-size: 14px;
-        font-weight: 500;
-        color: var(--gray-700);
-        text-decoration: none;
-        cursor: pointer;
-        transition: background 0.2s ease, color 0.2s ease;
-        border-radius: var(--radius-sm);
-        white-space: nowrap;
-        background: transparent;
-        border: none;
-        font-family: inherit;
-        position: relative;
-        z-index: 2;               /* pastikan link di atas dropdown */
-    }
-
-    .topnav-link i {
-        font-size: 16px;
-        width: 18px;
-        text-align: center;
-        pointer-events: none;      /* biarkan klik menembus ikon ke link */
-    }
-
-    .topnav-link:hover {
-        background: var(--orange-pale);
-        color: var(--orange-primary);
-    }
-
-    .topnav-item.active > .topnav-link {
-        background: var(--orange-pale);
-        color: var(--orange-primary);
-        font-weight: 600;
-    }
-
-    /* ========== DROPDOWN SUBMENU ========== */
-    .dropdown-menu {
-        position: absolute;
-        top: calc(100% + 4px);
-        left: 0;
-        min-width: 220px;
-        background: var(--white);
-        border-radius: var(--radius-md);
-        box-shadow: var(--shadow-lg);
-        padding: 8px 0;
-        display: none;               /* tersembunyi default */
-        flex-direction: column;
-        z-index: 10001;              /* lebih tinggi dari elemen lain */
-        border: 1px solid var(--gray-200);
-        animation: dropdownFadeIn 0.2s ease;
-        pointer-events: none;        /* tidak menerima klik saat tersembunyi */
-    }
-
-    .dropdown-menu.show {
-        display: flex;
-        pointer-events: auto;        /* klik berfungsi saat tampil */
-    }
-
-    @keyframes dropdownFadeIn {
-        from { opacity: 0; transform: translateY(-8px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-
-    .dropdown-menu a,
-    .dropdown-menu .dropdown-item {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        padding: 10px 16px;
-        font-size: 13px;
-        color: var(--gray-700);
-        text-decoration: none;
-        cursor: pointer;
-        transition: background 0.15s ease, color 0.15s ease;
-        white-space: nowrap;
-        border: none;
-        background: transparent;
-        font-family: inherit;
-        width: 100%;
-        text-align: left;
-    }
-
-    .dropdown-menu a:hover,
-    .dropdown-menu .dropdown-item:hover {
-        background: var(--gray-50);
-        color: var(--orange-primary);
-    }
-
-    .dropdown-menu a i,
-    .dropdown-menu .dropdown-item i {
-        width: 18px;
-        text-align: center;
-        font-size: 14px;
-        pointer-events: none;      /* biarkan klik menembus ikon ke teks/link */
-    }
-
-    /* ========== PASTIKAN TIDAK ADA ELEMEN MENUTUPI DROPDOWN ========== */
-    .content-area {
-        z-index: auto;             /* tidak menimpa dropdown */
-        position: relative;
-    }
-
-    /* ========== SIDEBAR LAMA DIHAPUS ========== */
-    .sidebar,
-    .sidebar.closed,
-    .sidebar-menu-title,
-    .sidebar-menu-item,
-    .sidebar-overlay {
-        display: none !important;
-    }
-
-    /* ========== RESPONSIVE ========== */
-    @media (max-width: 768px) {
-        .topnav {
-            padding: 0 10px;
-            height: 44px;
-        }
-        .topnav-link {
-            padding: 0 12px;
-            font-size: 13px;
-        }
-        .dropdown-menu {
-            position: fixed;
-            top: auto;
-            left: 10px;
-            right: 10px;
-            min-width: auto;
-            border-radius: var(--radius-md);
-            box-shadow: var(--shadow-xl);
-            z-index: 10001;
-        }
-    }
-</style>
-<!-- ============ AKHIR BLOK 2 R4 CSS TOP NAVIGATION ============ -->
-<!-- ============ BLOK 3 R1 CSS CONTENT AREA & RESPONSIVE ============ -->
-<style>
-    /* ========== CONTENT AREA ========== */
-    .content-area {
-        /* Tidak ada margin-left untuk sidebar */
-        margin-left: 0;
-        /* Padding atas: navbar (64px) + topnav (48px) + ruang (20px) = 132px */
-        padding: 132px 25px 25px 25px;
-        min-height: 100vh;
-        transition: padding-top var(--transition-normal);
-        background: #FFF8F3;
-    }
-
-    /* Tidak diperlukan lagi .content-area.expanded karena sidebar dihapus */
-    .content-area.expanded {
-        margin-left: 0;
-    }
-
-    /* ========== RESPONSIVE ========== */
-    @media (max-width: 768px) {
-        .content-area {
-            padding: 132px 15px 15px 15px;
-        }
-    }
-
-    /* ========== SEMUA ATURAN SIDEBAR & OVERLAY DIHAPUS ========== */
-    /* Karena sidebar sudah diganti topnav, aturan di bawah ini
-       tidak diperlukan lagi dan dinonaktifkan. */
-    .sidebar,
-    .sidebar.closed,
-    .sidebar-overlay {
-        display: none !important;
-    }
-
-    /* Responsive sidebar rules dihapus */
-    /* @media (max-width: 768px) { ... } */
-    /* @media (min-width: 769px) { ... } */
-</style>
-<!-- ============ AKHIR BLOK 3 R1 CSS CONTENT AREA & RESPONSIVE ============ -->
-    <!-- ============ BLOK 4 R1 CSS PRODUCT GRID & EMPTY STATE ============ -->
-<style>
-    /* --- Product Grid (Public) --- */
-    .product-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-        gap: 15px;
-    }
-    @media (max-width: 600px) {
-        .product-grid {
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-        }
-    }
-
-    /* --- Empty State --- */
-    .empty-state {
-        text-align: center;
-        padding: 40px 20px;
-        color: var(--gray-500);
-    }
-    .empty-state i {
-        font-size: 50px;
-        color: var(--gray-400);
-        display: block;
-        margin-bottom: 15px;
-    }
-    .empty-state h3 {
-        font-size: 18px;
-        font-weight: 600;
-        margin-bottom: 5px;
-        color: var(--gray-700);
-    }
-    .empty-state p {
-        font-size: 14px;
-    }
-</style>
-<!-- ============ AKHIR BLOK 4 R1 CSS PRODUCT GRID & EMPTY STATE ============ -->
-<!-- ============ BLOK 5 PRELOADER & TOAST ============ -->
-    <div id="preloader"><div class="loader"></div></div>
-    <div class="toast-container" id="toastContainer"></div>
-<!-- ============ AKHIR BLOK 5 PRELOADER & TOAST ============ -->
-
-<!-- ============ BLOK 6 AUTH CONTAINER ============ -->
-    <div class="auth-container" id="pageAuth">
-        <div class="auth-box">
-            <div class="auth-logo">
-                <i class="fas fa-store-alt"></i>
-                <h1>Toko Online <span>2R</span></h1>
-                <p>Platform Belanja & Layanan Serba Ada</p>
-            </div>
-            <div class="auth-error" id="authError">
-                <i class="fas fa-exclamation-circle"></i>
-                <span id="authErrorText">Terjadi kesalahan!</span>
-            </div>
-            <form class="auth-form" id="loginForm" onsubmit="prosesLogin(event)">
-                <div class="form-group">
-                    <label for="loginUsername">Username</label>
-                    <div class="input-group">
-                        <i class="fas fa-user"></i>
-                        <input type="text" id="loginUsername" placeholder="Masukkan username" autocomplete="username" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="loginPassword">Password</label>
-                    <div class="input-group">
-                        <i class="fas fa-lock"></i>
-                        <input type="password" id="loginPassword" placeholder="Masukkan password" autocomplete="current-password" required>
-                    </div>
-                </div>
-                <div class="form-group" style="margin-top:25px;">
-                    <button type="submit" class="btn-submit">
-                        <i class="fas fa-sign-in-alt"></i> Masuk
-                    </button>
-                </div>
-                <div class="auth-footer">
-                    Belum punya akun? <a onclick="toggleForm('register')">Daftar di sini</a>
-                </div>
-            </form>
-            <form class="auth-form hidden-form" id="registerForm" onsubmit="prosesRegister(event)">
-                <div class="form-group">
-                    <label>ID Akun (Otomatis)</label>
-                    <div class="input-group" style="background:#f0f0f0; border:2px solid #ddd;">
-                        <i class="fas fa-id-card"></i>
-                        <span id="regIdPreview" style="padding:15px 12px; font-weight:600; color:var(--gray-700);">-</span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="regRole">Pilih Role <span style="color:var(--error);">*</span></label>
-                    <div class="input-group">
-                        <i class="fas fa-user-tag"></i>
-                        <select id="regRole" onchange="updateIdPreview()">
-                            <option value="customer">Customer</option>
-                            <option value="toko">Toko</option>
-                            <option value="ojek">Ojek</option>
-                            <option value="pedagang">Pedagang Pasar</option>
-                            <option value="codseller">COD Seller</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="regUsername">Username <span style="color:var(--error);">*</span></label>
-                    <div class="input-group"><i class="fas fa-user"></i><input type="text" id="regUsername" placeholder="Buat username (4-20 karakter)" required></div>
-                </div>
-                <div class="form-group">
-                    <label for="regPassword">Password <span style="color:var(--error);">*</span></label>
-                    <div class="input-group"><i class="fas fa-lock"></i><input type="password" id="regPassword" placeholder="Buat password (minimal 6 karakter)" required></div>
-                </div>
-                <div class="form-group">
-                    <label for="regNama">Nama Lengkap <span style="color:var(--error);">*</span></label>
-                    <div class="input-group"><i class="fas fa-id-card"></i><input type="text" id="regNama" placeholder="Nama lengkap Anda" required></div>
-                </div>
-                <div class="form-group">
-                    <label for="regEmail">Email (opsional)</label>
-                    <div class="input-group"><i class="fas fa-envelope"></i><input type="email" id="regEmail" placeholder="Email"></div>
-                </div>
-                <div class="form-group">
-                    <label for="regHp">Nomor HP (opsional)</label>
-                    <div class="input-group"><i class="fas fa-phone"></i><input type="tel" id="regHp" placeholder="Nomor HP"></div>
-                </div>
-                <div style="margin-bottom:20px; padding:12px; background:#FFF3E0; border-radius:8px; font-size:13px; color:var(--gray-700);">
-                    <i class="fas fa-map-marker-alt" style="color:var(--orange-primary);"></i> Sistem akan merekam koordinat lokasi Anda.
-                </div>
-                <div class="form-group" style="margin-top:25px;">
-                    <button type="submit" class="btn-submit"><i class="fas fa-user-plus"></i> Daftar</button>
-                </div>
-                <div class="auth-footer">
-                    Sudah punya akun? <a onclick="toggleForm('login')">Login di sini</a>
-                </div>
-            </form>
+<!-- ============ AUTH CONTAINER ============ -->
+<div class="auth-container" id="pageAuth">
+    <div class="auth-box">
+        <div class="auth-logo">
+            <i class="fas fa-store-alt"></i>
+            <h1>Toko Online <span>2R</span></h1>
+            <p>Platform Belanja & Layanan Serba Ada</p>
         </div>
+        <div class="auth-error" id="authError">
+            <i class="fas fa-exclamation-circle"></i>
+            <span id="authErrorText">Terjadi kesalahan!</span>
+        </div>
+        <form class="auth-form" id="loginForm" onsubmit="prosesLogin(event)">
+            <div class="form-group">
+                <label for="loginUsername">Username</label>
+                <div class="input-group"><i class="fas fa-user"></i><input type="text" id="loginUsername" placeholder="Masukkan username" autocomplete="username" required></div>
+            </div>
+            <div class="form-group">
+                <label for="loginPassword">Password</label>
+                <div class="input-group"><i class="fas fa-lock"></i><input type="password" id="loginPassword" placeholder="Masukkan password" autocomplete="current-password" required></div>
+            </div>
+            <div class="form-group" style="margin-top:25px;">
+                <button type="submit" class="btn-submit"><i class="fas fa-sign-in-alt"></i> Masuk</button>
+            </div>
+            <div class="auth-footer">Belum punya akun? <a onclick="toggleForm('register')">Daftar di sini</a></div>
+        </form>
+        <form class="auth-form hidden-form" id="registerForm" onsubmit="prosesRegister(event)">
+            <div class="form-group">
+                <label>ID Akun (Otomatis)</label>
+                <div class="input-group" style="background:#f0f0f0; border:2px solid #ddd;">
+                    <i class="fas fa-id-card"></i>
+                    <span id="regIdPreview" style="padding:15px 12px; font-weight:600; color:var(--gray-700);">-</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="regRole">Pilih Role <span style="color:var(--error);">*</span></label>
+                <div class="input-group">
+                    <i class="fas fa-user-tag"></i>
+                    <select id="regRole" onchange="updateIdPreview()">
+                        <option value="customer">Customer</option>
+                        <option value="toko">Toko</option>
+                        <option value="ojek">Ojek</option>
+                        <option value="pedagang">Pedagang Pasar</option>
+                        <option value="codseller">COD Seller</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group"><label for="regUsername">Username <span style="color:var(--error);">*</span></label><div class="input-group"><i class="fas fa-user"></i><input type="text" id="regUsername" placeholder="Buat username (4-20 karakter)" required></div></div>
+            <div class="form-group"><label for="regPassword">Password <span style="color:var(--error);">*</span></label><div class="input-group"><i class="fas fa-lock"></i><input type="password" id="regPassword" placeholder="Buat password (minimal 6 karakter)" required></div></div>
+            <div class="form-group"><label for="regNama">Nama Lengkap <span style="color:var(--error);">*</span></label><div class="input-group"><i class="fas fa-id-card"></i><input type="text" id="regNama" placeholder="Nama lengkap Anda" required></div></div>
+            <div class="form-group"><label for="regEmail">Email (opsional)</label><div class="input-group"><i class="fas fa-envelope"></i><input type="email" id="regEmail" placeholder="Email"></div></div>
+            <div class="form-group"><label for="regHp">Nomor HP (opsional)</label><div class="input-group"><i class="fas fa-phone"></i><input type="tel" id="regHp" placeholder="Nomor HP"></div></div>
+            <div style="margin-bottom:20px; padding:12px; background:#FFF3E0; border-radius:8px; font-size:13px; color:var(--gray-700);">
+                <i class="fas fa-map-marker-alt" style="color:var(--orange-primary);"></i> Sistem akan merekam koordinat lokasi Anda.
+            </div>
+            <div class="form-group" style="margin-top:25px;">
+                <button type="submit" class="btn-submit"><i class="fas fa-user-plus"></i> Daftar</button>
+            </div>
+            <div class="auth-footer">Sudah punya akun? <a onclick="toggleForm('login')">Login di sini</a></div>
+        </form>
     </div>
-<!-- ============ AKHIR BLOK 6 AUTH CONTAINER ============ -->
+</div>
 
-<!-- ============ BLOK 7 R1 NAVBAR ============ -->
+<!-- ============ NAVBAR ============ -->
 <nav class="navbar hidden" id="mainNavbar">
-    <div class="navbar-brand">
-        <i class="fas fa-store-alt"></i>
-        <span>Toko Online 2R</span>
-    </div>
+    <div class="navbar-brand"><i class="fas fa-store-alt"></i><span>Toko Online 2R</span></div>
     <div class="navbar-user">
         <div class="navbar-user-avatar" id="navbarAvatar">SA</div>
         <div class="navbar-user-info">
@@ -772,120 +257,60 @@
         </div>
     </div>
     <div class="navbar-actions">
-        <!-- Tombol chat opsional, bisa dipertahankan atau dihapus -->
-        <button class="btn-icon" id="btnChatNav" title="Chat">
-            <i class="fas fa-comments"></i>
-            <span class="badge hidden" id="chatBadge">0</span>
-        </button>
-        <button class="btn-logout" id="btnLogout">
-            <i class="fas fa-sign-out-alt"></i> Keluar
-        </button>
+        <button class="btn-icon" id="btnSidebarToggle" title="Toggle Menu"><i class="fas fa-bars"></i></button>
+        <button class="btn-icon" id="btnChatNav" title="Chat"><i class="fas fa-comments"></i><span class="badge hidden" id="chatBadge">0</span></button>
+        <button class="btn-logout" id="btnLogout"><i class="fas fa-sign-out-alt"></i> Keluar</button>
     </div>
 </nav>
-<!-- ============ AKHIR BLOK 7 R1 NAVBAR ============ -->
-<!-- ============ BLOK 8 R10 TOP NAVIGATION MARKUP ============ -->
-<!-- Perbaikan: tambahkan class "hidden" agar tidak muncul di halaman login -->
-<nav class="topnav hidden" id="mainTopnav">
-    <ul class="topnav-menu">
-        <!-- Menu Utama -->
-        <li class="topnav-item active" data-page="dashboard">
-            <a class="topnav-link" href="javascript:void(0)" onclick="navigasiHalaman('dashboard')"><i class="fas fa-th-large"></i> Dasbor</a>
-        </li>
-        <li class="topnav-item" data-page="profile">
-            <button class="topnav-link" onclick="var d=document.getElementById('dropdownProfil'); d.style.display = (d.style.display === 'flex' ? 'none' : 'flex');">
-                <i class="fas fa-user-circle"></i> Profil <i class="fas fa-chevron-down" style="font-size:10px; margin-left:4px;"></i>
-            </button>
-            <div class="dropdown-menu" id="dropdownProfil" style="display:none;">
-                <button type="button" class="dropdown-item" onclick="navigasiHalaman('profile'); document.getElementById('dropdownProfil').style.display='none';"><i class="fas fa-eye"></i> Lihat Profil</button>
-                <button type="button" class="dropdown-item" onclick="if(typeof bukaModalEditProfil==='function'){bukaModalEditProfil()}else{alert('Fungsi edit belum tersedia')}; document.getElementById('dropdownProfil').style.display='none';"><i class="fas fa-edit"></i> Edit Profil</button>
-                <button type="button" class="dropdown-item" onclick="navigasiHalaman('profile'); setTimeout(function(){ var el=document.getElementById('daftarDokumen'); if(el)el.scrollIntoView(); },200); document.getElementById('dropdownProfil').style.display='none';"><i class="fas fa-folder-open"></i> Dokumen</button>
-            </div>
-        </li>
-        <li class="topnav-item" data-page="lihatToko">
-            <a class="topnav-link" href="javascript:void(0)" onclick="navigasiHalaman('lihatToko')"><i class="fas fa-store"></i> Lihat Semua Toko</a>
-        </li>
-        <li class="topnav-item" data-page="lihatOjek">
-            <a class="topnav-link" href="javascript:void(0)" onclick="navigasiHalaman('lihatOjek')"><i class="fas fa-motorcycle"></i> Lihat Semua Ojek</a>
-        </li>
-        <li class="topnav-item" data-page="lihatProduk">
-            <a class="topnav-link" href="javascript:void(0)" onclick="navigasiHalaman('lihatProduk')"><i class="fas fa-box"></i> Lihat Semua Produk</a>
-        </li>
-        <li class="topnav-item" data-page="chat">
-            <a class="topnav-link" href="javascript:void(0)" onclick="navigasiHalaman('chat')"><i class="fas fa-comments"></i> Chat</a>
-        </li>
-        <!-- Menu Admin -->
-        <li class="topnav-item" data-page="daftarAkun">
-            <a class="topnav-link" href="javascript:void(0)" onclick="navigasiHalaman('daftarAkun')"><i class="fas fa-user-plus"></i> Daftar Akun Baru</a>
-        </li>
-        <li class="topnav-item" data-page="transferMenu">
-            <a class="topnav-link" href="javascript:void(0)" onclick="navigasiHalaman('transferMenu')"><i class="fas fa-exchange-alt"></i> Transfer Menu</a>
-        </li>
-        <li class="topnav-item" data-page="kelolaAkun">
-            <a class="topnav-link" href="javascript:void(0)" onclick="navigasiHalaman('kelolaAkun')"><i class="fas fa-users-cog"></i> Kelola Semua Akun</a>
-        </li>
-        <li class="topnav-item" data-page="penagihan">
-            <a class="topnav-link" href="javascript:void(0)" onclick="navigasiHalaman('penagihan')"><i class="fas fa-file-invoice-dollar"></i> Penagihan</a>
-        </li>
-        <li class="topnav-item" data-page="settingRekening">
-            <a class="topnav-link" href="javascript:void(0)" onclick="navigasiHalaman('settingRekening')"><i class="fas fa-university"></i> Setting Rekening</a>
-        </li>
-        <li class="topnav-item" data-page="kelolaUpgrade">
-            <a class="topnav-link" href="javascript:void(0)" onclick="navigasiHalaman('kelolaUpgrade')"><i class="fas fa-crown"></i> Kelola Upgrade</a>
-        </li>
-        <li class="topnav-item" data-page="settingTarifOjek">
-            <a class="topnav-link" href="javascript:void(0)" onclick="navigasiHalaman('settingTarifOjek')"><i class="fas fa-cogs"></i> Setting Tarif Ojek</a>
-        </li>
-        <li class="topnav-item" data-page="kelolaIklan">
-            <a class="topnav-link" href="javascript:void(0)" onclick="navigasiHalaman('kelolaIklan')"><i class="fas fa-ad"></i> Kelola Iklan</a>
-        </li>
-    </ul>
-</nav>
 
-<script>
-    // Tutup dropdown saat klik di luar
-    document.addEventListener('click', function(event) {
-        if (!event.target.closest('.topnav-item')) {
-            var dropdown = document.getElementById('dropdownProfil');
-            if (dropdown) dropdown.style.display = 'none';
-        }
-    });
-</script>
-<!-- ============ AKHIR BLOK 8 R10 ============ -->
-<!-- ============ BLOK 9.1 R1 CONTENT AREA SA DASH ============ -->
+<!-- ============ SIDEBAR ============ -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<aside class="sidebar hidden closed" id="mainSidebar">
+    <div class="sidebar-menu">
+        <div class="sidebar-menu-title">Menu Utama</div>
+        <div class="sidebar-menu-item active" data-page="dashboard" id="menuDashboard"><i class="fas fa-th-large"></i> Dasbor</div>
+        <div class="sidebar-menu-item" data-page="profile" id="menuProfile"><i class="fas fa-user-circle"></i> Profil</div>
+        <div class="sidebar-menu-item" data-page="lihatToko"><i class="fas fa-store"></i> Lihat Semua Toko</div>
+        <div class="sidebar-menu-item" data-page="lihatOjek"><i class="fas fa-motorcycle"></i> Lihat Semua Ojek</div>
+        <div class="sidebar-menu-item" data-page="lihatProduk"><i class="fas fa-box"></i> Lihat Semua Produk</div>
+        <div class="sidebar-menu-item" data-page="chat"><i class="fas fa-comments"></i> Chat</div>
+        <div class="sidebar-menu-title">Menu Admin</div>
+        <div class="sidebar-menu-item menu-admin" data-page="daftarAkun"><i class="fas fa-user-plus"></i> Daftar Akun Baru</div>
+        <div class="sidebar-menu-item menu-admin" data-page="transferMenu"><i class="fas fa-exchange-alt"></i> Transfer Menu</div>
+        <div class="sidebar-menu-item menu-admin" data-page="kelolaAkun"><i class="fas fa-users-cog"></i> Kelola Semua Akun</div>
+        <div class="sidebar-menu-item menu-admin" data-page="penagihan"><i class="fas fa-file-invoice-dollar"></i> Penagihan</div>
+        <div class="sidebar-menu-item menu-admin" data-page="settingRekening"><i class="fas fa-university"></i> Setting Rekening</div>
+        <div class="sidebar-menu-item menu-admin" data-page="kelolaUpgrade"><i class="fas fa-crown"></i> Kelola Upgrade</div>
+        <div class="sidebar-menu-item menu-admin" data-page="settingTarifOjek"><i class="fas fa-cogs"></i> Setting Tarif Ojek</div>
+        <div class="sidebar-menu-item menu-admin" data-page="kelolaIklan"><i class="fas fa-ad"></i> Kelola Iklan</div>
+    </div>
+</aside>
+
+<!-- ============ CONTENT AREA ============ -->
 <main class="content-area expanded hidden" id="contentArea">
-
-    <!-- ========== DASBOR ========== -->
+    <!-- Dasbor -->
     <div class="page" id="pageDashboard">
         <div class="page-header">
-            <div class="breadcrumb">
-                <i class="fas fa-home"></i> <span>Home</span>
-                <i class="fas fa-chevron-right"></i> <span class="active">Dasbor</span>
-            </div>
+            <div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Dasbor</span></div>
             <h2>Dasbor SuperAdmin</h2>
             <p>Selamat datang, <strong id="dashboardNama">SuperAdmin</strong> — Anda memiliki kendali penuh atas sistem</p>
         </div>
         <div class="card">
-            <div class="card-body text-center" style="padding: 60px 20px;">
-                <i class="fas fa-tachometer-alt" style="font-size: 64px; color: var(--gray-400); margin-bottom: 20px; display: block;"></i>
-                <h3 style="color: var(--gray-700); margin-bottom: 8px;">Dasbor Siap Digunakan</h3>
-                <p style="color: var(--gray-500);">Tambahkan widget dan fitur di sini sesuai kebutuhan.</p>
+            <div class="card-body text-center" style="padding:60px 20px;">
+                <i class="fas fa-tachometer-alt" style="font-size:64px; color:var(--gray-400); margin-bottom:20px; display:block;"></i>
+                <h3 style="color:var(--gray-700); margin-bottom:8px;">Dasbor Siap Digunakan</h3>
+                <p style="color:var(--gray-500);">Tambahkan widget dan fitur di sini sesuai kebutuhan.</p>
             </div>
         </div>
     </div>
 
-    <!-- ========== PROFIL (LENGKAP) ========== -->
-    <!-- Diambil dari Blok SA DASH - PROFIL 01 yang sudah dibuat sebelumnya -->
+    <!-- Profil (lengkap) -->
     <div class="page" id="pageProfile">
         <div class="page-header">
-            <div class="breadcrumb">
-                <i class="fas fa-home"></i> <span>Home</span>
-                <i class="fas fa-chevron-right"></i> <span class="active">Profil SuperAdmin</span>
-            </div>
+            <div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Profil SuperAdmin</span></div>
             <h2>Profil SuperAdmin</h2>
             <p>Kelola data profil dan dokumen perusahaan <strong>Toko Online 2R</strong></p>
         </div>
-
-        <!-- Profil Utama -->
         <div class="card">
             <div class="card-header">
                 <h3><i class="fas fa-user-circle" style="color:var(--orange-primary)"></i> Informasi Profil</h3>
@@ -902,24 +327,14 @@
                 </div>
             </div>
         </div>
-
-        <!-- Dokumen Perusahaan -->
         <div class="card">
             <div class="card-header">
                 <h3><i class="fas fa-folder-open" style="color:var(--orange-primary)"></i> Dokumen Perusahaan</h3>
                 <button class="btn btn-primary btn-sm" onclick="document.getElementById('inputDokumen').click()"><i class="fas fa-upload"></i> Unggah Dokumen</button>
                 <input type="file" id="inputDokumen" multiple accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png" style="display:none" onchange="uploadDokumen(event)">
             </div>
-            <div class="card-body">
-                <div id="daftarDokumen" class="empty-state">
-                    <i class="fas fa-cloud-upload-alt" style="font-size:40px; color:var(--gray-400);"></i>
-                    <h3>Belum ada dokumen</h3>
-                    <p>Klik tombol "Unggah Dokumen" untuk menambahkan.</p>
-                </div>
-            </div>
+            <div class="card-body"><div id="daftarDokumen" class="empty-state"><i class="fas fa-cloud-upload-alt" style="font-size:40px; color:var(--gray-400);"></i><h3>Belum ada dokumen</h3><p>Klik tombol "Unggah Dokumen" untuk menambahkan.</p></div></div>
         </div>
-
-        <!-- Keterangan -->
         <div class="card">
             <div class="card-header"><h3><i class="fas fa-sticky-note" style="color:var(--orange-primary)"></i> Keterangan</h3></div>
             <div class="card-body">
@@ -964,772 +379,262 @@
         </div>
     </div>
 
-    <!-- Script Profil (dari SA DASH - PROFIL 01) -->
-    <script>
-        const PROFILE_KEY = '2r_superadmin_profile';
-        const DOCUMENTS_KEY = '2r_superadmin_documents';
-
-        function loadProfil() {
-            const stored = localStorage.getItem(PROFILE_KEY);
-            if (stored) {
-                const p = JSON.parse(stored);
-                document.getElementById('profilNama').textContent = p.nama || '-';
-                document.getElementById('profilAlamat').textContent = p.alamat || '-';
-                document.getElementById('profilEmail').textContent = p.email || '-';
-                document.getElementById('profilHp').textContent = p.hp || '-';
-                document.getElementById('profilJabatan').textContent = p.jabatan || '-';
-                document.getElementById('profilPerusahaan').textContent = p.perusahaan || '-';
-                document.getElementById('textKeterangan').value = p.keterangan || '';
-            }
-            renderDokumen();
-        }
-
-        function bukaModalEditProfil() {
-            const stored = localStorage.getItem(PROFILE_KEY);
-            const p = stored ? JSON.parse(stored) : {};
-            document.getElementById('editNama').value = p.nama || '';
-            document.getElementById('editAlamat').value = p.alamat || '';
-            document.getElementById('editEmail').value = p.email || '';
-            document.getElementById('editHp').value = p.hp || '';
-            document.getElementById('editJabatan').value = p.jabatan || '';
-            document.getElementById('editPerusahaan').value = p.perusahaan || '';
-            bukaModal('modalEditProfil');
-        }
-
-        function simpanProfil() {
-            const profil = {
-                nama: document.getElementById('editNama').value.trim(),
-                alamat: document.getElementById('editAlamat').value.trim(),
-                email: document.getElementById('editEmail').value.trim(),
-                hp: document.getElementById('editHp').value.trim(),
-                jabatan: document.getElementById('editJabatan').value.trim(),
-                perusahaan: document.getElementById('editPerusahaan').value.trim(),
-                keterangan: document.getElementById('textKeterangan').value
-            };
-            if (!profil.nama) { tampilkanToast('Nama tidak boleh kosong!', 'error'); return; }
-            localStorage.setItem(PROFILE_KEY, JSON.stringify(profil));
-            loadProfil();
-            tutupModal('modalEditProfil');
-            tampilkanToast('Profil berhasil disimpan!', 'success');
-        }
-
-        function simpanKeterangan() {
-            let profil = localStorage.getItem(PROFILE_KEY);
-            profil = profil ? JSON.parse(profil) : {};
-            profil.keterangan = document.getElementById('textKeterangan').value;
-            localStorage.setItem(PROFILE_KEY, JSON.stringify(profil));
-            tampilkanToast('Keterangan disimpan!', 'success');
-        }
-
-        function getDocuments() { return JSON.parse(localStorage.getItem(DOCUMENTS_KEY) || '[]'); }
-        function saveDocuments(docs) { localStorage.setItem(DOCUMENTS_KEY, JSON.stringify(docs)); }
-
-        function uploadDokumen(event) {
-            const files = event.target.files;
-            if (!files.length) return;
-            const docs = getDocuments();
-            let loaded = 0;
-            Array.from(files).forEach(file => {
-                if (file.size > 10 * 1024 * 1024) { tampilkanToast(`File ${file.name} terlalu besar`, 'warning'); return; }
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    docs.push({ id: Date.now() + Math.random(), name: file.name, type: file.type, data: e.target.result, keterangan: '' });
-                    loaded++;
-                    if (loaded === files.length) { saveDocuments(docs); renderDokumen(); tampilkanToast(`${loaded} dokumen berhasil diunggah`, 'success'); }
-                };
-                reader.readAsDataURL(file);
-            });
-            event.target.value = '';
-        }
-
-        function renderDokumen() {
-            const docs = getDocuments();
-            const container = document.getElementById('daftarDokumen');
-            if (docs.length === 0) {
-                container.innerHTML = `<div class="empty-state"><i class="fas fa-cloud-upload-alt" style="font-size:40px; color:var(--gray-400);"></i><h3>Belum ada dokumen</h3><p>Klik tombol "Unggah Dokumen" untuk menambahkan.</p></div>`;
-                return;
-            }
-            container.innerHTML = docs.map(doc => `
-                <div class="profile-detail-item" style="justify-content:space-between; align-items:center;">
-                    <div style="display:flex; align-items:center; gap:12px; flex:1;">
-                        <div class="profile-detail-icon" style="background:var(--orange-pale); color:var(--orange-primary);"><i class="fas fa-file-alt"></i></div>
-                        <div class="profile-detail-text"><h4>${doc.name}</h4><p>${doc.keterangan || 'Tidak ada keterangan'}</p></div>
-                    </div>
-                    <div style="display:flex; gap:6px;">
-                        <button class="btn btn-sm btn-secondary" onclick="editDokumen('${doc.id}')"><i class="fas fa-edit"></i></button>
-                        <a href="${doc.data}" download="${doc.name}" class="btn btn-sm btn-primary"><i class="fas fa-download"></i></a>
-                        <button class="btn btn-sm btn-danger" onclick="hapusDokumen('${doc.id}')"><i class="fas fa-trash"></i></button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function editDokumen(id) {
-            const docs = getDocuments();
-            const doc = docs.find(d => d.id == id);
-            if (!doc) return;
-            document.getElementById('editDocId').value = id;
-            document.getElementById('editDocName').value = doc.name;
-            document.getElementById('editDocKeterangan').value = doc.keterangan || '';
-            bukaModal('modalEditDokumen');
-        }
-
-        function simpanEditDokumen() {
-            const id = document.getElementById('editDocId').value;
-            const newName = document.getElementById('editDocName').value.trim();
-            const newKet = document.getElementById('editDocKeterangan').value.trim();
-            if (!newName) { tampilkanToast('Nama file tidak boleh kosong!', 'error'); return; }
-            const docs = getDocuments();
-            const doc = docs.find(d => d.id == id);
-            if (doc) { doc.name = newName; doc.keterangan = newKet; saveDocuments(docs); renderDokumen(); tutupModal('modalEditDokumen'); tampilkanToast('Dokumen diperbarui!', 'success'); }
-        }
-
-        function hapusDokumen(id) {
-            if (!confirm('Yakin ingin menghapus dokumen ini?')) return;
-            let docs = getDocuments().filter(d => d.id != id);
-            saveDocuments(docs);
-            renderDokumen();
-            tampilkanToast('Dokumen dihapus!', 'success');
-        }
-
-        document.addEventListener('DOMContentLoaded', loadProfil);
-        (function() {
-            const originalNavigasi = window.navigasiHalaman;
-            if (originalNavigasi) {
-                window.navigasiHalaman = function(page) {
-                    originalNavigasi(page);
-                    if (page === 'profile' && typeof loadProfil === 'function') loadProfil();
-                };
-            }
-        })();
-    </script>
-
-    <!-- ========== HALAMAN LAINNYA (PLACEHOLDER) ========== -->
-    <!-- Lihat Semua Toko -->
-    <div class="page" id="pageLihatToko">
-        <div class="page-header">
-            <div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Lihat Semua Toko</span></div>
-            <h2>Daftar Toko</h2>
-            <p>Halaman untuk menampilkan semua toko yang terdaftar.</p>
-        </div>
-        <div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-store" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div>
-    </div>
-
-    <!-- Lihat Semua Ojek -->
-    <div class="page" id="pageLihatOjek">
-        <div class="page-header">
-            <div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Lihat Semua Ojek</span></div>
-            <h2>Daftar Ojek</h2>
-            <p>Halaman untuk menampilkan semua ojek yang terdaftar.</p>
-        </div>
-        <div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-motorcycle" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div>
-    </div>
-
-    <!-- Lihat Semua Produk -->
-    <div class="page" id="pageLihatProduk">
-        <div class="page-header">
-            <div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Lihat Semua Produk</span></div>
-            <h2>Daftar Produk</h2>
-            <p>Halaman untuk menampilkan semua produk yang tersedia.</p>
-        </div>
-        <div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-box" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div>
-    </div>
-
-    <!-- Chat -->
-    <div class="page" id="pageChat">
-        <div class="page-header">
-            <div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Chat</span></div>
-            <h2>Percakapan</h2>
-            <p>Halaman untuk berkomunikasi dengan pengguna lain.</p>
-        </div>
-        <div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-comments" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div>
-    </div>
-
-    <!-- Daftar Akun Baru -->
-    <div class="page" id="pageDaftarAkun">
-        <div class="page-header">
-            <div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Daftar Akun Baru</span></div>
-            <h2>Pendaftaran Akun</h2>
-            <p>SuperAdmin dapat membuat akun untuk staf, owner, dan peran lainnya.</p>
-        </div>
-        <div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-user-plus" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div>
-    </div>
-
-    <!-- Transfer Menu -->
-    <div class="page" id="pageTransferMenu">
-        <div class="page-header">
-            <div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Transfer Menu</span></div>
-            <h2>Transfer Menu</h2>
-            <p>Halaman untuk memindahkan menu atau akses antar pengguna.</p>
-        </div>
-        <div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-exchange-alt" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div>
-    </div>
-
-    <!-- Kelola Semua Akun -->
-    <div class="page" id="pageKelolaAkun">
-        <div class="page-header">
-            <div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Kelola Semua Akun</span></div>
-            <h2>Manajemen Akun</h2>
-            <p>Kelola, edit, atau hapus semua akun yang terdaftar.</p>
-        </div>
-        <div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-users-cog" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div>
-    </div>
-
-    <!-- Penagihan -->
-    <div class="page" id="pagePenagihan">
-        <div class="page-header">
-            <div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Penagihan</span></div>
-            <h2>Penagihan</h2>
-            <p>Halaman untuk mengelola invoice dan penagihan.</p>
-        </div>
-        <div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-file-invoice-dollar" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div>
-    </div>
-
-    <!-- Setting Rekening -->
-    <div class="page" id="pageSettingRekening">
-        <div class="page-header">
-            <div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Setting Rekening</span></div>
-            <h2>Pengaturan Rekening</h2>
-            <p>Atur rekening bank untuk transaksi.</p>
-        </div>
-        <div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-university" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div>
-    </div>
-
-    <!-- Kelola Upgrade -->
-    <div class="page" id="pageKelolaUpgrade">
-        <div class="page-header">
-            <div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Kelola Upgrade</span></div>
-            <h2>Kelola Upgrade</h2>
-            <p>Halaman untuk mengatur paket upgrade layanan.</p>
-        </div>
-        <div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-crown" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div>
-    </div>
-
-    <!-- Setting Tarif Ojek -->
-    <div class="page" id="pageSettingTarifOjek">
-        <div class="page-header">
-            <div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Setting Tarif Ojek</span></div>
-            <h2>Pengaturan Tarif Ojek</h2>
-            <p>Atur tarif per kilometer atau per zona.</p>
-        </div>
-        <div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-cogs" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div>
-    </div>
-
-    <!-- Kelola Iklan -->
-    <div class="page" id="pageKelolaIklan">
-        <div class="page-header">
-            <div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Kelola Iklan</span></div>
-            <h2>Kelola Iklan</h2>
-            <p>Atur tampilan iklan di platform.</p>
-        </div>
-        <div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-ad" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div>
-    </div>
+    <!-- Placeholder halaman lainnya -->
+    <div class="page" id="pageLihatToko"><div class="page-header"><div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Lihat Semua Toko</span></div><h2>Daftar Toko</h2><p>Halaman untuk menampilkan semua toko yang terdaftar.</p></div><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-store" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div></div>
+    <div class="page" id="pageLihatOjek"><div class="page-header"><div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Lihat Semua Ojek</span></div><h2>Daftar Ojek</h2><p>Halaman untuk menampilkan semua ojek yang terdaftar.</p></div><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-motorcycle" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div></div>
+    <div class="page" id="pageLihatProduk"><div class="page-header"><div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Lihat Semua Produk</span></div><h2>Daftar Produk</h2><p>Halaman untuk menampilkan semua produk yang tersedia.</p></div><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-box" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div></div>
+    <div class="page" id="pageChat"><div class="page-header"><div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Chat</span></div><h2>Percakapan</h2><p>Halaman untuk berkomunikasi dengan pengguna lain.</p></div><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-comments" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div></div>
+    <div class="page" id="pageDaftarAkun"><div class="page-header"><div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Daftar Akun Baru</span></div><h2>Pendaftaran Akun</h2><p>SuperAdmin dapat membuat akun untuk staf, owner, dan peran lainnya.</p></div><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-user-plus" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div></div>
+    <div class="page" id="pageTransferMenu"><div class="page-header"><div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Transfer Menu</span></div><h2>Transfer Menu</h2><p>Halaman untuk memindahkan menu atau akses antar pengguna.</p></div><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-exchange-alt" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div></div>
+    <div class="page" id="pageKelolaAkun"><div class="page-header"><div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Kelola Semua Akun</span></div><h2>Manajemen Akun</h2><p>Kelola, edit, atau hapus semua akun yang terdaftar.</p></div><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-users-cog" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div></div>
+    <div class="page" id="pagePenagihan"><div class="page-header"><div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Penagihan</span></div><h2>Penagihan</h2><p>Halaman untuk mengelola invoice dan penagihan.</p></div><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-file-invoice-dollar" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div></div>
+    <div class="page" id="pageSettingRekening"><div class="page-header"><div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Setting Rekening</span></div><h2>Pengaturan Rekening</h2><p>Atur rekening bank untuk transaksi.</p></div><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-university" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div></div>
+    <div class="page" id="pageKelolaUpgrade"><div class="page-header"><div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Kelola Upgrade</span></div><h2>Kelola Upgrade</h2><p>Halaman untuk mengatur paket upgrade layanan.</p></div><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-crown" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div></div>
+    <div class="page" id="pageSettingTarifOjek"><div class="page-header"><div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Setting Tarif Ojek</span></div><h2>Pengaturan Tarif Ojek</h2><p>Atur tarif per kilometer atau per zona.</p></div><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-cogs" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div></div>
+    <div class="page" id="pageKelolaIklan"><div class="page-header"><div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Kelola Iklan</span></div><h2>Kelola Iklan</h2><p>Atur tampilan iklan di platform.</p></div><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-ad" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div></div>
 </main>
-<!-- ============ AKHIR BLOK 9.1 R1 CONTENT AREA SA DASH ============ -->
 
-<!-- ============ BLOK 10.1 MODALS ============ -->
-    <div class="modal-overlay" id="modalKonfirmasi">
-        <div class="modal"><div class="modal-header"><h3 id="modalKonfirmasiTitle">Konfirmasi</h3><button class="modal-close" onclick="tutupModal('modalKonfirmasi')"><i class="fas fa-times"></i></button></div>
-        <div class="modal-body"><p id="modalKonfirmasiPesan">Apakah Anda yakin?</p></div>
-        <div class="modal-footer"><button class="btn btn-secondary" onclick="tutupModal('modalKonfirmasi')">Batal</button><button class="btn btn-primary" id="modalKonfirmasiBtn">Ya, Lanjutkan</button></div></div>
-    </div>
-    <div class="modal-overlay" id="modalDetail">
-        <div class="modal"><div class="modal-header"><h3 id="modalDetailTitle">Detail</h3><button class="modal-close" onclick="tutupModal('modalDetail')"><i class="fas fa-times"></i></button></div>
-        <div class="modal-body" id="modalDetailBody"></div>
-        <div class="modal-footer"><button class="btn btn-secondary" onclick="tutupModal('modalDetail')">Tutup</button></div></div>
-    </div>
-    <div class="modal-overlay" id="modalForm">
-        <div class="modal"><div class="modal-header"><h3 id="modalFormTitle">Form</h3><button class="modal-close" onclick="tutupModal('modalForm')"><i class="fas fa-times"></i></button></div>
-        <div class="modal-body" id="modalFormBody"></div>
-        <div class="modal-footer"><button class="btn btn-secondary" onclick="tutupModal('modalForm')">Batal</button><button class="btn btn-primary" id="modalFormSubmit">Simpan</button></div></div>
-    </div>
-<!-- ============ AKHIR BLOK 10.1 MODALS ============ -->
+<!-- ============ MODALS ============ -->
+<div class="modal-overlay" id="modalKonfirmasi">
+    <div class="modal"><div class="modal-header"><h3 id="modalKonfirmasiTitle">Konfirmasi</h3><button class="modal-close" onclick="tutupModal('modalKonfirmasi')"><i class="fas fa-times"></i></button></div>
+    <div class="modal-body"><p id="modalKonfirmasiPesan">Apakah Anda yakin?</p></div>
+    <div class="modal-footer"><button class="btn btn-secondary" onclick="tutupModal('modalKonfirmasi')">Batal</button><button class="btn btn-primary" id="modalKonfirmasiBtn">Ya, Lanjutkan</button></div></div>
+</div>
+<div class="modal-overlay" id="modalDetail">
+    <div class="modal"><div class="modal-header"><h3 id="modalDetailTitle">Detail</h3><button class="modal-close" onclick="tutupModal('modalDetail')"><i class="fas fa-times"></i></button></div>
+    <div class="modal-body" id="modalDetailBody"></div>
+    <div class="modal-footer"><button class="btn btn-secondary" onclick="tutupModal('modalDetail')">Tutup</button></div></div>
+</div>
+<div class="modal-overlay" id="modalForm">
+    <div class="modal"><div class="modal-header"><h3 id="modalFormTitle">Form</h3><button class="modal-close" onclick="tutupModal('modalForm')"><i class="fas fa-times"></i></button></div>
+    <div class="modal-body" id="modalFormBody"></div>
+    <div class="modal-footer"><button class="btn btn-secondary" onclick="tutupModal('modalForm')">Batal</button><button class="btn btn-primary" id="modalFormSubmit">Simpan</button></div></div>
+</div>
 
-<!-- ============ BLOK 10.2.1 DATA & AUTH CORE ============ -->
+<!-- ============ SCRIPTS ============ -->
 <script>
-    // ============================================
-    // DATA AKUN DI LOCALSTORAGE
-    // ============================================
-    function getDataAkun() {
-        var data = localStorage.getItem('2r_akun');
-        return data ? JSON.parse(data) : [];
-    }
+    // Data akun & enkripsi
+    function getDataAkun() { var d=localStorage.getItem('2r_akun'); return d?JSON.parse(d):[]; }
+    function simpanDataAkun(akun) { localStorage.setItem('2r_akun', JSON.stringify(akun)); }
+    function encodePassword(p) { return btoa(p); }
+    function decodePassword(p) { return atob(p); }
 
-    function simpanDataAkun(daftarAkun) {
-        localStorage.setItem('2r_akun', JSON.stringify(daftarAkun));
-    }
-
-    // ============================================
-    // ENKRIPSI / DEKRIPSI PASSWORD (BASE64)
-    // ============================================
-    function encodePassword(passwordAsli) {
-        return btoa(passwordAsli);
-    }
-
-    function decodePassword(passwordTerenkripsi) {
-        return atob(passwordTerenkripsi);
-    }
-
-    // ============================================
-    // INISIALISASI SUPERADMIN DEFAULT
-    // ============================================
+    // Inisialisasi SuperAdmin
     function inisialisasiSuperAdmin() {
-        var daftarAkun = getDataAkun();
-        var superAdmin = daftarAkun.find(function(akun) {
-            return akun.role === 'superadmin';
-        });
-
-        if (!superAdmin) {
-            var akunBaru = {
-                id: 'SA-001',
-                role: 'superadmin',
-                username: 'TokoOnline2R',
-                password: encodePassword('MyHand0286'),
-                nama: 'SuperAdmin',
-                email: 'superadmin@tokoonline2r.com',
-                hp: '081234567890',
-                alamat: 'Kantor Pusat Toko Online 2R',
-                jabatan: 'Pemilik',
-                perusahaan: 'Toko Online 2R',
-                latitude: null,
-                longitude: null,
-                registeredAt: new Date().toISOString()
-            };
-            daftarAkun.push(akunBaru);
-            simpanDataAkun(daftarAkun);
+        var akun = getDataAkun();
+        var sa = akun.find(function(a){ return a.role==='superadmin'; });
+        if (!sa) {
+            akun.push({ id:'SA-001', role:'superadmin', username:'TokoOnline2R', password:encodePassword('MyHand0286'), nama:'SuperAdmin', email:'superadmin@tokoonline2r.com', hp:'081234567890', alamat:'Kantor Pusat Toko Online 2R', jabatan:'Pemilik', perusahaan:'Toko Online 2R', latitude:null, longitude:null, registeredAt:new Date().toISOString() });
+            simpanDataAkun(akun);
         } else {
-            var passwordTersimpan = superAdmin.password;
-            try {
-                var decoded = atob(passwordTersimpan);
-                if (decoded !== 'MyHand0286') {
-                    superAdmin.password = encodePassword('MyHand0286');
-                    simpanDataAkun(daftarAkun);
-                }
-            } catch (e) {
-                superAdmin.password = encodePassword(passwordTersimpan);
-                simpanDataAkun(daftarAkun);
-            }
+            try { if(atob(sa.password)!=='MyHand0286') { sa.password=encodePassword('MyHand0286'); simpanDataAkun(akun); } }
+            catch(e) { sa.password=encodePassword(sa.password); simpanDataAkun(akun); }
         }
     }
 
-    // ============================================
-    // GENERATE ID UNIK PER ROLE
-    // ============================================
+    // Generate ID
     function generateId(role) {
-        var daftarAkun = getDataAkun();
-        var akunRoleSama = daftarAkun.filter(function(akun) {
-            return akun.role === role;
-        });
-        var nomor = 1;
-        akunRoleSama.forEach(function(akun) {
-            var bagian = akun.id.split('-');
-            if (bagian.length === 2) {
-                var angka = parseInt(bagian[1]);
-                if (!isNaN(angka) && angka >= nomor) {
-                    nomor = angka + 1;
-                }
-            }
-        });
-        var prefix = {
-            'customer': 'CUST',
-            'toko': 'TOKO',
-            'ojek': 'OJEK',
-            'pedagang': 'PEDAGANG',
-            'codseller': 'COD',
-            'superadmin': 'SA'
-        };
-        return prefix[role] + '-' + String(nomor).padStart(3, '0');
+        var akun = getDataAkun().filter(function(a){ return a.role===role; });
+        var n=1; akun.forEach(function(a){ var p=a.id.split('-'); if(p.length===2){ var x=parseInt(p[1]); if(!isNaN(x)&&x>=n) n=x+1; } });
+        var prefix={'customer':'CUST','toko':'TOKO','ojek':'OJEK','pedagang':'PEDAGANG','codseller':'COD','superadmin':'SA'};
+        return prefix[role]+'-'+String(n).padStart(3,'0');
     }
 
-    // ============================================
-    // PREVIEW ID PADA FORM REGISTER
-    // ============================================
-    function updateIdPreview() {
-        var role = document.getElementById('regRole').value;
-        var preview = document.getElementById('regIdPreview');
-        preview.textContent = role ? generateId(role) : '-';
-    }
-
-    // ============================================
-    // TOGGLE FORM LOGIN / REGISTER
-    // ============================================
-    function toggleForm(tipe) {
-        var loginForm = document.getElementById('loginForm');
-        var registerForm = document.getElementById('registerForm');
-        var errorDiv = document.getElementById('authError');
-        errorDiv.style.display = 'none';
-        if (tipe === 'register') {
-            loginForm.classList.add('hidden-form');
-            registerForm.classList.remove('hidden-form');
-            updateIdPreview();
-        } else {
-            registerForm.classList.add('hidden-form');
-            loginForm.classList.remove('hidden-form');
-        }
-    }
-
-    // ============================================
-    // TOAST NOTIFIKASI
-    // ============================================
+    function updateIdPreview() { document.getElementById('regIdPreview').textContent = generateId(document.getElementById('regRole').value) || '-'; }
+    function toggleForm(t) { document.getElementById('authError').style.display='none'; if(t==='register'){ document.getElementById('loginForm').classList.add('hidden-form'); document.getElementById('registerForm').classList.remove('hidden-form'); updateIdPreview(); } else { document.getElementById('registerForm').classList.add('hidden-form'); document.getElementById('loginForm').classList.remove('hidden-form'); } }
     function tampilkanToast(pesan, tipe) {
-        tipe = tipe || 'success';
-        var container = document.getElementById('toastContainer');
-        var toast = document.createElement('div');
-        toast.className = 'toast ' + tipe;
-        var icon = tipe === 'success' ? 'fa-check-circle' :
-                   tipe === 'error' ? 'fa-times-circle' :
-                   'fa-exclamation-triangle';
-        toast.innerHTML = '<i class="fas ' + icon + '"></i> ' + pesan;
-        container.appendChild(toast);
-        setTimeout(function() {
-            toast.style.animation = 'slideInRight 0.3s ease reverse';
-            setTimeout(function() { toast.remove(); }, 300);
-        }, 3500);
+        tipe=tipe||'success'; var t=document.createElement('div'); t.className='toast '+tipe;
+        var icon=tipe==='success'?'fa-check-circle':tipe==='error'?'fa-times-circle':'fa-exclamation-triangle';
+        t.innerHTML='<i class="fas '+icon+'"></i> '+pesan; document.getElementById('toastContainer').appendChild(t);
+        setTimeout(function(){ t.style.animation='slideInRight 0.3s ease reverse'; setTimeout(function(){ t.remove(); },300); },3500);
     }
 
-    // ============================================
-    // PROSES LOGIN
-    // ============================================
-    function prosesLogin(event) {
-        event.preventDefault();
-        var username = document.getElementById('loginUsername').value.trim();
-        var password = document.getElementById('loginPassword').value.trim();
-        var errorDiv = document.getElementById('authError');
-        var errorText = document.getElementById('authErrorText');
-        errorDiv.style.display = 'none';
-
-        var daftarAkun = getDataAkun();
-        var user = daftarAkun.find(function(akun) {
-            return akun.username === username && decodePassword(akun.password) === password;
-        });
-
-        if (user) {
-            tampilkanToast('Selamat datang, ' + user.nama + '!', 'success');
+    // Login
+    function prosesLogin(e) {
+        e.preventDefault();
+        var username=document.getElementById('loginUsername').value.trim();
+        var password=document.getElementById('loginPassword').value.trim();
+        var user=getDataAkun().find(function(a){ return a.username===username && decodePassword(a.password)===password; });
+        if(user){
+            tampilkanToast('Selamat datang, '+user.nama+'!');
             localStorage.setItem('2r_user', JSON.stringify(user));
-            document.getElementById('loginUsername').value = '';
-            document.getElementById('loginPassword').value = '';
+            document.getElementById('loginUsername').value=''; document.getElementById('loginPassword').value='';
             tampilkanDashboard(user);
         } else {
-            errorDiv.style.display = 'flex';
-            errorText.textContent = 'Username atau password salah!';
-            tampilkanToast('Username atau password salah!', 'error');
+            document.getElementById('authError').style.display='flex';
+            document.getElementById('authErrorText').textContent='Username atau password salah!';
         }
     }
 
-    // ============================================
-    // PROSES REGISTER
-    // ============================================
-    function prosesRegister(event) {
-        event.preventDefault();
-
-        var role = document.getElementById('regRole').value;
-        var username = document.getElementById('regUsername').value.trim();
-        var password = document.getElementById('regPassword').value.trim();
-        var nama = document.getElementById('regNama').value.trim();
-        var email = document.getElementById('regEmail').value.trim();
-        var hp = document.getElementById('regHp').value.trim();
-
-        var errorDiv = document.getElementById('authError');
-        var errorText = document.getElementById('authErrorText');
-        errorDiv.style.display = 'none';
-
-        if (!role || !username || !password || !nama) {
-            errorDiv.style.display = 'flex';
-            errorText.textContent = 'Role, username, password, dan nama lengkap harus diisi!';
-            tampilkanToast('Data belum lengkap!', 'warning');
-            return;
-        }
-        if (username.length < 4 || username.length > 20) {
-            tampilkanToast('Username harus 4-20 karakter!', 'warning');
-            return;
-        }
-        if (password.length < 6) {
-            tampilkanToast('Password minimal 6 karakter!', 'warning');
-            return;
-        }
-
-        var daftarAkun = getDataAkun();
-        if (daftarAkun.find(function(akun) { return akun.username === username; })) {
-            tampilkanToast('Username sudah digunakan!', 'error');
-            return;
-        }
-        if (email && daftarAkun.find(function(akun) { return akun.email === email; })) {
-            tampilkanToast('Email sudah digunakan!', 'error');
-            return;
-        }
-        if (hp && daftarAkun.find(function(akun) { return akun.hp === hp; })) {
-            tampilkanToast('Nomor HP sudah digunakan!', 'error');
-            return;
-        }
-
-        var id = generateId(role);
-
-        function selesaiRegister(latitude, longitude) {
-            var userBaru = {
-                id: id,
-                role: role,
-                username: username,
-                password: encodePassword(password),
-                nama: nama,
-                email: email || '',
-                hp: hp || '',
-                alamat: '',
-                jabatan: '',
-                perusahaan: '',
-                latitude: latitude,
-                longitude: longitude,
-                registeredAt: new Date().toISOString()
-            };
-            daftarAkun.push(userBaru);
-            simpanDataAkun(daftarAkun);
-            tampilkanToast('Akun berhasil dibuat! ID: ' + id, 'success');
-            document.getElementById('regUsername').value = '';
-            document.getElementById('regPassword').value = '';
-            document.getElementById('regNama').value = '';
-            document.getElementById('regEmail').value = '';
-            document.getElementById('regHp').value = '';
+    // Register
+    function prosesRegister(e) {
+        e.preventDefault();
+        var role=document.getElementById('regRole').value, username=document.getElementById('regUsername').value.trim(), password=document.getElementById('regPassword').value.trim(), nama=document.getElementById('regNama').value.trim(), email=document.getElementById('regEmail').value.trim(), hp=document.getElementById('regHp').value.trim();
+        if(!role||!username||!password||!nama){ tampilkanToast('Data belum lengkap!','warning'); return; }
+        var akun=getDataAkun();
+        if(akun.find(function(a){ return a.username===username; })){ tampilkanToast('Username sudah digunakan','error'); return; }
+        if(email && akun.find(function(a){ return a.email===email; })){ tampilkanToast('Email sudah digunakan','error'); return; }
+        if(hp && akun.find(function(a){ return a.hp===hp; })){ tampilkanToast('HP sudah digunakan','error'); return; }
+        var id=generateId(role);
+        function selesai(lat, lng) {
+            akun.push({ id:id, role:role, username:username, password:encodePassword(password), nama:nama, email:email||'', hp:hp||'', alamat:'', jabatan:'', perusahaan:'', latitude:lat, longitude:lng, registeredAt:new Date().toISOString() });
+            simpanDataAkun(akun); tampilkanToast('Akun berhasil dibuat! ID: '+id);
+            document.getElementById('regUsername').value=''; document.getElementById('regPassword').value=''; document.getElementById('regNama').value=''; document.getElementById('regEmail').value=''; document.getElementById('regHp').value='';
             toggleForm('login');
         }
-
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                function(position) {
-                    selesaiRegister(position.coords.latitude, position.coords.longitude);
-                },
-                function() {
-                    selesaiRegister(null, null);
-                }
-            );
-        } else {
-            selesaiRegister(null, null);
-        }
+        if(navigator.geolocation){ navigator.geolocation.getCurrentPosition(function(p){ selesai(p.coords.latitude, p.coords.longitude); }, function(){ selesai(null,null); }); }
+        else { selesai(null,null); }
     }
-</script>
-<!-- ============ AKHIR BLOK 10.2.1 ============ -->
-<!-- ============ BLOK 10.2.2 R2 UI SETUP ============ -->
-<script>
-    // ============================================
-    // SETUP TOP NAVIGATION & DROPDOWN
-    // ============================================
-    function setupTopNavigation() {
-        // Hapus listener klik global sebelumnya (hindari duplikasi)
-        var oldHandler = document._topnavClickHandler;
-        if (oldHandler) {
-            document.removeEventListener('click', oldHandler);
-        }
 
-        // Handler untuk menutup dropdown saat klik di luar
-        var clickOutsideHandler = function(event) {
-            if (!event.target.closest('.topnav-item')) {
-                document.querySelectorAll('.dropdown-menu.show').forEach(function(d) {
-                    d.classList.remove('show');
-                });
-            }
-        };
-        document.addEventListener('click', clickOutsideHandler);
-        document._topnavClickHandler = clickOutsideHandler;
+    // Navigasi & sidebar
+    function navigasiHalaman(page) {
+        document.querySelectorAll('.page').forEach(function(p){ p.classList.add('hidden'); });
+        var target=document.getElementById('page'+page.charAt(0).toUpperCase()+page.slice(1));
+        if(target){ target.classList.remove('hidden'); setActiveMenu(page); if(page==='profile'&&typeof loadProfil==='function') loadProfil(); }
+        else tampilkanToast('Halaman belum tersedia','warning');
+        // Auto-close sidebar di mobile
+        if(window.innerWidth<=768){ toggleSidebar(true); }
+    }
+    function setActiveMenu(page) {
+        document.querySelectorAll('.sidebar-menu-item').forEach(function(el){ el.classList.remove('active'); });
+        var menu=document.getElementById('menu'+page.charAt(0).toUpperCase()+page.slice(1));
+        if(menu) menu.classList.add('active');
+    }
+    function toggleSidebar(forceClose) {
+        var sidebar=document.getElementById('mainSidebar'), overlay=document.getElementById('sidebarOverlay');
+        if(forceClose){ sidebar.classList.add('closed'); overlay.classList.remove('active'); }
+        else { sidebar.classList.toggle('closed'); overlay.classList.toggle('active'); }
+    }
+    function logout(){ localStorage.removeItem('2r_user'); location.reload(); }
+    function bukaModal(id){ document.getElementById(id).classList.add('active'); }
+    function tutupModal(id){ document.getElementById(id).classList.remove('active'); }
 
-        // Event listener untuk setiap item menu
-        document.querySelectorAll('.topnav-item').forEach(function(item) {
-            var link = item.querySelector('.topnav-link');
-            var dropdown = item.querySelector('.dropdown-menu');
-            var page = item.dataset.page;
+    // Tampilkan dashboard
+    function tampilkanDashboard(user) {
+        document.body.style.display='block'; document.body.style.justifyContent='unset'; document.body.style.alignItems='unset';
+        document.getElementById('pageAuth').style.display='none';
+        document.getElementById('mainNavbar').classList.remove('hidden');
+        var sidebar=document.getElementById('mainSidebar'); sidebar.classList.remove('hidden'); sidebar.classList.remove('closed');
+        document.getElementById('contentArea').classList.remove('hidden');
 
-            if (!link) return;
+        var avatar=document.getElementById('navbarAvatar'); avatar.textContent=user.nama.charAt(0).toUpperCase(); avatar.style.background='var(--orange-gradient)'; avatar.style.color='white';
+        document.getElementById('navbarUserName').textContent=user.nama;
+        var roleLabel=user.role==='superadmin'?'SuperAdmin':user.role==='toko'?'Toko':user.role==='ojek'?'Ojek':user.role==='pedagang'?'Pedagang':user.role==='codseller'?'COD Seller':user.role==='customer'?'Customer':user.role;
+        document.getElementById('navbarUserRole').textContent=roleLabel;
+        var dn=document.getElementById('dashboardNama'); if(dn) dn.textContent=user.nama;
 
-            // Hapus listener lama (hindari duplikasi jika dipanggil ulang)
-            link.removeEventListener('click', link._clickHandler);
+        document.querySelectorAll('.page').forEach(function(p){ p.classList.add('hidden'); });
+        document.getElementById('pageDashboard').classList.remove('hidden');
+        setActiveMenu('dashboard');
 
-            link._clickHandler = function(event) {
-                if (dropdown) {
-                    // Jika ada dropdown, toggle tampilannya
-                    event.preventDefault();
-                    event.stopPropagation();
+        document.getElementById('btnSidebarToggle').addEventListener('click', function(){ toggleSidebar(); });
+        document.getElementById('sidebarOverlay').addEventListener('click', function(){ toggleSidebar(true); });
+        document.getElementById('btnLogout').addEventListener('click', function(){ if(confirm('Yakin keluar?')){ logout(); } });
 
-                    var isShown = dropdown.classList.contains('show');
-                    // Tutup semua dropdown lain
-                    document.querySelectorAll('.dropdown-menu.show').forEach(function(d) {
-                        d.classList.remove('show');
-                    });
-
-                    if (!isShown) {
-                        dropdown.classList.add('show');
-                    }
-                } else if (page) {
-                    // Menu biasa: navigasi
-                    navigasiHalaman(page);
-                    document.querySelectorAll('.dropdown-menu.show').forEach(function(d) {
-                        d.classList.remove('show');
-                    });
-                }
-            };
-
-            link.addEventListener('click', link._clickHandler);
-
-            // Submenu di dalam dropdown
-            var subItems = dropdown ? dropdown.querySelectorAll('a, .dropdown-item') : [];
-            subItems.forEach(function(sub) {
-                sub.removeEventListener('click', sub._subClickHandler);
-
-                sub._subClickHandler = function(event) {
-                    event.stopPropagation();
-                    var subPage = sub.dataset.page;
-                    var action = sub.dataset.action;
-
-                    if (subPage) {
-                        navigasiHalaman(subPage);
-                    }
-                    if (action && typeof window[action] === 'function') {
-                        window[action]();
-                    }
-
-                    // Tutup dropdown setelah submenu diklik
-                    document.querySelectorAll('.dropdown-menu.show').forEach(function(d) {
-                        d.classList.remove('show');
-                    });
-                };
-                sub.addEventListener('click', sub._subClickHandler);
+        document.querySelectorAll('.sidebar-menu-item').forEach(function(item){
+            item.addEventListener('click', function(){
+                var page=this.dataset.page;
+                if(page){ navigasiHalaman(page); }
             });
         });
     }
 
-    // ============================================
-    // FUNGSI SET ACTIVE MENU (TOPNAV VERSION)
-    // ============================================
-    function setActiveMenu(page) {
-        document.querySelectorAll('.topnav-item').forEach(function(item) {
-            item.classList.remove('active');
-        });
-        var activeItem = document.querySelector('.topnav-item[data-page="' + page + '"]');
-        if (activeItem) {
-            activeItem.classList.add('active');
-        }
-    }
-
-    // ============================================
-    // FUNGSI TAMPILKAN DASHBOARD
-    // ============================================
-    function tampilkanDashboard(user) {
-        document.body.style.display = 'block';
-        document.body.style.justifyContent = 'unset';
-        document.body.style.alignItems = 'unset';
-
-        document.getElementById('pageAuth').style.display = 'none';
-        document.getElementById('mainNavbar').classList.remove('hidden');
-        document.getElementById('mainTopnav').classList.remove('hidden'); // ✅ Tampilkan topnav
-        document.getElementById('contentArea').classList.remove('hidden');
-
-        var avatar = document.getElementById('navbarAvatar');
-        var inisial = user.nama.charAt(0).toUpperCase();
-        avatar.textContent = inisial;
-        avatar.style.background = 'var(--orange-gradient)';
-        avatar.style.color = 'white';
-
-        document.getElementById('navbarUserName').textContent = user.nama;
-        var roleLabel = user.role === 'superadmin' ? 'SuperAdmin' :
-                        user.role === 'toko' ? 'Toko' :
-                        user.role === 'ojek' ? 'Ojek' :
-                        user.role === 'pedagang' ? 'Pedagang' :
-                        user.role === 'codseller' ? 'COD Seller' :
-                        user.role === 'customer' ? 'Customer' : user.role;
-        document.getElementById('navbarUserRole').textContent = roleLabel;
-
-        var dashboardNama = document.getElementById('dashboardNama');
-        if (dashboardNama) {
-            dashboardNama.textContent = user.nama;
-        }
-
-        var semuaHalaman = document.querySelectorAll('.page');
-        semuaHalaman.forEach(function(halaman) {
-            halaman.classList.add('hidden');
-        });
-        var halamanDashboard = document.getElementById('pageDashboard');
-        if (halamanDashboard) {
-            halamanDashboard.classList.remove('hidden');
-        }
-        setActiveMenu('dashboard');
-
-        // Pasang event listener top navigation (memperbaiki dropdown Profil)
-        setupTopNavigation();
-
-        document.getElementById('btnLogout').addEventListener('click', function() {
-            if (confirm('Apakah Anda yakin ingin keluar?')) {
-                localStorage.removeItem('2r_user');
-                location.reload();
-            }
-        });
-    }
-</script>
-<!-- ============ AKHIR BLOK 10.2.2 R2 ============ -->
-    <!-- ============ BLOK 10.2.3 INISIALISASI HALAMAN ============ -->
-<script>
-    // ============================================
-    // EVENT LISTENER SAAT HALAMAN DIMUAT
-    // ============================================
-    window.addEventListener('load', function() {
-        setTimeout(function() {
-            document.getElementById('preloader').classList.add('hidden');
-        }, 500);
-    });
-
-    window.addEventListener('DOMContentLoaded', function() {
+    // Inisialisasi halaman
+    window.addEventListener('load', function(){ setTimeout(function(){ document.getElementById('preloader').classList.add('hidden'); },500); });
+    window.addEventListener('DOMContentLoaded', function(){
         inisialisasiSuperAdmin();
-
-        var storedUser = localStorage.getItem('2r_user');
-        if (storedUser) {
-            var user = JSON.parse(storedUser);
-            tampilkanDashboard(user);
-        } else {
-            updateIdPreview();
-        }
+        var stored=localStorage.getItem('2r_user');
+        if(stored){ tampilkanDashboard(JSON.parse(stored)); }
+        updateIdPreview();
     });
 </script>
-<!-- ============ AKHIR BLOK 10.2.3 ============ -->
 
-<!-- ============ BLOK 10.3 R1 NAVIGASI & HELPER ============ -->
+<!-- ============ PROFIL SCRIPTS ============ -->
 <script>
-    // ============================================
-    // FUNGSI NAVIGASI HALAMAN
-    // ============================================
-    function navigasiHalaman(page) {
-        var semuaHalaman = document.querySelectorAll('.page');
-        semuaHalaman.forEach(function(halaman) {
-            halaman.classList.add('hidden');
+    const PROFILE_KEY='2r_superadmin_profile', DOCUMENTS_KEY='2r_superadmin_documents';
+    function loadProfil(){
+        var p=JSON.parse(localStorage.getItem(PROFILE_KEY)||'{}');
+        document.getElementById('profilNama').textContent=p.nama||'-';
+        document.getElementById('profilAlamat').textContent=p.alamat||'-';
+        document.getElementById('profilEmail').textContent=p.email||'-';
+        document.getElementById('profilHp').textContent=p.hp||'-';
+        document.getElementById('profilJabatan').textContent=p.jabatan||'-';
+        document.getElementById('profilPerusahaan').textContent=p.perusahaan||'-';
+        document.getElementById('textKeterangan').value=p.keterangan||'';
+        renderDokumen();
+    }
+    function bukaModalEditProfil(){
+        var p=JSON.parse(localStorage.getItem(PROFILE_KEY)||'{}');
+        document.getElementById('editNama').value=p.nama||'';
+        document.getElementById('editAlamat').value=p.alamat||'';
+        document.getElementById('editEmail').value=p.email||'';
+        document.getElementById('editHp').value=p.hp||'';
+        document.getElementById('editJabatan').value=p.jabatan||'';
+        document.getElementById('editPerusahaan').value=p.perusahaan||'';
+        bukaModal('modalEditProfil');
+    }
+    function simpanProfil(){
+        var profil={
+            nama:document.getElementById('editNama').value.trim(),
+            alamat:document.getElementById('editAlamat').value.trim(),
+            email:document.getElementById('editEmail').value.trim(),
+            hp:document.getElementById('editHp').value.trim(),
+            jabatan:document.getElementById('editJabatan').value.trim(),
+            perusahaan:document.getElementById('editPerusahaan').value.trim(),
+            keterangan:document.getElementById('textKeterangan').value
+        };
+        if(!profil.nama){ tampilkanToast('Nama tidak boleh kosong!','error'); return; }
+        localStorage.setItem(PROFILE_KEY, JSON.stringify(profil));
+        loadProfil(); tutupModal('modalEditProfil'); tampilkanToast('Profil berhasil disimpan!');
+    }
+    function simpanKeterangan(){
+        var p=JSON.parse(localStorage.getItem(PROFILE_KEY)||'{}'); p.keterangan=document.getElementById('textKeterangan').value;
+        localStorage.setItem(PROFILE_KEY, JSON.stringify(p)); tampilkanToast('Keterangan disimpan!');
+    }
+    function getDocuments(){ return JSON.parse(localStorage.getItem(DOCUMENTS_KEY)||'[]'); }
+    function saveDocuments(docs){ localStorage.setItem(DOCUMENTS_KEY, JSON.stringify(docs)); }
+    function uploadDokumen(event){
+        var files=event.target.files; if(!files.length) return;
+        var docs=getDocuments(), loaded=0;
+        Array.from(files).forEach(function(file){
+            if(file.size>10*1024*1024){ tampilkanToast('File '+file.name+' terlalu besar','warning'); return; }
+            var reader=new FileReader();
+            reader.onload=function(e){
+                docs.push({ id:Date.now()+Math.random(), name:file.name, type:file.type, data:e.target.result, keterangan:'' });
+                loaded++; if(loaded===files.length){ saveDocuments(docs); renderDokumen(); tampilkanToast(loaded+' dokumen berhasil diunggah'); }
+            };
+            reader.readAsDataURL(file);
         });
-        var target = document.getElementById('page' + page.charAt(0).toUpperCase() + page.slice(1));
-        if (target) {
-            target.classList.remove('hidden');
-            setActiveMenu(page); // fungsi ini sudah ada di Blok 10.2
-
-            // Jika menuju halaman profil, muat data terbaru
-            if (page === 'profile' && typeof loadProfil === 'function') {
-                loadProfil();
-            }
-        } else {
-            tampilkanToast('Halaman ' + page + ' belum tersedia', 'warning');
-        }
+        event.target.value='';
     }
-
-    function toggleSidebar() {
-        var sidebar = document.getElementById('mainSidebar');
-        var overlay = document.getElementById('sidebarOverlay');
-        sidebar.classList.toggle('closed');
-        overlay.classList.toggle('active');
+    function renderDokumen(){
+        var docs=getDocuments(), container=document.getElementById('daftarDokumen');
+        if(docs.length===0){ container.innerHTML='<div class="empty-state"><i class="fas fa-cloud-upload-alt" style="font-size:40px; color:var(--gray-400);"></i><h3>Belum ada dokumen</h3><p>Klik tombol "Unggah Dokumen" untuk menambahkan.</p></div>'; return; }
+        container.innerHTML=docs.map(function(doc){
+            return '<div class="profile-detail-item" style="justify-content:space-between; align-items:center;"><div style="display:flex; align-items:center; gap:12px; flex:1;"><div class="profile-detail-icon" style="background:var(--orange-pale); color:var(--orange-primary);"><i class="fas fa-file-alt"></i></div><div class="profile-detail-text"><h4>'+doc.name+'</h4><p>'+(doc.keterangan||'Tidak ada keterangan')+'</p></div></div><div style="display:flex; gap:6px;"><button class="btn btn-sm btn-secondary" onclick="editDokumen(\''+doc.id+'\')"><i class="fas fa-edit"></i></button><a href="'+doc.data+'" download="'+doc.name+'" class="btn btn-sm btn-primary"><i class="fas fa-download"></i></a><button class="btn btn-sm btn-danger" onclick="hapusDokumen(\''+doc.id+'\')"><i class="fas fa-trash"></i></button></div></div>';
+        }).join('');
     }
-
-    function logout() {
-        localStorage.removeItem('2r_user');
-        location.reload();
+    function editDokumen(id){
+        var doc=getDocuments().find(function(d){ return d.id==id; }); if(!doc) return;
+        document.getElementById('editDocId').value=id; document.getElementById('editDocName').value=doc.name; document.getElementById('editDocKeterangan').value=doc.keterangan||'';
+        bukaModal('modalEditDokumen');
     }
-
-    function bukaModal(id) {
-        document.getElementById(id).classList.add('active');
+    function simpanEditDokumen(){
+        var id=document.getElementById('editDocId').value, name=document.getElementById('editDocName').value.trim(), ket=document.getElementById('editDocKeterangan').value.trim();
+        if(!name){ tampilkanToast('Nama file tidak boleh kosong!','error'); return; }
+        var docs=getDocuments(), doc=docs.find(function(d){ return d.id==id; });
+        if(doc){ doc.name=name; doc.keterangan=ket; saveDocuments(docs); renderDokumen(); tutupModal('modalEditDokumen'); tampilkanToast('Dokumen diperbarui!'); }
     }
-
-    function tutupModal(id) {
-        document.getElementById(id).classList.remove('active');
+    function hapusDokumen(id){
+        if(!confirm('Yakin ingin menghapus dokumen ini?')) return;
+        var docs=getDocuments().filter(function(d){ return d.id!=id; });
+        saveDocuments(docs); renderDokumen(); tampilkanToast('Dokumen dihapus!');
     }
+    document.addEventListener('DOMContentLoaded', loadProfil);
+    (function(){
+        var orig=window.navigasiHalaman;
+        if(orig){ window.navigasiHalaman=function(page){ orig(page); if(page==='profile'&&typeof loadProfil==='function') loadProfil(); }; }
+    })();
 </script>
-<!-- ============ AKHIR BLOK 10.3 R1 NAVIGASI & HELPER ============ -->
 </body>
 </html>
