@@ -1223,7 +1223,7 @@
     </div>
 <!-- ============ AKHIR BLOK 10.1 MODALS ============ -->
 
-<!-- ============ BLOK 10.2 R7 SCRIPT UTAMA ============ -->
+<!-- ============ BLOK 10.2.1 DATA & AUTH CORE ============ -->
 <script>
     // ============================================
     // DATA AKUN DI LOCALSTORAGE
@@ -1386,7 +1386,6 @@
             localStorage.setItem('2r_user', JSON.stringify(user));
             document.getElementById('loginUsername').value = '';
             document.getElementById('loginPassword').value = '';
-
             tampilkanDashboard(user);
         } else {
             errorDiv.style.display = 'flex';
@@ -1483,28 +1482,10 @@
             selesaiRegister(null, null);
         }
     }
-
-    // ============================================
-    // EVENT LISTENER SAAT HALAMAN DIMUAT
-    // ============================================
-    window.addEventListener('load', function() {
-        setTimeout(function() {
-            document.getElementById('preloader').classList.add('hidden');
-        }, 500);
-    });
-
-    window.addEventListener('DOMContentLoaded', function() {
-        inisialisasiSuperAdmin();
-
-        var storedUser = localStorage.getItem('2r_user');
-        if (storedUser) {
-            var user = JSON.parse(storedUser);
-            tampilkanDashboard(user);
-        }
-        updateIdPreview();
-        setupTopNavigation();
-    });
-
+</script>
+<!-- ============ AKHIR BLOK 10.2.1 ============ -->
+    <!-- ============ BLOK 10.2.2 UI SETUP ============ -->
+<script>
     // ============================================
     // SETUP TOP NAVIGATION & DROPDOWN
     // ============================================
@@ -1532,7 +1513,6 @@
                     event.preventDefault();
                     event.stopPropagation();
                     var isShown = dropdown.classList.contains('show');
-                    // Tutup semua dropdown lain
                     document.querySelectorAll('.dropdown-menu.show').forEach(function(d) {
                         d.classList.remove('show');
                     });
@@ -1540,16 +1520,14 @@
                         dropdown.classList.add('show');
                     }
                 } else if (page) {
-                    // Navigasi biasa
                     navigasiHalaman(page);
-                    // Tutup semua dropdown
                     document.querySelectorAll('.dropdown-menu.show').forEach(function(d) {
                         d.classList.remove('show');
                     });
                 }
             });
 
-            // Klik pada submenu item
+            // Klik pada submenu
             var subItems = item.querySelectorAll('.dropdown-menu a, .dropdown-menu .dropdown-item');
             subItems.forEach(function(sub) {
                 sub.addEventListener('click', function(event) {
@@ -1562,7 +1540,6 @@
                     if (action && typeof window[action] === 'function') {
                         window[action]();
                     }
-                    // Tutup dropdown
                     document.querySelectorAll('.dropdown-menu.show').forEach(function(d) {
                         d.classList.remove('show');
                     });
@@ -1575,11 +1552,9 @@
     // FUNGSI SET ACTIVE MENU (TOPNAV VERSION)
     // ============================================
     function setActiveMenu(page) {
-        // Hapus active dari semua item
         document.querySelectorAll('.topnav-item').forEach(function(item) {
             item.classList.remove('active');
         });
-        // Cari item dengan data-page yang sesuai
         var activeItem = document.querySelector('.topnav-item[data-page="' + page + '"]');
         if (activeItem) {
             activeItem.classList.add('active');
@@ -1596,7 +1571,6 @@
 
         document.getElementById('pageAuth').style.display = 'none';
         document.getElementById('mainNavbar').classList.remove('hidden');
-        // Top navigation sudah tidak memerlukan class hidden/closed seperti sidebar
         document.getElementById('contentArea').classList.remove('hidden');
 
         var avatar = document.getElementById('navbarAvatar');
@@ -1629,7 +1603,9 @@
         }
         setActiveMenu('dashboard');
 
-        // Event listener logout (tidak ada tombol sidebar lagi)
+        // Pasang event listener top navigation (memperbaiki dropdown Profil)
+        setupTopNavigation();
+
         document.getElementById('btnLogout').addEventListener('click', function() {
             if (confirm('Apakah Anda yakin ingin keluar?')) {
                 localStorage.removeItem('2r_user');
@@ -1638,7 +1614,31 @@
         });
     }
 </script>
-<!-- ============ AKHIR BLOK 10.2 R7 SCRIPT UTAMA ============ -->
+<!-- ============ AKHIR BLOK 10.2.2 ============ -->
+    <!-- ============ BLOK 10.2.3 INISIALISASI HALAMAN ============ -->
+<script>
+    // ============================================
+    // EVENT LISTENER SAAT HALAMAN DIMUAT
+    // ============================================
+    window.addEventListener('load', function() {
+        setTimeout(function() {
+            document.getElementById('preloader').classList.add('hidden');
+        }, 500);
+    });
+
+    window.addEventListener('DOMContentLoaded', function() {
+        inisialisasiSuperAdmin();
+
+        var storedUser = localStorage.getItem('2r_user');
+        if (storedUser) {
+            var user = JSON.parse(storedUser);
+            tampilkanDashboard(user);
+        } else {
+            updateIdPreview();
+        }
+    });
+</script>
+<!-- ============ AKHIR BLOK 10.2.3 ============ -->
 
 <!-- ============ BLOK 10.3 R1 NAVIGASI & HELPER ============ -->
 <script>
