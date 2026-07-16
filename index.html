@@ -783,7 +783,7 @@
     </div>
 </nav>
 <!-- ============ AKHIR BLOK 7 R1 NAVBAR ============ -->
-<!-- ============ BLOK 8 R8 TOP NAVIGATION MARKUP (BUTTON-BASED) ============ -->
+<!-- ============ BLOK 8 R9 TOP NAVIGATION MARKUP ============ -->
 <nav class="topnav" id="mainTopnav">
     <ul class="topnav-menu">
         <!-- Menu Utama -->
@@ -791,16 +791,16 @@
             <a class="topnav-link" href="javascript:void(0)" onclick="navigasiHalaman('dashboard')"><i class="fas fa-th-large"></i> Dasbor</a>
         </li>
         <li class="topnav-item" data-page="profile">
-            <!-- Ganti <a> menjadi <button> agar klik tidak terhambat oleh href -->
-            <button class="topnav-link" onclick="var dd=document.getElementById('dropdownProfil'); if(dd){ dd.classList.toggle('show'); }">
+            <button class="topnav-link" onclick="var d=document.getElementById('dropdownProfil'); d.style.display = (d.style.display === 'flex' ? 'none' : 'flex');">
                 <i class="fas fa-user-circle"></i> Profil <i class="fas fa-chevron-down" style="font-size:10px; margin-left:4px;"></i>
             </button>
-            <div class="dropdown-menu" id="dropdownProfil">
-                <button type="button" class="dropdown-item" onclick="navigasiHalaman('profile'); document.getElementById('dropdownProfil').classList.remove('show');"><i class="fas fa-eye"></i> Lihat Profil</button>
-                <button type="button" class="dropdown-item" onclick="if(typeof bukaModalEditProfil==='function'){bukaModalEditProfil()}else{alert('Fungsi edit belum tersedia')}; document.getElementById('dropdownProfil').classList.remove('show');"><i class="fas fa-edit"></i> Edit Profil</button>
-                <button type="button" class="dropdown-item" onclick="navigasiHalaman('profile'); setTimeout(function(){ var el=document.getElementById('daftarDokumen'); if(el)el.scrollIntoView(); },200); document.getElementById('dropdownProfil').classList.remove('show');"><i class="fas fa-folder-open"></i> Dokumen</button>
+            <div class="dropdown-menu" id="dropdownProfil" style="display:none;">
+                <button type="button" class="dropdown-item" onclick="navigasiHalaman('profile'); document.getElementById('dropdownProfil').style.display='none';"><i class="fas fa-eye"></i> Lihat Profil</button>
+                <button type="button" class="dropdown-item" onclick="if(typeof bukaModalEditProfil==='function'){bukaModalEditProfil()}else{alert('Fungsi edit belum tersedia')}; document.getElementById('dropdownProfil').style.display='none';"><i class="fas fa-edit"></i> Edit Profil</button>
+                <button type="button" class="dropdown-item" onclick="navigasiHalaman('profile'); setTimeout(function(){ var el=document.getElementById('daftarDokumen'); if(el)el.scrollIntoView(); },200); document.getElementById('dropdownProfil').style.display='none';"><i class="fas fa-folder-open"></i> Dokumen</button>
             </div>
         </li>
+        <!-- Menu lainnya tetap sama -->
         <li class="topnav-item" data-page="lihatToko">
             <a class="topnav-link" href="javascript:void(0)" onclick="navigasiHalaman('lihatToko')"><i class="fas fa-store"></i> Lihat Semua Toko</a>
         </li>
@@ -813,7 +813,6 @@
         <li class="topnav-item" data-page="chat">
             <a class="topnav-link" href="javascript:void(0)" onclick="navigasiHalaman('chat')"><i class="fas fa-comments"></i> Chat</a>
         </li>
-        <!-- Menu Admin -->
         <li class="topnav-item" data-page="daftarAkun">
             <a class="topnav-link" href="javascript:void(0)" onclick="navigasiHalaman('daftarAkun')"><i class="fas fa-user-plus"></i> Daftar Akun Baru</a>
         </li>
@@ -846,11 +845,11 @@
     document.addEventListener('click', function(event) {
         if (!event.target.closest('.topnav-item')) {
             var dropdown = document.getElementById('dropdownProfil');
-            if (dropdown) dropdown.classList.remove('show');
+            if (dropdown) dropdown.style.display = 'none';
         }
     });
 </script>
-<!-- ============ AKHIR BLOK 8 R8 ============ -->
+<!-- ============ AKHIR BLOK 8 R9 ============ -->
 <!-- ============ BLOK 9.1 R1 CONTENT AREA SA DASH ============ -->
 <main class="content-area expanded hidden" id="contentArea">
 
