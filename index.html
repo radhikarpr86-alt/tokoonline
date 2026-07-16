@@ -394,6 +394,148 @@
 </head>
 <body>
 <!-- ============ AKHIR BLOK 1 R1 HEAD & CSS ============ -->
+    <!-- ============ BLOK 2 R1 CSS TOP NAVIGATION ============ -->
+<style>
+    /* ========== TOP NAVIGATION CONTAINER ========== */
+    .topnav {
+        position: fixed;
+        top: 64px;                  /* tepat di bawah navbar utama */
+        left: 0;
+        right: 0;
+        height: 48px;
+        background: var(--white);
+        box-shadow: var(--shadow-sm);
+        z-index: 999;
+        display: flex;
+        align-items: center;
+        padding: 0 20px;
+        border-bottom: 1px solid var(--gray-200);
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    /* ========== MENU LIST (HORIZONTAL) ========== */
+    .topnav-menu {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        height: 100%;
+    }
+
+    /* ========== MENU ITEM ========== */
+    .topnav-item {
+        position: relative;          /* untuk menampung dropdown */
+        display: flex;
+        align-items: center;
+        height: 100%;
+    }
+
+    /* ========== MENU LINK ========== */
+    .topnav-link {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 0 16px;
+        height: 100%;
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--gray-700);
+        text-decoration: none;
+        cursor: pointer;
+        transition: var(--transition-fast);
+        border-radius: var(--radius-sm);
+        white-space: nowrap;
+    }
+
+    .topnav-link i {
+        font-size: 16px;
+        width: 18px;
+        text-align: center;
+    }
+
+    .topnav-link:hover {
+        background: var(--orange-pale);
+        color: var(--orange-primary);
+    }
+
+    .topnav-item.active > .topnav-link {
+        background: var(--orange-pale);
+        color: var(--orange-primary);
+        font-weight: 600;
+    }
+
+    /* ========== DROPDOWN SUBMENU ========== */
+    .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        min-width: 200px;
+        background: var(--white);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-lg);
+        padding: 8px 0;
+        display: none;                /* tersembunyi default */
+        flex-direction: column;
+        z-index: 1000;
+        border: 1px solid var(--gray-200);
+    }
+
+    .dropdown-menu.show {
+        display: flex;                /* tampil saat kelas show ditambahkan */
+    }
+
+    .dropdown-menu a,
+    .dropdown-menu .dropdown-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 16px;
+        font-size: 13px;
+        color: var(--gray-700);
+        text-decoration: none;
+        cursor: pointer;
+        transition: var(--transition-fast);
+        white-space: nowrap;
+    }
+
+    .dropdown-menu a:hover,
+    .dropdown-menu .dropdown-item:hover {
+        background: var(--gray-50);
+        color: var(--orange-primary);
+    }
+
+    .dropdown-menu a i,
+    .dropdown-menu .dropdown-item i {
+        width: 18px;
+        text-align: center;
+        font-size: 14px;
+    }
+
+    /* ========== SIDEBAR LAMA DIHAPUS ========== */
+    .sidebar,
+    .sidebar.closed,
+    .sidebar-menu-title,
+    .sidebar-menu-item,
+    .sidebar-overlay {
+        /* Seluruh style sidebar lama tidak digunakan lagi */
+        display: none !important;
+    }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 768px) {
+        .topnav {
+            padding: 0 10px;
+        }
+        .topnav-link {
+            padding: 0 12px;
+            font-size: 13px;
+        }
+    }
+</style>
+<!-- ============ AKHIR BLOK 2 R1 CSS TOP NAVIGATION ============ -->
 <!-- ============ BLOK 3 R1 CSS CONTENT AREA & RESPONSIVE ============ -->
 <style>
     /* ========== CONTENT AREA ========== */
