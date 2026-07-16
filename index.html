@@ -671,23 +671,31 @@
     </div>
 <!-- ============ AKHIR BLOK 6 AUTH CONTAINER ============ -->
 
-<!-- ============ BLOK 7 NAVBAR ============ -->
-    <nav class="navbar hidden" id="mainNavbar">
-        <div class="navbar-brand"><i class="fas fa-store-alt"></i><span>Toko Online 2R</span></div>
-        <div class="navbar-user">
-            <div class="navbar-user-avatar" id="navbarAvatar">SA</div>
-            <div class="navbar-user-info">
-                <span class="navbar-user-name" id="navbarUserName">SuperAdmin</span>
-                <span class="navbar-user-role" id="navbarUserRole">SuperAdmin</span>
-            </div>
+<!-- ============ BLOK 7 R1 NAVBAR ============ -->
+<nav class="navbar hidden" id="mainNavbar">
+    <div class="navbar-brand">
+        <i class="fas fa-store-alt"></i>
+        <span>Toko Online 2R</span>
+    </div>
+    <div class="navbar-user">
+        <div class="navbar-user-avatar" id="navbarAvatar">SA</div>
+        <div class="navbar-user-info">
+            <span class="navbar-user-name" id="navbarUserName">SuperAdmin</span>
+            <span class="navbar-user-role" id="navbarUserRole">SuperAdmin</span>
         </div>
-        <div class="navbar-actions">
-            <button class="btn-icon" id="btnSidebarToggle"><i class="fas fa-bars"></i></button>
-            <button class="btn-icon"><i class="fas fa-comments"></i><span class="badge hidden" id="chatBadge">0</span></button>
-            <button class="btn-logout" id="btnLogout"><i class="fas fa-sign-out-alt"></i> Keluar</button>
-        </div>
-    </nav>
-<!-- ============ AKHIR BLOK 7 NAVBAR ============ -->
+    </div>
+    <div class="navbar-actions">
+        <!-- Tombol chat opsional, bisa dipertahankan atau dihapus -->
+        <button class="btn-icon" id="btnChatNav" title="Chat">
+            <i class="fas fa-comments"></i>
+            <span class="badge hidden" id="chatBadge">0</span>
+        </button>
+        <button class="btn-logout" id="btnLogout">
+            <i class="fas fa-sign-out-alt"></i> Keluar
+        </button>
+    </div>
+</nav>
+<!-- ============ AKHIR BLOK 7 R1 NAVBAR ============ -->
 
 <!-- ============ BLOK 8 SIDEBAR ============ -->
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
