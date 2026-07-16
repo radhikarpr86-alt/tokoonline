@@ -742,8 +742,7 @@
             <a class="topnav-link" onclick="navigasiHalaman('dashboard')"><i class="fas fa-th-large"></i> Dasbor</a>
         </li>
         <li class="topnav-item" data-page="profile">
-            <a class="topnav-link" onclick="event.preventDefault()"><i class="fas fa-user-circle"></i> Profil <i class="fas fa-chevron-down" style="font-size:10px; margin-left:4px;"></i></a>
-            <div class="dropdown-menu">
+            <a class="topnav-link" href="javascript:void(0)"><i class="fas fa-user-circle"></i> Profil <i class="fas fa-chevron-down" style="font-size:10px; margin-left:4px;"></i></a>
                 <a data-page="profile" onclick="navigasiHalaman('profile')"><i class="fas fa-eye"></i> Lihat Profil</a>
                 <a data-action="bukaModalEditProfil" onclick="bukaModalEditProfil()"><i class="fas fa-edit"></i> Edit Profil</a>
                 <a data-page="profile" onclick="navigasiHalaman('profile'); setTimeout(function(){ document.getElementById('daftarDokumen').scrollIntoView(); }, 200)"><i class="fas fa-folder-open"></i> Dokumen</a>
