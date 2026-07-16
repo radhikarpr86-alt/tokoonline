@@ -394,7 +394,7 @@
 </head>
 <body>
 <!-- ============ AKHIR BLOK 1 R1 HEAD & CSS ============ -->
-<!-- ============ BLOK 2 R2 CSS TOP NAVIGATION ============ -->
+<!-- ============ BLOK 2 R3 CSS TOP NAVIGATION ============ -->
 <style>
     /* ========== TOP NAVIGATION CONTAINER ========== */
     .topnav {
@@ -415,7 +415,6 @@
         -webkit-overflow-scrolling: touch;
     }
 
-    /* Sembunyikan scrollbar di menu (opsional) */
     .topnav::-webkit-scrollbar {
         height: 4px;
     }
@@ -436,16 +435,16 @@
         margin: 0;
         padding: 0;
         height: 100%;
-        min-width: max-content;     /* agar semua item tetap dalam satu baris */
+        min-width: max-content;
     }
 
     /* ========== MENU ITEM ========== */
     .topnav-item {
-        position: relative;          /* untuk menampung dropdown */
+        position: relative;
         display: flex;
         align-items: center;
         height: 100%;
-        flex-shrink: 0;              /* mencegah item mengecil */
+        flex-shrink: 0;
     }
 
     /* ========== MENU LINK ========== */
@@ -466,13 +465,15 @@
         background: transparent;
         border: none;
         font-family: inherit;
+        position: relative;
+        z-index: 1;               /* pastikan link di atas dropdown */
     }
 
     .topnav-link i {
         font-size: 16px;
         width: 18px;
         text-align: center;
-        pointer-events: none;        /* ikon tidak mengganggu klik */
+        pointer-events: none;
     }
 
     .topnav-link:hover {
@@ -489,7 +490,7 @@
     /* ========== DROPDOWN SUBMENU ========== */
     .dropdown-menu {
         position: absolute;
-        top: calc(100% + 4px);      /* sedikit jarak dari menu induk */
+        top: calc(100% + 4px);
         left: 0;
         min-width: 220px;
         background: var(--white);
@@ -498,13 +499,15 @@
         padding: 8px 0;
         display: none;               /* tersembunyi default */
         flex-direction: column;
-        z-index: 1001;               /* di atas elemen lain */
+        z-index: 1001;
         border: 1px solid var(--gray-200);
         animation: dropdownFadeIn 0.2s ease;
+        pointer-events: none;        /* ✅ mencegah klik pada area dropdown tersembunyi */
     }
 
     .dropdown-menu.show {
-        display: flex;               /* tampil saat kelas show ditambahkan */
+        display: flex;
+        pointer-events: auto;        /* ✅ aktifkan klik saat terlihat */
     }
 
     @keyframes dropdownFadeIn {
@@ -575,7 +578,7 @@
         }
     }
 </style>
-<!-- ============ AKHIR BLOK 2 R2 CSS TOP NAVIGATION ============ -->
+<!-- ============ AKHIR BLOK 2 R3 CSS TOP NAVIGATION ============ -->
 <!-- ============ BLOK 3 R1 CSS CONTENT AREA & RESPONSIVE ============ -->
 <style>
     /* ========== CONTENT AREA ========== */
