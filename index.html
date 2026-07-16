@@ -1484,66 +1484,89 @@
     }
 </script>
 <!-- ============ AKHIR BLOK 10.2.1 ============ -->
-    <!-- ============ BLOK 10.2.2 UI SETUP ============ -->
+<!-- ============ BLOK 10.2.2 R1 UI SETUP ============ -->
 <script>
     // ============================================
     // SETUP TOP NAVIGATION & DROPDOWN
     // ============================================
     function setupTopNavigation() {
-        // Tutup semua dropdown saat klik di luar
-        document.addEventListener('click', function(event) {
+        // Hapus listener klik global sebelumnya (hindari duplikasi)
+        var oldHandler = document._topnavClickHandler;
+        if (oldHandler) {
+            document.removeEventListener('click', oldHandler);
+        }
+
+        // Handler untuk menutup dropdown saat klik di luar
+        var clickOutsideHandler = function(event) {
             if (!event.target.closest('.topnav-item')) {
                 document.querySelectorAll('.dropdown-menu.show').forEach(function(d) {
                     d.classList.remove('show');
                 });
             }
-        });
+        };
+        document.addEventListener('click', clickOutsideHandler);
+        document._topnavClickHandler = clickOutsideHandler;
 
         // Event listener untuk setiap item menu
         document.querySelectorAll('.topnav-item').forEach(function(item) {
             var link = item.querySelector('.topnav-link');
+            var dropdown = item.querySelector('.dropdown-menu');
+            var page = item.dataset.page;
+
             if (!link) return;
 
-            link.addEventListener('click', function(event) {
-                var dropdown = item.querySelector('.dropdown-menu');
-                var page = item.dataset.page;
+            // Hapus listener lama (hindari duplikasi jika dipanggil ulang)
+            link.removeEventListener('click', link._clickHandler);
 
+            link._clickHandler = function(event) {
                 if (dropdown) {
-                    // Toggle dropdown
+                    // Jika ada dropdown, toggle tampilannya
                     event.preventDefault();
                     event.stopPropagation();
+
                     var isShown = dropdown.classList.contains('show');
+                    // Tutup semua dropdown lain
                     document.querySelectorAll('.dropdown-menu.show').forEach(function(d) {
                         d.classList.remove('show');
                     });
+
                     if (!isShown) {
                         dropdown.classList.add('show');
                     }
                 } else if (page) {
+                    // Menu biasa: navigasi
                     navigasiHalaman(page);
                     document.querySelectorAll('.dropdown-menu.show').forEach(function(d) {
                         d.classList.remove('show');
                     });
                 }
-            });
+            };
 
-            // Klik pada submenu
-            var subItems = item.querySelectorAll('.dropdown-menu a, .dropdown-menu .dropdown-item');
+            link.addEventListener('click', link._clickHandler);
+
+            // Submenu di dalam dropdown
+            var subItems = dropdown ? dropdown.querySelectorAll('a, .dropdown-item') : [];
             subItems.forEach(function(sub) {
-                sub.addEventListener('click', function(event) {
+                sub.removeEventListener('click', sub._subClickHandler);
+
+                sub._subClickHandler = function(event) {
                     event.stopPropagation();
                     var subPage = sub.dataset.page;
                     var action = sub.dataset.action;
+
                     if (subPage) {
                         navigasiHalaman(subPage);
                     }
                     if (action && typeof window[action] === 'function') {
                         window[action]();
                     }
+
+                    // Tutup dropdown setelah submenu diklik
                     document.querySelectorAll('.dropdown-menu.show').forEach(function(d) {
                         d.classList.remove('show');
                     });
-                });
+                };
+                sub.addEventListener('click', sub._subClickHandler);
             });
         });
     }
@@ -1614,7 +1637,7 @@
         });
     }
 </script>
-<!-- ============ AKHIR BLOK 10.2.2 ============ -->
+<!-- ============ AKHIR BLOK 10.2.2 R1 ============ -->
     <!-- ============ BLOK 10.2.3 INISIALISASI HALAMAN ============ -->
 <script>
     // ============================================
