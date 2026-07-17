@@ -607,6 +607,258 @@
     (function(){ var orig=window.navigasiHalaman; if(orig) window.navigasiHalaman = (page)=>{ orig(page); if(page==='profile'&&typeof loadProfil==='function') loadProfil(); }; })();
 </script>
 <!-- ============ AKHIR BLOK 8 ============ -->
+    <!-- ============ BLOK 9 FUNGSI RENDER TABEL SEMUA AKUN ============ -->
+<script>
+    // Fungsi untuk merender tabel manajemen semua akun yang terdaftar
+    function renderTabelSemuaAkun() {
+        // Mengambil data akun dari localStorage
+        var dataAkunSaatIni = localStorage.getItem('2r_akun');
+        var daftarAkun = dataAkunSaatIni ? JSON.parse(dataAkunSaatIni) : [];
+
+        // Mendapatkan elemen tabel container
+        var containerTabel = document.getElementById('tabelManajemenAkunContainer');
+
+        // Jika container tidak ditemukan, hentikan fungsi
+        if (!containerTabel) {
+            return;
+        }
+
+        // Jika tidak ada akun yang terdaftar sama sekali
+        if (daftarAkun.length === 0) {
+            containerTabel.innerHTML = `
+                <div class="kosong-state-manajemen" style="text-align: center; padding: 40px 20px; color: var(--gray-500);">
+                    <i class="fas fa-users-slash" style="font-size: 48px; color: var(--gray-300); display: block; margin-bottom: 15px;"></i>
+                    <h3 style="font-size: 18px; font-weight: 600; margin-bottom: 5px; color: var(--gray-700);">Belum Ada Akun Terdaftar</h3>
+                    <p style="font-size: 14px;">Silakan daftarkan akun baru melalui menu Daftar Akun Baru.</p>
+                </div>
+            `;
+            return;
+        }
+
+        // Membuat struktur tabel HTML
+        var htmlTabel = `
+            <div class="tabel-manajemen-akun-container" style="width: 100%; overflow-x: auto; background-color: var(--white); border-radius: var(--radius-md); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); border: 1px solid var(--gray-200);">
+                <table class="tabel-manajemen-akun" style="width: 100%; border-collapse: collapse; font-size: 14px; font-family: 'Poppins', sans-serif;">
+                    <thead style="background-color: var(--gray-50); border-bottom: 2px solid var(--gray-200);">
+                        <tr>
+                            <th style="padding: 16px 20px; text-align: left; font-weight: 600; color: var(--gray-700); white-space: nowrap; width: 50px;">Nomor Urut</th>
+                            <th style="padding: 16px 20px; text-align: left; font-weight: 600; color: var(--gray-700); white-space: nowrap;">ID Akun</th>
+                            <th style="padding: 16px 20px; text-align: left; font-weight: 600; color: var(--gray-700); white-space: nowrap;">Nama Lengkap</th>
+                            <th style="padding: 16px 20px; text-align: left; font-weight: 600; color: var(--gray-700); white-space: nowrap;">Role (Peran)</th>
+                            <th style="padding: 16px 20px; text-align: left; font-weight: 600; color: var(--gray-700); white-space: nowrap;">Status Akun</th>
+                            <th style="padding: 16px 20px; text-align: left; font-weight: 600; color: var(--gray-700); white-space: nowrap; width: 260px;">Aksi Manajemen</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+        `;
+
+        // Melakukan perulangan untuk menampilkan data setiap akun
+        for (var i = 0; i < daftarAkun.length; i++) {
+            var akun = daftarAkun[i];
+            var nomorUrut = i + 1;
+            var statusBadgeHtml = "";
+            var aksiTombolHtml = "";
+
+            // Menentukan tampilan badge status berdasarkan status akun
+            if (akun.role === "superadmin") {
+                statusBadgeHtml = `<span style="display: inline-block; padding: 4px 14px; background-color: #FFF3E0; color: #E65100; font-size: 12px; font-weight: 600; border-radius: 20px; border: 1px solid #FFE0B2;"><i class="fas fa-crown"></i> SuperAdmin (Tidak Bisa Diubah)</span>`;
+            } else if (akun.status === "AKTIF") {
+                statusBadgeHtml = `<span style="display: inline-block; padding: 4px 14px; background-color: #E8F5E9; color: #2E7D32; font-size: 12px; font-weight: 600; border-radius: 20px; border: 1px solid #C8E6C9;"><i class="fas fa-check-circle"></i> AKTIF</span>`;
+            } else {
+                statusBadgeHtml = `<span style="display: inline-block; padding: 4px 14px; background-color: #FFEBEE; color: #C62828; font-size: 12px; font-weight: 600; border-radius: 20px; border: 1px solid #FFCDD2;"><i class="fas fa-times-circle"></i> ${akun.status}</span>`;
+            }
+
+            // Menentukan tombol aksi berdasarkan role dan status akun
+            if (akun.role === "superadmin") {
+                // SuperAdmin tidak memiliki tombol aksi sama sekali (dilindungi)
+                aksiTombolHtml = `
+                    <span style="color: var(--gray-400); font-size: 12px;">
+                        <i class="fas fa-lock"></i> Terlindungi
+                    </span>
+                `;
+            } else {
+                // Untuk akun selain SuperAdmin, tampilkan tombol berdasarkan status
+                var tombolAktifkan = "";
+                var tombolNonaktifkan = "";
+                var tombolHapus = "";
+
+                // Jika status akun adalah NONAKTIF, tampilkan tombol "Aktifkan Kembali"
+                if (akun.status !== "AKTIF") {
+                    tombolAktifkan = `
+                        <button class="btn-aktifkan-kembali" onclick="aktifkanAkunDariManajemen('${akun.id}')" style="background-color: var(--success); color: var(--white); border: none; padding: 6px 14px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; cursor: pointer; transition: 0.3s ease; font-family: 'Poppins', sans-serif; display: inline-flex; align-items: center; gap: 6px;">
+                            <i class="fas fa-check-circle"></i> Aktifkan Kembali
+                        </button>
+                    `;
+                }
+
+                // Jika status akun adalah AKTIF, tampilkan tombol "Nonaktifkan Akun"
+                if (akun.status === "AKTIF") {
+                    tombolNonaktifkan = `
+                        <button class="btn-nonaktifkan-akun" onclick="nonaktifkanAkunDariManajemen('${akun.id}')" style="background-color: var(--warning); color: var(--white); border: none; padding: 6px 14px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; cursor: pointer; transition: 0.3s ease; font-family: 'Poppins', sans-serif; display: inline-flex; align-items: center; gap: 6px;">
+                            <i class="fas fa-pause-circle"></i> Nonaktifkan Akun
+                        </button>
+                    `;
+                }
+
+                // Tombol Hapus Akun selalu ada untuk semua akun non-SuperAdmin
+                tombolHapus = `
+                    <button class="btn-hapus-akun" onclick="hapusAkunDariManajemen('${akun.id}')" style="background-color: var(--error); color: var(--white); border: none; padding: 6px 14px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; cursor: pointer; transition: 0.3s ease; font-family: 'Poppins', sans-serif; display: inline-flex; align-items: center; gap: 6px;">
+                        <i class="fas fa-trash-alt"></i> Hapus Akun
+                    </button>
+                `;
+
+                // Menggabungkan semua tombol aksi
+                aksiTombolHtml = `
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        ${tombolAktifkan}
+                        ${tombolNonaktifkan}
+                        ${tombolHapus}
+                    </div>
+                `;
+            }
+
+            // Menambahkan baris tabel untuk setiap akun
+            htmlTabel += `
+                <tr style="border-bottom: 1px solid var(--gray-100);">
+                    <td style="padding: 14px 20px; color: var(--gray-800); vertical-align: middle;">${nomorUrut}</td>
+                    <td style="padding: 14px 20px; color: var(--gray-800); vertical-align: middle;"><strong>${akun.id}</strong></td>
+                    <td style="padding: 14px 20px; color: var(--gray-800); vertical-align: middle;">${akun.nama}</td>
+                    <td style="padding: 14px 20px; color: var(--gray-800); vertical-align: middle;">${akun.role}</td>
+                    <td style="padding: 14px 20px; color: var(--gray-800); vertical-align: middle;">${statusBadgeHtml}</td>
+                    <td style="padding: 14px 20px; color: var(--gray-800); vertical-align: middle;">${aksiTombolHtml}</td>
+                </tr>
+            `;
+        }
+
+        // Menutup tag tabel
+        htmlTabel += `
+                    </tbody>
+                </table>
+            </div>
+        `;
+
+        // Memasukkan HTML tabel ke dalam container
+        containerTabel.innerHTML = htmlTabel;
+    }
+</script>
+<!-- ============ AKHIR BLOK 9 FUNGSI RENDER TABEL SEMUA AKUN ============ -->
+    <!-- ============ BLOK 10 FUNGSI AKSI MANAJEMEN AKUN ============ -->
+<script>
+    // Fungsi untuk mengaktifkan kembali akun dari halaman manajemen
+    function aktifkanAkunDariManajemen(idAkun) {
+        // Mengambil data akun dari localStorage
+        var dataAkunSaatIni = localStorage.getItem('2r_akun');
+        var daftarAkun = dataAkunSaatIni ? JSON.parse(dataAkunSaatIni) : [];
+
+        // Mencari indeks akun berdasarkan ID
+        var indeksAkun = -1;
+        for (var i = 0; i < daftarAkun.length; i++) {
+            if (daftarAkun[i].id === idAkun) {
+                indeksAkun = i;
+                break;
+            }
+        }
+
+        // Jika akun ditemukan, ubah statusnya menjadi AKTIF
+        if (indeksAkun !== -1) {
+            // Menampilkan konfirmasi kepada SuperAdmin
+            var konfirmasi = confirm("Apakah Anda yakin ingin mengaktifkan kembali akun dengan ID " + idAkun + "?");
+            if (konfirmasi) {
+                // Mengubah status akun
+                daftarAkun[indeksAkun].status = "AKTIF";
+                
+                // Menyimpan kembali data akun ke localStorage
+                localStorage.setItem('2r_akun', JSON.stringify(daftarAkun));
+
+                // Menampilkan notifikasi sukses
+                tampilkanToast("Akun dengan ID " + idAkun + " berhasil diaktifkan kembali!", "success");
+
+                // Merender ulang tabel manajemen semua akun
+                renderTabelSemuaAkun();
+            }
+        } else {
+            tampilkanToast("Akun dengan ID " + idAkun + " tidak ditemukan dalam sistem.", "error");
+        }
+    }
+
+    // Fungsi untuk menonaktifkan akun dari halaman manajemen
+    function nonaktifkanAkunDariManajemen(idAkun) {
+        // Mengambil data akun dari localStorage
+        var dataAkunSaatIni = localStorage.getItem('2r_akun');
+        var daftarAkun = dataAkunSaatIni ? JSON.parse(dataAkunSaatIni) : [];
+
+        // Mencari indeks akun berdasarkan ID
+        var indeksAkun = -1;
+        for (var i = 0; i < daftarAkun.length; i++) {
+            if (daftarAkun[i].id === idAkun) {
+                indeksAkun = i;
+                break;
+            }
+        }
+
+        // Jika akun ditemukan, ubah statusnya menjadi NONAKTIF
+        if (indeksAkun !== -1) {
+            // Menampilkan konfirmasi kepada SuperAdmin
+            var konfirmasi = confirm("Apakah Anda yakin ingin menonaktifkan akun dengan ID " + idAkun + "? Akun ini tidak bisa digunakan sampai diaktifkan kembali.");
+            if (konfirmasi) {
+                // Mengubah status akun
+                daftarAkun[indeksAkun].status = "NONAKTIF (Dinonaktifkan oleh SuperAdmin)";
+                
+                // Menyimpan kembali data akun ke localStorage
+                localStorage.setItem('2r_akun', JSON.stringify(daftarAkun));
+
+                // Menampilkan notifikasi
+                tampilkanToast("Akun dengan ID " + idAkun + " berhasil dinonaktifkan.", "warning");
+
+                // Merender ulang tabel manajemen semua akun
+                renderTabelSemuaAkun();
+            }
+        } else {
+            tampilkanToast("Akun dengan ID " + idAkun + " tidak ditemukan dalam sistem.", "error");
+        }
+    }
+
+    // Fungsi untuk menghapus akun dari halaman manajemen
+    function hapusAkunDariManajemen(idAkun) {
+        // Mengambil data akun dari localStorage
+        var dataAkunSaatIni = localStorage.getItem('2r_akun');
+        var daftarAkun = dataAkunSaatIni ? JSON.parse(dataAkunSaatIni) : [];
+
+        // Mencari indeks akun berdasarkan ID
+        var indeksAkun = -1;
+        for (var i = 0; i < daftarAkun.length; i++) {
+            if (daftarAkun[i].id === idAkun) {
+                indeksAkun = i;
+                break;
+            }
+        }
+
+        // Jika akun ditemukan, hapus dari array
+        if (indeksAkun !== -1) {
+            // Menampilkan konfirmasi penghapusan ganda kepada SuperAdmin (Proteksi)
+            var konfirmasiPertama = confirm("PERINGATAN: Anda akan menghapus permanen akun dengan ID " + idAkun + ". Data ini tidak dapat dikembalikan. Lanjutkan?");
+            if (konfirmasiPertama) {
+                var konfirmasiKedua = confirm("KONFIRMASI TERAKHIR: Apakah Anda benar-benar yakin ingin menghapus akun " + idAkun + "?");
+                if (konfirmasiKedua) {
+                    // Menghapus akun dari array
+                    daftarAkun.splice(indeksAkun, 1);
+
+                    // Menyimpan kembali data akun ke localStorage
+                    localStorage.setItem('2r_akun', JSON.stringify(daftarAkun));
+
+                    // Menampilkan notifikasi
+                    tampilkanToast("Akun dengan ID " + idAkun + " telah berhasil dihapus permanen dari sistem.", "error");
+
+                    // Merender ulang tabel manajemen semua akun
+                    renderTabelSemuaAkun();
+                }
+            }
+        } else {
+            tampilkanToast("Akun dengan ID " + idAkun + " tidak ditemukan dalam sistem.", "error");
+        }
+    }
+</script>
+<!-- ============ AKHIR BLOK 10 FUNGSI AKSI MANAJEMEN AKUN ============ -->
 <!-- ============ BLOK 11 FORM DAFTAR AKUN BARU OLEH SUPERADMIN ============ -->
 <!-- PENJELASAN: 
      Blok ini berisi kode HTML, CSS, dan JavaScript untuk halaman "Daftar Akun Baru" yang hanya dapat diakses oleh SuperAdmin. 
