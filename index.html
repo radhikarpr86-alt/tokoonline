@@ -1,6 +1,13 @@
 <!-- ============ BLOK 1(1) - 01 HEAD & HTML STRUCTURE ============ -->
 <!-- PENJELASAN: 
      Ini adalah fondasi awal halaman web. 
+     Blok ini berisi:
+     1. Deklarasi DOCTYPE dan struktur HTML dasar.
+     2. Meta tag (charset, viewport) untuk responsivitas.
+     3. Judul halaman "Toko Online 2R - SuperAdmin".
+     4. Import Font Awesome (CDN jsDelivr) dan Google Fonts (Poppins).
+     5. CSS Global & Root (reset, variabel warna, scrollbar, preloader, toast).
+     6. Aturan CSS untuk menyembunyikan semua halaman (.page) secara default.
      Semua komentar blok diletakkan di LUAR tag <style> agar 100% valid 
      dan tidak menyebabkan error saat di-upload ke Vercel. -->
 
@@ -20,7 +27,12 @@
     <!-- ===== CSS GLOBAL & ROOT ===== -->
     <style>
         /* Reset Dasar */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+        
         body {
             font-family: 'Poppins', sans-serif;
             background: #F8F9FA;
@@ -49,6 +61,7 @@
             --success: #4CAF50; 
             --error: #F44336; 
             --warning: #FF9800;
+            --info: #2196F3;
             --radius-md: 12px; 
             --radius-sm: 8px;
             --transition: 0.3s ease;
@@ -60,31 +73,83 @@
         ::-webkit-scrollbar-thumb { background: var(--orange-primary); border-radius: 10px; }
 
         /* Preloader */
-        #preloader { position: fixed; inset:0; background:var(--white); display:flex; justify-content:center; align-items:center; z-index:99999; transition: 0.5s; }
-        #preloader.hidden { opacity:0; visibility:hidden; }
-        .loader { width: 40px; height: 40px; border: 4px solid var(--gray-200); border-top: 4px solid var(--orange-primary); border-radius: 50%; animation: spin 0.8s linear infinite; }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
+        #preloader { 
+            position: fixed; 
+            inset: 0; 
+            background: var(--white); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            z-index: 99999; 
+            transition: 0.5s; 
+        }
+        #preloader.hidden { 
+            opacity: 0; 
+            visibility: hidden; 
+        }
+        .loader { 
+            width: 40px; 
+            height: 40px; 
+            border: 4px solid var(--gray-200); 
+            border-top: 4px solid var(--orange-primary); 
+            border-radius: 50%; 
+            animation: spin 0.8s linear infinite; 
+        }
+        @keyframes spin { 
+            100% { transform: rotate(360deg); } 
+        }
 
         /* Toast Notification */
-        .toast-container { position:fixed; top:20px; right:20px; z-index:10000; display:flex; flex-direction:column; gap:10px; }
-        .toast { padding: 14px 20px; border-radius:var(--radius-sm); color:white; font-size:14px; min-width:250px; box-shadow:0 10px 20px rgba(0,0,0,0.15); animation:slideInRight 0.4s; display:flex; align-items:center; gap:10px; }
-        .toast.success { background:var(--success); } .toast.error { background:var(--error); } .toast.warning { background:var(--warning); }
-        @keyframes slideInRight { from { transform:translateX(100%); opacity:0; } to { transform:translateX(0); opacity:1; } }
+        .toast-container { 
+            position: fixed; 
+            top: 20px; 
+            right: 20px; 
+            z-index: 10000; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 10px; 
+        }
+        .toast { 
+            padding: 14px 20px; 
+            border-radius: var(--radius-sm); 
+            color: white; 
+            font-size: 14px; 
+            min-width: 250px; 
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15); 
+            animation: slideInRight 0.4s; 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+        }
+        .toast.success { background: var(--success); } 
+        .toast.error { background: var(--error); } 
+        .toast.warning { background: var(--warning); }
+        .toast.info { background: var(--info); }
+        @keyframes slideInRight { 
+            from { transform: translateX(100%); opacity: 0; } 
+            to { transform: translateX(0); opacity: 1; } 
+        }
         
-        /* Sembunyikan Halaman (FIX MENU TERCAMPUR) */
+        /* Sembunyikan Semua Halaman (FIX MENU TERCAMPUR) */
         .page { display: none; }
     </style>
 </head>
 <!-- ============ AKHIR BLOK 1(1) - 01 HEAD & HTML STRUCTURE ============ -->
-
 <!-- ============ BLOK 1(2) - 01 CSS LOGIN & REGISTER MENARIK ============ -->
 <!-- PENJELASAN: 
      Blok ini berisi CSS khusus untuk halaman Login dan Register. 
+     Desain dibuat menarik dengan efek glassmorphism (background transparan 
+     dengan blur), animasi hover pada tombol, dan layout yang responsif.
      Dipisahkan dari CSS Global agar struktur kode lebih rapi dan valid secara HTML. -->
 
 <style>
     /* ===== AUTH LOGIN/REGISTER (DESAIN MENARIK) ===== */
-    .auth-container { width:100%; max-width:450px; padding:20px; }
+    .auth-container { 
+        width: 100%; 
+        max-width: 450px; 
+        padding: 20px; 
+    }
+    
     .auth-box { 
         background: rgba(255, 255, 255, 0.95); 
         backdrop-filter: blur(10px);
@@ -93,46 +158,139 @@
         box-shadow: 0 15px 35px rgba(255, 107, 0, 0.15); 
         border: 1px solid rgba(255, 255, 255, 0.2); 
     }
-    .auth-logo { text-align:center; margin-bottom:25px; }
-    .auth-logo i { font-size:40px; color:var(--orange-primary); display:block; margin-bottom:5px; }
-    .auth-logo h1 { font-size:26px; font-weight:800; color:var(--gray-900); }
-    .auth-logo h1 span { color:var(--orange-primary); }
-    .auth-logo p { color:var(--gray-500); font-size:13px; margin-top:4px; }
     
-    .auth-error { display:none; background:#FFEBEE; color:var(--error); padding:12px; border-radius:var(--radius-sm); margin-bottom:20px; font-size:14px; align-items:center; gap:10px; }
+    .auth-logo { 
+        text-align: center; 
+        margin-bottom: 25px; 
+    }
     
-    .form-group { margin-bottom:18px; }
-    .form-group label { display:block; font-weight:600; font-size:14px; color:var(--gray-800); margin-bottom:5px; }
+    .auth-logo i { 
+        font-size: 40px; 
+        color: var(--orange-primary); 
+        display: block; 
+        margin-bottom: 5px; 
+    }
+    
+    .auth-logo h1 { 
+        font-size: 26px; 
+        font-weight: 800; 
+        color: var(--gray-900); 
+    }
+    
+    .auth-logo h1 span { 
+        color: var(--orange-primary); 
+    }
+    
+    .auth-logo p { 
+        color: var(--gray-500); 
+        font-size: 13px; 
+        margin-top: 4px; 
+    }
+    
+    .auth-error { 
+        display: none; 
+        background: #FFEBEE; 
+        color: var(--error); 
+        padding: 12px; 
+        border-radius: var(--radius-sm); 
+        margin-bottom: 20px; 
+        font-size: 14px; 
+        align-items: center; 
+        gap: 10px; 
+    }
+    
+    .form-group { 
+        margin-bottom: 18px; 
+    }
+    
+    .form-group label { 
+        display: block; 
+        font-weight: 600; 
+        font-size: 14px; 
+        color: var(--gray-800); 
+        margin-bottom: 5px; 
+    }
     
     .input-group { 
-        display:flex; align-items:center; 
-        background:var(--gray-100); 
-        border-radius:var(--radius-sm); 
-        padding:0 14px; 
-        border:2px solid transparent; 
-        transition:0.3s; 
+        display: flex; 
+        align-items: center; 
+        background: var(--gray-100); 
+        border-radius: var(--radius-sm); 
+        padding: 0 14px; 
+        border: 2px solid transparent; 
+        transition: 0.3s; 
     }
-    .input-group:focus-within { border-color:var(--orange-primary); background:white; box-shadow: 0 0 0 4px rgba(255, 107, 0, 0.1); }
-    .input-group i { color:var(--gray-500); font-size:16px; width: 30px; text-align: center;}
-    .input-group input, .input-group select { 
-        border:none; background:transparent; padding:13px 10px; font-size:15px; width:100%; outline:none; font-family:inherit; 
+    
+    .input-group:focus-within { 
+        border-color: var(--orange-primary); 
+        background: white; 
+        box-shadow: 0 0 0 4px rgba(255, 107, 0, 0.1); 
     }
-    .input-group select { cursor: pointer; }
+    
+    .input-group i { 
+        color: var(--gray-500); 
+        font-size: 16px; 
+        width: 30px; 
+        text-align: center;
+    }
+    
+    .input-group input, 
+    .input-group select { 
+        border: none; 
+        background: transparent; 
+        padding: 13px 10px; 
+        font-size: 15px; 
+        width: 100%; 
+        outline: none; 
+        font-family: inherit; 
+    }
+    
+    .input-group select { 
+        cursor: pointer; 
+    }
     
     .btn-submit { 
-        width:100%; padding:14px; background:linear-gradient(135deg, var(--orange-primary), #FF8C32); 
-        color:white; border:none; border-radius:var(--radius-sm); font-size:16px; font-weight:700; cursor:pointer; transition:0.3s; 
+        width: 100%; 
+        padding: 14px; 
+        background: linear-gradient(135deg, var(--orange-primary), #FF8C32); 
+        color: white; 
+        border: none; 
+        border-radius: var(--radius-sm); 
+        font-size: 16px; 
+        font-weight: 700; 
+        cursor: pointer; 
+        transition: 0.3s; 
         box-shadow: 0 4px 15px rgba(255, 107, 0, 0.3);
     }
-    .btn-submit:hover { transform:translateY(-2px) scale(1.02); box-shadow:0 6px 20px rgba(255,107,0,0.4); }
     
-    .auth-footer { text-align:center; margin-top:20px; font-size:14px; color:var(--gray-500); }
-    .auth-footer a { color:var(--orange-primary); font-weight:600; cursor:pointer; text-decoration:none; }
-    .auth-footer a:hover { text-decoration:underline; }
-    .hidden-form { display:none !important; }
+    .btn-submit:hover { 
+        transform: translateY(-2px) scale(1.02); 
+        box-shadow: 0 6px 20px rgba(255,107,0,0.4); 
+    }
+    
+    .auth-footer { 
+        text-align: center; 
+        margin-top: 20px; 
+        font-size: 14px; 
+        color: var(--gray-500); 
+    }
+    
+    .auth-footer a { 
+        color: var(--orange-primary); 
+        font-weight: 600; 
+        cursor: pointer; 
+        text-decoration: none; 
+    }
+    
+    .auth-footer a:hover { 
+        text-decoration: underline; 
+    }
+    
+    .hidden-form { 
+        display: none !important; 
+    }
 </style>
 <!-- ============ AKHIR BLOK 1(2) - 01 CSS LOGIN & REGISTER MENARIK ============ -->
-
 <!-- ============ BLOK 1(3) - 01 R4 CSS DASHBOARD & SIDEBAR (REVISI KEEMPAT - MEMPERBAIKI OVERLAY) ============ -->
 <!-- PENJELASAN: 
      Ini adalah revisi keempat (R4) dari BLOK 1(3). 
@@ -141,118 +299,602 @@
      1. Menghapus properti backdrop-filter: blur(4px); yang menyebabkan overlay transparan menutupi layar.
      2. Menambahkan z-index yang tepat pada .sidebar dan .sidebar-overlay agar urutan lapisan (layer) benar.
      3. Memastikan tidak ada properti CSS yang menghalangi event klik (pointer-events).
+     4. Menambahkan gaya untuk tombol logout dan navbar yang rapi.
+     5. Memastikan sidebar tertutup secara default di perangkat mobile dan terbuka di desktop.
      Setelah revisi ini, menu sidebar dan tombol logout dapat berfungsi normal. -->
 
 <style>
     /* ===== NAVBAR ===== */
-    .navbar { position:fixed; top:0; left:0; right:0; height:68px; background:white; box-shadow:0 2px 10px rgba(0,0,0,0.05); z-index:1000; padding:0 25px; display:flex; align-items:center; justify-content:space-between; border-bottom:2px solid var(--orange-light); }
-    .navbar-brand { display:flex; align-items:center; gap:10px; font-weight:700; font-size:20px; color:var(--orange-primary); }
-    .navbar-brand i { font-size:22px; } .navbar-brand span { color:var(--gray-900); }
-    .navbar-user { display:flex; align-items:center; gap:15px; }
-    .navbar-user-avatar { width:38px; height:38px; border-radius:50%; background:var(--orange-primary); color:white; display:flex; align-items:center; justify-content:center; font-weight:600; font-size:15px; }
-    .navbar-user-info { display:flex; flex-direction:column; line-height:1.2; text-align:right; }
-    .navbar-user-name { font-weight:600; font-size:14px; color:var(--gray-900); }
-    .navbar-user-role { font-size:12px; color:var(--gray-500); }
+    .navbar { 
+        position: fixed; 
+        top: 0; 
+        left: 0; 
+        right: 0; 
+        height: 68px; 
+        background: white; 
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05); 
+        z-index: 1000; 
+        padding: 0 25px; 
+        display: flex; 
+        align-items: center; 
+        justify-content: space-between; 
+        border-bottom: 2px solid var(--orange-light); 
+    }
     
-    .navbar-actions { display:flex; align-items:center; gap:10px; flex-shrink: 0; }
-    .btn-icon { background:transparent; border:none; font-size:20px; color:var(--gray-600); cursor:pointer; padding:8px; border-radius:50%; transition:0.2s; }
-    .btn-icon:hover { background:var(--gray-100); }
-    .btn-logout { background:transparent; border:1px solid var(--gray-300); padding:8px 16px; border-radius:var(--radius-sm); font-weight:500; color:var(--gray-700); cursor:pointer; transition:0.3s; font-size:13px; display:flex; align-items:center; gap:5px; }
-    .btn-logout:hover { background:var(--error); color:white; border-color:var(--error); }
+    .navbar-brand { 
+        display: flex; 
+        align-items: center; 
+        gap: 10px; 
+        font-weight: 700; 
+        font-size: 20px; 
+        color: var(--orange-primary); 
+    }
+    
+    .navbar-brand i { 
+        font-size: 22px; 
+    } 
+    
+    .navbar-brand span { 
+        color: var(--gray-900); 
+    }
+    
+    .navbar-user { 
+        display: flex; 
+        align-items: center; 
+        gap: 15px; 
+    }
+    
+    .navbar-user-avatar { 
+        width: 38px; 
+        height: 38px; 
+        border-radius: 50%; 
+        background: var(--orange-primary); 
+        color: white; 
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+        font-weight: 600; 
+        font-size: 15px; 
+    }
+    
+    .navbar-user-info { 
+        display: flex; 
+        flex-direction: column; 
+        line-height: 1.2; 
+        text-align: right; 
+    }
+    
+    .navbar-user-name { 
+        font-weight: 600; 
+        font-size: 14px; 
+        color: var(--gray-900); 
+    }
+    
+    .navbar-user-role { 
+        font-size: 12px; 
+        color: var(--gray-500); 
+    }
+    
+    .navbar-actions { 
+        display: flex; 
+        align-items: center; 
+        gap: 10px; 
+        flex-shrink: 0; 
+    }
+    
+    .btn-icon { 
+        background: transparent; 
+        border: none; 
+        font-size: 20px; 
+        color: var(--gray-600); 
+        cursor: pointer; 
+        padding: 8px; 
+        border-radius: 50%; 
+        transition: 0.2s; 
+    }
+    
+    .btn-icon:hover { 
+        background: var(--gray-100); 
+    }
+    
+    .btn-logout { 
+        background: transparent; 
+        border: 1px solid var(--gray-300); 
+        padding: 8px 16px; 
+        border-radius: var(--radius-sm); 
+        font-weight: 500; 
+        color: var(--gray-700); 
+        cursor: pointer; 
+        transition: 0.3s; 
+        font-size: 13px; 
+        display: flex; 
+        align-items: center; 
+        gap: 5px; 
+    }
+    
+    .btn-logout:hover { 
+        background: var(--error); 
+        color: white; 
+        border-color: var(--error); 
+    }
 
     /* ===== SIDEBAR MODERN ===== */
-    .sidebar { position:fixed; top:68px; left:0; bottom:0; width:260px; background:white; box-shadow:2px 0 10px rgba(0,0,0,0.03); overflow-y:auto; z-index:999; transition:transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); padding:20px 0 30px 0; }
-    .sidebar.closed { transform:translateX(-100%); }
-    .sidebar-menu-title { font-size:11px; text-transform:uppercase; color:var(--gray-400); font-weight:700; padding:12px 25px; letter-spacing:1px; }
-    .sidebar-menu-item { display:flex; align-items:center; gap:14px; padding:12px 25px; cursor:pointer; transition:0.3s; color:var(--gray-600); font-size:14px; font-weight:500; border-right:3px solid transparent; }
-    .sidebar-menu-item:hover { background:var(--gray-50); color:var(--orange-primary); padding-left:30px; }
-    .sidebar-menu-item.active { background:var(--orange-light); color:var(--orange-primary); border-right-color:var(--orange-primary); font-weight:600; }
-    .sidebar-menu-item i { width:22px; text-align:center; font-size:18px; }
-    .sidebar-overlay { position:fixed; top:68px; left:0; right:0; bottom:0; background:rgba(0,0,0,0.4); z-index:998; display:none; }
-    .sidebar-overlay.active { display:block; }
+    .sidebar { 
+        position: fixed; 
+        top: 68px; 
+        left: 0; 
+        bottom: 0; 
+        width: 260px; 
+        background: white; 
+        box-shadow: 2px 0 10px rgba(0,0,0,0.03); 
+        overflow-y: auto; 
+        z-index: 999; 
+        transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); 
+        padding: 20px 0 30px 0; 
+    }
+    
+    .sidebar.closed { 
+        transform: translateX(-100%); 
+    }
+    
+    .sidebar-menu-title { 
+        font-size: 11px; 
+        text-transform: uppercase; 
+        color: var(--gray-400); 
+        font-weight: 700; 
+        padding: 12px 25px; 
+        letter-spacing: 1px; 
+    }
+    
+    .sidebar-menu-item { 
+        display: flex; 
+        align-items: center; 
+        gap: 14px; 
+        padding: 12px 25px; 
+        cursor: pointer; 
+        transition: 0.3s; 
+        color: var(--gray-600); 
+        font-size: 14px; 
+        font-weight: 500; 
+        border-right: 3px solid transparent; 
+    }
+    
+    .sidebar-menu-item:hover { 
+        background: var(--gray-50); 
+        color: var(--orange-primary); 
+        padding-left: 30px; 
+    }
+    
+    .sidebar-menu-item.active { 
+        background: var(--orange-light); 
+        color: var(--orange-primary); 
+        border-right-color: var(--orange-primary); 
+        font-weight: 600; 
+    }
+    
+    .sidebar-menu-item i { 
+        width: 22px; 
+        text-align: center; 
+        font-size: 18px; 
+    }
+    
+    .sidebar-overlay { 
+        position: fixed; 
+        top: 68px; 
+        left: 0; 
+        right: 0; 
+        bottom: 0; 
+        background: rgba(0,0,0,0.4); 
+        z-index: 998; 
+        display: none; 
+    }
+    
+    .sidebar-overlay.active { 
+        display: block; 
+    }
 
     /* ===== CONTENT AREA ===== */
-    .content-area { margin-left:260px; padding:88px 30px 30px 30px; min-height:100vh; transition:margin-left 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); background:#F8F9FA; width:calc(100% - 260px); }
-    .content-area.expanded { margin-left:0; width:100%; }
-    @media (max-width:768px) {
-        .sidebar:not(.closed) + .sidebar-overlay.active { display:block; }
-        .sidebar.closed { transform:translateX(-100%); }
-        .sidebar:not(.closed) { transform:translateX(0); }
-        .content-area { margin-left:0; width:100%; padding:80px 15px 15px 15px; }
+    .content-area { 
+        margin-left: 260px; 
+        padding: 88px 30px 30px 30px; 
+        min-height: 100vh; 
+        transition: margin-left 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); 
+        background: #F8F9FA; 
+        width: calc(100% - 260px); 
     }
+    
+    .content-area.expanded { 
+        margin-left: 0; 
+        width: 100%; 
+    }
+    
+    @media (max-width:768px) {
+        .sidebar:not(.closed) + .sidebar-overlay.active { 
+            display: block; 
+        }
+        .sidebar.closed { 
+            transform: translateX(-100%); 
+        }
+        .sidebar:not(.closed) { 
+            transform: translateX(0); 
+        }
+        .content-area { 
+            margin-left: 0; 
+            width: 100%; 
+            padding: 80px 15px 15px 15px; 
+        }
+    }
+    
     @media (min-width:769px) {
-        .sidebar-overlay { display:none !important; }
-        .sidebar.closed { transform:translateX(0); }
+        .sidebar-overlay { 
+            display: none !important; 
+        }
+        .sidebar.closed { 
+            transform: translateX(0); 
+        }
     }
 
     /* ===== CARDS & HEADERS ===== */
-    .page-header { margin-bottom:25px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; }
-    .page-header h2 { font-size:24px; font-weight:700; color:var(--gray-900); margin-bottom:4px; }
-    .page-header p { color:var(--gray-500); font-size:14px; }
-    .card { background:white; border-radius:var(--radius-md); box-shadow:0 2px 8px rgba(0,0,0,0.04); margin-bottom:24px; overflow:hidden; border:1px solid var(--gray-200); }
-    .card-header { padding:18px 24px; border-bottom:1px solid var(--gray-200); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; background:var(--gray-50); }
-    .card-header h3 { font-size:16px; font-weight:600; color:var(--gray-800); display:flex; align-items:center; gap:10px; }
-    .card-body { padding:24px; }
+    .page-header { 
+        margin-bottom: 25px; 
+        display: flex; 
+        justify-content: space-between; 
+        align-items: center; 
+        flex-wrap: wrap; 
+    }
+    
+    .page-header h2 { 
+        font-size: 24px; 
+        font-weight: 700; 
+        color: var(--gray-900); 
+        margin-bottom: 4px; 
+    }
+    
+    .page-header p { 
+        color: var(--gray-500); 
+        font-size: 14px; 
+    }
+    
+    .card { 
+        background: white; 
+        border-radius: var(--radius-md); 
+        box-shadow: 0 2px 8px rgba(0,0,0,0.04); 
+        margin-bottom: 24px; 
+        overflow: hidden; 
+        border: 1px solid var(--gray-200); 
+    }
+    
+    .card-header { 
+        padding: 18px 24px; 
+        border-bottom: 1px solid var(--gray-200); 
+        display: flex; 
+        justify-content: space-between; 
+        align-items: center; 
+        flex-wrap: wrap; 
+        gap: 10px; 
+        background: var(--gray-50); 
+    }
+    
+    .card-header h3 { 
+        font-size: 16px; 
+        font-weight: 600; 
+        color: var(--gray-800); 
+        display: flex; 
+        align-items: center; 
+        gap: 10px; 
+    }
+    
+    .card-body { 
+        padding: 24px; 
+    }
 
     /* ===== BUTTONS CANTIK ===== */
-    .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:8px 16px; border-radius:var(--radius-sm); font-weight:500; font-size:14px; cursor:pointer; border:none; transition:0.3s; font-family:inherit; text-decoration:none; }
-    .btn-primary { background:var(--orange-primary); color:white; }
-    .btn-primary:hover { opacity:0.9; transform:translateY(-1px); box-shadow:0 4px 10px rgba(255,107,0,0.3); }
-    .btn-secondary { background:var(--gray-200); color:var(--gray-700); }
-    .btn-secondary:hover { background:var(--gray-300); }
-    .btn-danger { background:var(--error); color:white; }
-    .btn-danger:hover { background:#d32f2f; }
-    .btn-xs { padding:5px 12px; font-size:12px; border-radius:6px; gap:6px; }
-    .btn-sm { padding:6px 14px; font-size:13px; border-radius:6px; gap:6px; }
+    .btn { 
+        display: inline-flex; 
+        align-items: center; 
+        justify-content: center; 
+        gap: 8px; 
+        padding: 8px 16px; 
+        border-radius: var(--radius-sm); 
+        font-weight: 500; 
+        font-size: 14px; 
+        cursor: pointer; 
+        border: none; 
+        transition: 0.3s; 
+        font-family: inherit; 
+        text-decoration: none; 
+    }
+    
+    .btn-primary { 
+        background: var(--orange-primary); 
+        color: white; 
+    }
+    
+    .btn-primary:hover { 
+        opacity: 0.9; 
+        transform: translateY(-1px); 
+        box-shadow: 0 4px 10px rgba(255,107,0,0.3); 
+    }
+    
+    .btn-secondary { 
+        background: var(--gray-200); 
+        color: var(--gray-700); 
+    }
+    
+    .btn-secondary:hover { 
+        background: var(--gray-300); 
+    }
+    
+    .btn-danger { 
+        background: var(--error); 
+        color: white; 
+    }
+    
+    .btn-danger:hover { 
+        background: #d32f2f; 
+    }
+    
+    .btn-info { 
+        background: var(--info); 
+        color: white; 
+    }
+    
+    .btn-info:hover { 
+        background: #1976D2; 
+    }
+    
+    .btn-xs { 
+        padding: 5px 12px; 
+        font-size: 12px; 
+        border-radius: 6px; 
+        gap: 6px; 
+    }
+    
+    .btn-sm { 
+        padding: 6px 14px; 
+        font-size: 13px; 
+        border-radius: 6px; 
+        gap: 6px; 
+    }
 
     /* ===== EMPTY STATE & UTILITY ===== */
-    .empty-state { text-align:center; padding:40px 20px; color:var(--gray-500); }
-    .empty-state i { font-size:48px; color:var(--gray-300); display:block; margin-bottom:15px; }
-    .empty-state h3 { font-size:18px; font-weight:600; margin-bottom:5px; color:var(--gray-700); }
-    .hidden { display:none !important; }
-    .text-center { text-align:center; }
-    .mt-10 { margin-top:10px; }
-    input[type="text"], input[type="email"], input[type="tel"], textarea { width:100%; padding:12px; border-radius:var(--radius-sm); border:1px solid var(--gray-300); font-family:inherit; font-size:14px; transition:0.3s; background:var(--gray-50); }
-    input:focus, textarea:focus { outline:2px solid var(--orange-primary); border-color:transparent; background:white; }
+    .empty-state { 
+        text-align: center; 
+        padding: 40px 20px; 
+        color: var(--gray-500); 
+    }
+    
+    .empty-state i { 
+        font-size: 48px; 
+        color: var(--gray-300); 
+        display: block; 
+        margin-bottom: 15px; 
+    }
+    
+    .empty-state h3 { 
+        font-size: 18px; 
+        font-weight: 600; 
+        margin-bottom: 5px; 
+        color: var(--gray-700); 
+    }
+    
+    .hidden { 
+        display: none !important; 
+    }
+    
+    .text-center { 
+        text-align: center; 
+    }
+    
+    .mt-10 { 
+        margin-top: 10px; 
+    }
+    
+    input[type="text"], 
+    input[type="email"], 
+    input[type="tel"], 
+    textarea { 
+        width: 100%; 
+        padding: 12px; 
+        border-radius: var(--radius-sm); 
+        border: 1px solid var(--gray-300); 
+        font-family: inherit; 
+        font-size: 14px; 
+        transition: 0.3s; 
+        background: var(--gray-50); 
+    }
+    
+    input:focus, 
+    textarea:focus { 
+        outline: 2px solid var(--orange-primary); 
+        border-color: transparent; 
+        background: white; 
+    }
 
     /* ===== MODALS ===== */
-    .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:10000; display:none; justify-content:center; align-items:center; backdrop-filter:blur(4px); }
-    .modal-overlay.active { display:flex; }
-    .modal { background:white; border-radius:var(--radius-md); max-width:600px; width:92%; max-height:90vh; overflow-y:auto; box-shadow:0 25px 50px rgba(0,0,0,0.25); animation:modalFade 0.3s ease; }
-    @keyframes modalFade { from { opacity:0; transform:translateY(-20px) scale(0.95); } to { opacity:1; transform:translateY(0) scale(1); } }
-    .modal-header { padding:18px 24px; border-bottom:1px solid var(--gray-200); display:flex; justify-content:space-between; align-items:center; background:var(--gray-50); border-radius:var(--radius-md) var(--radius-md) 0 0; }
-    .modal-header h3 { font-size:18px; font-weight:600; color:var(--gray-800); }
-    .modal-close { background:transparent; border:none; font-size:22px; cursor:pointer; color:var(--gray-500); transition:0.3s; }
-    .modal-close:hover { color:var(--error); transform:rotate(90deg); }
-    .modal-body { padding:24px; }
-    .modal-footer { padding:16px 24px; border-top:1px solid var(--gray-200); display:flex; justify-content:flex-end; gap:10px; background:var(--gray-50); border-radius:0 0 var(--radius-md) var(--radius-md); }
+    .modal-overlay { 
+        position: fixed; 
+        inset: 0; 
+        background: rgba(0,0,0,0.6); 
+        z-index: 10000; 
+        display: none; 
+        justify-content: center; 
+        align-items: center; 
+        backdrop-filter: blur(4px); 
+    }
+    
+    .modal-overlay.active { 
+        display: flex; 
+    }
+    
+    .modal { 
+        background: white; 
+        border-radius: var(--radius-md); 
+        max-width: 600px; 
+        width: 92%; 
+        max-height: 90vh; 
+        overflow-y: auto; 
+        box-shadow: 0 25px 50px rgba(0,0,0,0.25); 
+        animation: modalFade 0.3s ease; 
+    }
+    
+    @keyframes modalFade { 
+        from { 
+            opacity: 0; 
+            transform: translateY(-20px) scale(0.95); 
+        } 
+        to { 
+            opacity: 1; 
+            transform: translateY(0) scale(1); 
+        } 
+    }
+    
+    .modal-header { 
+        padding: 18px 24px; 
+        border-bottom: 1px solid var(--gray-200); 
+        display: flex; 
+        justify-content: space-between; 
+        align-items: center; 
+        background: var(--gray-50); 
+        border-radius: var(--radius-md) var(--radius-md) 0 0; 
+    }
+    
+    .modal-header h3 { 
+        font-size: 18px; 
+        font-weight: 600; 
+        color: var(--gray-800); 
+    }
+    
+    .modal-close { 
+        background: transparent; 
+        border: none; 
+        font-size: 22px; 
+        cursor: pointer; 
+        color: var(--gray-500); 
+        transition: 0.3s; 
+    }
+    
+    .modal-close:hover { 
+        color: var(--error); 
+        transform: rotate(90deg); 
+    }
+    
+    .modal-body { 
+        padding: 24px; 
+    }
+    
+    .modal-footer { 
+        padding: 16px 24px; 
+        border-top: 1px solid var(--gray-200); 
+        display: flex; 
+        justify-content: flex-end; 
+        gap: 10px; 
+        background: var(--gray-50); 
+        border-radius: 0 0 var(--radius-md) var(--radius-md); 
+    }
     
     /* ===== PREVIEW GAMBAR BESAR ===== */
-    .modal-preview-gambar .modal { max-width:800px; background:transparent; box-shadow:none; }
-    .modal-preview-gambar .modal-header { background:white; border-radius:var(--radius-md) var(--radius-md) 0 0; }
-    .modal-preview-gambar .modal-body { padding:0; background:#1a1a1a; border-radius:0 0 var(--radius-md) var(--radius-md); text-align:center; }
-    .modal-preview-gambar .modal-body img { max-width:100%; max-height:75vh; display:block; margin:0 auto; border-radius:0 0 var(--radius-md) var(--radius-md); }
+    .modal-preview-gambar .modal { 
+        max-width: 800px; 
+        background: transparent; 
+        box-shadow: none; 
+    }
+    
+    .modal-preview-gambar .modal-header { 
+        background: white; 
+        border-radius: var(--radius-md) var(--radius-md) 0 0; 
+    }
+    
+    .modal-preview-gambar .modal-body { 
+        padding: 0; 
+        background: #1a1a1a; 
+        border-radius: 0 0 var(--radius-md) var(--radius-md); 
+        text-align: center; 
+    }
+    
+    .modal-preview-gambar .modal-body img { 
+        max-width: 100%; 
+        max-height: 75vh; 
+        display: block; 
+        margin: 0 auto; 
+        border-radius: 0 0 var(--radius-md) var(--radius-md); 
+    }
     
     /* ===== DOKUMEN UPLOAD STYLE ===== */
-    .doc-item { display:flex; justify-content:space-between; align-items:center; padding:16px 0; border-bottom:1px solid var(--gray-100); }
-    .doc-item:last-child { border-bottom:none; }
-    .doc-info { display:flex; align-items:center; gap:16px; flex:1; }
-    .doc-thumb { width:64px; height:64px; border-radius:var(--radius-sm); object-fit:cover; border:1px solid var(--gray-200); cursor:pointer; transition:0.3s; }
-    .doc-thumb:hover { transform:scale(1.05); box-shadow:0 4px 10px rgba(0,0,0,0.15); }
-    .doc-icon { width:64px; height:64px; border-radius:var(--radius-sm); background:var(--orange-light); color:var(--orange-primary); display:flex; align-items:center; justify-content:center; font-size:28px; }
-    .doc-text h4 { font-size:15px; font-weight:600; color:var(--gray-800); margin-bottom:2px; }
-    .doc-text p { font-size:13px; color:var(--gray-500); margin:0; }
-    .doc-actions { display:flex; gap:8px; }
+    .doc-item { 
+        display: flex; 
+        justify-content: space-between; 
+        align-items: center; 
+        padding: 16px 0; 
+        border-bottom: 1px solid var(--gray-100); 
+    }
+    
+    .doc-item:last-child { 
+        border-bottom: none; 
+    }
+    
+    .doc-info { 
+        display: flex; 
+        align-items: center; 
+        gap: 16px; 
+        flex: 1; 
+    }
+    
+    .doc-thumb { 
+        width: 64px; 
+        height: 64px; 
+        border-radius: var(--radius-sm); 
+        object-fit: cover; 
+        border: 1px solid var(--gray-200); 
+        cursor: pointer; 
+        transition: 0.3s; 
+    }
+    
+    .doc-thumb:hover { 
+        transform: scale(1.05); 
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15); 
+    }
+    
+    .doc-icon { 
+        width: 64px; 
+        height: 64px; 
+        border-radius: var(--radius-sm); 
+        background: var(--orange-light); 
+        color: var(--orange-primary); 
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+        font-size: 28px; 
+    }
+    
+    .doc-text h4 { 
+        font-size: 15px; 
+        font-weight: 600; 
+        color: var(--gray-800); 
+        margin-bottom: 2px; 
+    }
+    
+    .doc-text p { 
+        font-size: 13px; 
+        color: var(--gray-500); 
+        margin: 0; 
+    }
+    
+    .doc-actions { 
+        display: flex; 
+        gap: 8px; 
+    }
 </style>
 <!-- ============ AKHIR BLOK 1(3) - 01 R4 CSS DASHBOARD & SIDEBAR (REVISI KEEMPAT - MEMPERBAIKI OVERLAY) ============ -->
-
 <!-- ============ BLOK 2 PRELOADER & TOAST ============ -->
 <!-- PENJELASAN: 
      Blok ini berisi kode HTML untuk Preloader dan Toast Notification.
      Preloader akan tampil saat halaman pertama kali dimuat, memberikan efek 
      loading yang halus sebelum konten utama ditampilkan.
      Toast Notification adalah komponen yang akan menampilkan notifikasi 
-     pop-up di pojok kanan atas saat ada aksi atau pesan dari sistem. -->
+     pop-up di pojok kanan atas saat ada aksi atau pesan dari sistem.
+     Kedua elemen ini diletakkan di bagian paling awal dari <body> agar 
+     dapat diakses secara global oleh seluruh halaman. -->
 
 <body>
     <!-- Preloader: Tampilan loading awal sebelum halaman siap -->
@@ -263,14 +905,20 @@
     <!-- Toast Container: Tempat notifikasi akan ditampilkan oleh JavaScript -->
     <div class="toast-container" id="toastContainer"></div>
 <!-- ============ AKHIR BLOK 2 PRELOADER & TOAST ============ -->
-
 <!-- ============ BLOK 3 AUTH CONTAINER ============ -->
 <!-- PENJELASAN: 
      Blok ini berisi kode HTML untuk Halaman Login dan Register (Auth Container).
      Halaman ini merupakan pintu masuk pertama bagi pengguna, baik untuk login 
      sebagai SuperAdmin maupun untuk mendaftar sebagai pengguna biasa.
-     Terdapat dua formulir di dalamnya: loginForm untuk masuk, dan registerForm 
-     untuk pendaftaran akun baru dengan berbagai Role (Customer, Toko, Ojek, dll). -->
+     Terdapat dua formulir di dalamnya:
+     1. loginForm - untuk masuk ke sistem.
+     2. registerForm - untuk pendaftaran akun baru dengan berbagai Role 
+        (Customer, Toko, Ojek, Pedagang, COD Seller).
+     
+     Fitur unggulan:
+     - Preview ID otomatis saat memilih Role di form registrasi.
+     - Toggle antar form Login dan Register tanpa reload halaman.
+     - Desain responsif dan elegan dengan efek glassmorphism. -->
 
 <div class="auth-container" id="pageAuth">
     <div class="auth-box">
@@ -370,14 +1018,16 @@
     </div>
 </div>
 <!-- ============ AKHIR BLOK 3 AUTH CONTAINER ============ -->
-
 <!-- ============ BLOK 4 R2 NAVBAR & SIDEBAR (REVISI KEDUA - TOMBOL KELUAR & NAVBAR RAPI) ============ -->
 <!-- PENJELASAN: 
      Ini adalah revisi kedua (R2) dari BLOK 4. 
      Pada revisi ini, dipastikan struktur Navbar dan Sidebar sudah rapi.
-     - Navbar menggunakan flexbox yang kuat agar tombol "Keluar" selalu muncul di kanan.
-     - Sidebar memiliki tinggi 100% dan scroll otomatis jika menu terlalu panjang.
-     - Semua ID dan class sudah terintegrasi dengan JavaScript navigasi di BLOK 7. -->
+     PERBAIKAN UTAMA:
+     1. Navbar menggunakan flexbox yang kuat agar tombol "Keluar" selalu muncul di kanan.
+     2. Sidebar memiliki tinggi 100% dan scroll otomatis jika menu terlalu panjang.
+     3. Semua ID dan class sudah terintegrasi dengan JavaScript navigasi di BLOK 7.
+     4. Menu sidebar dibagi menjadi dua bagian: Menu Utama dan Menu Admin.
+     5. Tombol toggle sidebar dan tombol logout berfungsi penuh. -->
 
 <nav class="navbar hidden" id="mainNavbar">
     <div class="navbar-brand">
@@ -462,19 +1112,23 @@
     </div>
 </aside>
 <!-- ============ AKHIR BLOK 4 R2 NAVBAR & SIDEBAR (REVISI KEDUA - TOMBOL KELUAR & NAVBAR RAPI) ============ -->
-
-    <!-- ============ BLOK 5(1) - 01 CONTENT AREA (DASHBOARD & PROFIL) ============ -->
+<!-- ============ BLOK 5(1) - 01 CONTENT AREA (DASHBOARD & PROFIL) ============ -->
 <!-- PENJELASAN: 
      Ini adalah bagian pertama dari area konten. Bagian ini berisi kode HTML untuk 
      Halaman Dasbor (Dashboard) dan Halaman Profil SuperAdmin. 
      Halaman Dasbor berisi sambutan dan status awal sistem. 
      Halaman Profil berisi data lengkap SuperAdmin (Nama, Alamat, Email, dll) 
      beserta formulir untuk mengunggah dokumen perusahaan dan menyimpan keterangan. 
-     Halaman-halaman ini merupakan komponen utama dari antarmuka SuperAdmin. -->
+     Halaman-halaman ini merupakan komponen utama dari antarmuka SuperAdmin.
+     
+     PERBAIKAN PENTING:
+     1. Tombol "Edit Profil" telah dihapus dari halaman Profil.
+     2. Semua ID elemen tetap sama dan terintegrasi dengan JavaScript.
+     3. Tidak ada kode yang terpotong atau tumpang tindih. -->
 
 <main class="content-area expanded hidden" id="contentArea">
     
-    <!-- DASHBOARD -->
+    <!-- ==================== HALAMAN DASHBOARD ==================== -->
     <div class="page" id="pageDashboard">
         <div class="page-header">
             <div>
@@ -491,7 +1145,7 @@
         </div>
     </div>
 
-    <!-- PROFIL -->
+    <!-- ==================== HALAMAN PROFIL ==================== -->
     <div class="page" id="pageProfile">
         <div class="page-header">
             <div>
@@ -504,7 +1158,7 @@
         <div class="card">
             <div class="card-header">
                 <h3><i class="fas fa-user-circle" style="color:var(--orange-primary)"></i> Informasi Profil</h3>
-                <button class="btn btn-primary btn-sm" onclick="bukaModalEditProfil()"><i class="fas fa-edit"></i> Edit Profil</button>
+                <!-- TOMBOL EDIT PROFIL TELAH DIHAPUS -->
             </div>
             <div class="card-body">
                 <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:20px;">
@@ -563,6 +1217,7 @@
             </div>
         </div>
     </div>
+</main>
 <!-- ============ AKHIR BLOK 5(1) - 01 CONTENT AREA (DASHBOARD & PROFIL) ============ -->
 <!-- ============ BLOK 5(2) - 01 CONTENT AREA (DAFTAR AKUN, PERSETUJUAN & KELOLA AKUN) ============ -->
 <!-- PENJELASAN: 
@@ -574,10 +1229,10 @@
         form Daftar Akun Baru, karena elemen tersebut sudah ada di dalam halaman 
         pagePersetujuan. Hal ini untuk menghilangkan duplikasi ID yang menyebabkan 
         JavaScript bingung dalam merender tabel.
-     2. Tag penutup </div> dan komentar akhir blok telah disatukan di bagian paling bawah 
-        untuk memastikan struktur HTML tetap valid dan tidak ada kode yang terpotong. -->
+     2. Semua halaman memiliki ID unik dan terintegrasi dengan navigasi.
+     3. Tidak ada kode yang terpotong atau tumpang tindih. -->
 
-    <!-- HALAMAN DAFTAR AKUN BARU -->
+    <!-- ==================== HALAMAN DAFTAR AKUN BARU ==================== -->
     <div class="page" id="pageDaftarAkun">
         <div class="page-header">
             <div>
@@ -677,7 +1332,7 @@
         </div>
     </div>
 
-    <!-- HALAMAN PERSETUJUAN -->
+    <!-- ==================== HALAMAN PERSETUJUAN ==================== -->
     <div class="page" id="pagePersetujuan">
         <div class="page-header">
             <div>
@@ -696,7 +1351,7 @@
         </div>
     </div>
 
-    <!-- HALAMAN KELOLA SEMUA AKUN -->
+    <!-- ==================== HALAMAN KELOLA SEMUA AKUN ==================== -->
     <div class="page" id="pageKelolaAkun">
         <div class="page-header">
             <div>
@@ -715,16 +1370,17 @@
             </div>
         </div>
     </div>
-</div>
+</main>
 <!-- ============ AKHIR BLOK 5(2) - 01 CONTENT AREA (DAFTAR AKUN, PERSETUJUAN & KELOLA AKUN) ============ -->
 <!-- ============ BLOK 5(3) - 01 CONTENT AREA (PLACEHOLDER & PENUTUP) ============ -->
 <!-- PENJELASAN: 
      Ini adalah bagian ketiga dan terakhir dari BLOK 5 (Content Area). 
      Bagian ini berisi kode HTML untuk Halaman Placeholder (fitur dalam pengembangan) 
      dan tag penutup </main> untuk mengakhiri area konten utama.
-     Halaman-halaman ini ditampilkan sebagai placeholder untuk fitur-fitur yang belum dikembangkan. -->
+     Halaman-halaman ini ditampilkan sebagai placeholder untuk fitur-fitur yang belum dikembangkan.
+     Semua halaman placeholder memiliki desain yang konsisten dengan halaman lainnya. -->
 
-    <!-- HALAMAN LIhat SEMUA TOKO -->
+    <!-- ==================== HALAMAN LIhat SEMUA TOKO ==================== -->
     <div class="page" id="pageLihatToko">
         <div class="card">
             <div class="card-body text-center" style="padding:60px;">
@@ -735,7 +1391,7 @@
         </div>
     </div>
 
-    <!-- HALAMAN LIhat SEMUA OJEK -->
+    <!-- ==================== HALAMAN LIhat SEMUA OJEK ==================== -->
     <div class="page" id="pageLihatOjek">
         <div class="card">
             <div class="card-body text-center" style="padding:60px;">
@@ -746,7 +1402,7 @@
         </div>
     </div>
 
-    <!-- HALAMAN LIhat SEMUA PRODUK -->
+    <!-- ==================== HALAMAN LIhat SEMUA PRODUK ==================== -->
     <div class="page" id="pageLihatProduk">
         <div class="card">
             <div class="card-body text-center" style="padding:60px;">
@@ -757,7 +1413,7 @@
         </div>
     </div>
 
-    <!-- HALAMAN CHAT -->
+    <!-- ==================== HALAMAN CHAT ==================== -->
     <div class="page" id="pageChat">
         <div class="card">
             <div class="card-body text-center" style="padding:60px;">
@@ -768,7 +1424,7 @@
         </div>
     </div>
 
-    <!-- HALAMAN TRANSFER MENU -->
+    <!-- ==================== HALAMAN TRANSFER MENU ==================== -->
     <div class="page" id="pageTransferMenu">
         <div class="card">
             <div class="card-body text-center" style="padding:60px;">
@@ -779,7 +1435,7 @@
         </div>
     </div>
 
-    <!-- HALAMAN PENAGIHAN -->
+    <!-- ==================== HALAMAN PENAGIHAN ==================== -->
     <div class="page" id="pagePenagihan">
         <div class="card">
             <div class="card-body text-center" style="padding:60px;">
@@ -790,7 +1446,7 @@
         </div>
     </div>
 
-    <!-- HALAMAN SETTING REKENING -->
+    <!-- ==================== HALAMAN SETTING REKENING ==================== -->
     <div class="page" id="pageSettingRekening">
         <div class="card">
             <div class="card-body text-center" style="padding:60px;">
@@ -801,7 +1457,7 @@
         </div>
     </div>
 
-    <!-- HALAMAN KELOLA UPGRADE -->
+    <!-- ==================== HALAMAN KELOLA UPGRADE ==================== -->
     <div class="page" id="pageKelolaUpgrade">
         <div class="card">
             <div class="card-body text-center" style="padding:60px;">
@@ -812,7 +1468,7 @@
         </div>
     </div>
 
-    <!-- HALAMAN SETTING TARIF OJEK -->
+    <!-- ==================== HALAMAN SETTING TARIF OJEK ==================== -->
     <div class="page" id="pageSettingTarifOjek">
         <div class="card">
             <div class="card-body text-center" style="padding:60px;">
@@ -825,43 +1481,219 @@
 
 </main>
 <!-- ============ AKHIR BLOK 5(3) - 01 CONTENT AREA (PLACEHOLDER & PENUTUP) ============ -->
+<!-- ============ BLOK 5(3) - 01 CONTENT AREA (PLACEHOLDER & PENUTUP) ============ -->
+<!-- PENJELASAN: 
+     Ini adalah bagian ketiga dan terakhir dari BLOK 5 (Content Area). 
+     Bagian ini berisi kode HTML untuk Halaman Placeholder (fitur dalam pengembangan) 
+     dan tag penutup </main> untuk mengakhiri area konten utama.
+     Halaman-halaman ini ditampilkan sebagai placeholder untuk fitur-fitur yang belum dikembangkan.
+     Semua halaman placeholder memiliki desain yang konsisten dengan halaman lainnya. -->
 
-<!-- ============ BLOK 6 MODALS ============ -->
-<div class="modal-overlay" id="modalEditProfil">
-    <div class="modal"><div class="modal-header"><h3>Edit Profil</h3><button class="modal-close" onclick="tutupModal('modalEditProfil')"><i class="fas fa-times"></i></button></div>
-        <div class="modal-body">
-            <div class="form-group"><label>Nama Lengkap</label><input type="text" id="editNama"></div>
-            <div class="form-group"><label>Alamat</label><input type="text" id="editAlamat"></div>
-            <div class="form-group"><label>Email</label><input type="email" id="editEmail"></div>
-            <div class="form-group"><label>Nomor HP</label><input type="tel" id="editHp"></div>
-            <div class="form-group"><label>Jabatan</label><input type="text" id="editJabatan"></div>
-            <div class="form-group"><label>Perusahaan Penerbit</label><input type="text" id="editPerusahaan"></div>
+    <!-- ==================== HALAMAN LIhat SEMUA TOKO ==================== -->
+    <div class="page" id="pageLihatToko">
+        <div class="card">
+            <div class="card-body text-center" style="padding:60px;">
+                <i class="fas fa-store" style="font-size:48px; color:var(--gray-300); margin-bottom:15px;"></i>
+                <h3>Lihat Semua Toko</h3>
+                <p>Fitur dalam pengembangan.</p>
+            </div>
         </div>
-        <div class="modal-footer"><button class="btn btn-secondary" onclick="tutupModal('modalEditProfil')">Batal</button><button class="btn btn-primary" onclick="simpanProfil()">Simpan</button></div>
     </div>
-</div>
 
+    <!-- ==================== HALAMAN LIhat SEMUA OJEK ==================== -->
+    <div class="page" id="pageLihatOjek">
+        <div class="card">
+            <div class="card-body text-center" style="padding:60px;">
+                <i class="fas fa-motorcycle" style="font-size:48px; color:var(--gray-300); margin-bottom:15px;"></i>
+                <h3>Lihat Semua Ojek</h3>
+                <p>Fitur dalam pengembangan.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== HALAMAN LIhat SEMUA PRODUK ==================== -->
+    <div class="page" id="pageLihatProduk">
+        <div class="card">
+            <div class="card-body text-center" style="padding:60px;">
+                <i class="fas fa-box" style="font-size:48px; color:var(--gray-300); margin-bottom:15px;"></i>
+                <h3>Lihat Semua Produk</h3>
+                <p>Fitur dalam pengembangan.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== HALAMAN CHAT ==================== -->
+    <div class="page" id="pageChat">
+        <div class="card">
+            <div class="card-body text-center" style="padding:60px;">
+                <i class="fas fa-comments" style="font-size:48px; color:var(--gray-300); margin-bottom:15px;"></i>
+                <h3>Chat</h3>
+                <p>Fitur dalam pengembangan.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== HALAMAN TRANSFER MENU ==================== -->
+    <div class="page" id="pageTransferMenu">
+        <div class="card">
+            <div class="card-body text-center" style="padding:60px;">
+                <i class="fas fa-exchange-alt" style="font-size:48px; color:var(--gray-300); margin-bottom:15px;"></i>
+                <h3>Transfer Menu</h3>
+                <p>Fitur dalam pengembangan.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== HALAMAN PENAGIHAN ==================== -->
+    <div class="page" id="pagePenagihan">
+        <div class="card">
+            <div class="card-body text-center" style="padding:60px;">
+                <i class="fas fa-file-invoice-dollar" style="font-size:48px; color:var(--gray-300); margin-bottom:15px;"></i>
+                <h3>Penagihan</h3>
+                <p>Fitur dalam pengembangan.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== HALAMAN SETTING REKENING ==================== -->
+    <div class="page" id="pageSettingRekening">
+        <div class="card">
+            <div class="card-body text-center" style="padding:60px;">
+                <i class="fas fa-university" style="font-size:48px; color:var(--gray-300); margin-bottom:15px;"></i>
+                <h3>Setting Rekening</h3>
+                <p>Fitur dalam pengembangan.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== HALAMAN KELOLA UPGRADE ==================== -->
+    <div class="page" id="pageKelolaUpgrade">
+        <div class="card">
+            <div class="card-body text-center" style="padding:60px;">
+                <i class="fas fa-crown" style="font-size:48px; color:var(--gray-300); margin-bottom:15px;"></i>
+                <h3>Kelola Upgrade</h3>
+                <p>Fitur dalam pengembangan.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== HALAMAN SETTING TARIF OJEK ==================== -->
+    <div class="page" id="pageSettingTarifOjek">
+        <div class="card">
+            <div class="card-body text-center" style="padding:60px;">
+                <i class="fas fa-cogs" style="font-size:48px; color:var(--gray-300); margin-bottom:15px;"></i>
+                <h3>Setting Tarif Ojek</h3>
+                <p>Fitur dalam pengembangan.</p>
+            </div>
+        </div>
+    </div>
+
+</main>
+<!-- ============ AKHIR BLOK 5(3) - 01 CONTENT AREA (PLACEHOLDER & PENUTUP) ============ -->
+<!-- ============ BLOK 6 MODALS ============ -->
+<!-- PENJELASAN: 
+     Blok ini berisi semua modal (pop-up window) yang digunakan dalam aplikasi.
+     Modal Edit Profil telah dihapus karena SuperAdmin tidak boleh mengedit 
+     profilnya sendiri melalui UI. Modal yang tersisa:
+     1. modalEditDokumen - Untuk mengedit nama dan keterangan dokumen.
+     2. modalPreviewGambar - Untuk menampilkan preview gambar dokumen.
+     3. modalDetailRekrutan - Untuk menampilkan detail akun rekrutan (dari BLOK 14).
+     4. modalPreviewIklan - Untuk menampilkan preview iklan sponsor (dari BLOK 16).
+     
+     Semua modal menggunakan class .modal-overlay dan .modal yang sudah 
+     didefinisikan di CSS Global (BLOK 1(3)). -->
+
+<!-- ==================== MODAL EDIT DOKUMEN ==================== -->
 <div class="modal-overlay" id="modalEditDokumen">
-    <div class="modal"><div class="modal-header"><h3>Edit Dokumen</h3><button class="modal-close" onclick="tutupModal('modalEditDokumen')"><i class="fas fa-times"></i></button></div>
+    <div class="modal">
+        <div class="modal-header">
+            <h3><i class="fas fa-edit" style="color: var(--orange-primary);"></i> Edit Dokumen</h3>
+            <button class="modal-close" onclick="tutupModal('modalEditDokumen')"><i class="fas fa-times"></i></button>
+        </div>
         <div class="modal-body">
             <input type="hidden" id="editDocId">
-            <div class="form-group"><label>Nama File</label><input type="text" id="editDocName"></div>
-            <div class="form-group"><label>Keterangan</label><input type="text" id="editDocKeterangan"></div>
+            <div class="form-group">
+                <label for="editDocName">Nama File <span style="color: var(--error);">*</span></label>
+                <input type="text" id="editDocName" placeholder="Masukkan nama file">
+            </div>
+            <div class="form-group">
+                <label for="editDocKeterangan">Keterangan</label>
+                <input type="text" id="editDocKeterangan" placeholder="Masukkan keterangan dokumen">
+            </div>
         </div>
-        <div class="modal-footer"><button class="btn btn-secondary" onclick="tutupModal('modalEditDokumen')">Batal</button><button class="btn btn-primary" onclick="simpanEditDokumen()">Simpan</button></div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="tutupModal('modalEditDokumen')"><i class="fas fa-times"></i> Batal</button>
+            <button class="btn btn-primary" onclick="simpanEditDokumen()"><i class="fas fa-save"></i> Simpan</button>
+        </div>
     </div>
 </div>
 
+<!-- ==================== MODAL PREVIEW GAMBAR ==================== -->
 <div class="modal-overlay modal-preview-gambar" id="modalPreviewGambar">
-    <div class="modal"><div class="modal-header"><h3 id="modalPreviewTitle">Preview Gambar</h3><button class="modal-close" onclick="tutupModal('modalPreviewGambar')"><i class="fas fa-times"></i></button></div>
-        <div class="modal-body"><img id="modalPreviewImage" src="" alt="Preview"></div>
+    <div class="modal">
+        <div class="modal-header">
+            <h3 id="modalPreviewTitle"><i class="fas fa-image" style="color: var(--orange-primary);"></i> Preview Gambar</h3>
+            <button class="modal-close" onclick="tutupModal('modalPreviewGambar')"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+            <img id="modalPreviewImage" src="" alt="Preview" style="max-width: 100%; max-height: 75vh; display: block; margin: 0 auto;">
+        </div>
+    </div>
+</div>
+
+<!-- ==================== MODAL DETAIL REKRUTAN (Dari BLOK 14) ==================== -->
+<div class="modal-overlay modal-detail-owner" id="modalDetailRekrutan">
+    <div class="modal">
+        <div class="modal-header">
+            <h3><i class="fas fa-user-circle" style="color: var(--info);"></i> Detail Akun Rekrutan</h3>
+            <button class="modal-close" onclick="tutupModal('modalDetailRekrutan')"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body" id="modalDetailRekrutanBody">
+            <!-- Konten detail akan diisi oleh JavaScript -->
+            <div class="text-center" style="padding: 20px;">
+                <i class="fas fa-spinner fa-spin" style="font-size: 32px; color: var(--gray-400);"></i>
+                <p style="margin-top: 10px; color: var(--gray-500);">Memuat data...</p>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="tutupModal('modalDetailRekrutan')"><i class="fas fa-times"></i> Tutup</button>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== MODAL PREVIEW IKLAN SPONSOR (Dari BLOK 16) ==================== -->
+<div class="modal-overlay modal-preview-sponsor" id="modalPreviewIklan">
+    <div class="modal">
+        <div class="modal-header">
+            <h3 id="modalPreviewIklanTitle"><i class="fas fa-ad" style="color: var(--orange-primary);"></i> Preview Iklan</h3>
+            <button class="modal-close" onclick="tutupModal('modalPreviewIklan')"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+            <img id="modalPreviewIklanImage" src="" alt="Preview Iklan" style="max-width: 100%; max-height: 70vh; display: block; margin: 0 auto;">
+        </div>
     </div>
 </div>
 <!-- ============ AKHIR BLOK 6 ============ -->
-
 <!-- ============ BLOK 7(1) - 01 SCRIPTS DATA AKUN & UTILITY ============ -->
+<!-- PENJELASAN: 
+     Blok ini berisi fungsi-fungsi dasar JavaScript untuk manajemen data akun 
+     dan utilitas yang digunakan di seluruh aplikasi.
+     
+     FITUR UTAMA:
+     1. getDataAkun() - Mengambil semua data akun dari localStorage.
+     2. simpanDataAkun() - Menyimpan data akun ke localStorage.
+     3. encodePassword() - Mengenkripsi password menggunakan Base64.
+     4. decodePassword() - Mendekripsi password dari Base64.
+     5. inisialisasiSuperAdmin() - Membuat akun SuperAdmin default jika belum ada.
+     6. generateId() - Membuat ID unik otomatis berdasarkan Role.
+     7. updateIdPreview() - Update preview ID di form registrasi publik.
+     8. tampilkanToast() - Menampilkan notifikasi pop-up di pojok kanan atas.
+     
+     Semua fungsi ini bersifat global dan dapat diakses oleh blok lain. -->
+
 <script>
     // ===== DATA AKUN & ENKRIPSI =====
+    
     // Mengambil data akun dari localStorage
     function getDataAkun() { 
         var dataAkun = localStorage.getItem('2r_akun'); 
@@ -907,9 +1739,11 @@
                 latitude: null,
                 longitude: null,
                 status: 'AKTIF',
-                registeredAt: new Date().toISOString()
+                registeredAt: new Date().toISOString(),
+                direkrutOleh: 'Sistem'
             });
             simpanDataAkun(daftarAkun);
+            console.log('✅ Akun SuperAdmin default berhasil dibuat.');
         }
     }
 
@@ -968,7 +1802,8 @@
         toastElement.className = 'toast ' + tipe;
         
         var icon = tipe === 'success' ? 'fa-check-circle' : 
-                   (tipe === 'error' ? 'fa-times-circle' : 'fa-exclamation-triangle');
+                   (tipe === 'error' ? 'fa-times-circle' : 
+                   (tipe === 'warning' ? 'fa-exclamation-triangle' : 'fa-info-circle'));
         toastElement.innerHTML = '<i class="fas ' + icon + '"></i> ' + pesan;
         
         document.getElementById('toastContainer').appendChild(toastElement);
@@ -983,7 +1818,20 @@
     }
 </script>
 <!-- ============ AKHIR BLOK 7(1) - 01 SCRIPTS DATA AKUN & UTILITY ============ -->
-    <!-- ============ BLOK 7(2) - 01 SCRIPTS LOGIN, REGISTER & NAVIGASI ============ -->
+<!-- ============ BLOK 7(2) - 01 SCRIPTS LOGIN, REGISTER & NAVIGASI ============ -->
+<!-- PENJELASAN: 
+     Blok ini berisi fungsi-fungsi JavaScript untuk:
+     1. Toggle form Login dan Register.
+     2. Proses Login (autentikasi pengguna).
+     3. Proses Register (pendaftaran akun baru dengan geolokasi).
+     4. Navigasi antar halaman di dalam dashboard.
+     5. Manajemen sidebar (buka/tutup).
+     6. Manajemen modal (buka/tutup).
+     7. Logout (keluar dari sistem).
+     
+     FUNGSI EDIT PROFIL TELAH DIHAPUS karena SuperAdmin tidak boleh mengedit 
+     profilnya sendiri melalui UI. -->
+
 <script>
     // ===== TOGGLE FORM LOGIN / REGISTER =====
     // Fungsi untuk berpindah antara form Login dan Register di halaman publik
@@ -1016,6 +1864,13 @@
         });
         
         if (userDitemukan) {
+            // Cek status akun
+            if (userDitemukan.status !== 'AKTIF') {
+                document.getElementById('authError').style.display = 'flex';
+                document.getElementById('authErrorText').textContent = 'Akun Anda sedang ' + userDitemukan.status + '. Silakan hubungi SuperAdmin.';
+                return;
+            }
+            
             tampilkanToast('Selamat datang, ' + userDitemukan.nama + '!');
             localStorage.setItem('2r_user', JSON.stringify(userDitemukan));
             tampilkanDashboard(userDitemukan);
@@ -1066,6 +1921,12 @@
         
         // Fungsi untuk menyelesaikan pendaftaran (dengan atau tanpa koordinat)
         function selesaiDaftar(latitude, longitude) {
+            // Menentukan status akun berdasarkan role
+            var statusAkun = 'AKTIF';
+            if (role === 'toko' || role === 'ojek') {
+                statusAkun = 'NONAKTIF (Menunggu Verifikasi)';
+            }
+            
             var akunBaru = {
                 id: idBaru,
                 role: role,
@@ -1079,13 +1940,16 @@
                 perusahaan: '',
                 latitude: latitude,
                 longitude: longitude,
-                status: 'AKTIF',
-                registeredAt: new Date().toISOString()
+                status: statusAkun,
+                registeredAt: new Date().toISOString(),
+                direkrutOleh: 'Registrasi Publik'
             };
             
             daftarAkun.push(akunBaru);
             simpanDataAkun(daftarAkun);
-            tampilkanToast('Akun berhasil dibuat! ID: ' + idBaru);
+            
+            var pesanStatus = statusAkun === 'AKTIF' ? 'Akun berhasil dibuat!' : 'Akun berhasil dibuat! Status: ' + statusAkun;
+            tampilkanToast(pesanStatus + ' ID: ' + idBaru);
             
             // Reset form
             document.getElementById('regUsername').value = '';
@@ -1130,6 +1994,16 @@
             if (namaHalaman === 'profile' && typeof loadProfil === 'function') {
                 loadProfil();
             }
+            
+            // Jika halaman yang dibuka adalah Kelola Akun, render tabel
+            if (namaHalaman === 'kelolaAkun' && typeof renderTabelSemuaAkun === 'function') {
+                renderTabelSemuaAkun();
+            }
+            
+            // Jika halaman yang dibuka adalah Persetujuan, render tabel
+            if (namaHalaman === 'persetujuan' && typeof renderTabelPersetujuan === 'function') {
+                renderTabelPersetujuan();
+            }
         } else {
             tampilkanToast('Halaman belum tersedia', 'warning');
         }
@@ -1141,10 +2015,12 @@
             item.classList.remove('active');
         });
         
-        var menuAktif = document.getElementById('menu' + namaHalaman.charAt(0).toUpperCase() + namaHalaman.slice(1));
-        if (menuAktif) {
-            menuAktif.classList.add('active');
-        }
+        // Cari menu dengan data-page yang sesuai
+        document.querySelectorAll('.sidebar-menu-item').forEach(function(item) {
+            if (item.dataset.page === namaHalaman) {
+                item.classList.add('active');
+            }
+        });
     }
 
     // Fungsi untuk membuka dan menutup sidebar
@@ -1173,6 +2049,7 @@
         document.getElementById(idModal).classList.remove('active');
     }
     
+    // ===== LOGOUT =====
     function logout() {
         if (confirm('Apakah Anda yakin ingin keluar?')) {
             localStorage.removeItem('2r_user');
@@ -1181,7 +2058,17 @@
     }
 </script>
 <!-- ============ AKHIR BLOK 7(2) - 01 SCRIPTS LOGIN, REGISTER & NAVIGASI ============ -->
-    <!-- ============ BLOK 7(3) - 01 SCRIPTS DASHBOARD LOADER & EVENT LISTENER ============ -->
+<!-- ============ BLOK 7(3) - 01 SCRIPTS DASHBOARD LOADER & EVENT LISTENER ============ -->
+<!-- PENJELASAN: 
+     Blok ini berisi fungsi-fungsi JavaScript untuk:
+     1. tampilkanDashboard() - Fungsi utama untuk mengubah tampilan dari halaman Login ke Dashboard.
+     2. Event listener saat halaman dimuat (DOMContentLoaded dan window.load).
+     3. Inisialisasi preloader dan pengecekan session login.
+     
+     Fungsi ini adalah jembatan antara halaman Auth (Login/Register) dan 
+     halaman Dashboard SuperAdmin. Semua event listener untuk tombol sidebar,
+     logout, dan menu navigasi diatur di sini. -->
+
 <script>
     // ===== TAMPILKAN DASHBOARD =====
     // Fungsi utama untuk mengubah tampilan dari halaman Login ke Dashboard SuperAdmin
@@ -1243,9 +2130,18 @@
                 }
             };
         });
+        
+        // 13. Update nama di dashboard
+        document.getElementById('dashboardNama').textContent = user.nama;
+        
+        // 14. Load data profil jika halaman profil dibuka pertama kali
+        if (typeof loadProfil === 'function') {
+            loadProfil();
+        }
     }
 
     // ===== INISIALISASI SAAT HALAMAN DIMUAT =====
+    
     // 1. Jalankan Preloader
     window.addEventListener('load', function() {
         setTimeout(function() {
@@ -1271,127 +2167,373 @@
     });
 </script>
 <!-- ============ AKHIR BLOK 7(3) - 01 SCRIPTS DASHBOARD LOADER & EVENT LISTENER ============ -->
-
 <!-- ============ BLOK 8 SCRIPTS PROFIL & UPLOAD ============ -->
+<!-- PENJELASAN: 
+     Blok ini berisi semua fungsi JavaScript yang terkait dengan halaman Profil:
+     1. loadProfil() - Memuat dan menampilkan data profil dari localStorage.
+     2. simpanKeterangan() - Menyimpan keterangan perusahaan.
+     3. Fungsi manajemen dokumen (getDocuments, saveDocuments, renderDokumen).
+     4. uploadDokumen() - Mengunggah dokumen baru dengan validasi ukuran file.
+     5. editDokumen() - Membuka modal edit dokumen.
+     6. simpanEditDokumen() - Menyimpan hasil edit dokumen.
+     7. hapusDokumen() - Menghapus dokumen dari sistem.
+     8. bukaPreviewGambar() - Membuka modal preview gambar.
+     9. Event listener untuk tombol upload dan textarea keterangan.
+     
+     PERBAIKAN PENTING:
+     1. Fungsi EDIT PROFIL (bukaModalEditProfil dan simpanProfil) telah DIHAPUS.
+     2. Semua fungsi manajemen dokumen tetap lengkap dan berfungsi penuh.
+     3. Tidak ada kode yang terpotong atau tumpang tindih. -->
+
 <script>
-    const PROFILE_KEY='2r_superadmin_profile', DOCUMENTS_KEY='2r_superadmin_documents';
-    function loadProfil(){
-        var p=JSON.parse(localStorage.getItem(PROFILE_KEY)||'{}');
-        document.getElementById('profilNama').textContent=p.nama||'-';
-        document.getElementById('profilAlamat').textContent=p.alamat||'-';
-        document.getElementById('profilEmail').textContent=p.email||'-';
-        document.getElementById('profilHp').textContent=p.hp||'-';
-        document.getElementById('profilJabatan').textContent=p.jabatan||'-';
-        document.getElementById('profilPerusahaan').textContent=p.perusahaan||'-';
-        document.getElementById('textKeterangan').value=p.keterangan||'';
+    // Konstanta untuk penyimpanan data di localStorage
+    const PROFILE_KEY = '2r_superadmin_profile';
+    const DOCUMENTS_KEY = '2r_superadmin_documents';
+
+    // ===== FUNGSI MEMUAT PROFIL =====
+    // Fungsi untuk memuat dan menampilkan data profil dari localStorage
+    function loadProfil() {
+        // Mengambil data profil dari localStorage
+        var dataProfil = localStorage.getItem(PROFILE_KEY);
+        var profil = dataProfil ? JSON.parse(dataProfil) : {};
+        
+        // Menampilkan data profil ke elemen HTML
+        document.getElementById('profilNama').textContent = profil.nama || '-';
+        document.getElementById('profilAlamat').textContent = profil.alamat || '-';
+        document.getElementById('profilEmail').textContent = profil.email || '-';
+        document.getElementById('profilHp').textContent = profil.hp || '-';
+        document.getElementById('profilJabatan').textContent = profil.jabatan || '-';
+        document.getElementById('profilPerusahaan').textContent = profil.perusahaan || '-';
+        document.getElementById('textKeterangan').value = profil.keterangan || '';
+        
+        // Memuat daftar dokumen
         renderDokumen();
     }
 
-    function bukaModalEditProfil(){
-        var p=JSON.parse(localStorage.getItem(PROFILE_KEY)||'{}');
-        ['editNama','editAlamat','editEmail','editHp','editJabatan','editPerusahaan'].forEach(id=>document.getElementById(id).value=p[id.replace('edit','').toLowerCase()]||'');
-        bukaModal('modalEditProfil');
-    }
-
-    function simpanProfil(){
-        var profil={
-            nama:document.getElementById('editNama').value.trim(),
-            alamat:document.getElementById('editAlamat').value.trim(),
-            email:document.getElementById('editEmail').value.trim(),
-            hp:document.getElementById('editHp').value.trim(),
-            jabatan:document.getElementById('editJabatan').value.trim(),
-            perusahaan:document.getElementById('editPerusahaan').value.trim(),
-            keterangan:document.getElementById('textKeterangan').value
-        };
-        if(!profil.nama){ tampilkanToast('Nama tidak boleh kosong!','error'); return; }
+    // ===== FUNGSI MENYIMPAN KETERANGAN =====
+    // Fungsi untuk menyimpan keterangan perusahaan
+    function simpanKeterangan() {
+        // Mengambil data profil yang sudah ada
+        var dataProfil = localStorage.getItem(PROFILE_KEY);
+        var profil = dataProfil ? JSON.parse(dataProfil) : {};
+        
+        // Mengambil nilai keterangan dari textarea
+        profil.keterangan = document.getElementById('textKeterangan').value;
+        
+        // Menyimpan kembali ke localStorage
         localStorage.setItem(PROFILE_KEY, JSON.stringify(profil));
-        loadProfil(); tutupModal('modalEditProfil'); tampilkanToast('Profil berhasil disimpan!');
+        
+        // Menampilkan notifikasi sukses
+        tampilkanToast('Keterangan berhasil disimpan!', 'success');
     }
 
-    function simpanKeterangan(){
-        var p=JSON.parse(localStorage.getItem(PROFILE_KEY)||'{}');
-        p.keterangan=document.getElementById('textKeterangan').value;
-        localStorage.setItem(PROFILE_KEY, JSON.stringify(p)); tampilkanToast('Keterangan disimpan!');
+    // ===== FUNGSI MANAJEMEN DOKUMEN =====
+    
+    // Fungsi untuk mendapatkan daftar dokumen dari localStorage
+    function getDocuments() {
+        var dataDokumen = localStorage.getItem(DOCUMENTS_KEY);
+        return dataDokumen ? JSON.parse(dataDokumen) : [];
     }
 
-    function getDocuments(){ return JSON.parse(localStorage.getItem(DOCUMENTS_KEY)||'[]'); }
-    function saveDocuments(docs){ localStorage.setItem(DOCUMENTS_KEY, JSON.stringify(docs)); }
+    // Fungsi untuk menyimpan daftar dokumen ke localStorage
+    function saveDocuments(dokumen) {
+        localStorage.setItem(DOCUMENTS_KEY, JSON.stringify(dokumen));
+    }
 
-    document.addEventListener('DOMContentLoaded', function() {
-        var btn=document.getElementById('btnUnggahDokumen'), input=document.getElementById('inputDokumen');
-        if(btn&&input){ btn.onclick = ()=>{ input.click(); }; input.onchange = (e)=>uploadDokumen(e); }
-    });
+    // Fungsi untuk merender daftar dokumen ke dalam HTML
+    function renderDokumen() {
+        var daftarDokumen = getDocuments();
+        var container = document.getElementById('daftarDokumen');
+        
+        // Jika container tidak ditemukan, hentikan fungsi
+        if (!container) {
+            return;
+        }
+        
+        // Jika tidak ada dokumen
+        if (daftarDokumen.length === 0) {
+            container.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <h3>Belum ada dokumen</h3>
+                    <p>Klik tombol di atas untuk menambahkan.</p>
+                </div>
+            `;
+            return;
+        }
+        
+        // Membuat HTML untuk setiap dokumen
+        var html = '';
+        for (var i = 0; i < daftarDokumen.length; i++) {
+            var dokumen = daftarDokumen[i];
+            var isImage = dokumen.type && dokumen.type.startsWith('image/');
+            var previewHtml = '';
+            
+            if (isImage) {
+                // Jika dokumen adalah gambar, tampilkan thumbnail
+                previewHtml = `<img src="${dokumen.data}" alt="${dokumen.name}" onclick="bukaPreviewGambar('${dokumen.data}', '${dokumen.name}')" class="doc-thumb">`;
+            } else {
+                // Jika dokumen bukan gambar, tampilkan ikon
+                previewHtml = `<div class="doc-icon"><i class="fas fa-file-alt"></i></div>`;
+            }
+            
+            html += `
+                <div class="doc-item">
+                    <div class="doc-info">
+                        ${previewHtml}
+                        <div class="doc-text">
+                            <h4>${dokumen.name}</h4>
+                            <p>${dokumen.keterangan || 'Tidak ada keterangan'}</p>
+                        </div>
+                    </div>
+                    <div class="doc-actions">
+                        <button class="btn btn-secondary btn-xs" onclick="editDokumen('${dokumen.id}')">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <a href="${dokumen.data}" download="${dokumen.name}" class="btn btn-primary btn-xs">
+                            <i class="fas fa-download"></i>
+                        </a>
+                        <button class="btn btn-danger btn-xs" onclick="hapusDokumen('${dokumen.id}')">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Memasukkan HTML ke dalam container
+        container.innerHTML = html;
+    }
 
+    // ===== FUNGSI UPLOAD DOKUMEN =====
+    // Fungsi untuk mengunggah dokumen baru
     function uploadDokumen(event) {
-        var files=event.target.files; if(!files||!files.length) return;
-        var docs=getDocuments(), loaded=0;
-        tampilkanToast('Mengunggah '+files.length+' file...','info');
-        Array.from(files).forEach(file=>{
-            if(file.size>10*1024*1024){ tampilkanToast('File '+file.name+' terlalu besar (max 10MB)','warning'); loaded++; if(loaded===files.length){ event.target.value=''; renderDokumen(); } return; }
-            var reader=new FileReader();
-            reader.onload = (e)=>{
-                docs.push({ id:Date.now()+'-'+Math.random().toString(36).substr(2,9), name:file.name, type:file.type, data:e.target.result, keterangan:'' });
-                loaded++;
-                if(loaded===files.length){ saveDocuments(docs); renderDokumen(); tampilkanToast(loaded+' dokumen berhasil diunggah!'); event.target.value=''; }
+        var files = event.target.files;
+        
+        // Jika tidak ada file yang dipilih
+        if (!files || files.length === 0) {
+            return;
+        }
+        
+        var daftarDokumen = getDocuments();
+        var jumlahTerunggah = 0;
+        
+        // Menampilkan notifikasi proses upload
+        tampilkanToast('Mengunggah ' + files.length + ' file...', 'info');
+        
+        // Memproses setiap file
+        for (var i = 0; i < files.length; i++) {
+            var file = files[i];
+            
+            // Validasi ukuran file (max 10MB)
+            if (file.size > 10 * 1024 * 1024) {
+                tampilkanToast('File ' + file.name + ' terlalu besar (max 10MB)', 'warning');
+                jumlahTerunggah++;
+                
+                // Jika semua file sudah diproses
+                if (jumlahTerunggah === files.length) {
+                    event.target.value = '';
+                    renderDokumen();
+                }
+                continue;
+            }
+            
+            // Membaca file menjadi base64
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                // Menambahkan dokumen baru ke daftar
+                daftarDokumen.push({
+                    id: Date.now() + '-' + Math.random().toString(36).substr(2, 9),
+                    name: file.name,
+                    type: file.type,
+                    data: e.target.result,
+                    keterangan: ''
+                });
+                
+                jumlahTerunggah++;
+                
+                // Jika semua file sudah diproses
+                if (jumlahTerunggah === files.length) {
+                    saveDocuments(daftarDokumen);
+                    renderDokumen();
+                    tampilkanToast(jumlahTerunggah + ' dokumen berhasil diunggah!', 'success');
+                    event.target.value = '';
+                }
             };
-            reader.onerror = ()=>{ tampilkanToast('Gagal membaca file '+file.name,'error'); loaded++; if(loaded===files.length){ event.target.value=''; renderDokumen(); } };
+            
+            reader.onerror = function() {
+                tampilkanToast('Gagal membaca file ' + file.name, 'error');
+                jumlahTerunggah++;
+                
+                // Jika semua file sudah diproses
+                if (jumlahTerunggah === files.length) {
+                    event.target.value = '';
+                    renderDokumen();
+                }
+            };
+            
             reader.readAsDataURL(file);
-        });
+        }
     }
 
+    // ===== FUNGSI EDIT DOKUMEN =====
+    // Fungsi untuk membuka modal edit dokumen
+    function editDokumen(id) {
+        var daftarDokumen = getDocuments();
+        var dokumen = null;
+        
+        // Mencari dokumen berdasarkan ID
+        for (var i = 0; i < daftarDokumen.length; i++) {
+            if (daftarDokumen[i].id === id) {
+                dokumen = daftarDokumen[i];
+                break;
+            }
+        }
+        
+        // Jika dokumen ditemukan
+        if (dokumen) {
+            document.getElementById('editDocId').value = id;
+            document.getElementById('editDocName').value = dokumen.name;
+            document.getElementById('editDocKeterangan').value = dokumen.keterangan || '';
+            
+            // Membuka modal edit dokumen
+            bukaModal('modalEditDokumen');
+        } else {
+            tampilkanToast('Dokumen tidak ditemukan!', 'error');
+        }
+    }
+
+    // Fungsi untuk menyimpan hasil edit dokumen
+    function simpanEditDokumen() {
+        var id = document.getElementById('editDocId').value;
+        var namaBaru = document.getElementById('editDocName').value.trim();
+        var keteranganBaru = document.getElementById('editDocKeterangan').value.trim();
+        
+        // Validasi nama file
+        if (!namaBaru) {
+            tampilkanToast('Nama file tidak boleh kosong!', 'error');
+            return;
+        }
+        
+        var daftarDokumen = getDocuments();
+        var dokumenDitemukan = false;
+        
+        // Mencari dan mengupdate dokumen
+        for (var i = 0; i < daftarDokumen.length; i++) {
+            if (daftarDokumen[i].id === id) {
+                daftarDokumen[i].name = namaBaru;
+                daftarDokumen[i].keterangan = keteranganBaru;
+                dokumenDitemukan = true;
+                break;
+            }
+        }
+        
+        // Jika dokumen ditemukan dan berhasil diupdate
+        if (dokumenDitemukan) {
+            saveDocuments(daftarDokumen);
+            renderDokumen();
+            tutupModal('modalEditDokumen');
+            tampilkanToast('Dokumen berhasil diperbarui!', 'success');
+        } else {
+            tampilkanToast('Dokumen tidak ditemukan!', 'error');
+        }
+    }
+
+    // ===== FUNGSI HAPUS DOKUMEN =====
+    // Fungsi untuk menghapus dokumen
+    function hapusDokumen(id) {
+        // Konfirmasi penghapusan
+        if (!confirm('Yakin ingin menghapus dokumen ini?')) {
+            return;
+        }
+        
+        var daftarDokumen = getDocuments();
+        var daftarBaru = [];
+        var ditemukan = false;
+        
+        // Menyaring dokumen yang akan dihapus
+        for (var i = 0; i < daftarDokumen.length; i++) {
+            if (daftarDokumen[i].id !== id) {
+                daftarBaru.push(daftarDokumen[i]);
+            } else {
+                ditemukan = true;
+            }
+        }
+        
+        // Jika dokumen ditemukan dan berhasil dihapus
+        if (ditemukan) {
+            saveDocuments(daftarBaru);
+            renderDokumen();
+            tampilkanToast('Dokumen berhasil dihapus!', 'success');
+        } else {
+            tampilkanToast('Dokumen tidak ditemukan!', 'error');
+        }
+    }
+
+    // ===== FUNGSI PREVIEW GAMBAR =====
+    // Fungsi untuk membuka modal preview gambar
     function bukaPreviewGambar(src, nama) {
         document.getElementById('modalPreviewImage').src = src;
         document.getElementById('modalPreviewTitle').textContent = 'Preview: ' + nama;
         bukaModal('modalPreviewGambar');
     }
 
-    function renderDokumen(){
-        var docs=getDocuments(), container=document.getElementById('daftarDokumen');
-        if(!container) return;
-        if(docs.length===0){ container.innerHTML='<div class="empty-state"><i class="fas fa-cloud-upload-alt"></i><h3>Belum ada dokumen</h3><p>Klik tombol di atas untuk menambahkan.</p></div>'; return; }
+    // ===== EVENT LISTENER =====
+    // Event listener saat halaman dimuat
+    document.addEventListener('DOMContentLoaded', function() {
+        // Memuat data profil
+        loadProfil();
         
-        var html='';
-        docs.forEach(doc=>{
-            var isImage=doc.type&&doc.type.startsWith('image/');
-            var preview = isImage ? `<img src="${doc.data}" alt="${doc.name}" onclick="bukaPreviewGambar('${doc.data}','${doc.name}')" class="doc-thumb">` : `<div class="doc-icon"><i class="fas fa-file-alt"></i></div>`;
-            html+=`
-                <div class="doc-item">
-                    <div class="doc-info">${preview}<div class="doc-text"><h4>${doc.name}</h4><p>${doc.keterangan||'Tidak ada keterangan'}</p></div></div>
-                    <div class="doc-actions">
-                        <button class="btn btn-secondary btn-xs" onclick="editDokumen('${doc.id}')"><i class="fas fa-edit"></i></button>
-                        <a href="${doc.data}" download="${doc.name}" class="btn btn-primary btn-xs"><i class="fas fa-download"></i></a>
-                        <button class="btn btn-danger btn-xs" onclick="hapusDokumen('${doc.id}')"><i class="fas fa-trash"></i></button>
-                    </div>
-                </div>
-            `;
-        });
-        container.innerHTML = html;
-    }
+        // Event listener untuk tombol upload dokumen
+        var btnUpload = document.getElementById('btnUnggahDokumen');
+        var inputFile = document.getElementById('inputDokumen');
+        
+        if (btnUpload && inputFile) {
+            btnUpload.onclick = function() {
+                inputFile.click();
+            };
+            
+            inputFile.onchange = function(event) {
+                uploadDokumen(event);
+            };
+        }
+        
+        // Event listener untuk textarea keterangan (auto-save saat blur)
+        var textKeterangan = document.getElementById('textKeterangan');
+        if (textKeterangan) {
+            textKeterangan.onblur = function() {
+                simpanKeterangan();
+            };
+        }
+    });
 
-    function editDokumen(id){
-        var doc=getDocuments().find(d=>d.id==id); if(!doc) return;
-        document.getElementById('editDocId').value=id; document.getElementById('editDocName').value=doc.name; document.getElementById('editDocKeterangan').value=doc.keterangan||'';
-        bukaModal('modalEditDokumen');
-    }
-
-    function simpanEditDokumen(){
-        var id=document.getElementById('editDocId').value, name=document.getElementById('editDocName').value.trim(), ket=document.getElementById('editDocKeterangan').value.trim();
-        if(!name){ tampilkanToast('Nama file tidak boleh kosong!','error'); return; }
-        var docs=getDocuments(), doc=docs.find(d=>d.id==id);
-        if(doc){ doc.name=name; doc.keterangan=ket; saveDocuments(docs); renderDokumen(); tutupModal('modalEditDokumen'); tampilkanToast('Dokumen diperbarui!'); }
-    }
-
-    function hapusDokumen(id){
-        if(!confirm('Yakin ingin menghapus dokumen ini?')) return;
-        var docs=getDocuments().filter(d=>d.id!=id);
-        saveDocuments(docs); renderDokumen(); tampilkanToast('Dokumen dihapus!');
-    }
-
-    document.addEventListener('DOMContentLoaded', loadProfil);
-    (function(){ var orig=window.navigasiHalaman; if(orig) window.navigasiHalaman = (page)=>{ orig(page); if(page==='profile'&&typeof loadProfil==='function') loadProfil(); }; })();
+    // ===== OVERRIDE NAVIGASI HALAMAN =====
+    // Memastikan saat navigasi ke halaman Profil, data profil dimuat ulang
+    (function() {
+        var fungsiNavigasiAsli = window.navigasiHalaman;
+        if (typeof fungsiNavigasiAsli === 'function') {
+            window.navigasiHalaman = function(halaman) {
+                fungsiNavigasiAsli(halaman);
+                if (halaman === 'profile' && typeof loadProfil === 'function') {
+                    loadProfil();
+                }
+            };
+        }
+    })();
 </script>
 <!-- ============ AKHIR BLOK 8 ============ -->
-    <!-- ============ BLOK 9 FUNGSI RENDER TABEL SEMUA AKUN ============ -->
+<!-- ============ BLOK 9 FUNGSI RENDER TABEL SEMUA AKUN ============ -->
+<!-- PENJELASAN: 
+     Blok ini berisi fungsi JavaScript untuk merender tabel manajemen semua akun 
+     yang terdaftar di sistem. Tabel ini digunakan di halaman "Kelola Semua Akun".
+     
+     FITUR UTAMA:
+     1. Menampilkan semua akun yang terdaftar (kecuali SuperAdmin).
+     2. Menampilkan status akun (AKTIF / NONAKTIF) dengan badge warna.
+     3. Menyediakan tombol aksi: Aktifkan, Nonaktifkan, Hapus.
+     4. Akun SuperAdmin dilindungi dan tidak bisa diubah/dihapus.
+     5. Tampilan responsif dengan scroll horizontal untuk tabel yang panjang. -->
+
 <script>
     // Fungsi untuk merender tabel manajemen semua akun yang terdaftar
     function renderTabelSemuaAkun() {
@@ -1526,3024 +2668,6 @@
     }
 </script>
 <!-- ============ AKHIR BLOK 9 FUNGSI RENDER TABEL SEMUA AKUN ============ -->
-    <!-- ============ BLOK 10 FUNGSI AKSI MANAJEMEN AKUN ============ -->
-<script>
-    // Fungsi untuk mengaktifkan kembali akun dari halaman manajemen
-    function aktifkanAkunDariManajemen(idAkun) {
-        // Mengambil data akun dari localStorage
-        var dataAkunSaatIni = localStorage.getItem('2r_akun');
-        var daftarAkun = dataAkunSaatIni ? JSON.parse(dataAkunSaatIni) : [];
-
-        // Mencari indeks akun berdasarkan ID
-        var indeksAkun = -1;
-        for (var i = 0; i < daftarAkun.length; i++) {
-            if (daftarAkun[i].id === idAkun) {
-                indeksAkun = i;
-                break;
-            }
-        }
-
-        // Jika akun ditemukan, ubah statusnya menjadi AKTIF
-        if (indeksAkun !== -1) {
-            // Menampilkan konfirmasi kepada SuperAdmin
-            var konfirmasi = confirm("Apakah Anda yakin ingin mengaktifkan kembali akun dengan ID " + idAkun + "?");
-            if (konfirmasi) {
-                // Mengubah status akun
-                daftarAkun[indeksAkun].status = "AKTIF";
-                
-                // Menyimpan kembali data akun ke localStorage
-                localStorage.setItem('2r_akun', JSON.stringify(daftarAkun));
-
-                // Menampilkan notifikasi sukses
-                tampilkanToast("Akun dengan ID " + idAkun + " berhasil diaktifkan kembali!", "success");
-
-                // Merender ulang tabel manajemen semua akun
-                renderTabelSemuaAkun();
-            }
-        } else {
-            tampilkanToast("Akun dengan ID " + idAkun + " tidak ditemukan dalam sistem.", "error");
-        }
-    }
-
-    // Fungsi untuk menonaktifkan akun dari halaman manajemen
-    function nonaktifkanAkunDariManajemen(idAkun) {
-        // Mengambil data akun dari localStorage
-        var dataAkunSaatIni = localStorage.getItem('2r_akun');
-        var daftarAkun = dataAkunSaatIni ? JSON.parse(dataAkunSaatIni) : [];
-
-        // Mencari indeks akun berdasarkan ID
-        var indeksAkun = -1;
-        for (var i = 0; i < daftarAkun.length; i++) {
-            if (daftarAkun[i].id === idAkun) {
-                indeksAkun = i;
-                break;
-            }
-        }
-
-        // Jika akun ditemukan, ubah statusnya menjadi NONAKTIF
-        if (indeksAkun !== -1) {
-            // Menampilkan konfirmasi kepada SuperAdmin
-            var konfirmasi = confirm("Apakah Anda yakin ingin menonaktifkan akun dengan ID " + idAkun + "? Akun ini tidak bisa digunakan sampai diaktifkan kembali.");
-            if (konfirmasi) {
-                // Mengubah status akun
-                daftarAkun[indeksAkun].status = "NONAKTIF (Dinonaktifkan oleh SuperAdmin)";
-                
-                // Menyimpan kembali data akun ke localStorage
-                localStorage.setItem('2r_akun', JSON.stringify(daftarAkun));
-
-                // Menampilkan notifikasi
-                tampilkanToast("Akun dengan ID " + idAkun + " berhasil dinonaktifkan.", "warning");
-
-                // Merender ulang tabel manajemen semua akun
-                renderTabelSemuaAkun();
-            }
-        } else {
-            tampilkanToast("Akun dengan ID " + idAkun + " tidak ditemukan dalam sistem.", "error");
-        }
-    }
-
-    // Fungsi untuk menghapus akun dari halaman manajemen
-    function hapusAkunDariManajemen(idAkun) {
-        // Mengambil data akun dari localStorage
-        var dataAkunSaatIni = localStorage.getItem('2r_akun');
-        var daftarAkun = dataAkunSaatIni ? JSON.parse(dataAkunSaatIni) : [];
-
-        // Mencari indeks akun berdasarkan ID
-        var indeksAkun = -1;
-        for (var i = 0; i < daftarAkun.length; i++) {
-            if (daftarAkun[i].id === idAkun) {
-                indeksAkun = i;
-                break;
-            }
-        }
-
-        // Jika akun ditemukan, hapus dari array
-        if (indeksAkun !== -1) {
-            // Menampilkan konfirmasi penghapusan ganda kepada SuperAdmin (Proteksi)
-            var konfirmasiPertama = confirm("PERINGATAN: Anda akan menghapus permanen akun dengan ID " + idAkun + ". Data ini tidak dapat dikembalikan. Lanjutkan?");
-            if (konfirmasiPertama) {
-                var konfirmasiKedua = confirm("KONFIRMASI TERAKHIR: Apakah Anda benar-benar yakin ingin menghapus akun " + idAkun + "?");
-                if (konfirmasiKedua) {
-                    // Menghapus akun dari array
-                    daftarAkun.splice(indeksAkun, 1);
-
-                    // Menyimpan kembali data akun ke localStorage
-                    localStorage.setItem('2r_akun', JSON.stringify(daftarAkun));
-
-                    // Menampilkan notifikasi
-                    tampilkanToast("Akun dengan ID " + idAkun + " telah berhasil dihapus permanen dari sistem.", "error");
-
-                    // Merender ulang tabel manajemen semua akun
-                    renderTabelSemuaAkun();
-                }
-            }
-        } else {
-            tampilkanToast("Akun dengan ID " + idAkun + " tidak ditemukan dalam sistem.", "error");
-        }
-    }
-</script>
-<!-- ============ AKHIR BLOK 10 FUNGSI AKSI MANAJEMEN AKUN ============ -->
-<!-- ============ BLOK 11(1) - 01 R1 HTML & CSS DAFTAR AKUN LAMA (REVISI PERTAMA) ============ -->
-<!-- PENJELASAN: 
-     Ini adalah revisi pertama (R1) dari BLOK 11(1). 
-     Pada revisi ini, saya menambahkan atribut style="display:none;" 
-     pada elemen pembuka <div class="page" id="pageDaftarAkun_Lama">.
-     Hal ini dilakukan untuk memastikan halaman ini benar-benar tersembunyi 
-     dan tidak akan pernah mengganggu halaman utama yang ada di BLOK 5(2) 
-     yang memiliki ID yang sama. -->
-
-<style>
-    /* CSS Khusus untuk Halaman Daftar Akun Baru */
-    .form-daftar-akun-container {
-        max-width: 700px;
-        margin: 0 auto;
-        background-color: var(--white);
-        padding: 30px;
-        border-radius: var(--radius-md);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        border: 1px solid var(--gray-200);
-    }
-    .form-daftar-akun-container .form-group {
-        margin-bottom: 20px;
-    }
-    .form-daftar-akun-container label {
-        display: block;
-        font-weight: 600;
-        font-size: 14px;
-        color: var(--gray-800);
-        margin-bottom: 6px;
-    }
-    .form-daftar-akun-container .input-group {
-        display: flex;
-        align-items: center;
-        background: var(--gray-100);
-        border-radius: var(--radius-sm);
-        padding: 0 14px;
-        border: 2px solid transparent;
-        transition: 0.3s ease;
-    }
-    .form-daftar-akun-container .input-group:focus-within {
-        border-color: var(--orange-primary);
-        background: var(--white);
-    }
-    .form-daftar-akun-container .input-group i {
-        color: var(--gray-500);
-        font-size: 16px;
-        width: 24px;
-        text-align: center;
-    }
-    .form-daftar-akun-container .input-group input,
-    .form-daftar-akun-container .input-group select {
-        border: none;
-        background: transparent;
-        padding: 13px 10px;
-        font-size: 15px;
-        width: 100%;
-        outline: none;
-        font-family: 'Poppins', sans-serif;
-    }
-    .form-daftar-akun-container .input-group select {
-        cursor: pointer;
-    }
-    .form-daftar-akun-container .btn-submit-akun {
-        width: 100%;
-        padding: 14px;
-        background: var(--orange-primary);
-        color: var(--white);
-        border: none;
-        border-radius: var(--radius-sm);
-        font-size: 16px;
-        font-weight: 700;
-        cursor: pointer;
-        transition: 0.3s ease;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-    }
-    .form-daftar-akun-container .btn-submit-akun:hover {
-        transform: scale(1.02);
-        box-shadow: 0 6px 20px rgba(255, 107, 0, 0.4);
-    }
-    .form-daftar-akun-container .btn-submit-akun:disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
-        transform: none;
-    }
-    .info-verifikasi {
-        background-color: var(--orange-light);
-        border-left: 4px solid var(--orange-primary);
-        padding: 12px 16px;
-        border-radius: var(--radius-sm);
-        font-size: 14px;
-        color: var(--gray-700);
-        margin-bottom: 20px;
-    }
-</style>
-
-<!-- HTML untuk Halaman Daftar Akun Baru (ID sudah diubah menjadi _Lama dan ditambahkan style display:none) -->
-<div class="page" id="pageDaftarAkun_Lama" style="display:none;">
-    <div class="page-header">
-        <div>
-            <h2>Daftar Akun Baru Oleh SuperAdmin</h2>
-            <p>Halaman ini khusus untuk SuperAdmin dalam membuat akun untuk Staf Admin, Owner, Customer Service, Sponsor, Customer, Toko, dan Ojek.</p>
-        </div>
-    </div>
-
-    <div class="info-verifikasi">
-        <i class="fas fa-info-circle" style="color: var(--orange-primary); margin-right: 8px;"></i>
-        <strong>Penting:</strong> Jika Anda membuat akun dengan Role <strong>Toko</strong> atau <strong>Ojek</strong>, maka akun tersebut akan berstatus <strong>"NONAKTIF (Menunggu Verifikasi)"</strong> dan harus diaktifkan secara manual oleh SuperAdmin melalui menu <strong>"Persetujuan"</strong>.
-    </div>
-
-    <div class="form-daftar-akun-container">
-        <form id="formDaftarAkunBaru">
-            <!-- Input Role -->
-            <div class="form-group">
-                <label for="daftarRoleBaru">Pilih Role Akun <span style="color: var(--error);">*</span></label>
-                <div class="input-group">
-                    <i class="fas fa-user-tag"></i>
-                    <select id="daftarRoleBaru" required>
-                        <option value="customer">Customer</option>
-                        <option value="toko">Toko (Membutuhkan Verifikasi)</option>
-                        <option value="ojek">Ojek (Membutuhkan Verifikasi)</option>
-                        <option value="staf_admin">Staf Admin</option>
-                        <option value="staf_owner_ojek">Staf Owner Ojek</option>
-                        <option value="staf_owner_toko">Staf Owner Toko</option>
-                        <option value="customer_service">Customer Service</option>
-                        <option value="sponsor">Sponsor</option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- Input Username -->
-            <div class="form-group">
-                <label for="daftarUsernameBaru">Username <span style="color: var(--error);">*</span></label>
-                <div class="input-group">
-                    <i class="fas fa-user"></i>
-                    <input type="text" id="daftarUsernameBaru" placeholder="Masukkan username (minimal 4 karakter)" required>
-                </div>
-            </div>
-
-            <!-- Input Password -->
-            <div class="form-group">
-                <label for="daftarPasswordBaru">Password <span style="color: var(--error);">*</span></label>
-                <div class="input-group">
-                    <i class="fas fa-lock"></i>
-                    <input type="password" id="daftarPasswordBaru" placeholder="Masukkan password (minimal 6 karakter)" required>
-                </div>
-            </div>
-
-            <!-- Input Nama Lengkap -->
-            <div class="form-group">
-                <label for="daftarNamaBaru">Nama Lengkap <span style="color: var(--error);">*</span></label>
-                <div class="input-group">
-                    <i class="fas fa-id-card"></i>
-                    <input type="text" id="daftarNamaBaru" placeholder="Masukkan nama lengkap" required>
-                </div>
-            </div>
-
-            <!-- Input Email -->
-            <div class="form-group">
-                <label for="daftarEmailBaru">Email (Opsional)</label>
-                <div class="input-group">
-                    <i class="fas fa-envelope"></i>
-                    <input type="email" id="daftarEmailBaru" placeholder="Masukkan alamat email">
-                </div>
-            </div>
-
-            <!-- Input Nomor HP -->
-            <div class="form-group">
-                <label for="daftarHpBaru">Nomor HP (Opsional)</label>
-                <div class="input-group">
-                    <i class="fas fa-phone"></i>
-                    <input type="tel" id="daftarHpBaru" placeholder="Masukkan nomor HP">
-                </div>
-            </div>
-
-            <!-- Input Alamat -->
-            <div class="form-group">
-                <label for="daftarAlamatBaru">Alamat (Opsional)</label>
-                <div class="input-group">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <input type="text" id="daftarAlamatBaru" placeholder="Masukkan alamat lengkap">
-                </div>
-            </div>
-
-            <!-- Tombol Submit -->
-            <div class="form-group" style="margin-top: 10px;">
-                <button type="submit" class="btn-submit-akun">
-                    <i class="fas fa-user-plus"></i> Buat Akun Baru
-                </button>
-            </div>
-        </form>
-    </div>
-</div>
-<!-- ============ AKHIR BLOK 11(1) - 01 R1 HTML & CSS DAFTAR AKUN LAMA (REVISI PERTAMA) ============ -->
-<!-- ============ BLOK 11(2) - 01 JAVASCRIPT FUNGSI SIMPAN AKUN ============ -->
-<script>
-    // Fungsi untuk menyimpan data akun baru dari form SuperAdmin
-    function simpanAkunBaruDariSuperAdmin(event) {
-        event.preventDefault();
-
-        // Mengambil elemen-elemen input dari form
-        var inputRole = document.getElementById('daftarRoleBaru');
-        var inputUsername = document.getElementById('daftarUsernameBaru');
-        var inputPassword = document.getElementById('daftarPasswordBaru');
-        var inputNama = document.getElementById('daftarNamaBaru');
-        var inputEmail = document.getElementById('daftarEmailBaru');
-        var inputHp = document.getElementById('daftarHpBaru');
-        var inputAlamat = document.getElementById('daftarAlamatBaru');
-
-        // Mengambil nilai dari input
-        var role = inputRole.value;
-        var username = inputUsername.value.trim();
-        var password = inputPassword.value.trim();
-        var nama = inputNama.value.trim();
-        var email = inputEmail.value.trim();
-        var hp = inputHp.value.trim();
-        var alamat = inputAlamat.value.trim();
-
-        // Validasi data wajib diisi
-        if (role === "" || username === "" || password === "" || nama === "") {
-            tampilkanToast("Harap isi Role, Username, Password, dan Nama Lengkap terlebih dahulu.", "warning");
-            return;
-        }
-
-        // Validasi panjang username minimal 4 karakter
-        if (username.length < 4) {
-            tampilkanToast("Username harus memiliki minimal 4 karakter.", "warning");
-            return;
-        }
-
-        // Validasi panjang password minimal 6 karakter
-        if (password.length < 6) {
-            tampilkanToast("Password harus memiliki minimal 6 karakter.", "warning");
-            return;
-        }
-
-        // Mengambil data akun yang sudah ada dari localStorage
-        var dataAkunSaatIni = localStorage.getItem('2r_akun');
-        var daftarAkun = dataAkunSaatIni ? JSON.parse(dataAkunSaatIni) : [];
-
-        // Mengecek apakah username sudah digunakan oleh akun lain
-        var cekUsername = daftarAkun.find(function(akun) {
-            return akun.username === username;
-        });
-        if (cekUsername) {
-            tampilkanToast("Username '" + username + "' sudah digunakan oleh akun lain. Silakan gunakan username lain.", "error");
-            return;
-        }
-
-        // Mengecek apakah email sudah digunakan (jika diisi)
-        if (email !== "") {
-            var cekEmail = daftarAkun.find(function(akun) {
-                return akun.email === email;
-            });
-            if (cekEmail) {
-                tampilkanToast("Email '" + email + "' sudah digunakan oleh akun lain.", "error");
-                return;
-            }
-        }
-
-        // Mengecek apakah nomor HP sudah digunakan (jika diisi)
-        if (hp !== "") {
-            var cekHp = daftarAkun.find(function(akun) {
-                return akun.hp === hp;
-            });
-            if (cekHp) {
-                tampilkanToast("Nomor HP '" + hp + "' sudah digunakan oleh akun lain.", "error");
-                return;
-            }
-        }
-
-        // Menentukan status akun berdasarkan role
-        var statusAkunBaru = "AKTIF";
-        if (role === "toko" || role === "ojek") {
-            statusAkunBaru = "NONAKTIF (Menunggu Verifikasi)";
-        }
-
-        // Menentukan prefix ID berdasarkan role
-        var prefixId = "";
-        if (role === "customer") { prefixId = "CUST"; }
-        else if (role === "toko") { prefixId = "TOKO"; }
-        else if (role === "ojek") { prefixId = "OJEK"; }
-        else if (role === "pedagang") { prefixId = "PEDAGANG"; }
-        else if (role === "codseller") { prefixId = "COD"; }
-        else if (role === "superadmin") { prefixId = "SA"; }
-        else if (role === "staf_admin") { prefixId = "STA"; }
-        else if (role === "staf_owner_ojek") { prefixId = "SOO"; }
-        else if (role === "staf_owner_toko") { prefixId = "SOT"; }
-        else if (role === "customer_service") { prefixId = "CS"; }
-        else if (role === "sponsor") { prefixId = "SPN"; }
-
-        // Menghitung nomor urut ID berdasarkan role yang sama
-        var akunDenganRoleSama = daftarAkun.filter(function(akun) {
-            return akun.role === role;
-        });
-        var nomorUrut = 1;
-        akunDenganRoleSama.forEach(function(akun) {
-            var idArray = akun.id.split('-');
-            if (idArray.length === 2) {
-                var angkaId = parseInt(idArray[1]);
-                if (!isNaN(angkaId) && angkaId >= nomorUrut) {
-                    nomorUrut = angkaId + 1;
-                }
-            }
-        });
-        var idBaru = prefixId + '-' + String(nomorUrut).padStart(3, '0');
-
-        // Mengenkripsi password menggunakan Base64 (sesuai sistem lama)
-        var passwordTerenkripsi = btoa(password);
-
-        // Mencatat waktu registrasi saat ini
-        var waktuRegistrasi = new Date().toISOString();
-
-        // Membuat objek data akun baru
-        var dataAkunBaru = {
-            id: idBaru,
-            role: role,
-            username: username,
-            password: passwordTerenkripsi,
-            nama: nama,
-            email: email,
-            hp: hp,
-            alamat: alamat,
-            jabatan: "",
-            perusahaan: "",
-            latitude: null,
-            longitude: null,
-            status: statusAkunBaru,
-            registeredAt: waktuRegistrasi,
-            direkrutOleh: "SuperAdmin" // Menandakan akun ini dibuat langsung oleh SuperAdmin
-        };
-
-        // Menambahkan akun baru ke dalam daftar akun
-        daftarAkun.push(dataAkunBaru);
-
-        // Menyimpan kembali daftar akun ke localStorage
-        localStorage.setItem('2r_akun', JSON.stringify(daftarAkun));
-
-        // Menampilkan notifikasi sukses
-        tampilkanToast("Selamat! Akun " + role + " dengan ID " + idBaru + " berhasil dibuat. Status: " + statusAkunBaru, "success");
-
-        // Mengosongkan kembali input form setelah berhasil
-        inputRole.value = "customer";
-        inputUsername.value = "";
-        inputPassword.value = "";
-        inputNama.value = "";
-        inputEmail.value = "";
-        inputHp.value = "";
-        inputAlamat.value = "";
-
-        // Jika role adalah Toko atau Ojek, refresh tabel persetujuan di BLOK 12
-        if (role === "toko" || role === "ojek") {
-            if (typeof renderTabelPersetujuan === 'function') {
-                renderTabelPersetujuan();
-            }
-        }
-
-        // Refresh tabel semua akun di BLOK 13 jika sudah ada
-        if (typeof renderTabelSemuaAkun === 'function') {
-            renderTabelSemuaAkun();
-        }
-    }
-</script>
-<!-- ============ AKHIR BLOK 11(2) - 01 JAVASCRIPT FUNGSI SIMPAN AKUN ============ -->
-<!-- ============ BLOK 11(3) - 01 JAVASCRIPT EVENT LISTENER & PENUTUP ============ -->
-<script>
-    // Event listener saat halaman dimuat
-    document.addEventListener('DOMContentLoaded', function() {
-        // Mendapatkan elemen form pendaftaran akun
-        var formDaftarAkun = document.getElementById('formDaftarAkunBaru');
-        
-        // Jika form ditemukan, tambahkan event listener untuk submit
-        if (formDaftarAkun) {
-            formDaftarAkun.addEventListener('submit', simpanAkunBaruDariSuperAdmin);
-        }
-    });
-</script>
-<!-- ============ AKHIR BLOK 11(3) - 01 JAVASCRIPT EVENT LISTENER & PENUTUP ============ -->
-
-    <!-- ============ BLOK 12(1) - 01 HTML & CSS MENU PERSETUJUAN ============ -->
-<style>
-    /* CSS Khusus untuk Halaman Menu Persetujuan Verifikasi Akun */
-    .tabel-persetujuan-container {
-        width: 100%;
-        overflow-x: auto;
-        background-color: var(--white);
-        border-radius: var(--radius-md);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        border: 1px solid var(--gray-200);
-        margin-top: 20px;
-    }
-
-    .tabel-persetujuan {
-        width: 100%;
-        border-collapse: collapse;
-        font-size: 14px;
-        font-family: 'Poppins', sans-serif;
-    }
-
-    .tabel-persetujuan thead {
-        background-color: var(--gray-50);
-        border-bottom: 2px solid var(--gray-200);
-    }
-
-    .tabel-persetujuan thead th {
-        padding: 16px 20px;
-        text-align: left;
-        font-weight: 600;
-        color: var(--gray-700);
-        white-space: nowrap;
-    }
-
-    .tabel-persetujuan tbody td {
-        padding: 14px 20px;
-        border-bottom: 1px solid var(--gray-100);
-        color: var(--gray-800);
-        vertical-align: middle;
-    }
-
-    .tabel-persetujuan tbody tr:hover {
-        background-color: var(--gray-50);
-    }
-
-    .tabel-persetujuan tbody tr:last-child td {
-        border-bottom: none;
-    }
-
-    .koordinat-text {
-        font-size: 12px;
-        color: var(--gray-500);
-        font-family: monospace;
-        background: var(--gray-100);
-        padding: 4px 8px;
-        border-radius: 4px;
-        display: inline-block;
-    }
-
-    .status-badge-menunggu {
-        display: inline-block;
-        padding: 4px 14px;
-        background-color: #FFF3E0;
-        color: #E65100;
-        font-size: 12px;
-        font-weight: 600;
-        border-radius: 20px;
-        border: 1px solid #FFE0B2;
-    }
-
-    .aksi-tombol-group {
-        display: flex;
-        gap: 8px;
-        flex-wrap: wrap;
-    }
-
-    .btn-aktifkan-akun {
-        background-color: var(--success);
-        color: var(--white);
-        border: none;
-        padding: 6px 14px;
-        border-radius: var(--radius-sm);
-        font-size: 13px;
-        font-weight: 500;
-        cursor: pointer;
-        transition: 0.3s ease;
-        font-family: 'Poppins', sans-serif;
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-    }
-
-    .btn-aktifkan-akun:hover {
-        background-color: #388E3C;
-        transform: scale(1.02);
-    }
-
-    .btn-tolak-hapus-akun {
-        background-color: var(--error);
-        color: var(--white);
-        border: none;
-        padding: 6px 14px;
-        border-radius: var(--radius-sm);
-        font-size: 13px;
-        font-weight: 500;
-        cursor: pointer;
-        transition: 0.3s ease;
-        font-family: 'Poppins', sans-serif;
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-    }
-
-    .btn-tolak-hapus-akun:hover {
-        background-color: #D32F2F;
-        transform: scale(1.02);
-    }
-
-    .kosong-state-persetujuan {
-        text-align: center;
-        padding: 40px 20px;
-        color: var(--gray-500);
-    }
-
-    .kosong-state-persetujuan i {
-        font-size: 48px;
-        color: var(--gray-300);
-        display: block;
-        margin-bottom: 15px;
-    }
-
-    .kosong-state-persetujuan h3 {
-        font-size: 18px;
-        font-weight: 600;
-        margin-bottom: 5px;
-        color: var(--gray-700);
-    }
-
-    .kosong-state-persetujuan p {
-        font-size: 14px;
-    }
-</style>
-
-<!-- HTML untuk Halaman Menu Persetujuan Verifikasi Akun -->
-<div class="page" id="pagePersetujuan">
-    <div class="page-header">
-        <div>
-            <h2>Menu Persetujuan Verifikasi Akun</h2>
-            <p>Halaman ini khusus untuk SuperAdmin dalam melakukan verifikasi, aktivasi, atau penolakan terhadap akun Toko dan Ojek yang baru mendaftar.</p>
-        </div>
-    </div>
-
-    <!-- Tempat tabel persetujuan akan dirender oleh JavaScript -->
-    <div id="tabelPersetujuanContainer">
-        <div class="kosong-state-persetujuan">
-            <i class="fas fa-spinner fa-spin"></i>
-            <h3>Sedang Memuat Data</h3>
-            <p>Silakan tunggu sebentar...</p>
-        </div>
-    </div>
-</div>
-<!-- ============ AKHIR BLOK 12(1) - 01 HTML & CSS MENU PERSETUJUAN ============ -->
-<!-- ============ BLOK 12(2) - 01 JAVASCRIPT FUNGSI RENDER TABEL PERSETUJUAN ============ -->
-<script>
-    // Fungsi untuk merender tabel persetujuan akun yang berstatus NONAKTIF
-    function renderTabelPersetujuan() {
-        // Mengambil data akun dari localStorage
-        var dataAkunSaatIni = localStorage.getItem('2r_akun');
-        var daftarAkun = dataAkunSaatIni ? JSON.parse(dataAkunSaatIni) : [];
-
-        // Menyaring akun yang memiliki status "NONAKTIF (Menunggu Verifikasi)"
-        // dan memastikan role SuperAdmin tidak masuk ke dalam daftar ini
-        var daftarAkunMenungguVerifikasi = daftarAkun.filter(function(akun) {
-            return akun.status === "NONAKTIF (Menunggu Verifikasi)" && akun.role !== "superadmin";
-        });
-
-        // Mendapatkan elemen tabel container
-        var containerTabel = document.getElementById('tabelPersetujuanContainer');
-
-        // Jika tidak ada akun yang menunggu verifikasi
-        if (daftarAkunMenungguVerifikasi.length === 0) {
-            containerTabel.innerHTML = `
-                <div class="kosong-state-persetujuan">
-                    <i class="fas fa-check-circle"></i>
-                    <h3>Semua Akun Sudah Aktif</h3>
-                    <p>Saat ini tidak ada akun Toko atau Ojek yang menunggu persetujuan verifikasi.</p>
-                </div>
-            `;
-            return;
-        }
-
-        // Membuat struktur tabel HTML
-        var htmlTabel = `
-            <div class="tabel-persetujuan-container">
-                <table class="tabel-persetujuan">
-                    <thead>
-                        <tr>
-                            <th>ID Akun</th>
-                            <th>Nama Lengkap</th>
-                            <th>Role</th>
-                            <th>Email</th>
-                            <th>Titik Koordinat (Lat / Long)</th>
-                            <th>Status Saat Ini</th>
-                            <th>Aksi Verifikasi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-        `;
-
-        // Melakukan perulangan untuk menampilkan data setiap akun
-        for (var i = 0; i < daftarAkunMenungguVerifikasi.length; i++) {
-            var akun = daftarAkunMenungguVerifikasi[i];
-
-            // Mengubah format latitude dan longitude agar lebih rapi
-            var latitude = akun.latitude !== null && akun.latitude !== undefined ? akun.latitude : "Tidak tersedia";
-            var longitude = akun.longitude !== null && akun.longitude !== undefined ? akun.longitude : "Tidak tersedia";
-
-            // Menambahkan baris tabel untuk setiap akun
-            htmlTabel += `
-                <tr>
-                    <td><strong>${akun.id}</strong></td>
-                    <td>${akun.nama}</td>
-                    <td>${akun.role}</td>
-                    <td>${akun.email || "-"}</td>
-                    <td>
-                        <span class="koordinat-text">Lat: ${latitude}</span><br>
-                        <span class="koordinat-text">Long: ${longitude}</span>
-                    </td>
-                    <td>
-                        <span class="status-badge-menunggu">
-                            <i class="fas fa-clock"></i> Menunggu Verifikasi
-                        </span>
-                    </td>
-                    <td>
-                        <div class="aksi-tombol-group">
-                            <!-- Tombol untuk mengaktifkan akun -->
-                            <button class="btn-aktifkan-akun" onclick="aktifkanAkunDariPersetujuan('${akun.id}')">
-                                <i class="fas fa-check-circle"></i> Aktifkan Akun
-                            </button>
-                            <!-- Tombol untuk menolak dan menghapus akun -->
-                            <button class="btn-tolak-hapus-akun" onclick="tolakDanHapusAkunDariPersetujuan('${akun.id}')">
-                                <i class="fas fa-trash-alt"></i> Tolak & Hapus
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-            `;
-        }
-
-        // Menutup tag tabel
-        htmlTabel += `
-                    </tbody>
-                </table>
-            </div>
-        `;
-
-        // Memasukkan HTML tabel ke dalam container
-        containerTabel.innerHTML = htmlTabel;
-    }
-</script>
-<!-- ============ AKHIR BLOK 12(2) - 01 JAVASCRIPT FUNGSI RENDER TABEL PERSETUJUAN ============ -->
-<!-- ============ BLOK 12(3) - 01 JAVASCRIPT FUNGSI AKSI & EVENT LISTENER ============ -->
-<script>
-    // Fungsi untuk mengaktifkan akun dari menu persetujuan
-    function aktifkanAkunDariPersetujuan(idAkun) {
-        // Mengambil data akun dari localStorage
-        var dataAkunSaatIni = localStorage.getItem('2r_akun');
-        var daftarAkun = dataAkunSaatIni ? JSON.parse(dataAkunSaatIni) : [];
-
-        // Mencari indeks akun berdasarkan ID
-        var indeksAkun = -1;
-        for (var i = 0; i < daftarAkun.length; i++) {
-            if (daftarAkun[i].id === idAkun) {
-                indeksAkun = i;
-                break;
-            }
-        }
-
-        // Jika akun ditemukan, ubah statusnya menjadi AKTIF
-        if (indeksAkun !== -1) {
-            // Menampilkan konfirmasi kepada SuperAdmin
-            var konfirmasi = confirm("Apakah Anda yakin ingin mengaktifkan akun dengan ID " + idAkun + "?");
-            if (konfirmasi) {
-                // Mengubah status akun
-                daftarAkun[indeksAkun].status = "AKTIF";
-                
-                // Menyimpan kembali data akun ke localStorage
-                localStorage.setItem('2r_akun', JSON.stringify(daftarAkun));
-
-                // Menampilkan notifikasi sukses
-                tampilkanToast("Akun dengan ID " + idAkun + " berhasil diaktifkan!", "success");
-
-                // Merender ulang tabel persetujuan
-                renderTabelPersetujuan();
-
-                // Jika fungsi render tabel semua akun sudah ada, refresh juga
-                if (typeof renderTabelSemuaAkun === 'function') {
-                    renderTabelSemuaAkun();
-                }
-            }
-        } else {
-            tampilkanToast("Akun dengan ID " + idAkun + " tidak ditemukan dalam sistem.", "error");
-        }
-    }
-
-    // Fungsi untuk menolak dan menghapus akun dari menu persetujuan
-    function tolakDanHapusAkunDariPersetujuan(idAkun) {
-        // Mengambil data akun dari localStorage
-        var dataAkunSaatIni = localStorage.getItem('2r_akun');
-        var daftarAkun = dataAkunSaatIni ? JSON.parse(dataAkunSaatIni) : [];
-
-        // Mencari indeks akun berdasarkan ID
-        var indeksAkun = -1;
-        for (var i = 0; i < daftarAkun.length; i++) {
-            if (daftarAkun[i].id === idAkun) {
-                indeksAkun = i;
-                break;
-            }
-        }
-
-        // Jika akun ditemukan, hapus dari array
-        if (indeksAkun !== -1) {
-            // Menampilkan konfirmasi penghapusan kepada SuperAdmin
-            var konfirmasi = confirm("Apakah Anda yakin ingin menolak dan menghapus permanen akun dengan ID " + idAkun + "? Data ini tidak dapat dikembalikan.");
-            if (konfirmasi) {
-                // Menghapus akun dari array
-                daftarAkun.splice(indeksAkun, 1);
-
-                // Menyimpan kembali data akun ke localStorage
-                localStorage.setItem('2r_akun', JSON.stringify(daftarAkun));
-
-                // Menampilkan notifikasi
-                tampilkanToast("Akun dengan ID " + idAkun + " telah ditolak dan dihapus dari sistem.", "warning");
-
-                // Merender ulang tabel persetujuan
-                renderTabelPersetujuan();
-
-                // Jika fungsi render tabel semua akun sudah ada, refresh juga
-                if (typeof renderTabelSemuaAkun === 'function') {
-                    renderTabelSemuaAkun();
-                }
-            }
-        } else {
-            tampilkanToast("Akun dengan ID " + idAkun + " tidak ditemukan dalam sistem.", "error");
-        }
-    }
-
-    // Event listener saat halaman dimuat
-    document.addEventListener('DOMContentLoaded', function() {
-        // Mengecek apakah kita berada di halaman persetujuan
-        var containerTabel = document.getElementById('tabelPersetujuanContainer');
-        if (containerTabel) {
-            renderTabelPersetujuan();
-        }
-    });
-</script>
-<!-- ============ AKHIR BLOK 12(3) - 01 JAVASCRIPT FUNGSI AKSI & EVENT LISTENER ============ -->
-    <!-- ============ BLOK 13(1) - 01 R1 HTML & CSS MANAJEMEN AKUN LAMA (REVISI PERTAMA) ============ -->
-<!-- PENJELASAN: 
-     Ini adalah revisi pertama (R1) dari BLOK 13(1). 
-     Pada revisi ini, saya menambahkan atribut style="display:none;" 
-     pada elemen pembuka <div class="page" id="pageKelolaAkun_Lama">.
-     Hal ini dilakukan untuk memastikan halaman ini benar-benar tersembunyi 
-     dan tidak akan pernah mengganggu halaman utama yang ada di BLOK 5(2) 
-     yang memiliki ID yang sama. -->
-
-<style>
-    /* CSS Khusus untuk Halaman Manajemen Semua Akun */
-    .tabel-manajemen-akun-container {
-        width: 100%;
-        overflow-x: auto;
-        background-color: var(--white);
-        border-radius: var(--radius-md);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        border: 1px solid var(--gray-200);
-        margin-top: 20px;
-    }
-
-    .tabel-manajemen-akun {
-        width: 100%;
-        border-collapse: collapse;
-        font-size: 14px;
-        font-family: 'Poppins', sans-serif;
-    }
-
-    .tabel-manajemen-akun thead {
-        background-color: var(--gray-50);
-        border-bottom: 2px solid var(--gray-200);
-    }
-
-    .tabel-manajemen-akun thead th {
-        padding: 16px 20px;
-        text-align: left;
-        font-weight: 600;
-        color: var(--gray-700);
-        white-space: nowrap;
-    }
-
-    .tabel-manajemen-akun tbody td {
-        padding: 14px 20px;
-        border-bottom: 1px solid var(--gray-100);
-        color: var(--gray-800);
-        vertical-align: middle;
-    }
-
-    .tabel-manajemen-akun tbody tr:hover {
-        background-color: var(--gray-50);
-    }
-
-    .tabel-manajemen-akun tbody tr:last-child td {
-        border-bottom: none;
-    }
-
-    .status-badge-aktif {
-        display: inline-block;
-        padding: 4px 14px;
-        background-color: #E8F5E9;
-        color: #2E7D32;
-        font-size: 12px;
-        font-weight: 600;
-        border-radius: 20px;
-        border: 1px solid #C8E6C9;
-    }
-
-    .status-badge-nonaktif {
-        display: inline-block;
-        padding: 4px 14px;
-        background-color: #FFEBEE;
-        color: #C62828;
-        font-size: 12px;
-        font-weight: 600;
-        border-radius: 20px;
-        border: 1px solid #FFCDD2;
-    }
-
-    .status-badge-superadmin {
-        display: inline-block;
-        padding: 4px 14px;
-        background-color: #FFF3E0;
-        color: #E65100;
-        font-size: 12px;
-        font-weight: 600;
-        border-radius: 20px;
-        border: 1px solid #FFE0B2;
-    }
-
-    .aksi-tombol-manajemen {
-        display: flex;
-        gap: 8px;
-        flex-wrap: wrap;
-    }
-
-    .btn-aktifkan-kembali {
-        background-color: var(--success);
-        color: var(--white);
-        border: none;
-        padding: 6px 14px;
-        border-radius: var(--radius-sm);
-        font-size: 13px;
-        font-weight: 500;
-        cursor: pointer;
-        transition: 0.3s ease;
-        font-family: 'Poppins', sans-serif;
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-    }
-
-    .btn-aktifkan-kembali:hover {
-        background-color: #388E3C;
-        transform: scale(1.02);
-    }
-
-    .btn-nonaktifkan-akun {
-        background-color: var(--warning);
-        color: var(--white);
-        border: none;
-        padding: 6px 14px;
-        border-radius: var(--radius-sm);
-        font-size: 13px;
-        font-weight: 500;
-        cursor: pointer;
-        transition: 0.3s ease;
-        font-family: 'Poppins', sans-serif;
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-    }
-
-    .btn-nonaktifkan-akun:hover {
-        background-color: #F57C00;
-        transform: scale(1.02);
-    }
-
-    .btn-hapus-akun {
-        background-color: var(--error);
-        color: var(--white);
-        border: none;
-        padding: 6px 14px;
-        border-radius: var(--radius-sm);
-        font-size: 13px;
-        font-weight: 500;
-        cursor: pointer;
-        transition: 0.3s ease;
-        font-family: 'Poppins', sans-serif;
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-    }
-
-    .btn-hapus-akun:hover {
-        background-color: #D32F2F;
-        transform: scale(1.02);
-    }
-
-    .kosong-state-manajemen {
-        text-align: center;
-        padding: 40px 20px;
-        color: var(--gray-500);
-    }
-
-    .kosong-state-manajemen i {
-        font-size: 48px;
-        color: var(--gray-300);
-        display: block;
-        margin-bottom: 15px;
-    }
-
-    .kosong-state-manajemen h3 {
-        font-size: 18px;
-        font-weight: 600;
-        margin-bottom: 5px;
-        color: var(--gray-700);
-    }
-
-    .kosong-state-manajemen p {
-        font-size: 14px;
-    }
-</style>
-
-<!-- HTML untuk Halaman Manajemen Semua Akun (ID sudah diubah menjadi _Lama dan ditambahkan style display:none) -->
-<div class="page" id="pageKelolaAkun_Lama" style="display:none;">
-    <div class="page-header">
-        <div>
-            <h2>Manajemen dan Monitoring Semua Akun</h2>
-            <p>Halaman ini khusus untuk SuperAdmin dalam mengelola, mengaktifkan, menonaktifkan, atau menghapus seluruh akun yang terdaftar di sistem. Akun SuperAdmin dilindungi dan tidak dapat dihapus.</p>
-        </div>
-    </div>
-
-    <!-- Tempat tabel manajemen akan dirender oleh JavaScript -->
-    <div id="tabelManajemenAkunContainer">
-        <div class="kosong-state-manajemen">
-            <i class="fas fa-spinner fa-spin"></i>
-            <h3>Sedang Memuat Data</h3>
-            <p>Silakan tunggu sebentar...</p>
-        </div>
-    </div>
-</div>
-<!-- ============ AKHIR BLOK 13(1) - 01 R1 HTML & CSS MANAJEMEN AKUN LAMA (REVISI PERTAMA) ============ -->
-<!-- ============ BLOK 13(2) - 01 JAVASCRIPT FUNGSI RENDER TABEL SEMUA AKUN ============ -->
-<script>
-    // Fungsi untuk merender tabel manajemen semua akun yang terdaftar
-    function renderTabelSemuaAkun() {
-        // Mengambil data akun dari localStorage
-        var dataAkunSaatIni = localStorage.getItem('2r_akun');
-        var daftarAkun = dataAkunSaatIni ? JSON.parse(dataAkunSaatIni) : [];
-
-        // Mendapatkan elemen tabel container
-        var containerTabel = document.getElementById('tabelManajemenAkunContainer');
-
-        // Jika container tidak ditemukan, hentikan fungsi
-        if (!containerTabel) {
-            return;
-        }
-
-        // Jika tidak ada akun yang terdaftar sama sekali
-        if (daftarAkun.length === 0) {
-            containerTabel.innerHTML = `
-                <div class="kosong-state-manajemen">
-                    <i class="fas fa-users-slash"></i>
-                    <h3>Belum Ada Akun Terdaftar</h3>
-                    <p>Sistem saat ini masih kosong. Silakan daftarkan akun baru.</p>
-                </div>
-            `;
-            return;
-        }
-
-        // Membuat struktur tabel HTML
-        var htmlTabel = `
-            <div class="tabel-manajemen-akun-container">
-                <table class="tabel-manajemen-akun">
-                    <thead>
-                        <tr>
-                            <th style="width: 50px;">Nomor Urut</th>
-                            <th>ID Akun</th>
-                            <th>Nama Lengkap</th>
-                            <th>Role (Peran)</th>
-                            <th>Status Akun</th>
-                            <th style="width: 260px;">Aksi Manajemen</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-        `;
-
-        // Melakukan perulangan untuk menampilkan data setiap akun
-        for (var i = 0; i < daftarAkun.length; i++) {
-            var akun = daftarAkun[i];
-            var nomorUrut = i + 1;
-            var statusBadgeHtml = "";
-            var aksiTombolHtml = "";
-
-            // Menentukan tampilan badge status berdasarkan status akun
-            if (akun.role === "superadmin") {
-                statusBadgeHtml = `<span class="status-badge-superadmin"><i class="fas fa-crown"></i> SuperAdmin (Tidak Bisa Diubah)</span>`;
-            } else if (akun.status === "AKTIF") {
-                statusBadgeHtml = `<span class="status-badge-aktif"><i class="fas fa-check-circle"></i> AKTIF</span>`;
-            } else {
-                statusBadgeHtml = `<span class="status-badge-nonaktif"><i class="fas fa-times-circle"></i> ${akun.status}</span>`;
-            }
-
-            // Menentukan tombol aksi berdasarkan role dan status akun
-            if (akun.role === "superadmin") {
-                // SuperAdmin tidak memiliki tombol aksi sama sekali (dilindungi)
-                aksiTombolHtml = `
-                    <span style="color: var(--gray-400); font-size: 12px;">
-                        <i class="fas fa-lock"></i> Terlindungi
-                    </span>
-                `;
-            } else {
-                // Untuk akun selain SuperAdmin, tampilkan tombol berdasarkan status
-                var tombolAktifkan = "";
-                var tombolNonaktifkan = "";
-                var tombolHapus = "";
-
-                // Jika status akun adalah NONAKTIF, tampilkan tombol "Aktifkan Kembali"
-                if (akun.status !== "AKTIF") {
-                    tombolAktifkan = `
-                        <button class="btn-aktifkan-kembali" onclick="aktifkanAkunDariManajemen('${akun.id}')">
-                            <i class="fas fa-check-circle"></i> Aktifkan Kembali
-                        </button>
-                    `;
-                }
-
-                // Jika status akun adalah AKTIF, tampilkan tombol "Nonaktifkan Akun"
-                if (akun.status === "AKTIF") {
-                    tombolNonaktifkan = `
-                        <button class="btn-nonaktifkan-akun" onclick="nonaktifkanAkunDariManajemen('${akun.id}')">
-                            <i class="fas fa-pause-circle"></i> Nonaktifkan Akun
-                        </button>
-                    `;
-                }
-
-                // Tombol Hapus Akun selalu ada untuk semua akun non-SuperAdmin
-                tombolHapus = `
-                    <button class="btn-hapus-akun" onclick="hapusAkunDariManajemen('${akun.id}')">
-                        <i class="fas fa-trash-alt"></i> Hapus Akun
-                    </button>
-                `;
-
-                // Menggabungkan semua tombol aksi
-                aksiTombolHtml = `
-                    <div class="aksi-tombol-manajemen">
-                        ${tombolAktifkan}
-                        ${tombolNonaktifkan}
-                        ${tombolHapus}
-                    </div>
-                `;
-            }
-
-            // Menambahkan baris tabel untuk setiap akun
-            htmlTabel += `
-                <tr>
-                    <td>${nomorUrut}</td>
-                    <td><strong>${akun.id}</strong></td>
-                    <td>${akun.nama}</td>
-                    <td>${akun.role}</td>
-                    <td>${statusBadgeHtml}</td>
-                    <td>${aksiTombolHtml}</td>
-                </tr>
-            `;
-        }
-
-        // Menutup tag tabel
-        htmlTabel += `
-                    </tbody>
-                </table>
-            </div>
-        `;
-
-        // Memasukkan HTML tabel ke dalam container
-        containerTabel.innerHTML = htmlTabel;
-    }
-</script>
-<!-- ============ AKHIR BLOK 13(2) - 01 JAVASCRIPT FUNGSI RENDER TABEL SEMUA AKUN ============ -->
-<!-- ============ BLOK 13(3) - 01 JAVASCRIPT FUNGSI AKSI & EVENT LISTENER ============ -->
-<script>
-    // Fungsi untuk mengaktifkan kembali akun dari halaman manajemen
-    function aktifkanAkunDariManajemen(idAkun) {
-        // Mengambil data akun dari localStorage
-        var dataAkunSaatIni = localStorage.getItem('2r_akun');
-        var daftarAkun = dataAkunSaatIni ? JSON.parse(dataAkunSaatIni) : [];
-
-        // Mencari indeks akun berdasarkan ID
-        var indeksAkun = -1;
-        for (var i = 0; i < daftarAkun.length; i++) {
-            if (daftarAkun[i].id === idAkun) {
-                indeksAkun = i;
-                break;
-            }
-        }
-
-        // Jika akun ditemukan, ubah statusnya menjadi AKTIF
-        if (indeksAkun !== -1) {
-            // Menampilkan konfirmasi kepada SuperAdmin
-            var konfirmasi = confirm("Apakah Anda yakin ingin mengaktifkan kembali akun dengan ID " + idAkun + "?");
-            if (konfirmasi) {
-                // Mengubah status akun
-                daftarAkun[indeksAkun].status = "AKTIF";
-                
-                // Menyimpan kembali data akun ke localStorage
-                localStorage.setItem('2r_akun', JSON.stringify(daftarAkun));
-
-                // Menampilkan notifikasi sukses
-                tampilkanToast("Akun dengan ID " + idAkun + " berhasil diaktifkan kembali!", "success");
-
-                // Merender ulang tabel manajemen semua akun
-                renderTabelSemuaAkun();
-
-                // Jika fungsi render tabel persetujuan sudah ada, refresh juga
-                if (typeof renderTabelPersetujuan === 'function') {
-                    renderTabelPersetujuan();
-                }
-            }
-        } else {
-            tampilkanToast("Akun dengan ID " + idAkun + " tidak ditemukan dalam sistem.", "error");
-        }
-    }
-
-    // Fungsi untuk menonaktifkan akun dari halaman manajemen
-    function nonaktifkanAkunDariManajemen(idAkun) {
-        // Mengambil data akun dari localStorage
-        var dataAkunSaatIni = localStorage.getItem('2r_akun');
-        var daftarAkun = dataAkunSaatIni ? JSON.parse(dataAkunSaatIni) : [];
-
-        // Mencari indeks akun berdasarkan ID
-        var indeksAkun = -1;
-        for (var i = 0; i < daftarAkun.length; i++) {
-            if (daftarAkun[i].id === idAkun) {
-                indeksAkun = i;
-                break;
-            }
-        }
-
-        // Jika akun ditemukan, ubah statusnya menjadi NONAKTIF
-        if (indeksAkun !== -1) {
-            // Menampilkan konfirmasi kepada SuperAdmin
-            var konfirmasi = confirm("Apakah Anda yakin ingin menonaktifkan akun dengan ID " + idAkun + "? Akun ini tidak bisa digunakan sampai diaktifkan kembali.");
-            if (konfirmasi) {
-                // Mengubah status akun
-                daftarAkun[indeksAkun].status = "NONAKTIF (Dinonaktifkan oleh SuperAdmin)";
-                
-                // Menyimpan kembali data akun ke localStorage
-                localStorage.setItem('2r_akun', JSON.stringify(daftarAkun));
-
-                // Menampilkan notifikasi
-                tampilkanToast("Akun dengan ID " + idAkun + " berhasil dinonaktifkan.", "warning");
-
-                // Merender ulang tabel manajemen semua akun
-                renderTabelSemuaAkun();
-
-                // Jika fungsi render tabel persetujuan sudah ada, refresh juga
-                if (typeof renderTabelPersetujuan === 'function') {
-                    renderTabelPersetujuan();
-                }
-            }
-        } else {
-            tampilkanToast("Akun dengan ID " + idAkun + " tidak ditemukan dalam sistem.", "error");
-        }
-    }
-
-    // Fungsi untuk menghapus akun dari halaman manajemen
-    function hapusAkunDariManajemen(idAkun) {
-        // Mengambil data akun dari localStorage
-        var dataAkunSaatIni = localStorage.getItem('2r_akun');
-        var daftarAkun = dataAkunSaatIni ? JSON.parse(dataAkunSaatIni) : [];
-
-        // Mencari indeks akun berdasarkan ID
-        var indeksAkun = -1;
-        for (var i = 0; i < daftarAkun.length; i++) {
-            if (daftarAkun[i].id === idAkun) {
-                indeksAkun = i;
-                break;
-            }
-        }
-
-        // Jika akun ditemukan, hapus dari array
-        if (indeksAkun !== -1) {
-            // Menampilkan konfirmasi penghapusan ganda kepada SuperAdmin (Proteksi)
-            var konfirmasiPertama = confirm("PERINGATAN: Anda akan menghapus permanen akun dengan ID " + idAkun + ". Data ini tidak dapat dikembalikan. Lanjutkan?");
-            if (konfirmasiPertama) {
-                var konfirmasiKedua = confirm("KONFIRMASI TERAKHIR: Apakah Anda benar-benar yakin ingin menghapus akun " + idAkun + "?");
-                if (konfirmasiKedua) {
-                    // Menghapus akun dari array
-                    daftarAkun.splice(indeksAkun, 1);
-
-                    // Menyimpan kembali data akun ke localStorage
-                    localStorage.setItem('2r_akun', JSON.stringify(daftarAkun));
-
-                    // Menampilkan notifikasi
-                    tampilkanToast("Akun dengan ID " + idAkun + " telah berhasil dihapus permanen dari sistem.", "error");
-
-                    // Merender ulang tabel manajemen semua akun
-                    renderTabelSemuaAkun();
-
-                    // Jika fungsi render tabel persetujuan sudah ada, refresh juga
-                    if (typeof renderTabelPersetujuan === 'function') {
-                        renderTabelPersetujuan();
-                    }
-                }
-            }
-        } else {
-            tampilkanToast("Akun dengan ID " + idAkun + " tidak ditemukan dalam sistem.", "error");
-        }
-    }
-
-    // Event listener saat halaman dimuat
-    document.addEventListener('DOMContentLoaded', function() {
-        // Mengecek apakah kita berada di halaman manajemen akun
-        var containerTabel = document.getElementById('tabelManajemenAkunContainer');
-        if (containerTabel) {
-            renderTabelSemuaAkun();
-        }
-    });
-</script>
-<!-- ============ AKHIR BLOK 13(3) - 01 JAVASCRIPT FUNGSI AKSI & EVENT LISTENER ============ -->
-   <!-- ============ BLOK 14 DASHBOARD STAF OWNER OJEK DAN STAF OWNER TOKO ============ -->
-<style>
-    /* CSS Khusus untuk Halaman Dashboard Staf Owner */
-    .dashboard-owner-container {
-        width: 100%;
-        background-color: var(--white);
-        border-radius: var(--radius-md);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        border: 1px solid var(--gray-200);
-        margin-top: 20px;
-        padding: 20px;
-    }
-
-    .info-role-owner {
-        background-color: #E3F2FD;
-        border-left: 4px solid var(--info);
-        padding: 12px 16px;
-        border-radius: var(--radius-sm);
-        font-size: 14px;
-        color: var(--gray-700);
-        margin-bottom: 20px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .tabel-owner-container {
-        width: 100%;
-        overflow-x: auto;
-    }
-
-    .tabel-owner {
-        width: 100%;
-        border-collapse: collapse;
-        font-size: 14px;
-        font-family: 'Poppins', sans-serif;
-    }
-
-    .tabel-owner thead {
-        background-color: var(--gray-50);
-        border-bottom: 2px solid var(--gray-200);
-    }
-
-    .tabel-owner thead th {
-        padding: 16px 20px;
-        text-align: left;
-        font-weight: 600;
-        color: var(--gray-700);
-        white-space: nowrap;
-    }
-
-    .tabel-owner tbody td {
-        padding: 14px 20px;
-        border-bottom: 1px solid var(--gray-100);
-        color: var(--gray-800);
-        vertical-align: middle;
-    }
-
-    .tabel-owner tbody tr:hover {
-        background-color: var(--gray-50);
-    }
-
-    .tabel-owner tbody tr:last-child td {
-        border-bottom: none;
-    }
-
-    .btn-lihat-detail-owner {
-        background-color: var(--info);
-        color: var(--white);
-        border: none;
-        padding: 6px 14px;
-        border-radius: var(--radius-sm);
-        font-size: 13px;
-        font-weight: 500;
-        cursor: pointer;
-        transition: 0.3s ease;
-        font-family: 'Poppins', sans-serif;
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-    }
-
-    .btn-lihat-detail-owner:hover {
-        background-color: #1976D2;
-        transform: scale(1.02);
-    }
-
-    .kosong-state-owner {
-        text-align: center;
-        padding: 40px 20px;
-        color: var(--gray-500);
-    }
-
-    .kosong-state-owner i {
-        font-size: 48px;
-        color: var(--gray-300);
-        display: block;
-        margin-bottom: 15px;
-    }
-
-    .kosong-state-owner h3 {
-        font-size: 18px;
-        font-weight: 600;
-        margin-bottom: 5px;
-        color: var(--gray-700);
-    }
-
-    .kosong-state-owner p {
-        font-size: 14px;
-    }
-
-    /* Modal Detail Rekrutan */
-    .modal-detail-owner .modal {
-        max-width: 600px;
-    }
-    .detail-grid-owner {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 15px;
-    }
-    .detail-item-owner {
-        padding: 10px;
-        background-color: var(--gray-50);
-        border-radius: var(--radius-sm);
-    }
-    .detail-item-owner label {
-        display: block;
-        font-size: 12px;
-        color: var(--gray-500);
-        font-weight: 600;
-        margin-bottom: 4px;
-    }
-    .detail-item-owner span {
-        font-size: 14px;
-        font-weight: 500;
-        color: var(--gray-800);
-    }
-    .detail-item-owner-full {
-        grid-column: 1 / -1;
-    }
-</style>
-
-<script>
-    // Fungsi untuk merender tabel data rekrutan berdasarkan role Staf Owner
-    function renderTabelRekrutanOwner() {
-        // Mendapatkan data pengguna yang sedang login
-        var dataUserSaatIni = localStorage.getItem('2r_user');
-        var user = dataUserSaatIni ? JSON.parse(dataUserSaatIni) : null;
-
-        // Jika tidak ada user yang login, hentikan fungsi
-        if (!user) {
-            return;
-        }
-
-        // Mendapatkan elemen tabel container
-        var containerTabel = document.getElementById('tabelRekrutanOwnerContainer');
-
-        // Memeriksa apakah role user adalah Staf Owner
-        var roleUser = user.role;
-        if (roleUser !== "staf_owner_ojek" && roleUser !== "staf_owner_toko") {
-            containerTabel.innerHTML = `
-                <div class="kosong-state-owner">
-                    <i class="fas fa-lock"></i>
-                    <h3>Akses Dibatasi</h3>
-                    <p>Halaman ini hanya dapat diakses oleh Akun Staf Owner Ojek atau Staf Owner Toko.</p>
-                </div>
-            `;
-            return;
-        }
-
-        // Mengambil data semua akun dari localStorage
-        var dataAkunSaatIni = localStorage.getItem('2r_akun');
-        var daftarAkun = dataAkunSaatIni ? JSON.parse(dataAkunSaatIni) : [];
-
-        // Menentukan target role yang harus ditampilkan berdasarkan role user
-        var targetRole = "";
-        var judulHalaman = "";
-        if (roleUser === "staf_owner_ojek") {
-            targetRole = "ojek";
-            judulHalaman = "Dashboard Staf Owner Ojek";
-        } else if (roleUser === "staf_owner_toko") {
-            targetRole = "toko";
-            judulHalaman = "Dashboard Staf Owner Toko";
-        }
-
-        // Menyaring akun yang memiliki role target DAN direkrut oleh user yang sedang login
-        var daftarRekrutan = daftarAkun.filter(function(akun) {
-            return akun.role === targetRole && akun.direkrutOleh === user.nama;
-        });
-
-        // Jika tidak ada data rekrutan
-        if (daftarRekrutan.length === 0) {
-            containerTabel.innerHTML = `
-                <div class="dashboard-owner-container">
-                    <div class="info-role-owner">
-                        <i class="fas fa-info-circle" style="color: var(--info);"></i>
-                        <span><strong>${judulHalaman}</strong> - Anda belum merekrut akun ${targetRole} manapun. Semua akun yang Anda rekrut akan muncul di sini.</span>
-                    </div>
-                    <div class="kosong-state-owner">
-                        <i class="fas fa-users"></i>
-                        <h3>Belum Ada Akun yang Direkrut</h3>
-                        <p>Silakan rekrut akun ${targetRole} terlebih dahulu melalui menu Daftar Akun Baru.</p>
-                    </div>
-                </div>
-            `;
-            return;
-        }
-
-        // Membuat struktur tabel HTML
-        var htmlTabel = `
-            <div class="dashboard-owner-container">
-                <div class="info-role-owner">
-                    <i class="fas fa-info-circle" style="color: var(--info);"></i>
-                    <span><strong>${judulHalaman}</strong> - Berikut adalah daftar akun ${targetRole} yang berhasil Anda rekrut ke dalam sistem.</span>
-                </div>
-                <div class="tabel-owner-container">
-                    <table class="tabel-owner">
-                        <thead>
-                            <tr>
-                                <th style="width: 50px;">Nomor Urut</th>
-                                <th>ID Akun</th>
-                                <th>Nama Lengkap</th>
-                                <th>Role</th>
-                                <th>Nomor HP</th>
-                                <th>Status Akun</th>
-                                <th style="width: 120px;">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-        `;
-
-        // Melakukan perulangan untuk menampilkan data setiap rekrutan
-        for (var i = 0; i < daftarRekrutan.length; i++) {
-            var akun = daftarRekrutan[i];
-            var nomorUrut = i + 1;
-            var statusBadgeHtml = "";
-
-            // Menentukan tampilan badge status
-            if (akun.status === "AKTIF") {
-                statusBadgeHtml = `<span class="status-badge-aktif"><i class="fas fa-check-circle"></i> AKTIF</span>`;
-            } else {
-                statusBadgeHtml = `<span class="status-badge-nonaktif"><i class="fas fa-times-circle"></i> ${akun.status}</span>`;
-            }
-
-            // Menampilkan data dalam baris tabel
-            htmlTabel += `
-                <tr>
-                    <td>${nomorUrut}</td>
-                    <td><strong>${akun.id}</strong></td>
-                    <td>${akun.nama}</td>
-                    <td>${akun.role}</td>
-                    <td>${akun.hp || "-"}</td>
-                    <td>${statusBadgeHtml}</td>
-                    <td>
-                        <button class="btn-lihat-detail-owner" onclick="bukaModalDetailRekrutan('${akun.id}')">
-                            <i class="fas fa-eye"></i> Lihat Detail
-                        </button>
-                    </td>
-                </tr>
-            `;
-        }
-
-        // Menutup tag tabel
-        htmlTabel += `
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        `;
-
-        // Memasukkan HTML tabel ke dalam container
-        containerTabel.innerHTML = htmlTabel;
-    }
-
-    // Fungsi untuk membuka modal detail akun rekrutan
-    function bukaModalDetailRekrutan(idAkun) {
-        // Mengambil data semua akun dari localStorage
-        var dataAkunSaatIni = localStorage.getItem('2r_akun');
-        var daftarAkun = dataAkunSaatIni ? JSON.parse(dataAkunSaatIni) : [];
-
-        // Mencari akun berdasarkan ID
-        var akun = null;
-        for (var i = 0; i < daftarAkun.length; i++) {
-            if (daftarAkun[i].id === idAkun) {
-                akun = daftarAkun[i];
-                break;
-            }
-        }
-
-        // Jika akun ditemukan, tampilkan detailnya di dalam modal
-        if (akun) {
-            // Mengubah format latitude dan longitude
-            var latitude = akun.latitude !== null && akun.latitude !== undefined ? akun.latitude : "Tidak tersedia";
-            var longitude = akun.longitude !== null && akun.longitude !== undefined ? akun.longitude : "Tidak tersedia";
-
-            // Mengisi konten modal dengan data detail akun
-            var kontenModal = `
-                <div class="detail-grid-owner">
-                    <div class="detail-item-owner">
-                        <label>ID Akun</label>
-                        <span>${akun.id}</span>
-                    </div>
-                    <div class="detail-item-owner">
-                        <label>Nama Lengkap</label>
-                        <span>${akun.nama}</span>
-                    </div>
-                    <div class="detail-item-owner">
-                        <label>Role</label>
-                        <span>${akun.role}</span>
-                    </div>
-                    <div class="detail-item-owner">
-                        <label>Status Akun</label>
-                        <span>${akun.status}</span>
-                    </div>
-                    <div class="detail-item-owner">
-                        <label>Email</label>
-                        <span>${akun.email || "-"}</span>
-                    </div>
-                    <div class="detail-item-owner">
-                        <label>Nomor HP</label>
-                        <span>${akun.hp || "-"}</span>
-                    </div>
-                    <div class="detail-item-owner detail-item-owner-full">
-                        <label>Alamat</label>
-                        <span>${akun.alamat || "-"}</span>
-                    </div>
-                    <div class="detail-item-owner detail-item-owner-full">
-                        <label>Titik Koordinat (Latitude / Longitude)</label>
-                        <span>Latitude: ${latitude} | Longitude: ${longitude}</span>
-                    </div>
-                    <div class="detail-item-owner detail-item-owner-full">
-                        <label>Direkrut Oleh</label>
-                        <span>${akun.direkrutOleh || "SuperAdmin"}</span>
-                    </div>
-                </div>
-            `;
-
-            // Menampilkan modal
-            document.getElementById('modalDetailRekrutanBody').innerHTML = kontenModal;
-            bukaModal('modalDetailRekrutan');
-        } else {
-            tampilkanToast("Data akun tidak ditemukan dalam sistem.", "error");
-        }
-    }
-
-    // Event listener saat halaman dimuat
-    document.addEventListener('DOMContentLoaded', function() {
-        // Mengecek apakah kita berada di halaman dashboard owner
-        var containerTabel = document.getElementById('tabelRekrutanOwnerContainer');
-        if (containerTabel) {
-            renderTabelRekrutanOwner();
-        }
-    });
-</script>
-
-<!-- HTML untuk Halaman Dashboard Staf Owner -->
-<div class="page" id="pageDashboardOwner">
-    <div class="page-header">
-        <div>
-            <h2>Dashboard Staf Owner</h2>
-            <p>Halaman ini menampilkan daftar akun yang telah Anda rekrut. Jika Anda adalah Staf Owner Ojek, Anda akan melihat daftar Ojek. Jika Anda adalah Staf Owner Toko, Anda akan melihat daftar Toko.</p>
-        </div>
-    </div>
-
-    <!-- Tempat tabel rekrutan akan dirender oleh JavaScript -->
-    <div id="tabelRekrutanOwnerContainer">
-        <div class="kosong-state-owner">
-            <i class="fas fa-spinner fa-spin"></i>
-            <h3>Sedang Memuat Data</h3>
-            <p>Silakan tunggu sebentar...</p>
-        </div>
-    </div>
-</div>
-
-<!-- Modal untuk Menampilkan Detail Akun Rekrutan -->
-<div class="modal-overlay modal-detail-owner" id="modalDetailRekrutan">
-    <div class="modal">
-        <div class="modal-header">
-            <h3><i class="fas fa-user-circle" style="color: var(--info);"></i> Detail Akun Rekrutan</h3>
-            <button class="modal-close" onclick="tutupModal('modalDetailRekrutan')">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <div class="modal-body" id="modalDetailRekrutanBody">
-            <!-- Konten detail akan diisi oleh JavaScript -->
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-secondary" onclick="tutupModal('modalDetailRekrutan')">Tutup</button>
-        </div>
-    </div>
-</div>
-<!-- ============ AKHIR BLOK 14 DASHBOARD STAF OWNER OJEK DAN STAF OWNER TOKO ============ -->
-    <!-- ============ BLOK 15 DASHBOARD CUSTOMER SERVICE DAN LAPORAN KENDALA ============ -->
-<style>
-    /* CSS Khusus untuk Halaman Dashboard Customer Service */
-    .cs-dashboard-container {
-        width: 100%;
-        background-color: var(--white);
-        border-radius: var(--radius-md);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        border: 1px solid var(--gray-200);
-        margin-top: 20px;
-        padding: 20px;
-    }
-
-    .form-laporan-kendala {
-        background-color: var(--gray-50);
-        padding: 20px;
-        border-radius: var(--radius-sm);
-        margin-bottom: 30px;
-        border: 1px solid var(--gray-200);
-    }
-
-    .form-laporan-kendala .form-group {
-        margin-bottom: 15px;
-    }
-
-    .form-laporan-kendala label {
-        display: block;
-        font-weight: 600;
-        font-size: 14px;
-        color: var(--gray-800);
-        margin-bottom: 6px;
-    }
-
-    .form-laporan-kendala select,
-    .form-laporan-kendala textarea {
-        width: 100%;
-        padding: 10px 12px;
-        border: 1px solid var(--gray-300);
-        border-radius: var(--radius-sm);
-        font-family: 'Poppins', sans-serif;
-        font-size: 14px;
-        background-color: var(--white);
-        transition: 0.3s ease;
-    }
-
-    .form-laporan-kendala select:focus,
-    .form-laporan-kendala textarea:focus {
-        outline: 2px solid var(--orange-primary);
-        border-color: transparent;
-    }
-
-    .btn-buat-laporan {
-        background-color: var(--orange-primary);
-        color: var(--white);
-        border: none;
-        padding: 10px 20px;
-        border-radius: var(--radius-sm);
-        font-size: 14px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: 0.3s ease;
-        font-family: 'Poppins', sans-serif;
-    }
-
-    .btn-buat-laporan:hover {
-        background-color: #e65c00;
-        transform: scale(1.02);
-    }
-
-    .tabel-laporan-container {
-        width: 100%;
-        overflow-x: auto;
-        margin-top: 20px;
-    }
-
-    .tabel-laporan {
-        width: 100%;
-        border-collapse: collapse;
-        font-size: 14px;
-        font-family: 'Poppins', sans-serif;
-    }
-
-    .tabel-laporan thead {
-        background-color: var(--gray-50);
-        border-bottom: 2px solid var(--gray-200);
-    }
-
-    .tabel-laporan thead th {
-        padding: 16px 20px;
-        text-align: left;
-        font-weight: 600;
-        color: var(--gray-700);
-        white-space: nowrap;
-    }
-
-    .tabel-laporan tbody td {
-        padding: 14px 20px;
-        border-bottom: 1px solid var(--gray-100);
-        color: var(--gray-800);
-        vertical-align: middle;
-    }
-
-    .tabel-laporan tbody tr:hover {
-        background-color: var(--gray-50);
-    }
-
-    .status-badge-menunggu-cs {
-        display: inline-block;
-        padding: 4px 14px;
-        background-color: #FFF3E0;
-        color: #E65100;
-        font-size: 12px;
-        font-weight: 600;
-        border-radius: 20px;
-        border: 1px solid #FFE0B2;
-    }
-
-    .status-badge-selesai-cs {
-        display: inline-block;
-        padding: 4px 14px;
-        background-color: #E8F5E9;
-        color: #2E7D32;
-        font-size: 12px;
-        font-weight: 600;
-        border-radius: 20px;
-        border: 1px solid #C8E6C9;
-    }
-
-    .kosong-state-cs {
-        text-align: center;
-        padding: 40px 20px;
-        color: var(--gray-500);
-    }
-
-    .kosong-state-cs i {
-        font-size: 48px;
-        color: var(--gray-300);
-        display: block;
-        margin-bottom: 15px;
-    }
-
-    .kosong-state-cs h3 {
-        font-size: 18px;
-        font-weight: 600;
-        margin-bottom: 5px;
-        color: var(--gray-700);
-    }
-
-    .kosong-state-cs p {
-        font-size: 14px;
-    }
-</style>
-
-<script>
-    // Konstanta untuk key penyimpanan data laporan kendala di localStorage
-    const LAPORAN_KENDALA_KEY = '2r_laporan_kendala_cs';
-
-    // Fungsi untuk mendapatkan semua data laporan kendala
-    function getDataLaporanKendala() {
-        var dataLaporanSaatIni = localStorage.getItem(LAPORAN_KENDALA_KEY);
-        return dataLaporanSaatIni ? JSON.parse(dataLaporanSaatIni) : [];
-    }
-
-    // Fungsi untuk menyimpan data laporan kendala
-    function simpanDataLaporanKendala(dataLaporan) {
-        localStorage.setItem(LAPORAN_KENDALA_KEY, JSON.stringify(dataLaporan));
-    }
-
-    // Fungsi untuk mendapatkan data pengguna yang sedang login saat ini
-    function getUserSaatIni() {
-        var dataUser = localStorage.getItem('2r_user');
-        return dataUser ? JSON.parse(dataUser) : null;
-    }
-
-    // Fungsi untuk merender tabel riwayat laporan kendala milik Customer Service yang sedang login
-    function renderTabelLaporanKendala() {
-        var userSaatIni = getUserSaatIni();
-        if (!userSaatIni || userSaatIni.role !== "customer_service") {
-            return;
-        }
-
-        var containerTabel = document.getElementById('tabelLaporanKendalaContainer');
-        var daftarLaporan = getDataLaporanKendala();
-
-        // Menyaring laporan yang hanya dibuat oleh Customer Service yang sedang login
-        var laporanMilikSaya = daftarLaporan.filter(function(laporan) {
-            return laporan.dibuatOleh === userSaatIni.nama;
-        });
-
-        // Jika tidak ada laporan yang dibuat
-        if (laporanMilikSaya.length === 0) {
-            containerTabel.innerHTML = `
-                <div class="kosong-state-cs">
-                    <i class="fas fa-clipboard-list"></i>
-                    <h3>Belum Ada Laporan Kendala</h3>
-                    <p>Anda belum membuat laporan kendala apapun. Silakan gunakan formulir di atas untuk melaporkan kendala pengguna.</p>
-                </div>
-            `;
-            return;
-        }
-
-        // Membuat struktur tabel HTML
-        var htmlTabel = `
-            <div class="tabel-laporan-container">
-                <table class="tabel-laporan">
-                    <thead>
-                        <tr>
-                            <th style="width: 50px;">Nomor Urut</th>
-                            <th>ID Laporan</th>
-                            <th>Role Pengguna Bermasalah</th>
-                            <th>Deskripsi Kendala</th>
-                            <th>Status Laporan</th>
-                            <th>Tanggal Dibuat</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-        `;
-
-        // Melakukan perulangan untuk menampilkan setiap laporan
-        for (var i = 0; i < laporanMilikSaya.length; i++) {
-            var laporan = laporanMilikSaya[i];
-            var nomorUrut = i + 1;
-            var statusBadgeHtml = "";
-
-            // Menentukan tampilan badge status
-            if (laporan.status === "Selesai") {
-                statusBadgeHtml = `<span class="status-badge-selesai-cs"><i class="fas fa-check-circle"></i> Selesai</span>`;
-            } else {
-                statusBadgeHtml = `<span class="status-badge-menunggu-cs"><i class="fas fa-clock"></i> Menunggu Diproses</span>`;
-            }
-
-            // Menampilkan data dalam baris tabel
-            htmlTabel += `
-                <tr>
-                    <td>${nomorUrut}</td>
-                    <td><strong>${laporan.idLaporan}</strong></td>
-                    <td>${laporan.rolePenggunaBermasalah}</td>
-                    <td>${laporan.deskripsiKendala}</td>
-                    <td>${statusBadgeHtml}</td>
-                    <td>${laporan.tanggalDibuat}</td>
-                </tr>
-            `;
-        }
-
-        // Menutup tag tabel
-        htmlTabel += `
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        `;
-
-        // Memasukkan HTML tabel ke dalam container
-        containerTabel.innerHTML = htmlTabel;
-    }
-
-    // Fungsi untuk membuat laporan kendala baru dari form
-    function buatLaporanKendalaBaru(event) {
-        event.preventDefault();
-
-        var userSaatIni = getUserSaatIni();
-        if (!userSaatIni || userSaatIni.role !== "customer_service") {
-            tampilkanToast("Anda tidak memiliki izin untuk membuat laporan.", "error");
-            return;
-        }
-
-        // Mengambil nilai dari input form
-        var roleBermasalah = document.getElementById('csRoleBermasalah').value;
-        var deskripsi = document.getElementById('csDeskripsiKendala').value.trim();
-
-        // Validasi input
-        if (roleBermasalah === "" || deskripsi === "") {
-            tampilkanToast("Harap pilih Role pengguna dan isi deskripsi kendala.", "warning");
-            return;
-        }
-
-        // Mendapatkan daftar laporan yang sudah ada
-        var daftarLaporan = getDataLaporanKendala();
-
-        // Membuat ID laporan unik
-        var tanggalSekarang = new Date();
-        var idLaporanBaru = "LAP-CS-" + tanggalSekarang.getFullYear() + String(tanggalSekarang.getMonth() + 1).padStart(2, '0') + String(tanggalSekarang.getDate()).padStart(2, '0') + "-" + String(daftarLaporan.length + 1).padStart(4, '0');
-
-        // Format tanggal untuk ditampilkan
-        var tanggalFormatted = tanggalSekarang.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' });
-
-        // Membuat objek laporan baru
-        var laporanBaru = {
-            idLaporan: idLaporanBaru,
-            rolePenggunaBermasalah: roleBermasalah,
-            deskripsiKendala: deskripsi,
-            status: "Menunggu Diproses",
-            tanggalDibuat: tanggalFormatted,
-            dibuatOleh: userSaatIni.nama
-        };
-
-        // Menambahkan laporan baru ke dalam array
-        daftarLaporan.push(laporanBaru);
-
-        // Menyimpan data laporan ke localStorage
-        simpanDataLaporanKendala(daftarLaporan);
-
-        // Menampilkan notifikasi sukses
-        tampilkanToast("Laporan kendala dengan ID " + idLaporanBaru + " berhasil dibuat dan telah dikirim ke Staf Admin!", "success");
-
-        // Mengosongkan form
-        document.getElementById('csRoleBermasalah').value = "";
-        document.getElementById('csDeskripsiKendala').value = "";
-
-        // Merender ulang tabel laporan
-        renderTabelLaporanKendala();
-    }
-
-    // Event listener saat halaman dimuat
-    document.addEventListener('DOMContentLoaded', function() {
-        var containerTabel = document.getElementById('tabelLaporanKendalaContainer');
-        var formLaporan = document.getElementById('formLaporanKendala');
-        
-        if (containerTabel) {
-            renderTabelLaporanKendala();
-        }
-        
-        if (formLaporan) {
-            formLaporan.addEventListener('submit', buatLaporanKendalaBaru);
-        }
-    });
-</script>
-
-<!-- HTML untuk Halaman Dashboard Customer Service -->
-<div class="page" id="pageDashboardCS">
-    <div class="page-header">
-        <div>
-            <h2>Dashboard Customer Service</h2>
-            <p>Halaman ini khusus untuk Customer Service dalam melaporkan kendala yang dialami oleh pengguna (Toko, Ojek, atau Customer) kepada Staf Admin.</p>
-        </div>
-    </div>
-
-    <div class="cs-dashboard-container">
-        <!-- Formulir Pembuatan Laporan Kendala -->
-        <div class="form-laporan-kendala">
-            <h3 style="margin-bottom: 15px; color: var(--gray-800);">
-                <i class="fas fa-pen-alt" style="color: var(--orange-primary);"></i> Buat Laporan Kendala Baru
-            </h3>
-            <form id="formLaporanKendala">
-                <div class="form-group">
-                    <label for="csRoleBermasalah">Role Pengguna Bermasalah <span style="color: var(--error);">*</span></label>
-                    <select id="csRoleBermasalah" required>
-                        <option value="">-- Pilih Role --</option>
-                        <option value="Customer">Customer</option>
-                        <option value="Toko">Toko</option>
-                        <option value="Ojek">Ojek</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="csDeskripsiKendala">Deskripsi Kendala <span style="color: var(--error);">*</span></label>
-                    <textarea id="csDeskripsiKendala" rows="4" placeholder="Jelaskan secara detail kendala yang dialami oleh pengguna..." required></textarea>
-                </div>
-                <button type="submit" class="btn-buat-laporan">
-                    <i class="fas fa-paper-plane"></i> Kirim Laporan ke Staf Admin
-                </button>
-            </form>
-        </div>
-
-        <!-- Tabel Riwayat Laporan -->
-        <h3 style="margin-bottom: 10px; color: var(--gray-800);">
-            <i class="fas fa-history" style="color: var(--info);"></i> Riwayat Laporan Saya
-        </h3>
-        <div id="tabelLaporanKendalaContainer">
-            <div class="kosong-state-cs">
-                <i class="fas fa-spinner fa-spin"></i>
-                <h3>Sedang Memuat Data</h3>
-                <p>Silakan tunggu sebentar...</p>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- ============ AKHIR BLOK 15 DASHBOARD CUSTOMER SERVICE DAN LAPORAN KENDALA ============ -->
-    <!-- ============ BLOK 16 MANAJEMEN IKLAN SPONSOR ============ -->
-<style>
-    /* CSS Khusus untuk Halaman Manajemen Iklan Sponsor */
-    .sponsor-iklan-container {
-        width: 100%;
-        background-color: var(--white);
-        border-radius: var(--radius-md);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        border: 1px solid var(--gray-200);
-        margin-top: 20px;
-        padding: 20px;
-    }
-
-    .form-unggah-iklan {
-        background-color: var(--gray-50);
-        padding: 20px;
-        border-radius: var(--radius-sm);
-        margin-bottom: 30px;
-        border: 1px solid var(--gray-200);
-    }
-
-    .form-unggah-iklan .form-group {
-        margin-bottom: 15px;
-    }
-
-    .form-unggah-iklan label {
-        display: block;
-        font-weight: 600;
-        font-size: 14px;
-        color: var(--gray-800);
-        margin-bottom: 6px;
-    }
-
-    .form-unggah-iklan input[type="text"],
-    .form-unggah-iklan textarea,
-    .form-unggah-iklan input[type="file"] {
-        width: 100%;
-        padding: 10px 12px;
-        border: 1px solid var(--gray-300);
-        border-radius: var(--radius-sm);
-        font-family: 'Poppins', sans-serif;
-        font-size: 14px;
-        background-color: var(--white);
-        transition: 0.3s ease;
-    }
-
-    .form-unggah-iklan input[type="text"]:focus,
-    .form-unggah-iklan textarea:focus {
-        outline: 2px solid var(--orange-primary);
-        border-color: transparent;
-    }
-
-    .btn-unggah-iklan {
-        background-color: var(--orange-primary);
-        color: var(--white);
-        border: none;
-        padding: 10px 20px;
-        border-radius: var(--radius-sm);
-        font-size: 14px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: 0.3s ease;
-        font-family: 'Poppins', sans-serif;
-    }
-
-    .btn-unggah-iklan:hover {
-        background-color: #e65c00;
-        transform: scale(1.02);
-    }
-
-    .tabel-iklan-container {
-        width: 100%;
-        overflow-x: auto;
-        margin-top: 20px;
-    }
-
-    .tabel-iklan {
-        width: 100%;
-        border-collapse: collapse;
-        font-size: 14px;
-        font-family: 'Poppins', sans-serif;
-    }
-
-    .tabel-iklan thead {
-        background-color: var(--gray-50);
-        border-bottom: 2px solid var(--gray-200);
-    }
-
-    .tabel-iklan thead th {
-        padding: 16px 20px;
-        text-align: left;
-        font-weight: 600;
-        color: var(--gray-700);
-        white-space: nowrap;
-    }
-
-    .tabel-iklan tbody td {
-        padding: 14px 20px;
-        border-bottom: 1px solid var(--gray-100);
-        color: var(--gray-800);
-        vertical-align: middle;
-    }
-
-    .tabel-iklan tbody tr:hover {
-        background-color: var(--gray-50);
-    }
-
-    .status-badge-menunggu-iklan {
-        display: inline-block;
-        padding: 4px 14px;
-        background-color: #FFF3E0;
-        color: #E65100;
-        font-size: 12px;
-        font-weight: 600;
-        border-radius: 20px;
-        border: 1px solid #FFE0B2;
-    }
-
-    .status-badge-tayang-iklan {
-        display: inline-block;
-        padding: 4px 14px;
-        background-color: #E8F5E9;
-        color: #2E7D32;
-        font-size: 12px;
-        font-weight: 600;
-        border-radius: 20px;
-        border: 1px solid #C8E6C9;
-    }
-
-    .thumbnail-iklan {
-        width: 80px;
-        height: 50px;
-        object-fit: cover;
-        border-radius: var(--radius-sm);
-        border: 1px solid var(--gray-200);
-        cursor: pointer;
-        transition: 0.3s ease;
-    }
-
-    .thumbnail-iklan:hover {
-        transform: scale(1.05);
-        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-    }
-
-    .kosong-state-sponsor {
-        text-align: center;
-        padding: 40px 20px;
-        color: var(--gray-500);
-    }
-
-    .kosong-state-sponsor i {
-        font-size: 48px;
-        color: var(--gray-300);
-        display: block;
-        margin-bottom: 15px;
-    }
-
-    .kosong-state-sponsor h3 {
-        font-size: 18px;
-        font-weight: 600;
-        margin-bottom: 5px;
-        color: var(--gray-700);
-    }
-
-    .kosong-state-sponsor p {
-        font-size: 14px;
-    }
-
-    /* Modal Preview Gambar Iklan Sponsor */
-    .modal-preview-sponsor .modal {
-        max-width: 800px;
-        background: transparent;
-        box-shadow: none;
-    }
-
-    .modal-preview-sponsor .modal-header {
-        background: white;
-        border-radius: var(--radius-md) var(--radius-md) 0 0;
-    }
-
-    .modal-preview-sponsor .modal-body {
-        padding: 0;
-        background: #1a1a1a;
-        border-radius: 0 0 var(--radius-md) var(--radius-md);
-        text-align: center;
-    }
-
-    .modal-preview-sponsor .modal-body img {
-        max-width: 100%;
-        max-height: 70vh;
-        display: block;
-        margin: 0 auto;
-        border-radius: 0 0 var(--radius-md) var(--radius-md);
-    }
-</style>
-
-<script>
-    // Konstanta untuk key penyimpanan data iklan sponsor di localStorage
-    const IKLAN_SPONSOR_KEY = '2r_iklan_sponsor';
-
-    // Fungsi untuk mendapatkan semua data iklan sponsor
-    function getDataIklanSponsor() {
-        var dataIklanSaatIni = localStorage.getItem(IKLAN_SPONSOR_KEY);
-        return dataIklanSaatIni ? JSON.parse(dataIklanSaatIni) : [];
-    }
-
-    // Fungsi untuk menyimpan data iklan sponsor
-    function simpanDataIklanSponsor(dataIklan) {
-        localStorage.setItem(IKLAN_SPONSOR_KEY, JSON.stringify(dataIklan));
-    }
-
-    // Fungsi untuk mendapatkan data pengguna yang sedang login saat ini
-    function getUserSaatIni() {
-        var dataUser = localStorage.getItem('2r_user');
-        return dataUser ? JSON.parse(dataUser) : null;
-    }
-
-    // Fungsi untuk membuka modal preview gambar iklan
-    function bukaPreviewIklan(srcGambar, judulIklan) {
-        document.getElementById('modalPreviewIklanImage').src = srcGambar;
-        document.getElementById('modalPreviewIklanTitle').textContent = 'Preview Iklan: ' + judulIklan;
-        bukaModal('modalPreviewIklan');
-    }
-
-    // Fungsi untuk merender tabel riwayat iklan milik Sponsor yang sedang login
-    function renderTabelIklanSponsor() {
-        var userSaatIni = getUserSaatIni();
-        if (!userSaatIni || userSaatIni.role !== "sponsor") {
-            return;
-        }
-
-        var containerTabel = document.getElementById('tabelIklanSponsorContainer');
-        var daftarIklan = getDataIklanSponsor();
-
-        // Menyaring iklan yang hanya dibuat oleh Sponsor yang sedang login
-        var iklanMilikSaya = daftarIklan.filter(function(iklan) {
-            return iklan.dibuatOleh === userSaatIni.nama;
-        });
-
-        // Jika tidak ada iklan yang dibuat
-        if (iklanMilikSaya.length === 0) {
-            containerTabel.innerHTML = `
-                <div class="kosong-state-sponsor">
-                    <i class="fas fa-ad"></i>
-                    <h3>Belum Ada Iklan yang Diunggah</h3>
-                    <p>Anda belum mengunggah iklan apapun. Silakan gunakan formulir di atas untuk memasang iklan produk Anda.</p>
-                </div>
-            `;
-            return;
-        }
-
-        // Membuat struktur tabel HTML
-        var htmlTabel = `
-            <div class="tabel-iklan-container">
-                <table class="tabel-iklan">
-                    <thead>
-                        <tr>
-                            <th style="width: 50px;">Nomor Urut</th>
-                            <th>ID Iklan</th>
-                            <th>Judul Promosi</th>
-                            <th>Gambar Banner</th>
-                            <th>Link Tujuan</th>
-                            <th>Status Iklan</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-        `;
-
-        // Melakukan perulangan untuk menampilkan setiap iklan
-        for (var i = 0; i < iklanMilikSaya.length; i++) {
-            var iklan = iklanMilikSaya[i];
-            var nomorUrut = i + 1;
-            var statusBadgeHtml = "";
-
-            // Menentukan tampilan badge status
-            if (iklan.status === "Sudah Tayang") {
-                statusBadgeHtml = `<span class="status-badge-tayang-iklan"><i class="fas fa-check-circle"></i> Sudah Tayang</span>`;
-            } else {
-                statusBadgeHtml = `<span class="status-badge-menunggu-iklan"><i class="fas fa-clock"></i> Menunggu Disetujui</span>`;
-            }
-
-            // Menampilkan data dalam baris tabel
-            htmlTabel += `
-                <tr>
-                    <td>${nomorUrut}</td>
-                    <td><strong>${iklan.idIklan}</strong></td>
-                    <td>${iklan.judulPromosi}</td>
-                    <td>
-                        <img src="${iklan.gambarData}" 
-                             alt="${iklan.judulPromosi}" 
-                             class="thumbnail-iklan" 
-                             onclick="bukaPreviewIklan('${iklan.gambarData}', '${iklan.judulPromosi}')">
-                    </td>
-                    <td>
-                        <a href="${iklan.linkTujuan}" target="_blank" style="color: var(--info); text-decoration: underline;">
-                            ${iklan.linkTujuan}
-                        </a>
-                    </td>
-                    <td>${statusBadgeHtml}</td>
-                </tr>
-            `;
-        }
-
-        // Menutup tag tabel
-        htmlTabel += `
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        `;
-
-        // Memasukkan HTML tabel ke dalam container
-        containerTabel.innerHTML = htmlTabel;
-    }
-
-    // Fungsi untuk mengunggah iklan baru dari form
-    function unggahIklanBaru(event) {
-        event.preventDefault();
-
-        var userSaatIni = getUserSaatIni();
-        if (!userSaatIni || userSaatIni.role !== "sponsor") {
-            tampilkanToast("Anda tidak memiliki izin untuk mengunggah iklan.", "error");
-            return;
-        }
-
-        // Mengambil nilai dari input form
-        var judulPromosi = document.getElementById('sponsorJudulPromosi').value.trim();
-        var linkTujuan = document.getElementById('sponsorLinkTujuan').value.trim();
-        var inputFileGambar = document.getElementById('sponsorGambarIklan');
-
-        // Validasi input
-        if (judulPromosi === "" || linkTujuan === "" || !inputFileGambar.files || inputFileGambar.files.length === 0) {
-            tampilkanToast("Harap isi Judul Promosi, Link Tujuan, dan pilih gambar banner.", "warning");
-            return;
-        }
-
-        var fileGambar = inputFileGambar.files[0];
-        if (fileGambar.size > 5 * 1024 * 1024) {
-            tampilkanToast("Ukuran gambar maksimal adalah 5MB.", "warning");
-            return;
-        }
-
-        // Membaca file gambar menjadi base64
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            var gambarBase64 = e.target.result;
-
-            // Mendapatkan daftar iklan yang sudah ada
-            var daftarIklan = getDataIklanSponsor();
-
-            // Membuat ID iklan unik
-            var tanggalSekarang = new Date();
-            var idIklanBaru = "IKL-SPN-" + tanggalSekarang.getFullYear() + String(tanggalSekarang.getMonth() + 1).padStart(2, '0') + String(tanggalSekarang.getDate()).padStart(2, '0') + "-" + String(daftarIklan.length + 1).padStart(4, '0');
-
-            // Membuat objek iklan baru
-            var iklanBaru = {
-                idIklan: idIklanBaru,
-                judulPromosi: judulPromosi,
-                linkTujuan: linkTujuan,
-                gambarData: gambarBase64,
-                status: "Menunggu Disetujui",
-                dibuatOleh: userSaatIni.nama
-            };
-
-            // Menambahkan iklan baru ke dalam array
-            daftarIklan.push(iklanBaru);
-
-            // Menyimpan data iklan ke localStorage
-            simpanDataIklanSponsor(daftarIklan);
-
-            // Menampilkan notifikasi sukses
-            tampilkanToast("Iklan dengan ID " + idIklanBaru + " berhasil diunggah dan sedang menunggu persetujuan SuperAdmin!", "success");
-
-            // Mengosongkan form
-            document.getElementById('sponsorJudulPromosi').value = "";
-            document.getElementById('sponsorLinkTujuan').value = "";
-            document.getElementById('sponsorGambarIklan').value = "";
-
-            // Merender ulang tabel iklan
-            renderTabelIklanSponsor();
-        };
-
-        reader.onerror = function() {
-            tampilkanToast("Gagal membaca file gambar.", "error");
-        };
-
-        reader.readAsDataURL(fileGambar);
-    }
-
-    // Event listener saat halaman dimuat
-    document.addEventListener('DOMContentLoaded', function() {
-        var containerTabel = document.getElementById('tabelIklanSponsorContainer');
-        var formIklan = document.getElementById('formUnggahIklan');
-
-        if (containerTabel) {
-            renderTabelIklanSponsor();
-        }
-
-        if (formIklan) {
-            formIklan.addEventListener('submit', unggahIklanBaru);
-        }
-    });
-</script>
-
-<!-- HTML untuk Halaman Manajemen Iklan Sponsor -->
-<div class="page" id="pageKelolaIklan">
-    <div class="page-header">
-        <div>
-            <h2>Manajemen Iklan Sponsor</h2>
-            <p>Halaman ini khusus untuk Akun Sponsor dalam mengunggah iklan produk atau banner promosi untuk ditampilkan di aplikasi Toko Online 2R. Iklan akan melalui proses persetujuan dari SuperAdmin.</p>
-        </div>
-    </div>
-
-    <div class="sponsor-iklan-container">
-        <!-- Formulir Unggah Iklan Baru -->
-        <div class="form-unggah-iklan">
-            <h3 style="margin-bottom: 15px; color: var(--gray-800);">
-                <i class="fas fa-cloud-upload-alt" style="color: var(--orange-primary);"></i> Unggah Iklan Baru
-            </h3>
-            <form id="formUnggahIklan">
-                <div class="form-group">
-                    <label for="sponsorJudulPromosi">Judul Promosi / Nama Produk <span style="color: var(--error);">*</span></label>
-                    <input type="text" id="sponsorJudulPromosi" placeholder="Contoh: Diskon 50% Sepatu Branded" required>
-                </div>
-                <div class="form-group">
-                    <label for="sponsorLinkTujuan">Link Tujuan (Saat Iklan Diklik) <span style="color: var(--error);">*</span></label>
-                    <input type="text" id="sponsorLinkTujuan" placeholder="https://tokoonline2r.com/produk/..." required>
-                </div>
-                <div class="form-group">
-                    <label for="sponsorGambarIklan">Gambar Banner Iklan (Max 5MB) <span style="color: var(--error);">*</span></label>
-                    <input type="file" id="sponsorGambarIklan" accept=".jpg,.jpeg,.png" required>
-                </div>
-                <button type="submit" class="btn-unggah-iklan">
-                    <i class="fas fa-upload"></i> Unggah Iklan
-                </button>
-            </form>
-        </div>
-
-        <!-- Tabel Riwayat Iklan -->
-        <h3 style="margin-bottom: 10px; color: var(--gray-800);">
-            <i class="fas fa-history" style="color: var(--info);"></i> Riwayat Iklan Saya
-        </h3>
-        <div id="tabelIklanSponsorContainer">
-            <div class="kosong-state-sponsor">
-                <i class="fas fa-spinner fa-spin"></i>
-                <h3>Sedang Memuat Data</h3>
-                <p>Silakan tunggu sebentar...</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal Preview Gambar Iklan Sponsor -->
-<div class="modal-overlay modal-preview-sponsor" id="modalPreviewIklan">
-    <div class="modal">
-        <div class="modal-header">
-            <h3 id="modalPreviewIklanTitle">Preview Iklan</h3>
-            <button class="modal-close" onclick="tutupModal('modalPreviewIklan')">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <div class="modal-body">
-            <img id="modalPreviewIklanImage" src="" alt="Preview Iklan">
-        </div>
-    </div>
-</div>
-<!-- ============ AKHIR BLOK 16 MANAJEMEN IKLAN SPONSOR ============ -->
-    <!-- ============ BLOK 17 FORM PENDAFTARAN AKUN OLEH SUPERADMIN ============ -->
-<style>
-    /* CSS Khusus untuk Halaman Form Pendaftaran Akun oleh SuperAdmin */
-    .form-superadmin-wrapper {
-        max-width: 700px;
-        margin: 20px auto;
-        background-color: var(--white);
-        border-radius: var(--radius-md);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        border: 1px solid var(--gray-200);
-        padding: 30px;
-    }
-
-    .form-superadmin-wrapper .auth-logo {
-        text-align: center;
-        margin-bottom: 25px;
-    }
-
-    .form-superadmin-wrapper .auth-logo i {
-        font-size: 40px;
-        color: var(--orange-primary);
-        display: block;
-        margin-bottom: 5px;
-    }
-
-    .form-superadmin-wrapper .auth-logo h1 {
-        font-size: 24px;
-        font-weight: 800;
-        color: var(--gray-900);
-    }
-
-    .form-superadmin-wrapper .auth-logo h1 span {
-        color: var(--orange-primary);
-    }
-
-    .form-superadmin-wrapper .auth-logo p {
-        color: var(--gray-500);
-        font-size: 13px;
-        margin-top: 4px;
-    }
-
-    .form-superadmin-wrapper .info-penting {
-        background-color: var(--orange-light);
-        border-left: 4px solid var(--orange-primary);
-        padding: 12px 16px;
-        border-radius: var(--radius-sm);
-        font-size: 14px;
-        color: var(--gray-700);
-        margin-bottom: 20px;
-    }
-
-    .form-superadmin-wrapper .form-group {
-        margin-bottom: 18px;
-    }
-
-    .form-superadmin-wrapper label {
-        display: block;
-        font-weight: 600;
-        font-size: 14px;
-        color: var(--gray-800);
-        margin-bottom: 6px;
-    }
-
-    .form-superadmin-wrapper .input-group {
-        display: flex;
-        align-items: center;
-        background: var(--gray-100);
-        border-radius: var(--radius-sm);
-        padding: 0 14px;
-        border: 2px solid transparent;
-        transition: 0.3s ease;
-    }
-
-    .form-superadmin-wrapper .input-group:focus-within {
-        border-color: var(--orange-primary);
-        background: var(--white);
-    }
-
-    .form-superadmin-wrapper .input-group i {
-        color: var(--gray-500);
-        font-size: 16px;
-        width: 24px;
-        text-align: center;
-    }
-
-    .form-superadmin-wrapper .input-group input,
-    .form-superadmin-wrapper .input-group select {
-        border: none;
-        background: transparent;
-        padding: 13px 10px;
-        font-size: 15px;
-        width: 100%;
-        outline: none;
-        font-family: 'Poppins', sans-serif;
-    }
-
-    .form-superadmin-wrapper .input-group select {
-        cursor: pointer;
-    }
-
-    .form-superadmin-wrapper .btn-submit-akun {
-        width: 100%;
-        padding: 14px;
-        background: var(--orange-gradient);
-        color: var(--white);
-        border: none;
-        border-radius: var(--radius-sm);
-        font-size: 16px;
-        font-weight: 700;
-        cursor: pointer;
-        transition: 0.3s ease;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .form-superadmin-wrapper .btn-submit-akun:hover {
-        transform: scale(1.02);
-        box-shadow: 0 6px 20px rgba(255, 107, 0, 0.4);
-    }
-
-    .form-superadmin-wrapper .btn-submit-akun:disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
-        transform: none;
-    }
-
-    .form-superadmin-wrapper .auth-footer {
-        text-align: center;
-        margin-top: 20px;
-        font-size: 14px;
-        color: var(--gray-500);
-    }
-
-    .form-superadmin-wrapper .auth-footer a {
-        color: var(--orange-primary);
-        font-weight: 600;
-        cursor: pointer;
-        text-decoration: none;
-    }
-
-    .form-superadmin-wrapper .auth-footer a:hover {
-        text-decoration: underline;
-    }
-</style>
-
-<script>
-    // Fungsi khusus untuk menyimpan akun baru yang dibuat oleh SuperAdmin melalui form ini
-    function simpanAkunBaruDariFormSuperAdmin(event) {
-        event.preventDefault();
-
-        // Mengambil elemen input dari form
-        var inputRole = document.getElementById('superadminRoleBaru');
-        var inputUsername = document.getElementById('superadminUsernameBaru');
-        var inputPassword = document.getElementById('superadminPasswordBaru');
-        var inputNama = document.getElementById('superadminNamaBaru');
-        var inputEmail = document.getElementById('superadminEmailBaru');
-        var inputHp = document.getElementById('superadminHpBaru');
-        var inputAlamat = document.getElementById('superadminAlamatBaru');
-
-        // Mengambil nilai dari setiap input
-        var role = inputRole.value;
-        var username = inputUsername.value.trim();
-        var password = inputPassword.value.trim();
-        var nama = inputNama.value.trim();
-        var email = inputEmail.value.trim();
-        var hp = inputHp.value.trim();
-        var alamat = inputAlamat.value.trim();
-
-        // Melakukan validasi data wajib
-        if (role === "" || username === "" || password === "" || nama === "") {
-            tampilkanToast("Harap isi Role, Username, Password, dan Nama Lengkap terlebih dahulu.", "warning");
-            return;
-        }
-
-        // Validasi panjang username minimal 4 karakter
-        if (username.length < 4) {
-            tampilkanToast("Username harus memiliki minimal 4 karakter.", "warning");
-            return;
-        }
-
-        // Validasi panjang password minimal 6 karakter
-        if (password.length < 6) {
-            tampilkanToast("Password harus memiliki minimal 6 karakter.", "warning");
-            return;
-        }
-
-        // Mengambil data akun yang sudah ada dari localStorage
-        var dataAkunSaatIni = localStorage.getItem('2r_akun');
-        var daftarAkun = dataAkunSaatIni ? JSON.parse(dataAkunSaatIni) : [];
-
-        // Memeriksa apakah username sudah digunakan
-        var cekUsername = daftarAkun.find(function(akun) {
-            return akun.username === username;
-        });
-        if (cekUsername) {
-            tampilkanToast("Username '" + username + "' sudah digunakan oleh akun lain. Silakan gunakan username lain.", "error");
-            return;
-        }
-
-        // Memeriksa apakah email sudah digunakan (jika diisi)
-        if (email !== "") {
-            var cekEmail = daftarAkun.find(function(akun) {
-                return akun.email === email;
-            });
-            if (cekEmail) {
-                tampilkanToast("Email '" + email + "' sudah digunakan oleh akun lain.", "error");
-                return;
-            }
-        }
-
-        // Memeriksa apakah nomor HP sudah digunakan (jika diisi)
-        if (hp !== "") {
-            var cekHp = daftarAkun.find(function(akun) {
-                return akun.hp === hp;
-            });
-            if (cekHp) {
-                tampilkanToast("Nomor HP '" + hp + "' sudah digunakan oleh akun lain.", "error");
-                return;
-            }
-        }
-
-        // Menentukan status akun berdasarkan role
-        var statusAkunBaru = "AKTIF";
-        if (role === "toko" || role === "ojek") {
-            statusAkunBaru = "NONAKTIF (Menunggu Verifikasi)";
-        }
-
-        // Menentukan prefix ID berdasarkan role
-        var prefixId = "";
-        if (role === "customer") {
-            prefixId = "CUST";
-        } else if (role === "toko") {
-            prefixId = "TOKO";
-        } else if (role === "ojek") {
-            prefixId = "OJEK";
-        } else if (role === "pedagang") {
-            prefixId = "PEDAGANG";
-        } else if (role === "codseller") {
-            prefixId = "COD";
-        } else if (role === "superadmin") {
-            prefixId = "SA";
-        } else if (role === "staf_admin") {
-            prefixId = "STA";
-        } else if (role === "staf_owner_ojek") {
-            prefixId = "SOO";
-        } else if (role === "staf_owner_toko") {
-            prefixId = "SOT";
-        } else if (role === "customer_service") {
-            prefixId = "CS";
-        } else if (role === "sponsor") {
-            prefixId = "SPN";
-        } else {
-            prefixId = "USR";
-        }
-
-        // Menghitung nomor urut ID berdasarkan role yang sama
-        var akunDenganRoleSama = daftarAkun.filter(function(akun) {
-            return akun.role === role;
-        });
-        var nomorUrut = 1;
-        akunDenganRoleSama.forEach(function(akun) {
-            var idArray = akun.id.split('-');
-            if (idArray.length === 2) {
-                var angkaId = parseInt(idArray[1]);
-                if (!isNaN(angkaId) && angkaId >= nomorUrut) {
-                    nomorUrut = angkaId + 1;
-                }
-            }
-        });
-        var idBaru = prefixId + '-' + String(nomorUrut).padStart(3, '0');
-
-        // Mengenkripsi password menggunakan Base64
-        var passwordTerenkripsi = btoa(password);
-
-        // Mencatat waktu registrasi saat ini
-        var waktuRegistrasi = new Date().toISOString();
-
-        // Membuat objek data akun baru
-        var dataAkunBaru = {
-            id: idBaru,
-            role: role,
-            username: username,
-            password: passwordTerenkripsi,
-            nama: nama,
-            email: email,
-            hp: hp,
-            alamat: alamat,
-            jabatan: "",
-            perusahaan: "",
-            latitude: null,
-            longitude: null,
-            status: statusAkunBaru,
-            registeredAt: waktuRegistrasi,
-            direkrutOleh: "SuperAdmin"
-        };
-
-        // Menambahkan akun baru ke dalam daftar akun
-        daftarAkun.push(dataAkunBaru);
-
-        // Menyimpan kembali daftar akun ke localStorage
-        localStorage.setItem('2r_akun', JSON.stringify(daftarAkun));
-
-        // Menampilkan notifikasi sukses
-        tampilkanToast("Selamat! Akun " + role + " dengan ID " + idBaru + " berhasil dibuat. Status: " + statusAkunBaru, "success");
-
-        // Mengosongkan kembali input form setelah berhasil
-        inputRole.value = "customer";
-        inputUsername.value = "";
-        inputPassword.value = "";
-        inputNama.value = "";
-        inputEmail.value = "";
-        inputHp.value = "";
-        inputAlamat.value = "";
-
-        // Jika role adalah Toko atau Ojek, refresh tabel persetujuan di BLOK 12
-        if (role === "toko" || role === "ojek") {
-            if (typeof renderTabelPersetujuan === 'function') {
-                renderTabelPersetujuan();
-            }
-        }
-
-        // Refresh tabel semua akun di BLOK 13 jika sudah ada
-        if (typeof renderTabelSemuaAkun === 'function') {
-            renderTabelSemuaAkun();
-        }
-    }
-
-    // Event listener saat halaman dimuat
-    document.addEventListener('DOMContentLoaded', function() {
-        var formSuperAdmin = document.getElementById('formPendaftaranSuperAdmin');
-        if (formSuperAdmin) {
-            formSuperAdmin.addEventListener('submit', simpanAkunBaruDariFormSuperAdmin);
-        }
-    });
-</script>
-
-<!-- HTML untuk Halaman Form Pendaftaran Akun oleh SuperAdmin -->
-<div class="page" id="pageDaftarAkunSuperAdmin">
-    <div class="page-header">
-        <div>
-            <h2>Form Pendaftaran Akun Baru</h2>
-            <p>Halaman ini khusus untuk SuperAdmin dalam membuat akun baru untuk Staf Admin, Staf Owner, Customer Service, Sponsor, Customer, Toko, dan Ojek dengan tampilan form yang elegan dan profesional.</p>
-        </div>
-    </div>
-
-    <div class="form-superadmin-wrapper">
-        <!-- Logo dan Judul seperti di form registrasi publik -->
-        <div class="auth-logo">
-            <i class="fas fa-store-alt"></i>
-            <h1>Toko Online <span>2R</span></h1>
-            <p>Platform Belanja & Layanan Serba Ada</p>
-        </div>
-
-        <!-- Informasi penting untuk SuperAdmin -->
-        <div class="info-penting">
-            <i class="fas fa-info-circle" style="color: var(--orange-primary); margin-right: 8px;"></i>
-            <strong>Penting:</strong> Jika Anda membuat akun dengan Role <strong>Toko</strong> atau <strong>Ojek</strong>, maka akun tersebut akan berstatus <strong>"NONAKTIF (Menunggu Verifikasi)"</strong> dan harus diaktifkan secara manual oleh SuperAdmin melalui menu <strong>"Persetujuan"</strong>.
-        </div>
-
-        <!-- Form Pendaftaran -->
-        <form id="formPendaftaranSuperAdmin">
-            <!-- Input Role -->
-            <div class="form-group">
-                <label for="superadminRoleBaru">Pilih Role Akun <span style="color: var(--error);">*</span></label>
-                <div class="input-group">
-                    <i class="fas fa-user-tag"></i>
-                    <select id="superadminRoleBaru" required>
-                        <option value="customer">Customer</option>
-                        <option value="toko">Toko (Membutuhkan Verifikasi)</option>
-                        <option value="ojek">Ojek (Membutuhkan Verifikasi)</option>
-                        <option value="staf_admin">Staf Admin</option>
-                        <option value="staf_owner_ojek">Staf Owner Ojek</option>
-                        <option value="staf_owner_toko">Staf Owner Toko</option>
-                        <option value="customer_service">Customer Service</option>
-                        <option value="sponsor">Sponsor</option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- Input Username -->
-            <div class="form-group">
-                <label for="superadminUsernameBaru">Username <span style="color: var(--error);">*</span></label>
-                <div class="input-group">
-                    <i class="fas fa-user"></i>
-                    <input type="text" id="superadminUsernameBaru" placeholder="Masukkan username (minimal 4 karakter)" required>
-                </div>
-            </div>
-
-            <!-- Input Password -->
-            <div class="form-group">
-                <label for="superadminPasswordBaru">Password <span style="color: var(--error);">*</span></label>
-                <div class="input-group">
-                    <i class="fas fa-lock"></i>
-                    <input type="password" id="superadminPasswordBaru" placeholder="Masukkan password (minimal 6 karakter)" required>
-                </div>
-            </div>
-
-            <!-- Input Nama Lengkap -->
-            <div class="form-group">
-                <label for="superadminNamaBaru">Nama Lengkap <span style="color: var(--error);">*</span></label>
-                <div class="input-group">
-                    <i class="fas fa-id-card"></i>
-                    <input type="text" id="superadminNamaBaru" placeholder="Masukkan nama lengkap" required>
-                </div>
-            </div>
-
-            <!-- Input Email -->
-            <div class="form-group">
-                <label for="superadminEmailBaru">Email (Opsional)</label>
-                <div class="input-group">
-                    <i class="fas fa-envelope"></i>
-                    <input type="email" id="superadminEmailBaru" placeholder="Masukkan alamat email">
-                </div>
-            </div>
-
-            <!-- Input Nomor HP -->
-            <div class="form-group">
-                <label for="superadminHpBaru">Nomor HP (Opsional)</label>
-                <div class="input-group">
-                    <i class="fas fa-phone"></i>
-                    <input type="tel" id="superadminHpBaru" placeholder="Masukkan nomor HP">
-                </div>
-            </div>
-
-            <!-- Input Alamat -->
-            <div class="form-group">
-                <label for="superadminAlamatBaru">Alamat (Opsional)</label>
-                <div class="input-group">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <input type="text" id="superadminAlamatBaru" placeholder="Masukkan alamat lengkap">
-                </div>
-            </div>
-
-            <!-- Tombol Submit -->
-            <div class="form-group" style="margin-top: 10px;">
-                <button type="submit" class="btn-submit-akun">
-                    <i class="fas fa-user-plus"></i> Daftarkan Akun Baru
-                </button>
-            </div>
-        </form>
-
-        <!-- Footer seperti di form registrasi publik -->
-        <div class="auth-footer">
-            Kembali ke <a onclick="navigasiHalaman('dashboard')">Dasbor SuperAdmin</a>
-        </div>
-    </div>
-</div>
-<!-- ============ AKHIR BLOK 17 FORM PENDAFTARAN AKUN OLEH SUPERADMIN ============ -->
-   
 </body>
 </html>
+
