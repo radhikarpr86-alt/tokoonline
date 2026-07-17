@@ -1092,24 +1092,19 @@
     }
 </script>
 <!-- ============ AKHIR BLOK 7(1) - 01 SCRIPTS DATA AKUN & UTILITY ============ -->
-     <!-- ============ BLOK 7(2) - 01 SCRIPTS LOGIN, REGISTER & NAVIGASI ============ -->
+    <!-- ============ BLOK 7(2) - 01 R2 SCRIPTS LOGIN, REGISTER & NAVIGASI (PERBAIKAN TOGGLE) ============ -->
 <!-- PENJELASAN: 
-     Blok ini berisi logika inti untuk interaksi pengguna. Meliputi fungsi Login 
-     (memvalidasi username dan password), fungsi Register (mendaftarkan akun baru 
-     dengan role tertentu), fungsi Navigasi Halaman (untuk berpindah antar menu 
-     tanpa reload halaman), dan fungsi Toggle Sidebar (untuk membuka dan menutup 
-     menu samping dengan efek halus). Navigasi di blok ini sudah dipastikan 
-     tidak akan bentrok dengan duplikasi ID halaman. -->
+     Blok ini berisi logika inti untuk interaksi pengguna. 
+     PERBAIKAN PADA R2: Memperbaiki fungsi toggleSidebar() agar saat sidebar ditutup 
+     pointer-events diset menjadi 'none', dan saat dibuka dikembalikan menjadi 'auto'. 
+     Ini memastikan sidebar tidak memakan klik saat tertutup. -->
 
 <script>
     // ===== TOGGLE FORM LOGIN / REGISTER =====
-    // Fungsi untuk berpindah antara form Login dan Register di halaman publik
     function toggleForm(tipe) {
         document.getElementById('authError').style.display = 'none';
-        
         var formLogin = document.getElementById('loginForm');
         var formRegister = document.getElementById('registerForm');
-        
         if (tipe === 'register') {
             formLogin.classList.add('hidden-form');
             formRegister.classList.remove('hidden-form');
@@ -1123,15 +1118,12 @@
     // ===== PROSES LOGIN =====
     function prosesLogin(event) {
         event.preventDefault();
-        
         var inputUsername = document.getElementById('loginUsername').value.trim();
         var inputPassword = document.getElementById('loginPassword').value.trim();
-        
         var daftarAkun = getDataAkun();
         var userDitemukan = daftarAkun.find(function(akun) {
             return akun.username === inputUsername && decodePassword(akun.password) === inputPassword;
         });
-        
         if (userDitemukan) {
             tampilkanToast('Selamat datang, ' + userDitemukan.nama + '!');
             localStorage.setItem('2r_user', JSON.stringify(userDitemukan));
@@ -1145,7 +1137,6 @@
     // ===== PROSES REGISTER PUBLIK =====
     function prosesRegister(event) {
         event.preventDefault();
-        
         var role = document.getElementById('regRole').value;
         var username = document.getElementById('regUsername').value.trim();
         var password = document.getElementById('regPassword').value.trim();
@@ -1153,76 +1144,45 @@
         var email = document.getElementById('regEmail').value.trim();
         var hp = document.getElementById('regHp').value.trim();
         
-        // Validasi data
         if (!role || !username || !password || !nama) {
             tampilkanToast('Data belum lengkap!', 'warning');
             return;
         }
-        
         var daftarAkun = getDataAkun();
-        
-        // Cek apakah username sudah ada
         if (daftarAkun.find(function(akun) { return akun.username === username; })) {
             tampilkanToast('Username sudah digunakan', 'error');
             return;
         }
-        
-        // Cek apakah email sudah ada (jika diisi)
         if (email && daftarAkun.find(function(akun) { return akun.email === email; })) {
             tampilkanToast('Email sudah digunakan', 'error');
             return;
         }
-        
-        // Cek apakah HP sudah ada (jika diisi)
         if (hp && daftarAkun.find(function(akun) { return akun.hp === hp; })) {
             tampilkanToast('HP sudah digunakan', 'error');
             return;
         }
-        
         var idBaru = generateId(role);
-        
-        // Fungsi untuk menyelesaikan pendaftaran (dengan atau tanpa koordinat)
         function selesaiDaftar(latitude, longitude) {
             var akunBaru = {
-                id: idBaru,
-                role: role,
-                username: username,
-                password: encodePassword(password),
-                nama: nama,
-                email: email || '',
-                hp: hp || '',
-                alamat: '',
-                jabatan: '',
-                perusahaan: '',
-                latitude: latitude,
-                longitude: longitude,
-                status: 'AKTIF',
+                id: idBaru, role: role, username: username, password: encodePassword(password),
+                nama: nama, email: email || '', hp: hp || '', alamat: '', jabatan: '',
+                perusahaan: '', latitude: latitude, longitude: longitude, status: 'AKTIF',
                 registeredAt: new Date().toISOString()
             };
-            
             daftarAkun.push(akunBaru);
             simpanDataAkun(daftarAkun);
             tampilkanToast('Akun berhasil dibuat! ID: ' + idBaru);
-            
-            // Reset form
             document.getElementById('regUsername').value = '';
             document.getElementById('regPassword').value = '';
             document.getElementById('regNama').value = '';
             document.getElementById('regEmail').value = '';
             document.getElementById('regHp').value = '';
-            
             toggleForm('login');
         }
-        
-        // Mencoba mengambil lokasi geolokasi
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
-                function(posisi) {
-                    selesaiDaftar(posisi.coords.latitude, posisi.coords.longitude);
-                },
-                function() {
-                    selesaiDaftar(null, null);
-                }
+                function(posisi) { selesaiDaftar(posisi.coords.latitude, posisi.coords.longitude); },
+                function() { selesaiDaftar(null, null); }
             );
         } else {
             selesaiDaftar(null, null);
@@ -1230,20 +1190,14 @@
     }
 
     // ===== NAVIGASI HALAMAN & SIDEBAR =====
-    // Fungsi untuk berpindah antar halaman di dalam dashboard
     function navigasiHalaman(namaHalaman) {
-        // Sembunyikan semua halaman
         document.querySelectorAll('.page').forEach(function(halaman) {
             halaman.classList.add('hidden');
         });
-        
-        // Tampilkan halaman yang dituju
         var halamanTujuan = document.getElementById('page' + namaHalaman.charAt(0).toUpperCase() + namaHalaman.slice(1));
         if (halamanTujuan) {
             halamanTujuan.classList.remove('hidden');
             setActiveMenu(namaHalaman);
-            
-            // Jika halaman yang dibuka adalah Profil, muat data profil
             if (namaHalaman === 'profile' && typeof loadProfil === 'function') {
                 loadProfil();
             }
@@ -1252,19 +1206,17 @@
         }
     }
 
-    // Fungsi untuk menyorot menu yang sedang aktif di sidebar
     function setActiveMenu(namaHalaman) {
         document.querySelectorAll('.sidebar-menu-item').forEach(function(item) {
             item.classList.remove('active');
         });
-        
         var menuAktif = document.getElementById('menu' + namaHalaman.charAt(0).toUpperCase() + namaHalaman.slice(1));
         if (menuAktif) {
             menuAktif.classList.add('active');
         }
     }
 
-    // Fungsi untuk membuka dan menutup sidebar
+    // ===== PERBAIKAN R2: LOGIKA TOGGLE SIDEBAR YANG BENAR =====
     function toggleSidebar() {
         var sidebar = document.getElementById('mainSidebar');
         var overlay = document.getElementById('sidebarOverlay');
@@ -1272,10 +1224,15 @@
         
         sidebar.classList.toggle('closed');
         
+        // Jika sidebar tertutup, matikan pointer-events dan perluas konten
         if (sidebar.classList.contains('closed')) {
+            sidebar.style.pointerEvents = 'none';
             konten.classList.add('expanded');
             overlay.classList.remove('active');
-        } else {
+        } 
+        // Jika sidebar terbuka, hidupkan pointer-events dan geser konten
+        else {
+            sidebar.style.pointerEvents = 'auto';
             konten.classList.remove('expanded');
             overlay.classList.add('active');
         }
@@ -1285,11 +1242,9 @@
     function bukaModal(idModal) {
         document.getElementById(idModal).classList.add('active');
     }
-    
     function tutupModal(idModal) {
         document.getElementById(idModal).classList.remove('active');
     }
-    
     function logout() {
         if (confirm('Apakah Anda yakin ingin keluar?')) {
             localStorage.removeItem('2r_user');
@@ -1297,71 +1252,47 @@
         }
     }
 </script>
-<!-- ============ AKHIR BLOK 7(2) - 01 SCRIPTS LOGIN, REGISTER & NAVIGASI ============ -->
-   <!-- ============ BLOK 7(3) - 01 R2 SCRIPTS DASHBOARD LOADER & EVENT LISTENER (PERBAIKAN NAVIGASI) ============ -->
+<!-- ============ AKHIR BLOK 7(2) - 01 R2 SCRIPTS LOGIN, REGISTER & NAVIGASI ============ -->
+     <!-- ============ BLOK 7(3) - 01 R3 SCRIPTS DASHBOARD LOADER & EVENT LISTENER (PERBAIKAN LOGIN) ============ -->
 <!-- PENJELASAN: 
-     Blok ini bertugas untuk memuat antarmuka dashboard saat pengguna berhasil login. 
-     Di dalamnya terdapat fungsi tampilkanDashboard() yang mengatur tampilan 
-     (menyembunyikan form login, menampilkan navbar dan sidebar, serta 
-     memastikan hanya halaman Dasbor yang terbuka pertama kali). 
-     Bagian ini juga berisi semua Event Listener (seperti tombol logout, klik menu sidebar) 
-     dan inisialisasi awal saat halaman dimuat. -->
+     Blok ini bertugas memuat dashboard saat login. 
+     PERBAIKAN R3: Memastikan sidebar dalam keadaan tertutup dan pointer-events 
+     diset menjadi 'none' saat pertama kali login, agar menu tidak menghalangi konten. -->
 
 <script>
     // ===== TAMPILKAN DASHBOARD =====
-    // Fungsi utama untuk mengubah tampilan dari halaman Login ke Dashboard SuperAdmin
     function tampilkanDashboard(user) {
-        // 1. Reset layout body
         document.body.style.display = 'block';
         document.body.style.justifyContent = 'unset';
         document.body.style.alignItems = 'unset';
-        
-        // 2. Sembunyikan halaman Auth (Login/Register)
         document.getElementById('pageAuth').style.display = 'none';
-        
-        // 3. Tampilkan Navbar
         document.getElementById('mainNavbar').classList.remove('hidden');
         
-        // 4. Siapkan Sidebar (tampilkan, tapi dalam keadaan tertutup agar konten leluasa)
         var sidebar = document.getElementById('mainSidebar');
         sidebar.classList.remove('hidden');
         sidebar.classList.add('closed');
-        // PERBAIKAN PENTING: Memastikan sidebar benar-benar tidak bisa diklik saat tertutup
-        sidebar.style.pointerEvents = 'none'; // <-- Tambahan baris ini!
+        sidebar.style.pointerEvents = 'none'; // Pastikan sidebar tidak bisa diklik saat login
         
-        // 5. Siapkan Area Konten (pastikan lebar penuh karena sidebar tertutup)
         var konten = document.getElementById('contentArea');
         konten.classList.remove('hidden');
         konten.classList.add('expanded');
         
-        // 6. Isi data user ke Navbar
         var avatar = document.getElementById('navbarAvatar');
         avatar.textContent = user.nama.charAt(0).toUpperCase();
-        
         document.getElementById('navbarUserName').textContent = user.nama;
-        
         var labelRole = user.role === 'superadmin' ? 'SuperAdmin' : user.role;
         document.getElementById('navbarUserRole').textContent = labelRole;
         
-        // 7. Sembunyikan SEMUA halaman terlebih dahulu (FIX MASALAH BERTUMPUK)
         document.querySelectorAll('.page').forEach(function(halaman) {
             halaman.classList.add('hidden');
         });
-        
-        // 8. HANYA TAMPILKAN DASHBOARD (Halaman awal)
         document.getElementById('pageDashboard').classList.remove('hidden');
         setActiveMenu('dashboard');
         
-        // 9. Event Listener untuk Toggle Sidebar
         document.getElementById('btnSidebarToggle').onclick = toggleSidebar;
-        
-        // 10. Event Listener untuk Overlay (klik area gelap untuk menutup sidebar)
         document.getElementById('sidebarOverlay').onclick = toggleSidebar;
-        
-        // 11. Event Listener untuk Tombol Logout
         document.getElementById('btnLogout').onclick = logout;
         
-        // 12. Event Listener untuk Semua Item Menu Sidebar
         document.querySelectorAll('.sidebar-menu-item').forEach(function(item) {
             item.onclick = function() {
                 var halamanTujuan = this.dataset.page;
@@ -1373,31 +1304,22 @@
     }
 
     // ===== INISIALISASI SAAT HALAMAN DIMUAT =====
-    // 1. Jalankan Preloader
     window.addEventListener('load', function() {
         setTimeout(function() {
             document.getElementById('preloader').classList.add('hidden');
         }, 500);
     });
-    
-    // 2. Jalankan inisialisasi utama saat DOM siap
     window.addEventListener('DOMContentLoaded', function() {
-        // Inisialisasi akun SuperAdmin jika belum ada
         inisialisasiSuperAdmin();
-        
-        // Cek apakah ada user yang sedang login
         var dataUserTersimpan = localStorage.getItem('2r_user');
         if (dataUserTersimpan) {
-            // Jika ada, langsung tampilkan dashboard
             var user = JSON.parse(dataUserTersimpan);
             tampilkanDashboard(user);
         }
-        
-        // Update preview ID di form registrasi
         updateIdPreview();
     });
 </script>
-<!-- ============ AKHIR BLOK 7(3) - 01 R2 SCRIPTS DASHBOARD LOADER & EVENT LISTENER (PERBAIKAN NAVIGASI) ============ -->
+<!-- ============ AKHIR BLOK 7(3) - 01 R3 SCRIPTS DASHBOARD LOADER & EVENT LISTENER ============ -->
 
 <!-- ============ BLOK 8 SCRIPTS PROFIL & UPLOAD (REVISI SUPERLENGKAP) ============ -->
 <!-- PENJELASAN: 
