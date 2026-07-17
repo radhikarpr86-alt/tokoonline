@@ -1230,7 +1230,7 @@
         pagePersetujuan. Hal ini untuk menghilangkan duplikasi ID yang menyebabkan 
         JavaScript bingung dalam merender tabel.
      2. Semua halaman memiliki ID unik dan terintegrasi dengan navigasi.
-     3. Tidak ada kode yang terpotong atau tumpang tindih. -->
+     3. Tidak ada tag </main> di akhir blok ini (tag penutup ada di BLOK 5(3)). -->
 
     <!-- ==================== HALAMAN DAFTAR AKUN BARU ==================== -->
     <div class="page" id="pageDaftarAkun">
@@ -1370,7 +1370,6 @@
             </div>
         </div>
     </div>
-</main>
 <!-- ============ AKHIR BLOK 5(2) - 01 CONTENT AREA (DAFTAR AKUN, PERSETUJUAN & KELOLA AKUN) ============ -->
 <!-- ============ BLOK 5(3) - 01 CONTENT AREA (PLACEHOLDER & PENUTUP) ============ -->
 <!-- PENJELASAN: 
@@ -1378,7 +1377,12 @@
      Bagian ini berisi kode HTML untuk Halaman Placeholder (fitur dalam pengembangan) 
      dan tag penutup </main> untuk mengakhiri area konten utama.
      Halaman-halaman ini ditampilkan sebagai placeholder untuk fitur-fitur yang belum dikembangkan.
-     Semua halaman placeholder memiliki desain yang konsisten dengan halaman lainnya. -->
+     Semua halaman placeholder memiliki desain yang konsisten dengan halaman lainnya.
+     
+     PERBAIKAN PENTING:
+     1. Tag </main> ditambahkan di akhir blok ini untuk menutup area konten utama.
+     2. Tidak ada duplikasi kode (hanya satu BLOK 5(3)).
+     3. Semua halaman placeholder tetap lengkap. -->
 
     <!-- ==================== HALAMAN LIhat SEMUA TOKO ==================== -->
     <div class="page" id="pageLihatToko">
@@ -1480,7 +1484,7 @@
     </div>
 
 </main>
-<!-- ============ BLOK 5(3) - 01 CONTENT AREA (PLACEHOLDER & PENUTUP) ============ -->
+<!-- ============ AKHIR BLOK 5(3) - 01 CONTENT AREA (PLACEHOLDER & PENUTUP) ============ -->
 <!-- PENJELASAN: 
      Ini adalah bagian ketiga dan terakhir dari BLOK 5 (Content Area). 
      Bagian ini berisi kode HTML untuk Halaman Placeholder (fitur dalam pengembangan) 
