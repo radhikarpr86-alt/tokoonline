@@ -118,7 +118,18 @@
         .auth-footer a:hover { text-decoration:underline; }
         .hidden-form { display:none !important; }
 <!-- ============ AKHIR BLOK 1(2) - 01 CSS LOGIN & REGISTER MENARIK ============ -->
-        <!-- ============ BLOK 1(3) - 01 CSS DASHBOARD & SIDEBAR ============ -->
+        <!-- ============ BLOK 1(3) - 01 R1 CSS DASHBOARD & SIDEBAR (REVISI PERTAMA) ============ -->
+<!-- PENJELASAN: 
+     Ini adalah revisi pertama (R1) dari BLOK 1(3). 
+     Pada revisi ini, dilakukan perbaikan pada CSS Navbar dan Sidebar untuk mengatasi 
+     masalah tombol "Keluar" yang hilang dan menu sidebar yang tidak bisa diklik.
+     
+     PERBAIKAN UTAMA:
+     1. Menambahkan flex-shrink: 0; pada class .navbar-actions untuk mencegah 
+        area tombol (ikon dan tombol keluar) gepeng atau tertindih.
+     2. Memastikan layout Navbar lebih stabil agar tombol "Keluar" selalu muncul 
+        di ujung kanan atas. -->
+
         /* ===== NAVBAR ===== */
         .navbar { position:fixed; top:0; left:0; right:0; height:68px; background:white; box-shadow:0 2px 10px rgba(0,0,0,0.05); z-index:1000; padding:0 25px; display:flex; align-items:center; justify-content:space-between; border-bottom:2px solid var(--orange-light); }
         .navbar-brand { display:flex; align-items:center; gap:10px; font-weight:700; font-size:20px; color:var(--orange-primary); }
@@ -128,10 +139,12 @@
         .navbar-user-info { display:flex; flex-direction:column; line-height:1.2; text-align:right; }
         .navbar-user-name { font-weight:600; font-size:14px; color:var(--gray-900); }
         .navbar-user-role { font-size:12px; color:var(--gray-500); }
-        .navbar-actions { display:flex; align-items:center; gap:10px; }
+        
+        /* PERBAIKAN R1: Menambahkan flex-shrink: 0 agar tombol tidak gepeng */
+        .navbar-actions { display:flex; align-items:center; gap:10px; flex-shrink: 0; }
         .btn-icon { background:transparent; border:none; font-size:20px; color:var(--gray-600); cursor:pointer; padding:8px; border-radius:50%; transition:0.2s; }
         .btn-icon:hover { background:var(--gray-100); }
-        .btn-logout { background:transparent; border:1px solid var(--gray-300); padding:8px 16px; border-radius:var(--radius-sm); font-weight:500; color:var(--gray-700); cursor:pointer; transition:0.3s; font-size:13px; }
+        .btn-logout { background:transparent; border:1px solid var(--gray-300); padding:8px 16px; border-radius:var(--radius-sm); font-weight:500; color:var(--gray-700); cursor:pointer; transition:0.3s; font-size:13px; display:flex; align-items:center; gap:5px; }
         .btn-logout:hover { background:var(--error); color:white; border-color:var(--error); }
 
         /* ===== SIDEBAR MODERN ===== */
@@ -217,9 +230,7 @@
         .doc-text h4 { font-size:15px; font-weight:600; color:var(--gray-800); margin-bottom:2px; }
         .doc-text p { font-size:13px; color:var(--gray-500); margin:0; }
         .doc-actions { display:flex; gap:8px; }
-    </style>
-</head>
-<!-- ============ AKHIR BLOK 1(3) - 01 CSS DASHBOARD & SIDEBAR ============ -->
+<!-- ============ AKHIR BLOK 1(3) - 01 R1 CSS DASHBOARD & SIDEBAR (REVISI PERTAMA) ============ -->
 
 <!-- ============ BLOK 2 PRELOADER & TOAST ============ -->
 <body>
@@ -275,7 +286,14 @@
 </div>
 <!-- ============ AKHIR BLOK 3 ============ -->
 
-<!-- ============ BLOK 4 R1 NAVBAR & SIDEBAR (REVISI DENGAN MENU PERSETUJUAN) ============ -->
+<!-- ============ BLOK 4 R2 NAVBAR & SIDEBAR (REVISI KEDUA - TOMBOL KELUAR & NAVBAR RAPI) ============ -->
+<!-- PENJELASAN: 
+     Ini adalah revisi kedua (R2) dari BLOK 4. 
+     Pada revisi ini, dipastikan struktur Navbar dan Sidebar sudah rapi.
+     - Navbar menggunakan flexbox yang kuat agar tombol "Keluar" selalu muncul di kanan.
+     - Sidebar memiliki tinggi 100% dan scroll otomatis jika menu terlalu panjang.
+     - Semua ID dan class sudah terintegrasi dengan JavaScript navigasi di BLOK 7. -->
+
 <nav class="navbar hidden" id="mainNavbar">
     <div class="navbar-brand">
         <i class="fas fa-store-alt"></i>
@@ -289,12 +307,14 @@
         </div>
     </div>
     <div class="navbar-actions">
-        <button class="btn-icon" id="btnSidebarToggle">
+        <button class="btn-icon" id="btnSidebarToggle" title="Buka/Tutup Menu">
             <i class="fas fa-bars"></i>
         </button>
-        <button class="btn-icon" id="btnChatNav">
+        <!-- Tombol Chat untuk notifikasi -->
+        <button class="btn-icon" id="btnChatNav" title="Chat">
             <i class="fas fa-comments"></i>
         </button>
+        <!-- Tombol Keluar (Logout) -->
         <button class="btn-logout" id="btnLogout">
             <i class="fas fa-sign-out-alt"></i> Keluar
         </button>
@@ -330,7 +350,6 @@
         <div class="sidebar-menu-item" data-page="daftarAkun">
             <i class="fas fa-user-plus"></i> Daftar Akun Baru
         </div>
-        <!-- TAMBAHAN BARU: Menu Persetujuan Akun -->
         <div class="sidebar-menu-item" data-page="persetujuan">
             <i class="fas fa-check-double"></i> Persetujuan Akun
         </div>
@@ -357,7 +376,7 @@
         </div>
     </div>
 </aside>
-<!-- ============ AKHIR BLOK 4 R1 NAVBAR & SIDEBAR (REVISI DENGAN MENU PERSETUJUAN) ============ -->
+<!-- ============ AKHIR BLOK 4 R2 NAVBAR & SIDEBAR (REVISI KEDUA - TOMBOL KELUAR & NAVBAR RAPI) ============ -->
 
     <!-- ============ BLOK 5(1) - 01 CONTENT AREA (DASHBOARD & PROFIL) ============ -->
 <!-- PENJELASAN: 
@@ -571,7 +590,7 @@
         </div>
     </div>
 
-        <!-- HALAMAN PERSETUJUAN -->
+    <!-- HALAMAN PERSETUJUAN -->
     <div class="page" id="pagePersetujuan">
         <div class="page-header">
             <div>
@@ -609,7 +628,6 @@
             </div>
         </div>
     </div>
-</div>
 <!-- ============ AKHIR BLOK 5(2) - 01 CONTENT AREA (DAFTAR AKUN, PERSETUJUAN & KELOLA AKUN) ============ -->
 <!-- ============ BLOK 5(3) - 01 CONTENT AREA (PLACEHOLDER & PENUTUP) ============ -->
 <!-- PENJELASAN: 
