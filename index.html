@@ -955,6 +955,14 @@
 <!-- ============ AKHIR BLOK 6 MODALS (REVISI DAN PENULISAN ULANG) ============ -->
 
 <!-- ============ BLOK 7(1) - 01 SCRIPTS DATA AKUN & UTILITY ============ -->
+<!-- PENJELASAN: 
+     Blok ini adalah fondasi logika data. Berisi fungsi untuk mengambil dan menyimpan 
+     data akun ke localStorage, fungsi enkripsi password (Base64), fungsi untuk 
+     menginisialisasi akun SuperAdmin default jika belum ada, fungsi pembuatan ID 
+     otomatis berdasarkan Role, serta fungsi untuk menampilkan notifikasi Toast 
+     yang cantik dan elegan. Semua fungsi di blok ini bersifat global dan digunakan 
+     oleh blok-blok script selanjutnya. -->
+
 <script>
     // ===== DATA AKUN & ENKRIPSI =====
     // Mengambil data akun dari localStorage
@@ -1078,7 +1086,15 @@
     }
 </script>
 <!-- ============ AKHIR BLOK 7(1) - 01 SCRIPTS DATA AKUN & UTILITY ============ -->
-    <!-- ============ BLOK 7(2) - 01 SCRIPTS LOGIN, REGISTER & NAVIGASI ============ -->
+     <!-- ============ BLOK 7(2) - 01 SCRIPTS LOGIN, REGISTER & NAVIGASI ============ -->
+<!-- PENJELASAN: 
+     Blok ini berisi logika inti untuk interaksi pengguna. Meliputi fungsi Login 
+     (memvalidasi username dan password), fungsi Register (mendaftarkan akun baru 
+     dengan role tertentu), fungsi Navigasi Halaman (untuk berpindah antar menu 
+     tanpa reload halaman), dan fungsi Toggle Sidebar (untuk membuka dan menutup 
+     menu samping dengan efek halus). Navigasi di blok ini sudah dipastikan 
+     tidak akan bentrok dengan duplikasi ID halaman. -->
+
 <script>
     // ===== TOGGLE FORM LOGIN / REGISTER =====
     // Fungsi untuk berpindah antara form Login dan Register di halaman publik
@@ -1276,7 +1292,15 @@
     }
 </script>
 <!-- ============ AKHIR BLOK 7(2) - 01 SCRIPTS LOGIN, REGISTER & NAVIGASI ============ -->
-    <!-- ============ BLOK 7(3) - 01 SCRIPTS DASHBOARD LOADER & EVENT LISTENER ============ -->
+     <!-- ============ BLOK 7(3) - 01 SCRIPTS DASHBOARD LOADER & EVENT LISTENER ============ -->
+<!-- PENJELASAN: 
+     Blok ini bertugas untuk memuat antarmuka dashboard saat pengguna berhasil login. 
+     Di dalamnya terdapat fungsi tampilkanDashboard() yang mengatur tampilan 
+     (menyembunyikan form login, menampilkan navbar dan sidebar, serta 
+     memastikan hanya halaman Dasbor yang terbuka pertama kali). 
+     Bagian ini juga berisi semua Event Listener (seperti tombol logout, klik menu sidebar) 
+     dan inisialisasi awal saat halaman dimuat. -->
+
 <script>
     // ===== TAMPILKAN DASHBOARD =====
     // Fungsi utama untuk mengubah tampilan dari halaman Login ke Dashboard SuperAdmin
