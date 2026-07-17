@@ -133,15 +133,20 @@
 </style>
 <!-- ============ AKHIR BLOK 1(2) - 01 CSS LOGIN & REGISTER MENARIK ============ -->
 
-<!-- ============ BLOK 1(3) - 01 R4 CSS DASHBOARD & SIDEBAR (REVISI KEEMPAT - MEMPERBAIKI OVERLAY) ============ -->
+<!-- ============ BLOK 1(3) - 01 R5 CSS DASHBOARD & SIDEBAR (REVISI KELIMA - FINAL OVERLAY) ============ -->
 <!-- PENJELASAN: 
-     Ini adalah revisi keempat (R4) dari BLOK 1(3). 
-     Pada revisi ini, saya melakukan pembersihan total pada CSS Navbar dan Sidebar.
-     PERBAIKAN UTAMA:
-     1. Menghapus properti backdrop-filter: blur(4px); yang menyebabkan overlay transparan menutupi layar.
-     2. Menambahkan z-index yang tepat pada .sidebar dan .sidebar-overlay agar urutan lapisan (layer) benar.
-     3. Memastikan tidak ada properti CSS yang menghalangi event klik (pointer-events).
-     Setelah revisi ini, menu sidebar dan tombol logout dapat berfungsi normal. -->
+     Ini adalah revisi kelima (R5) dari BLOK 1(3). 
+     Pada revisi ini, saya melakukan perbaikan terakhir pada CSS Modal Overlay.
+     
+     PERBAIKAN UTAMA R5:
+     1. Menghapus properti backdrop-filter: blur(4px); pada class .modal-overlay.
+        Properti ini pada beberapa browser (terutama Chrome dan Vercel) menyebabkan 
+        lapisan transparan menutupi seluruh layar meskipun display: none;, 
+        sehingga menu sidebar dan tombol tidak bisa diklik.
+     2. Memastikan semua z-index dan struktur CSS sudah bersih dan aman.
+     
+     Setelah revisi ini, menu sidebar, tombol logout, dan semua tombol aksi 
+     di dalam dashboard dapat berfungsi normal. -->
 
 <style>
     /* ===== NAVBAR ===== */
@@ -216,7 +221,8 @@
     input:focus, textarea:focus { outline:2px solid var(--orange-primary); border-color:transparent; background:white; }
 
     /* ===== MODALS ===== */
-    .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:10000; display:none; justify-content:center; align-items:center; backdrop-filter:blur(4px); }
+    /* PERBAIKAN PENTING R5: backdrop-filter dihapus dari sini! */
+    .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:10000; display:none; justify-content:center; align-items:center; }
     .modal-overlay.active { display:flex; }
     .modal { background:white; border-radius:var(--radius-md); max-width:600px; width:92%; max-height:90vh; overflow-y:auto; box-shadow:0 25px 50px rgba(0,0,0,0.25); animation:modalFade 0.3s ease; }
     @keyframes modalFade { from { opacity:0; transform:translateY(-20px) scale(0.95); } to { opacity:1; transform:translateY(0) scale(1); } }
@@ -244,7 +250,7 @@
     .doc-text p { font-size:13px; color:var(--gray-500); margin:0; }
     .doc-actions { display:flex; gap:8px; }
 </style>
-<!-- ============ AKHIR BLOK 1(3) - 01 R4 CSS DASHBOARD & SIDEBAR (REVISI KEEMPAT - MEMPERBAIKI OVERLAY) ============ -->
+<!-- ============ AKHIR BLOK 1(3) - 01 R5 CSS DASHBOARD & SIDEBAR (REVISI KELIMA - FINAL OVERLAY) ============ -->
 
 <!-- ============ BLOK 2 PRELOADER & TOAST ============ -->
 <!-- PENJELASAN: 
