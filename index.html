@@ -2031,17 +2031,15 @@
     }
 </script>
 <!-- ============ AKHIR BLOK 10 FUNGSI AKSI MANAJEMEN AKUN (REVISI SUPERLENGKAP) ============ -->
-<!-- ============ BLOK 11(1) - 01 R1 HTML & CSS DAFTAR AKUN LAMA (REVISI PERTAMA) ============ -->
+<!-- ============ BLOK 11(1) - 01 HTML & CSS DAFTAR AKUN LAMA (REVISI) ============ -->
 <!-- PENJELASAN: 
-     Ini adalah revisi pertama (R1) dari BLOK 11(1). 
-     Pada revisi ini, saya menambahkan atribut style="display:none;" 
-     pada elemen pembuka <div class="page" id="pageDaftarAkun_Lama">.
-     Hal ini dilakukan untuk memastikan halaman ini benar-benar tersembunyi 
-     dan tidak akan pernah mengganggu halaman utama yang ada di BLOK 5(2) 
-     yang memiliki ID yang sama. -->
+     Blok ini adalah halaman duplikat dari "Daftar Akun Baru" yang telah 
+     disembunyikan menggunakan style="display:none;". Hal ini dilakukan untuk 
+     mencegah bentrok ID dengan halaman utama di BLOK 5(2).
+     CSS di dalamnya masih lengkap dan siap digunakan jika sewaktu-waktu diperlukan. -->
 
 <style>
-    /* CSS Khusus untuk Halaman Daftar Akun Baru */
+    /* CSS Khusus untuk Halaman Daftar Akun Baru (Lama) */
     .form-daftar-akun-container {
         max-width: 700px;
         margin: 0 auto;
@@ -2129,7 +2127,7 @@
     }
 </style>
 
-<!-- HTML untuk Halaman Daftar Akun Baru (ID sudah diubah menjadi _Lama dan ditambahkan style display:none) -->
+<!-- HTML untuk Halaman Daftar Akun Baru (ID lama dan disembunyikan) -->
 <div class="page" id="pageDaftarAkun_Lama" style="display:none;">
     <div class="page-header">
         <div>
@@ -2226,8 +2224,17 @@
         </form>
     </div>
 </div>
-<!-- ============ AKHIR BLOK 11(1) - 01 R1 HTML & CSS DAFTAR AKUN LAMA (REVISI PERTAMA) ============ -->
-<!-- ============ BLOK 11(2) - 01 JAVASCRIPT FUNGSI SIMPAN AKUN ============ -->
+<!-- ============ AKHIR BLOK 11(1) - 01 HTML & CSS DAFTAR AKUN LAMA (REVISI) ============ -->
+     <!-- ============ BLOK 11(2) - 01 JAVASCRIPT FUNGSI SIMPAN AKUN (REVISI) ============ -->
+<!-- PENJELASAN: 
+     Blok ini berisi fungsi utama simpanAkunBaruDariSuperAdmin(event).
+     Fungsi ini bertugas mengambil data dari form daftar akun, melakukan validasi 
+     (cek username unik, email unik, HP unik), menentukan status akun 
+     (AKTIF atau NONAKTIF), menghasilkan ID unik, mengenkripsi password, 
+     dan menyimpan data akun baru ke dalam localStorage.
+     Setelah berhasil, fungsi ini akan menampilkan notifikasi Toast dan merender 
+     ulang tabel di BLOK 12 dan BLOK 13 (jika fungsi tersebut sudah ada). -->
+
 <script>
     // Fungsi untuk menyimpan data akun baru dari form SuperAdmin
     function simpanAkunBaruDariSuperAdmin(event) {
@@ -2396,8 +2403,13 @@
         }
     }
 </script>
-<!-- ============ AKHIR BLOK 11(2) - 01 JAVASCRIPT FUNGSI SIMPAN AKUN ============ -->
-<!-- ============ BLOK 11(3) - 01 JAVASCRIPT EVENT LISTENER & PENUTUP ============ -->
+<!-- ============ AKHIR BLOK 11(2) - 01 JAVASCRIPT FUNGSI SIMPAN AKUN (REVISI) ============ -->
+     <!-- ============ BLOK 11(3) - 01 JAVASCRIPT EVENT LISTENER & PENUTUP (REVISI) ============ -->
+<!-- PENJELASAN: 
+     Blok ini berisi Event Listener untuk menghubungkan tombol submit 
+     pada form dengan fungsi simpanAkunBaruDariSuperAdmin.
+     Event listener akan aktif saat halaman dimuat, memastikan form siap digunakan. -->
+
 <script>
     // Event listener saat halaman dimuat
     document.addEventListener('DOMContentLoaded', function() {
@@ -2410,7 +2422,7 @@
         }
     });
 </script>
-<!-- ============ AKHIR BLOK 11(3) - 01 JAVASCRIPT EVENT LISTENER & PENUTUP ============ -->
+<!-- ============ AKHIR BLOK 11(3) - 01 JAVASCRIPT EVENT LISTENER & PENUTUP (REVISI) ============ -->
 
     <!-- ============ BLOK 12(1) - 01 HTML & CSS MENU PERSETUJUAN ============ -->
 <style>
