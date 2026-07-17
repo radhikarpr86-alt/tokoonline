@@ -641,7 +641,7 @@
 </script>
 <!-- ============ AKHIR BLOK 8 SCRIPTS UTAMA ============ -->
 
-<!-- ============ BLOK 9 SCRIPTS PROFIL (REVISI UPLOAD) ============ -->
+<!-- ============ BLOK 9 SCRIPTS PROFIL (REVISI PREVIEW GAMBAR) ============ -->
 <script>
     const PROFILE_KEY = '2r_superadmin_profile';
     const DOCUMENTS_KEY = '2r_superadmin_documents';
@@ -697,19 +697,16 @@
     function getDocuments() { return JSON.parse(localStorage.getItem(DOCUMENTS_KEY) || '[]'); }
     function saveDocuments(docs) { localStorage.setItem(DOCUMENTS_KEY, JSON.stringify(docs)); }
 
-    // PERBAIKAN: Event listener untuk tombol unggah (agar lebih responsif)
     document.addEventListener('DOMContentLoaded', function() {
         var btnUnggah = document.getElementById('btnUnggahDokumen');
         var inputFile = document.getElementById('inputDokumen');
         
         if (btnUnggah && inputFile) {
-            // Saat tombol diklik, pancing klik pada input file
             btnUnggah.addEventListener('click', function(e) {
                 e.preventDefault();
                 inputFile.click();
             });
 
-            // Saat file dipilih, jalankan upload
             inputFile.addEventListener('change', function(e) {
                 uploadDokumen(e);
             });
@@ -722,17 +719,14 @@
 
         var docs = getDocuments();
         var loaded = 0;
-
-        // Tampilkan loading toast
         tampilkanToast('Sedang mengunggah ' + files.length + ' file...', 'info');
 
         Array.from(files).forEach(function(file) {
-            // Batasi ukuran file (10MB)
             if (file.size > 10 * 1024 * 1024) {
                 tampilkanToast('File ' + file.name + ' terlalu besar (max 10MB)', 'warning');
                 loaded++;
                 if (loaded === files.length) { 
-                    event.target.value = ''; // Reset input
+                    event.target.value = ''; 
                     renderDokumen(); 
                 }
                 return;
@@ -744,17 +738,16 @@
                     id: Date.now() + '-' + Math.random().toString(36).substr(2, 9), 
                     name: file.name, 
                     type: file.type, 
-                    data: e.target.result, // Data base64 file
+                    data: e.target.result, 
                     keterangan: '' 
                 });
                 loaded++;
                 
-                // Jika semua file sudah selesai dibaca
                 if (loaded === files.length) {
                     saveDocuments(docs);
                     renderDokumen();
                     tampilkanToast(loaded + ' dokumen berhasil diunggah!');
-                    event.target.value = ''; // Reset input file agar bisa upload file yang sama lagi
+                    event.target.value = ''; 
                 }
             };
             reader.onerror = function() {
@@ -769,6 +762,7 @@
         });
     }
 
+    // REVISI UTAMA DI SINI (FUNGSI RENDER DOKUMEN UNTUK PREVIEW GAMBAR)
     function renderDokumen() {
         var docs = getDocuments();
         var container = document.getElementById('daftarDokumen');
@@ -788,12 +782,23 @@
 
         var html = '';
         docs.forEach(function(doc) {
+            // CEK APAKAH FILE INI GAMBAR?
+            var isImage = doc.type && doc.type.startsWith('image/');
+            
+            // Tentukan ikon atau tag img
+            var previewElement = '';
+            if (isImage) {
+                // Jika gambar, tampilkan thumbnail kecil
+                previewElement = `<img src="${doc.data}" alt="${doc.name}" style="width:50px; height:50px; object-fit:cover; border-radius:8px; border:1px solid #eee;">`;
+            } else {
+                // Jika bukan gambar, tampilkan ikon file
+                previewElement = `<div class="profile-detail-icon" style="background:var(--orange-pale); color:var(--orange-primary); width:50px; height:50px; border-radius:8px; display:flex; align-items:center; justify-content:center;"><i class="fas fa-file-alt"></i></div>`;
+            }
+
             html += `
                 <div class="profile-detail-item" style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #eee; padding:10px 0;">
                     <div style="display:flex; align-items:center; gap:12px; flex:1;">
-                        <div class="profile-detail-icon" style="background:var(--orange-pale); color:var(--orange-primary); width:40px; height:40px; border-radius:8px; display:flex; align-items:center; justify-content:center;">
-                            <i class="fas fa-file-alt"></i>
-                        </div>
+                        ${previewElement}
                         <div class="profile-detail-text">
                             <h4 style="font-size:14px; margin:0;">${doc.name}</h4>
                             <p style="font-size:12px; color:var(--gray-500); margin:0;">${doc.keterangan || 'Tidak ada keterangan'}</p>
@@ -845,10 +850,8 @@
         tampilkanToast('Dokumen dihapus!');
     }
 
-    // Jalankan load profil saat halaman dimuat
     document.addEventListener('DOMContentLoaded', loadProfil);
     
-    // Override navigasi agar profil ter-load saat pindah halaman
     (function() {
         var orig = window.navigasiHalaman;
         if (orig) {
@@ -859,6 +862,6 @@
         }
     })();
 </script>
-<!-- ============ AKHIR BLOK 9 SCRIPTS PROFIL (REVISI UPLOAD) ============ -->
+<!-- ============ AKHIR BLOK 9 SCRIPTS PROFIL (REVISI PREVIEW GAMBAR) ============ -->
 </body>
 </html>
