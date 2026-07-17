@@ -1298,7 +1298,7 @@
     }
 </script>
 <!-- ============ AKHIR BLOK 7(2) - 01 SCRIPTS LOGIN, REGISTER & NAVIGASI ============ -->
-     <!-- ============ BLOK 7(3) - 01 SCRIPTS DASHBOARD LOADER & EVENT LISTENER ============ -->
+   <!-- ============ BLOK 7(3) - 01 R2 SCRIPTS DASHBOARD LOADER & EVENT LISTENER (PERBAIKAN NAVIGASI) ============ -->
 <!-- PENJELASAN: 
      Blok ini bertugas untuk memuat antarmuka dashboard saat pengguna berhasil login. 
      Di dalamnya terdapat fungsi tampilkanDashboard() yang mengatur tampilan 
@@ -1326,6 +1326,8 @@
         var sidebar = document.getElementById('mainSidebar');
         sidebar.classList.remove('hidden');
         sidebar.classList.add('closed');
+        // PERBAIKAN PENTING: Memastikan sidebar benar-benar tidak bisa diklik saat tertutup
+        sidebar.style.pointerEvents = 'none'; // <-- Tambahan baris ini!
         
         // 5. Siapkan Area Konten (pastikan lebar penuh karena sidebar tertutup)
         var konten = document.getElementById('contentArea');
@@ -1395,7 +1397,7 @@
         updateIdPreview();
     });
 </script>
-<!-- ============ AKHIR BLOK 7(3) - 01 SCRIPTS DASHBOARD LOADER & EVENT LISTENER ============ -->
+<!-- ============ AKHIR BLOK 7(3) - 01 R2 SCRIPTS DASHBOARD LOADER & EVENT LISTENER (PERBAIKAN NAVIGASI) ============ -->
 
 <!-- ============ BLOK 8 SCRIPTS PROFIL & UPLOAD (REVISI SUPERLENGKAP) ============ -->
 <!-- PENJELASAN: 
