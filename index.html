@@ -93,14 +93,27 @@
         .btn-logout { background:transparent; border:1px solid var(--gray-300); padding:6px 14px; border-radius:var(--radius-sm); font-weight:500; color:var(--gray-700); cursor:pointer; transition:var(--transition-fast); font-size:13px; display:flex; align-items:center; gap:6px; }
         .btn-logout:hover { background:var(--error); color:white; border-color:var(--error); }
 
-        /* ============ SIDEBAR ============ */
-        .sidebar { position:fixed; top:64px; left:0; bottom:0; width:260px; background:white; box-shadow:var(--shadow-sm); overflow-y:auto; z-index:999; transition:transform var(--transition-normal); padding:0 0 20px 0; }
+                /* ============ SIDEBAR ============ */
+        .sidebar { 
+            position:fixed; 
+            top:64px; 
+            left:0; 
+            bottom:0; 
+            width:260px; 
+            background:white; 
+            box-shadow:var(--shadow-sm); 
+            overflow-y:auto; 
+            z-index:999; 
+            transition:transform var(--transition-normal); 
+            padding:0 0 20px 0; 
+            /* REVISI AGAR BISA DIGESER (SCROLL) */
+            max-height: calc(100vh - 64px); /* Mengurangi tinggi navbar */
+        }
         .sidebar.closed { transform:translateX(-100%); }
         .sidebar-menu-title { font-size:12px; text-transform:uppercase; color:var(--gray-400); font-weight:700; padding:10px 20px; letter-spacing:1px; margin-top:0; }
         .sidebar-menu-item { display:flex; align-items:center; gap:12px; padding:12px 20px; cursor:pointer; transition:var(--transition-fast); color:var(--gray-700); font-size:14px; font-weight:500; position:relative; }
         .sidebar-menu-item:hover { background:var(--orange-pale); color:var(--orange-primary); }
-        /* REVISI DI SINI: Menghapus border-right agar tidak ada garis tebal penghalang */
-        .sidebar-menu-item.active { background:var(--orange-pale); color:var(--orange-primary); }
+        .sidebar-menu-item.active { background:var(--orange-pale); color:var(--orange-primary); border-right:3px solid var(--orange-primary); } /* Garis oranye tetap dipertahankan */
         .sidebar-menu-item i { width:20px; text-align:center; font-size:16px; }
         .sidebar-overlay { position:fixed; top:64px; left:0; right:0; bottom:0; background:rgba(0,0,0,0.3); z-index:998; display:none; }
         .sidebar-overlay.active { display:block; }
