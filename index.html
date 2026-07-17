@@ -118,21 +118,30 @@
         .sidebar-overlay { position:fixed; top:64px; left:0; right:0; bottom:0; background:rgba(0,0,0,0.3); z-index:998; display:none; }
         .sidebar-overlay.active { display:block; }
 
-        /* ============ CONTENT AREA ============ */
-        .content-area { margin-left:260px; padding:84px 25px 25px 25px; min-height:100vh; transition:margin-left var(--transition-normal); background:#FFF8F3; }
-        .content-area.expanded { margin-left:0; }
+               /* ============ CONTENT AREA ============ */
+        .content-area { 
+            margin-left: 260px; 
+            padding: 84px 25px 25px 25px; 
+            min-height: 100vh; 
+            transition: margin-left var(--transition-normal); /* Animasi geser halus */
+            background: #FFF8F3; 
+            width: calc(100% - 260px); /* Lebar dinamis */
+        }
+        .content-area.expanded { 
+            margin-left: 0; 
+            width: 100%; /* Jika sidebar tertutup, konten jadi lebar 100% */
+        }
         @media (max-width:768px) {
             .sidebar:not(.closed) + .sidebar-overlay.active { display:block; }
             .sidebar.closed { transform:translateX(-100%); }
             .sidebar:not(.closed) { transform:translateX(0); }
-            .content-area { margin-left:0; }
+            .content-area { margin-left:0; width:100%; }
         }
         @media (min-width:769px) {
             .sidebar-overlay { display:none !important; }
             .sidebar.closed { transform:translateX(0); }
             .sidebar { width:260px; }
         }
-
         /* ============ PAGE HEADER ============ */
         .page-header { margin-bottom:25px; }
         .page-header .breadcrumb { display:flex; align-items:center; gap:8px; font-size:13px; color:var(--gray-500); margin-bottom:8px; }
