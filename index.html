@@ -1708,7 +1708,31 @@
     })();
 </script>
 <!-- ============ AKHIR BLOK 8 SCRIPTS PROFIL & UPLOAD (REVISI SUPERLENGKAP) ============ -->
-    <!-- ============ BLOK 9 FUNGSI RENDER TABEL SEMUA AKUN ============ -->
+    <!-- ============ BLOK 9 FUNGSI RENDER TABEL SEMUA AKUN (REVISI SUPERLENGKAP) ============ -->
+<!-- PENJELASAN: 
+     Blok ini berisi fungsi JavaScript utama untuk merender (menampilkan) 
+     tabel manajemen semua akun yang terdaftar di dalam sistem.
+
+     Fungsi renderTabelSemuaAkun() akan:
+     1. Mengambil seluruh data akun dari localStorage dengan key "2r_akun".
+     2. Jika tidak ada akun sama sekali, akan menampilkan pesan "Belum Ada Akun Terdaftar".
+     3. Jika ada data, fungsi akan membuat struktur tabel HTML secara dinamis.
+     4. Setiap baris tabel akan menampilkan informasi berikut:
+        - Nomor Urut
+        - ID Akun
+        - Nama Lengkap
+        - Role (Peran)
+        - Status Akun (AKTIF / NONAKTIF) dengan badge warna yang berbeda.
+     5. Untuk setiap baris, fungsi juga akan menampilkan tombol aksi:
+        - "Aktifkan Kembali" (jika akun berstatus NONAKTIF)
+        - "Nonaktifkan Akun" (jika akun berstatus AKTIF)
+        - "Hapus Akun" (untuk semua akun kecuali SuperAdmin)
+     6. Proteksi ketat: Akun dengan role "superadmin" tidak akan memiliki tombol aksi 
+        apapun dan akan diberi label "Terlindungi" untuk keamanan sistem.
+
+     Fungsi ini dipanggil secara otomatis saat halaman "Kelola Semua Akun" dibuka 
+     dan juga dipanggil ulang setelah setiap perubahan data (aktivasi, nonaktifasi, atau penghapusan). -->
+
 <script>
     // Fungsi untuk merender tabel manajemen semua akun yang terdaftar
     function renderTabelSemuaAkun() {
@@ -1719,7 +1743,7 @@
         // Mendapatkan elemen tabel container
         var containerTabel = document.getElementById('tabelManajemenAkunContainer');
 
-        // Jika container tidak ditemukan, hentikan fungsi
+        // Jika container tabel tidak ditemukan, hentikan fungsi
         if (!containerTabel) {
             return;
         }
@@ -1730,7 +1754,7 @@
                 <div class="kosong-state-manajemen" style="text-align: center; padding: 40px 20px; color: var(--gray-500);">
                     <i class="fas fa-users-slash" style="font-size: 48px; color: var(--gray-300); display: block; margin-bottom: 15px;"></i>
                     <h3 style="font-size: 18px; font-weight: 600; margin-bottom: 5px; color: var(--gray-700);">Belum Ada Akun Terdaftar</h3>
-                    <p style="font-size: 14px;">Silakan daftarkan akun baru melalui menu Daftar Akun Baru.</p>
+                    <p style="font-size: 14px;">Silakan daftarkan akun baru terlebih dahulu melalui menu Daftar Akun Baru.</p>
                 </div>
             `;
             return;
@@ -1760,7 +1784,7 @@
             var statusBadgeHtml = "";
             var aksiTombolHtml = "";
 
-            // Menentukan tampilan badge status berdasarkan status akun
+            // Menentukan tampilan badge status berdasarkan role dan status akun
             if (akun.role === "superadmin") {
                 statusBadgeHtml = `<span style="display: inline-block; padding: 4px 14px; background-color: #FFF3E0; color: #E65100; font-size: 12px; font-weight: 600; border-radius: 20px; border: 1px solid #FFE0B2;"><i class="fas fa-crown"></i> SuperAdmin (Tidak Bisa Diubah)</span>`;
             } else if (akun.status === "AKTIF") {
@@ -1778,7 +1802,7 @@
                     </span>
                 `;
             } else {
-                // Untuk akun selain SuperAdmin, tampilkan tombol berdasarkan status
+                // Untuk akun selain SuperAdmin, siapkan variabel tombol
                 var tombolAktifkan = "";
                 var tombolNonaktifkan = "";
                 var tombolHapus = "";
@@ -1808,7 +1832,7 @@
                     </button>
                 `;
 
-                // Menggabungkan semua tombol aksi
+                // Menggabungkan semua tombol aksi ke dalam satu div
                 aksiTombolHtml = `
                     <div style="display: flex; gap: 8px; flex-wrap: wrap;">
                         ${tombolAktifkan}
@@ -1842,7 +1866,7 @@
         containerTabel.innerHTML = htmlTabel;
     }
 </script>
-<!-- ============ AKHIR BLOK 9 FUNGSI RENDER TABEL SEMUA AKUN ============ -->
+<!-- ============ AKHIR BLOK 9 FUNGSI RENDER TABEL SEMUA AKUN (REVISI SUPERLENGKAP) ============ -->
     <!-- ============ BLOK 10 FUNGSI AKSI MANAJEMEN AKUN ============ -->
 <script>
     // Fungsi untuk mengaktifkan kembali akun dari halaman manajemen
