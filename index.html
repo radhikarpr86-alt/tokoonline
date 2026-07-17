@@ -270,77 +270,373 @@
 </aside>
 <!-- ============ AKHIR BLOK 4 ============ -->
 
-<!-- ============ BLOK 5 CONTENT AREA (DASHBOARD & PROFIL) ============ -->
+    <!-- ============ BLOK 5(1) - 01 CONTENT AREA (DASHBOARD & PROFIL) ============ -->
+<!-- PENJELASAN: 
+     Ini adalah bagian pertama dari revisi BLOK 5. Bagian ini berisi kode HTML untuk 
+     Halaman Dasbor (Dashboard) dan Halaman Profil SuperAdmin. 
+     Halaman Dasbor berisi sambutan dan status awal sistem. 
+     Halaman Profil berisi data lengkap SuperAdmin (Nama, Alamat, Email, dll) 
+     beserta formulir untuk mengunggah dokumen perusahaan dan menyimpan keterangan. 
+     Halaman-halaman ini merupakan komponen utama dari antarmuka SuperAdmin. -->
+
 <main class="content-area expanded hidden" id="contentArea">
+    
     <!-- DASHBOARD -->
     <div class="page" id="pageDashboard">
         <div class="page-header">
-            <div><h2>Dasbor SuperAdmin</h2><p>Selamat datang, <strong id="dashboardNama">SuperAdmin</strong> — Anda memiliki kendali penuh.</p></div>
+            <div>
+                <h2>Dasbor SuperAdmin</h2>
+                <p>Selamat datang, <strong id="dashboardNama">SuperAdmin</strong> — Anda memiliki kendali penuh.</p>
+            </div>
         </div>
-        <div class="card"><div class="card-body text-center" style="padding:60px 20px;">
-            <i class="fas fa-tachometer-alt" style="font-size:56px; color:var(--gray-300); margin-bottom:15px; display:block;"></i>
-            <h3 style="color:var(--gray-600);">Dasbor Siap Digunakan</h3>
-            <p style="color:var(--gray-500);">Tambahkan widget dan fitur di sini sesuai kebutuhan.</p>
-        </div></div>
+        <div class="card">
+            <div class="card-body text-center" style="padding:60px 20px;">
+                <i class="fas fa-tachometer-alt" style="font-size:56px; color:var(--gray-300); margin-bottom:15px; display:block;"></i>
+                <h3 style="color:var(--gray-600);">Dasbor Siap Digunakan</h3>
+                <p style="color:var(--gray-500);">Tambahkan widget dan fitur di sini sesuai kebutuhan.</p>
+            </div>
+        </div>
     </div>
 
     <!-- PROFIL -->
     <div class="page" id="pageProfile">
         <div class="page-header">
-            <div><h2>Profil SuperAdmin</h2><p>Kelola data profil dan dokumen perusahaan <strong>Toko Online 2R</strong></p></div>
+            <div>
+                <h2>Profil SuperAdmin</h2>
+                <p>Kelola data profil dan dokumen perusahaan <strong>Toko Online 2R</strong></p>
+            </div>
         </div>
         
+        <!-- Informasi Profil -->
         <div class="card">
-            <div class="card-header"><h3><i class="fas fa-user-circle" style="color:var(--orange-primary)"></i> Informasi Profil</h3>
+            <div class="card-header">
+                <h3><i class="fas fa-user-circle" style="color:var(--orange-primary)"></i> Informasi Profil</h3>
                 <button class="btn btn-primary btn-sm" onclick="bukaModalEditProfil()"><i class="fas fa-edit"></i> Edit Profil</button>
             </div>
             <div class="card-body">
                 <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:20px;">
-                    <div><p style="font-size:12px; color:var(--gray-500);">Nama Lengkap</p><p style="font-weight:600;" id="profilNama">-</p></div>
-                    <div><p style="font-size:12px; color:var(--gray-500);">Alamat</p><p style="font-weight:600;" id="profilAlamat">-</p></div>
-                    <div><p style="font-size:12px; color:var(--gray-500);">Email</p><p style="font-weight:600;" id="profilEmail">-</p></div>
-                    <div><p style="font-size:12px; color:var(--gray-500);">Nomor HP</p><p style="font-weight:600;" id="profilHp">-</p></div>
-                    <div><p style="font-size:12px; color:var(--gray-500);">Jabatan</p><p style="font-weight:600;" id="profilJabatan">-</p></div>
-                    <div><p style="font-size:12px; color:var(--gray-500);">Perusahaan Penerbit</p><p style="font-weight:600;" id="profilPerusahaan">-</p></div>
+                    <div>
+                        <p style="font-size:12px; color:var(--gray-500);">Nama Lengkap</p>
+                        <p style="font-weight:600;" id="profilNama">-</p>
+                    </div>
+                    <div>
+                        <p style="font-size:12px; color:var(--gray-500);">Alamat</p>
+                        <p style="font-weight:600;" id="profilAlamat">-</p>
+                    </div>
+                    <div>
+                        <p style="font-size:12px; color:var(--gray-500);">Email</p>
+                        <p style="font-weight:600;" id="profilEmail">-</p>
+                    </div>
+                    <div>
+                        <p style="font-size:12px; color:var(--gray-500);">Nomor HP</p>
+                        <p style="font-weight:600;" id="profilHp">-</p>
+                    </div>
+                    <div>
+                        <p style="font-size:12px; color:var(--gray-500);">Jabatan</p>
+                        <p style="font-weight:600;" id="profilJabatan">-</p>
+                    </div>
+                    <div>
+                        <p style="font-size:12px; color:var(--gray-500);">Perusahaan Penerbit</p>
+                        <p style="font-weight:600;" id="profilPerusahaan">-</p>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- DOKUMEN PERUSAHAAN -->
+        <!-- Dokumen Perusahaan -->
         <div class="card">
-            <div class="card-header"><h3><i class="fas fa-folder-open" style="color:var(--orange-primary)"></i> Dokumen Perusahaan</h3>
+            <div class="card-header">
+                <h3><i class="fas fa-folder-open" style="color:var(--orange-primary)"></i> Dokumen Perusahaan</h3>
                 <button class="btn btn-primary btn-sm" id="btnUnggahDokumen"><i class="fas fa-upload"></i> Unggah Dokumen</button>
                 <input type="file" id="inputDokumen" multiple accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png" style="display:none">
             </div>
             <div class="card-body" id="daftarDokumen">
-                <div class="empty-state"><i class="fas fa-cloud-upload-alt"></i><h3>Belum ada dokumen</h3><p>Klik tombol di atas untuk menambahkan.</p></div>
+                <div class="empty-state">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <h3>Belum ada dokumen</h3>
+                    <p>Klik tombol di atas untuk menambahkan.</p>
+                </div>
             </div>
         </div>
 
+        <!-- Keterangan -->
         <div class="card">
-            <div class="card-header"><h3><i class="fas fa-sticky-note" style="color:var(--orange-primary)"></i> Keterangan</h3></div>
+            <div class="card-header">
+                <h3><i class="fas fa-sticky-note" style="color:var(--orange-primary)"></i> Keterangan</h3>
+            </div>
             <div class="card-body">
                 <textarea id="textKeterangan" rows="4" placeholder="Isi keterangan perusahaan..."></textarea>
                 <button class="btn btn-primary mt-10" onclick="simpanKeterangan()"><i class="fas fa-save"></i> Simpan Keterangan</button>
             </div>
         </div>
     </div>
+<!-- ============ AKHIR BLOK 5(1) - 01 CONTENT AREA (DASHBOARD & PROFIL) ============ -->
+    <!-- ============ BLOK 5(2) - 01 CONTENT AREA (DAFTAR AKUN, PERSETUJUAN & KELOLA AKUN) ============ -->
+<!-- PENJELASAN: 
+     Ini adalah bagian kedua dari revisi BLOK 5. Bagian ini berisi kode HTML untuk 
+     Halaman Daftar Akun Baru, Halaman Persetujuan, dan Halaman Kelola Semua Akun.
+     Halaman Daftar Akun Baru berisi formulir lengkap yang terhubung dengan fungsi simpanAkunBaruDariSuperAdmin().
+     Halaman Persetujuan berisi wadah <div id="tabelPersetujuanContainer"> untuk menampilkan tabel verifikasi.
+     Halaman Kelola Semua Akun berisi wadah <div id="tabelManajemenAkunContainer"> untuk menampilkan tabel semua akun.
+     Ketiga halaman ini adalah komponen utama dalam sistem manajemen akun SuperAdmin. -->
 
-    <!-- HALAMAN LAINNYA (PLACEHOLDER) -->
-    <div class="page" id="pageLihatToko"><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-store" style="font-size:48px;color:var(--gray-300);margin-bottom:15px;"></i><h3>Lihat Semua Toko</h3><p>Fitur dalam pengembangan.</p></div></div></div>
-    <div class="page" id="pageLihatOjek"><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-motorcycle" style="font-size:48px;color:var(--gray-300);margin-bottom:15px;"></i><h3>Lihat Semua Ojek</h3><p>Fitur dalam pengembangan.</p></div></div></div>
-    <div class="page" id="pageLihatProduk"><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-box" style="font-size:48px;color:var(--gray-300);margin-bottom:15px;"></i><h3>Lihat Semua Produk</h3><p>Fitur dalam pengembangan.</p></div></div></div>
-    <div class="page" id="pageChat"><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-comments" style="font-size:48px;color:var(--gray-300);margin-bottom:15px;"></i><h3>Chat</h3><p>Fitur dalam pengembangan.</p></div></div></div>
-    <div class="page" id="pageDaftarAkun"><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-user-plus" style="font-size:48px;color:var(--gray-300);margin-bottom:15px;"></i><h3>Daftar Akun Baru</h3><p>Fitur dalam pengembangan.</p></div></div></div>
-    <div class="page" id="pageTransferMenu"><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-exchange-alt" style="font-size:48px;color:var(--gray-300);margin-bottom:15px;"></i><h3>Transfer Menu</h3><p>Fitur dalam pengembangan.</p></div></div></div>
-    <div class="page" id="pageKelolaAkun"><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-users-cog" style="font-size:48px;color:var(--gray-300);margin-bottom:15px;"></i><h3>Kelola Semua Akun</h3><p>Fitur dalam pengembangan.</p></div></div></div>
-    <div class="page" id="pagePenagihan"><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-file-invoice-dollar" style="font-size:48px;color:var(--gray-300);margin-bottom:15px;"></i><h3>Penagihan</h3><p>Fitur dalam pengembangan.</p></div></div></div>
-    <div class="page" id="pageSettingRekening"><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-university" style="font-size:48px;color:var(--gray-300);margin-bottom:15px;"></i><h3>Setting Rekening</h3><p>Fitur dalam pengembangan.</p></div></div></div>
-    <div class="page" id="pageKelolaUpgrade"><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-crown" style="font-size:48px;color:var(--gray-300);margin-bottom:15px;"></i><h3>Kelola Upgrade</h3><p>Fitur dalam pengembangan.</p></div></div></div>
-    <div class="page" id="pageSettingTarifOjek"><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-cogs" style="font-size:48px;color:var(--gray-300);margin-bottom:15px;"></i><h3>Setting Tarif Ojek</h3><p>Fitur dalam pengembangan.</p></div></div></div>
-    <div class="page" id="pageKelolaIklan"><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-ad" style="font-size:48px;color:var(--gray-300);margin-bottom:15px;"></i><h3>Kelola Iklan</h3><p>Fitur dalam pengembangan.</p></div></div></div>
+    <!-- HALAMAN DAFTAR AKUN BARU -->
+    <div class="page" id="pageDaftarAkun">
+        <div class="page-header">
+            <div>
+                <h2>Daftar Akun Baru Oleh SuperAdmin</h2>
+                <p>Halaman ini khusus untuk SuperAdmin dalam membuat akun untuk Staf Admin, Staf Owner, Customer Service, Sponsor, Customer, Toko, dan Ojek.</p>
+            </div>
+        </div>
+
+        <!-- Informasi Penting -->
+        <div class="info-verifikasi" style="background-color: var(--orange-light); border-left: 4px solid var(--orange-primary); padding: 12px 16px; border-radius: var(--radius-sm); font-size: 14px; color: var(--gray-700); margin-bottom: 20px;">
+            <i class="fas fa-info-circle" style="color: var(--orange-primary); margin-right: 8px;"></i>
+            <strong>Penting:</strong> Jika Anda membuat akun dengan Role <strong>Toko</strong> atau <strong>Ojek</strong>, maka akun tersebut akan berstatus <strong>"NONAKTIF (Menunggu Verifikasi)"</strong> dan harus diaktifkan secara manual oleh SuperAdmin melalui menu <strong>"Persetujuan"</strong>.
+        </div>
+
+        <!-- Formulir Pendaftaran Akun -->
+        <div class="form-daftar-akun-container" style="max-width: 700px; margin: 0 auto; background-color: var(--white); padding: 30px; border-radius: var(--radius-md); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); border: 1px solid var(--gray-200);">
+            <form id="formDaftarAkunBaru">
+                <!-- Input Role -->
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label for="daftarRoleBaru" style="display: block; font-weight: 600; font-size: 14px; color: var(--gray-800); margin-bottom: 6px;">Pilih Role Akun <span style="color: var(--error);">*</span></label>
+                    <div class="input-group" style="display: flex; align-items: center; background: var(--gray-100); border-radius: var(--radius-sm); padding: 0 14px; border: 2px solid transparent; transition: 0.3s ease;">
+                        <i class="fas fa-user-tag" style="color: var(--gray-500); font-size: 16px; width: 24px; text-align: center;"></i>
+                        <select id="daftarRoleBaru" required style="border: none; background: transparent; padding: 13px 10px; font-size: 15px; width: 100%; outline: none; font-family: 'Poppins', sans-serif; cursor: pointer;">
+                            <option value="customer">Customer</option>
+                            <option value="toko">Toko (Membutuhkan Verifikasi)</option>
+                            <option value="ojek">Ojek (Membutuhkan Verifikasi)</option>
+                            <option value="staf_admin">Staf Admin</option>
+                            <option value="staf_owner_ojek">Staf Owner Ojek</option>
+                            <option value="staf_owner_toko">Staf Owner Toko</option>
+                            <option value="customer_service">Customer Service</option>
+                            <option value="sponsor">Sponsor</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Input Username -->
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label for="daftarUsernameBaru" style="display: block; font-weight: 600; font-size: 14px; color: var(--gray-800); margin-bottom: 6px;">Username <span style="color: var(--error);">*</span></label>
+                    <div class="input-group" style="display: flex; align-items: center; background: var(--gray-100); border-radius: var(--radius-sm); padding: 0 14px; border: 2px solid transparent; transition: 0.3s ease;">
+                        <i class="fas fa-user" style="color: var(--gray-500); font-size: 16px; width: 24px; text-align: center;"></i>
+                        <input type="text" id="daftarUsernameBaru" placeholder="Masukkan username (minimal 4 karakter)" required style="border: none; background: transparent; padding: 13px 10px; font-size: 15px; width: 100%; outline: none; font-family: 'Poppins', sans-serif;">
+                    </div>
+                </div>
+
+                <!-- Input Password -->
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label for="daftarPasswordBaru" style="display: block; font-weight: 600; font-size: 14px; color: var(--gray-800); margin-bottom: 6px;">Password <span style="color: var(--error);">*</span></label>
+                    <div class="input-group" style="display: flex; align-items: center; background: var(--gray-100); border-radius: var(--radius-sm); padding: 0 14px; border: 2px solid transparent; transition: 0.3s ease;">
+                        <i class="fas fa-lock" style="color: var(--gray-500); font-size: 16px; width: 24px; text-align: center;"></i>
+                        <input type="password" id="daftarPasswordBaru" placeholder="Masukkan password (minimal 6 karakter)" required style="border: none; background: transparent; padding: 13px 10px; font-size: 15px; width: 100%; outline: none; font-family: 'Poppins', sans-serif;">
+                    </div>
+                </div>
+
+                <!-- Input Nama Lengkap -->
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label for="daftarNamaBaru" style="display: block; font-weight: 600; font-size: 14px; color: var(--gray-800); margin-bottom: 6px;">Nama Lengkap <span style="color: var(--error);">*</span></label>
+                    <div class="input-group" style="display: flex; align-items: center; background: var(--gray-100); border-radius: var(--radius-sm); padding: 0 14px; border: 2px solid transparent; transition: 0.3s ease;">
+                        <i class="fas fa-id-card" style="color: var(--gray-500); font-size: 16px; width: 24px; text-align: center;"></i>
+                        <input type="text" id="daftarNamaBaru" placeholder="Masukkan nama lengkap" required style="border: none; background: transparent; padding: 13px 10px; font-size: 15px; width: 100%; outline: none; font-family: 'Poppins', sans-serif;">
+                    </div>
+                </div>
+
+                <!-- Input Email -->
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label for="daftarEmailBaru" style="display: block; font-weight: 600; font-size: 14px; color: var(--gray-800); margin-bottom: 6px;">Email (Opsional)</label>
+                    <div class="input-group" style="display: flex; align-items: center; background: var(--gray-100); border-radius: var(--radius-sm); padding: 0 14px; border: 2px solid transparent; transition: 0.3s ease;">
+                        <i class="fas fa-envelope" style="color: var(--gray-500); font-size: 16px; width: 24px; text-align: center;"></i>
+                        <input type="email" id="daftarEmailBaru" placeholder="Masukkan alamat email" style="border: none; background: transparent; padding: 13px 10px; font-size: 15px; width: 100%; outline: none; font-family: 'Poppins', sans-serif;">
+                    </div>
+                </div>
+
+                <!-- Input Nomor HP -->
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label for="daftarHpBaru" style="display: block; font-weight: 600; font-size: 14px; color: var(--gray-800); margin-bottom: 6px;">Nomor HP (Opsional)</label>
+                    <div class="input-group" style="display: flex; align-items: center; background: var(--gray-100); border-radius: var(--radius-sm); padding: 0 14px; border: 2px solid transparent; transition: 0.3s ease;">
+                        <i class="fas fa-phone" style="color: var(--gray-500); font-size: 16px; width: 24px; text-align: center;"></i>
+                        <input type="tel" id="daftarHpBaru" placeholder="Masukkan nomor HP" style="border: none; background: transparent; padding: 13px 10px; font-size: 15px; width: 100%; outline: none; font-family: 'Poppins', sans-serif;">
+                    </div>
+                </div>
+
+                <!-- Input Alamat -->
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label for="daftarAlamatBaru" style="display: block; font-weight: 600; font-size: 14px; color: var(--gray-800); margin-bottom: 6px;">Alamat (Opsional)</label>
+                    <div class="input-group" style="display: flex; align-items: center; background: var(--gray-100); border-radius: var(--radius-sm); padding: 0 14px; border: 2px solid transparent; transition: 0.3s ease;">
+                        <i class="fas fa-map-marker-alt" style="color: var(--gray-500); font-size: 16px; width: 24px; text-align: center;"></i>
+                        <input type="text" id="daftarAlamatBaru" placeholder="Masukkan alamat lengkap" style="border: none; background: transparent; padding: 13px 10px; font-size: 15px; width: 100%; outline: none; font-family: 'Poppins', sans-serif;">
+                    </div>
+                </div>
+
+                <!-- Tombol Submit -->
+                <div class="form-group" style="margin-top: 10px;">
+                    <button type="submit" class="btn-submit-akun" style="width: 100%; padding: 14px; background: var(--orange-primary); color: var(--white); border: none; border-radius: var(--radius-sm); font-size: 16px; font-weight: 700; cursor: pointer; transition: 0.3s ease; display: flex; justify-content: center; align-items: center; gap: 10px;">
+                        <i class="fas fa-user-plus"></i> Buat Akun Baru
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Tempat tabel persetujuan akan dirender oleh JavaScript -->
+        <div id="tabelPersetujuanContainer" style="margin-top: 30px;">
+            <!-- Ini adalah tampilan awal (Loading) sebelum data diambil oleh JavaScript -->
+            <div class="kosong-state-persetujuan" style="text-align: center; padding: 40px 20px; color: var(--gray-500);">
+                <i class="fas fa-spinner fa-spin" style="font-size: 48px; color: var(--gray-300); display: block; margin-bottom: 15px;"></i>
+                <h3 style="font-size: 18px; font-weight: 600; margin-bottom: 5px; color: var(--gray-700);">Sedang Memuat Data Persetujuan</h3>
+                <p style="font-size: 14px;">Silakan tunggu sebentar...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- HALAMAN PERSETUJUAN -->
+    <div class="page" id="pagePersetujuan">
+        <div class="page-header">
+            <div>
+                <h2>Menu Persetujuan Verifikasi Akun</h2>
+                <p>Halaman ini khusus untuk SuperAdmin dalam melakukan verifikasi, aktivasi, atau penolakan terhadap akun Toko dan Ojek yang baru mendaftar.</p>
+            </div>
+        </div>
+
+        <!-- Tempat tabel persetujuan akan dirender oleh JavaScript -->
+        <div id="tabelPersetujuanContainer">
+            <div class="kosong-state-persetujuan">
+                <i class="fas fa-spinner fa-spin"></i>
+                <h3>Sedang Memuat Data</h3>
+                <p>Silakan tunggu sebentar...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- HALAMAN KELOLA SEMUA AKUN -->
+    <div class="page" id="pageKelolaAkun">
+        <div class="page-header">
+            <div>
+                <h2>Manajemen dan Monitoring Semua Akun</h2>
+                <p>Halaman ini khusus untuk SuperAdmin dalam mengelola, mengaktifkan, menonaktifkan, atau menghapus seluruh akun yang terdaftar di sistem. Akun SuperAdmin dilindungi dan tidak dapat dihapus.</p>
+            </div>
+        </div>
+
+        <!-- Tempat tabel manajemen akan dirender oleh JavaScript dari BLOK 9 -->
+        <div id="tabelManajemenAkunContainer">
+            <!-- Ini adalah tampilan awal (Loading) sebelum data diambil oleh JavaScript -->
+            <div class="kosong-state-manajemen" style="text-align: center; padding: 40px 20px; color: var(--gray-500);">
+                <i class="fas fa-spinner fa-spin" style="font-size: 48px; color: var(--gray-300); display: block; margin-bottom: 15px;"></i>
+                <h3 style="font-size: 18px; font-weight: 600; margin-bottom: 5px; color: var(--gray-700);">Sedang Memuat Data Akun</h3>
+                <p style="font-size: 14px;">Silakan tunggu sebentar...</p>
+            </div>
+        </div>
+    </div>
+<!-- ============ AKHIR BLOK 5(2) - 01 CONTENT AREA (DAFTAR AKUN, PERSETUJUAN & KELOLA AKUN) ============ -->
+<!-- ============ BLOK 5(3) - 01 CONTENT AREA (PLACEHOLDER & PENUTUP) ============ -->
+<!-- PENJELASAN: 
+     Ini adalah bagian ketiga dan terakhir dari revisi BLOK 5. 
+     Bagian ini berisi kode HTML untuk Halaman Placeholder (fitur dalam pengembangan) 
+     dan tag penutup </main> untuk mengakhiri area konten utama.
+     Halaman-halaman ini ditampilkan sebagai placeholder untuk fitur-fitur yang belum dikembangkan. -->
+
+    <!-- HALAMAN LIhat SEMUA TOKO -->
+    <div class="page" id="pageLihatToko">
+        <div class="card">
+            <div class="card-body text-center" style="padding:60px;">
+                <i class="fas fa-store" style="font-size:48px; color:var(--gray-300); margin-bottom:15px;"></i>
+                <h3>Lihat Semua Toko</h3>
+                <p>Fitur dalam pengembangan.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- HALAMAN LIhat SEMUA OJEK -->
+    <div class="page" id="pageLihatOjek">
+        <div class="card">
+            <div class="card-body text-center" style="padding:60px;">
+                <i class="fas fa-motorcycle" style="font-size:48px; color:var(--gray-300); margin-bottom:15px;"></i>
+                <h3>Lihat Semua Ojek</h3>
+                <p>Fitur dalam pengembangan.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- HALAMAN LIhat SEMUA PRODUK -->
+    <div class="page" id="pageLihatProduk">
+        <div class="card">
+            <div class="card-body text-center" style="padding:60px;">
+                <i class="fas fa-box" style="font-size:48px; color:var(--gray-300); margin-bottom:15px;"></i>
+                <h3>Lihat Semua Produk</h3>
+                <p>Fitur dalam pengembangan.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- HALAMAN CHAT -->
+    <div class="page" id="pageChat">
+        <div class="card">
+            <div class="card-body text-center" style="padding:60px;">
+                <i class="fas fa-comments" style="font-size:48px; color:var(--gray-300); margin-bottom:15px;"></i>
+                <h3>Chat</h3>
+                <p>Fitur dalam pengembangan.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- HALAMAN TRANSFER MENU -->
+    <div class="page" id="pageTransferMenu">
+        <div class="card">
+            <div class="card-body text-center" style="padding:60px;">
+                <i class="fas fa-exchange-alt" style="font-size:48px; color:var(--gray-300); margin-bottom:15px;"></i>
+                <h3>Transfer Menu</h3>
+                <p>Fitur dalam pengembangan.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- HALAMAN PENAGIHAN -->
+    <div class="page" id="pagePenagihan">
+        <div class="card">
+            <div class="card-body text-center" style="padding:60px;">
+                <i class="fas fa-file-invoice-dollar" style="font-size:48px; color:var(--gray-300); margin-bottom:15px;"></i>
+                <h3>Penagihan</h3>
+                <p>Fitur dalam pengembangan.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- HALAMAN SETTING REKENING -->
+    <div class="page" id="pageSettingRekening">
+        <div class="card">
+            <div class="card-body text-center" style="padding:60px;">
+                <i class="fas fa-university" style="font-size:48px; color:var(--gray-300); margin-bottom:15px;"></i>
+                <h3>Setting Rekening</h3>
+                <p>Fitur dalam pengembangan.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- HALAMAN KELOLA UPGRADE -->
+    <div class="page" id="pageKelolaUpgrade">
+        <div class="card">
+            <div class="card-body text-center" style="padding:60px;">
+                <i class="fas fa-crown" style="font-size:48px; color:var(--gray-300); margin-bottom:15px;"></i>
+                <h3>Kelola Upgrade</h3>
+                <p>Fitur dalam pengembangan.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- HALAMAN SETTING TARIF OJEK -->
+    <div class="page" id="pageSettingTarifOjek">
+        <div class="card">
+            <div class="card-body text-center" style="padding:60px;">
+                <i class="fas fa-cogs" style="font-size:48px; color:var(--gray-300); margin-bottom:15px;"></i>
+                <h3>Setting Tarif Ojek</h3>
+                <p>Fitur dalam pengembangan.</p>
+            </div>
+        </div>
+    </div>
+
 </main>
-<!-- ============ AKHIR BLOK 5 ============ -->
+<!-- ============ AKHIR BLOK 5(3) - 01 CONTENT AREA (PLACEHOLDER & PENUTUP) ============ -->
 
 <!-- ============ BLOK 6 MODALS ============ -->
 <div class="modal-overlay" id="modalEditProfil">
