@@ -275,9 +275,12 @@
 </div>
 <!-- ============ AKHIR BLOK 3 ============ -->
 
-<!-- ============ BLOK 4 NAVBAR & SIDEBAR ============ -->
+<!-- ============ BLOK 4 R1 NAVBAR & SIDEBAR (REVISI DENGAN MENU PERSETUJUAN) ============ -->
 <nav class="navbar hidden" id="mainNavbar">
-    <div class="navbar-brand"><i class="fas fa-store-alt"></i><span>Toko Online 2R</span></div>
+    <div class="navbar-brand">
+        <i class="fas fa-store-alt"></i>
+        <span>Toko Online 2R</span>
+    </div>
     <div class="navbar-user">
         <div class="navbar-user-avatar" id="navbarAvatar">SA</div>
         <div class="navbar-user-info">
@@ -286,34 +289,75 @@
         </div>
     </div>
     <div class="navbar-actions">
-        <button class="btn-icon" id="btnSidebarToggle"><i class="fas fa-bars"></i></button>
-        <button class="btn-icon" id="btnChatNav"><i class="fas fa-comments"></i></button>
-        <button class="btn-logout" id="btnLogout"><i class="fas fa-sign-out-alt"></i> Keluar</button>
+        <button class="btn-icon" id="btnSidebarToggle">
+            <i class="fas fa-bars"></i>
+        </button>
+        <button class="btn-icon" id="btnChatNav">
+            <i class="fas fa-comments"></i>
+        </button>
+        <button class="btn-logout" id="btnLogout">
+            <i class="fas fa-sign-out-alt"></i> Keluar
+        </button>
     </div>
 </nav>
 
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 <aside class="sidebar hidden closed" id="mainSidebar">
     <div class="sidebar-menu">
+        <!-- Menu Utama -->
         <div class="sidebar-menu-title">Menu Utama</div>
-        <div class="sidebar-menu-item active" data-page="dashboard"><i class="fas fa-th-large"></i> Dasbor</div>
-        <div class="sidebar-menu-item" data-page="profile"><i class="fas fa-user-circle"></i> Profil</div>
-        <div class="sidebar-menu-item" data-page="lihatToko"><i class="fas fa-store"></i> Lihat Semua Toko</div>
-        <div class="sidebar-menu-item" data-page="lihatOjek"><i class="fas fa-motorcycle"></i> Lihat Semua Ojek</div>
-        <div class="sidebar-menu-item" data-page="lihatProduk"><i class="fas fa-box"></i> Lihat Semua Produk</div>
-        <div class="sidebar-menu-item" data-page="chat"><i class="fas fa-comments"></i> Chat</div>
+        <div class="sidebar-menu-item active" data-page="dashboard">
+            <i class="fas fa-th-large"></i> Dasbor
+        </div>
+        <div class="sidebar-menu-item" data-page="profile">
+            <i class="fas fa-user-circle"></i> Profil
+        </div>
+        <div class="sidebar-menu-item" data-page="lihatToko">
+            <i class="fas fa-store"></i> Lihat Semua Toko
+        </div>
+        <div class="sidebar-menu-item" data-page="lihatOjek">
+            <i class="fas fa-motorcycle"></i> Lihat Semua Ojek
+        </div>
+        <div class="sidebar-menu-item" data-page="lihatProduk">
+            <i class="fas fa-box"></i> Lihat Semua Produk
+        </div>
+        <div class="sidebar-menu-item" data-page="chat">
+            <i class="fas fa-comments"></i> Chat
+        </div>
+
+        <!-- Menu Admin -->
         <div class="sidebar-menu-title">Menu Admin</div>
-        <div class="sidebar-menu-item" data-page="daftarAkun"><i class="fas fa-user-plus"></i> Daftar Akun Baru</div>
-        <div class="sidebar-menu-item" data-page="transferMenu"><i class="fas fa-exchange-alt"></i> Transfer Menu</div>
-        <div class="sidebar-menu-item" data-page="kelolaAkun"><i class="fas fa-users-cog"></i> Kelola Semua Akun</div>
-        <div class="sidebar-menu-item" data-page="penagihan"><i class="fas fa-file-invoice-dollar"></i> Penagihan</div>
-        <div class="sidebar-menu-item" data-page="settingRekening"><i class="fas fa-university"></i> Setting Rekening</div>
-        <div class="sidebar-menu-item" data-page="kelolaUpgrade"><i class="fas fa-crown"></i> Kelola Upgrade</div>
-        <div class="sidebar-menu-item" data-page="settingTarifOjek"><i class="fas fa-cogs"></i> Setting Tarif Ojek</div>
-        <div class="sidebar-menu-item" data-page="kelolaIklan"><i class="fas fa-ad"></i> Kelola Iklan</div>
+        <div class="sidebar-menu-item" data-page="daftarAkun">
+            <i class="fas fa-user-plus"></i> Daftar Akun Baru
+        </div>
+        <!-- TAMBAHAN BARU: Menu Persetujuan Akun -->
+        <div class="sidebar-menu-item" data-page="persetujuan">
+            <i class="fas fa-check-double"></i> Persetujuan Akun
+        </div>
+        <div class="sidebar-menu-item" data-page="transferMenu">
+            <i class="fas fa-exchange-alt"></i> Transfer Menu
+        </div>
+        <div class="sidebar-menu-item" data-page="kelolaAkun">
+            <i class="fas fa-users-cog"></i> Kelola Semua Akun
+        </div>
+        <div class="sidebar-menu-item" data-page="penagihan">
+            <i class="fas fa-file-invoice-dollar"></i> Penagihan
+        </div>
+        <div class="sidebar-menu-item" data-page="settingRekening">
+            <i class="fas fa-university"></i> Setting Rekening
+        </div>
+        <div class="sidebar-menu-item" data-page="kelolaUpgrade">
+            <i class="fas fa-crown"></i> Kelola Upgrade
+        </div>
+        <div class="sidebar-menu-item" data-page="settingTarifOjek">
+            <i class="fas fa-cogs"></i> Setting Tarif Ojek
+        </div>
+        <div class="sidebar-menu-item" data-page="kelolaIklan">
+            <i class="fas fa-ad"></i> Kelola Iklan
+        </div>
     </div>
 </aside>
-<!-- ============ AKHIR BLOK 4 ============ -->
+<!-- ============ AKHIR BLOK 4 R1 NAVBAR & SIDEBAR (REVISI DENGAN MENU PERSETUJUAN) ============ -->
 
     <!-- ============ BLOK 5(1) - 01 CONTENT AREA (DASHBOARD & PROFIL) ============ -->
 <!-- PENJELASAN: 
@@ -420,10 +464,12 @@
 <!-- PENJELASAN: 
      Ini adalah bagian kedua dari revisi BLOK 5. Bagian ini berisi kode HTML untuk 
      Halaman Daftar Akun Baru, Halaman Persetujuan, dan Halaman Kelola Semua Akun.
-     Halaman Daftar Akun Baru berisi formulir lengkap yang terhubung dengan fungsi simpanAkunBaruDariSuperAdmin().
-     Halaman Persetujuan berisi wadah <div id="tabelPersetujuanContainer"> untuk menampilkan tabel verifikasi.
-     Halaman Kelola Semua Akun berisi wadah <div id="tabelManajemenAkunContainer"> untuk menampilkan tabel semua akun.
-     Ketiga halaman ini adalah komponen utama dalam sistem manajemen akun SuperAdmin. -->
+     
+     PERBAIKAN PENTING: 
+     Telah dihapus elemen <div id="tabelPersetujuanContainer"> yang berada di bawah 
+     form Daftar Akun Baru, karena elemen tersebut sudah ada di dalam halaman 
+     pagePersetujuan. Hal ini untuk menghilangkan duplikasi ID yang menyebabkan 
+     JavaScript bingung dalam merender tabel. -->
 
     <!-- HALAMAN DAFTAR AKUN BARU -->
     <div class="page" id="pageDaftarAkun">
@@ -522,16 +568,6 @@
                     </button>
                 </div>
             </form>
-        </div>
-
-        <!-- Tempat tabel persetujuan akan dirender oleh JavaScript -->
-        <div id="tabelPersetujuanContainer" style="margin-top: 30px;">
-            <!-- Ini adalah tampilan awal (Loading) sebelum data diambil oleh JavaScript -->
-            <div class="kosong-state-persetujuan" style="text-align: center; padding: 40px 20px; color: var(--gray-500);">
-                <i class="fas fa-spinner fa-spin" style="font-size: 48px; color: var(--gray-300); display: block; margin-bottom: 15px;"></i>
-                <h3 style="font-size: 18px; font-weight: 600; margin-bottom: 5px; color: var(--gray-700);">Sedang Memuat Data Persetujuan</h3>
-                <p style="font-size: 14px;">Silakan tunggu sebentar...</p>
-            </div>
         </div>
     </div>
 
@@ -1500,25 +1536,7 @@
     }
 </script>
 <!-- ============ AKHIR BLOK 10 FUNGSI AKSI MANAJEMEN AKUN ============ -->
-<!-- ============ BLOK 11 FORM DAFTAR AKUN BARU OLEH SUPERADMIN ============ -->
-<!-- PENJELASAN: 
-     Blok ini berisi kode HTML, CSS, dan JavaScript untuk halaman "Daftar Akun Baru" yang hanya dapat diakses oleh SuperAdmin. 
-     Di dalamnya terdapat formulir lengkap untuk membuat akun dengan berbagai peran (Role), yaitu:
-     1. Staf Admin
-     2. Staf Owner Ojek
-     3. Staf Owner Toko
-     4. Customer Service
-     5. Sponsor
-     6. Customer
-     7. Toko
-     8. Ojek
-
-     Logika sistem pada blok ini adalah:
-     - Jika SuperAdmin memilih Role "Customer", maka akun akan langsung dibuat dengan status "AKTIF".
-     - Jika SuperAdmin memilih Role "Toko" atau "Ojek", maka akun akan dibuat dengan status "NONAKTIF (Menunggu Verifikasi)".
-     - Semua data akun baru akan disimpan ke dalam localStorage dengan key "2r_akun" dan akan langsung ditampilkan di menu Persetujuan (BLOK 12).
-
-     Blok ini juga dilengkapi dengan sistem validasi formulir, notifikasi Toast, dan animasi loading saat proses pembuatan akun berlangsung. -->
+<!-- ============ BLOK 11(1) - 01 HTML & CSS DAFTAR AKUN LAMA ============ -->
 <style>
     /* CSS Khusus untuk Halaman Daftar Akun Baru */
     .form-daftar-akun-container {
@@ -1597,22 +1615,6 @@
         cursor: not-allowed;
         transform: none;
     }
-    .status-indikator {
-        display: inline-block;
-        padding: 4px 12px;
-        border-radius: 20px;
-        font-size: 12px;
-        font-weight: 600;
-        margin-top: 5px;
-    }
-    .status-indikator.aktif {
-        background-color: #E8F5E9;
-        color: var(--success);
-    }
-    .status-indikator.nonaktif {
-        background-color: #FFEBEE;
-        color: var(--error);
-    }
     .info-verifikasi {
         background-color: var(--orange-light);
         border-left: 4px solid var(--orange-primary);
@@ -1624,6 +1626,105 @@
     }
 </style>
 
+<!-- HTML untuk Halaman Daftar Akun Baru (ID sudah diubah menjadi _Lama) -->
+<div class="page" id="pageDaftarAkun_Lama">
+    <div class="page-header">
+        <div>
+            <h2>Daftar Akun Baru Oleh SuperAdmin</h2>
+            <p>Halaman ini khusus untuk SuperAdmin dalam membuat akun untuk Staf Admin, Owner, Customer Service, Sponsor, Customer, Toko, dan Ojek.</p>
+        </div>
+    </div>
+
+    <div class="info-verifikasi">
+        <i class="fas fa-info-circle" style="color: var(--orange-primary); margin-right: 8px;"></i>
+        <strong>Penting:</strong> Jika Anda membuat akun dengan Role <strong>Toko</strong> atau <strong>Ojek</strong>, maka akun tersebut akan berstatus <strong>"NONAKTIF (Menunggu Verifikasi)"</strong> dan harus diaktifkan secara manual oleh SuperAdmin melalui menu <strong>"Persetujuan"</strong>.
+    </div>
+
+    <div class="form-daftar-akun-container">
+        <form id="formDaftarAkunBaru">
+            <!-- Input Role -->
+            <div class="form-group">
+                <label for="daftarRoleBaru">Pilih Role Akun <span style="color: var(--error);">*</span></label>
+                <div class="input-group">
+                    <i class="fas fa-user-tag"></i>
+                    <select id="daftarRoleBaru" required>
+                        <option value="customer">Customer</option>
+                        <option value="toko">Toko (Membutuhkan Verifikasi)</option>
+                        <option value="ojek">Ojek (Membutuhkan Verifikasi)</option>
+                        <option value="staf_admin">Staf Admin</option>
+                        <option value="staf_owner_ojek">Staf Owner Ojek</option>
+                        <option value="staf_owner_toko">Staf Owner Toko</option>
+                        <option value="customer_service">Customer Service</option>
+                        <option value="sponsor">Sponsor</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Input Username -->
+            <div class="form-group">
+                <label for="daftarUsernameBaru">Username <span style="color: var(--error);">*</span></label>
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="daftarUsernameBaru" placeholder="Masukkan username (minimal 4 karakter)" required>
+                </div>
+            </div>
+
+            <!-- Input Password -->
+            <div class="form-group">
+                <label for="daftarPasswordBaru">Password <span style="color: var(--error);">*</span></label>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="daftarPasswordBaru" placeholder="Masukkan password (minimal 6 karakter)" required>
+                </div>
+            </div>
+
+            <!-- Input Nama Lengkap -->
+            <div class="form-group">
+                <label for="daftarNamaBaru">Nama Lengkap <span style="color: var(--error);">*</span></label>
+                <div class="input-group">
+                    <i class="fas fa-id-card"></i>
+                    <input type="text" id="daftarNamaBaru" placeholder="Masukkan nama lengkap" required>
+                </div>
+            </div>
+
+            <!-- Input Email -->
+            <div class="form-group">
+                <label for="daftarEmailBaru">Email (Opsional)</label>
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="daftarEmailBaru" placeholder="Masukkan alamat email">
+                </div>
+            </div>
+
+            <!-- Input Nomor HP -->
+            <div class="form-group">
+                <label for="daftarHpBaru">Nomor HP (Opsional)</label>
+                <div class="input-group">
+                    <i class="fas fa-phone"></i>
+                    <input type="tel" id="daftarHpBaru" placeholder="Masukkan nomor HP">
+                </div>
+            </div>
+
+            <!-- Input Alamat -->
+            <div class="form-group">
+                <label for="daftarAlamatBaru">Alamat (Opsional)</label>
+                <div class="input-group">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <input type="text" id="daftarAlamatBaru" placeholder="Masukkan alamat lengkap">
+                </div>
+            </div>
+
+            <!-- Tombol Submit -->
+            <div class="form-group" style="margin-top: 10px;">
+                <button type="submit" class="btn-submit-akun">
+                    <i class="fas fa-user-plus"></i> Buat Akun Baru
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- ============ AKHIR BLOK 11(1) - 01 HTML & CSS DAFTAR AKUN LAMA ============ -->
+<!-- ============ BLOK 11(2) - 01 JAVASCRIPT FUNGSI SIMPAN AKUN ============ -->
 <script>
     // Fungsi untuk menyimpan data akun baru dari form SuperAdmin
     function simpanAkunBaruDariSuperAdmin(event) {
@@ -1791,137 +1892,24 @@
             renderTabelSemuaAkun();
         }
     }
-
+</script>
+<!-- ============ AKHIR BLOK 11(2) - 01 JAVASCRIPT FUNGSI SIMPAN AKUN ============ -->
+<!-- ============ BLOK 11(3) - 01 JAVASCRIPT EVENT LISTENER & PENUTUP ============ -->
+<script>
     // Event listener saat halaman dimuat
     document.addEventListener('DOMContentLoaded', function() {
+        // Mendapatkan elemen form pendaftaran akun
         var formDaftarAkun = document.getElementById('formDaftarAkunBaru');
+        
+        // Jika form ditemukan, tambahkan event listener untuk submit
         if (formDaftarAkun) {
             formDaftarAkun.addEventListener('submit', simpanAkunBaruDariSuperAdmin);
         }
     });
 </script>
+<!-- ============ AKHIR BLOK 11(3) - 01 JAVASCRIPT EVENT LISTENER & PENUTUP ============ -->
 
-<!-- HTML untuk Halaman Daftar Akun Baru -->
-<div class="page" id="pageDaftarAkun">
-    <div class="page-header">
-        <div>
-            <h2>Daftar Akun Baru Oleh SuperAdmin</h2>
-            <p>Halaman ini khusus untuk SuperAdmin dalam membuat akun untuk Staf Admin, Owner, Customer Service, Sponsor, Customer, Toko, dan Ojek.</p>
-        </div>
-    </div>
-
-    <div class="info-verifikasi">
-        <i class="fas fa-info-circle" style="color: var(--orange-primary); margin-right: 8px;"></i>
-        <strong>Penting:</strong> Jika Anda membuat akun dengan Role <strong>Toko</strong> atau <strong>Ojek</strong>, maka akun tersebut akan berstatus <strong>"NONAKTIF (Menunggu Verifikasi)"</strong> dan harus diaktifkan secara manual oleh SuperAdmin melalui menu <strong>"Persetujuan"</strong>.
-    </div>
-
-    <div class="form-daftar-akun-container">
-        <form id="formDaftarAkunBaru">
-            <!-- Input Role -->
-            <div class="form-group">
-                <label for="daftarRoleBaru">Pilih Role Akun <span style="color: var(--error);">*</span></label>
-                <div class="input-group">
-                    <i class="fas fa-user-tag"></i>
-                    <select id="daftarRoleBaru" required>
-                        <option value="customer">Customer</option>
-                        <option value="toko">Toko (Membutuhkan Verifikasi)</option>
-                        <option value="ojek">Ojek (Membutuhkan Verifikasi)</option>
-                        <option value="staf_admin">Staf Admin</option>
-                        <option value="staf_owner_ojek">Staf Owner Ojek</option>
-                        <option value="staf_owner_toko">Staf Owner Toko</option>
-                        <option value="customer_service">Customer Service</option>
-                        <option value="sponsor">Sponsor</option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- Input Username -->
-            <div class="form-group">
-                <label for="daftarUsernameBaru">Username <span style="color: var(--error);">*</span></label>
-                <div class="input-group">
-                    <i class="fas fa-user"></i>
-                    <input type="text" id="daftarUsernameBaru" placeholder="Masukkan username (minimal 4 karakter)" required>
-                </div>
-            </div>
-
-            <!-- Input Password -->
-            <div class="form-group">
-                <label for="daftarPasswordBaru">Password <span style="color: var(--error);">*</span></label>
-                <div class="input-group">
-                    <i class="fas fa-lock"></i>
-                    <input type="password" id="daftarPasswordBaru" placeholder="Masukkan password (minimal 6 karakter)" required>
-                </div>
-            </div>
-
-            <!-- Input Nama Lengkap -->
-            <div class="form-group">
-                <label for="daftarNamaBaru">Nama Lengkap <span style="color: var(--error);">*</span></label>
-                <div class="input-group">
-                    <i class="fas fa-id-card"></i>
-                    <input type="text" id="daftarNamaBaru" placeholder="Masukkan nama lengkap" required>
-                </div>
-            </div>
-
-            <!-- Input Email -->
-            <div class="form-group">
-                <label for="daftarEmailBaru">Email (Opsional)</label>
-                <div class="input-group">
-                    <i class="fas fa-envelope"></i>
-                    <input type="email" id="daftarEmailBaru" placeholder="Masukkan alamat email">
-                </div>
-            </div>
-
-            <!-- Input Nomor HP -->
-            <div class="form-group">
-                <label for="daftarHpBaru">Nomor HP (Opsional)</label>
-                <div class="input-group">
-                    <i class="fas fa-phone"></i>
-                    <input type="tel" id="daftarHpBaru" placeholder="Masukkan nomor HP">
-                </div>
-            </div>
-
-            <!-- Input Alamat -->
-            <div class="form-group">
-                <label for="daftarAlamatBaru">Alamat (Opsional)</label>
-                <div class="input-group">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <input type="text" id="daftarAlamatBaru" placeholder="Masukkan alamat lengkap">
-                </div>
-            </div>
-
-            <!-- Tombol Submit -->
-            <div class="form-group" style="margin-top: 10px;">
-                <button type="submit" class="btn-submit-akun">
-                    <i class="fas fa-user-plus"></i> Buat Akun Baru
-                </button>
-            </div>
-        </form>
-    </div>
-</div>
-<!-- ============ AKHIR BLOK 11 FORM DAFTAR AKUN BARU OLEH SUPERADMIN ============ -->
-    <!-- ============ BLOK 12 MENU PERSETUJUAN VERIFIKASI AKUN ============ -->
-<!-- PENJELASAN: 
-     Blok ini berisi kode HTML, CSS, dan JavaScript yang berfungsi sebagai halaman "Menu Persetujuan" 
-     untuk SuperAdmin dalam melakukan verifikasi dan aktivasi akun.
-
-     Halaman ini secara otomatis akan menampilkan daftar akun yang memiliki status 
-     "NONAKTIF (Menunggu Verifikasi)" dalam bentuk tabel interaktif. 
-     Akun yang masuk ke dalam daftar ini hanyalah akun dengan Role "Toko" dan "Ojek" 
-     karena kedua role ini membutuhkan persetujuan dari SuperAdmin sebelum dapat digunakan.
-
-     Fitur-fitur lengkap yang terdapat di dalam blok ini adalah:
-     1. Menampilkan ID Akun, Nama Lengkap, Role, Alamat Email, serta Titik Koordinat 
-        (Latitude dan Longitude) saat akun tersebut melakukan registrasi.
-     2. Menampilkan tombol aksi "Aktifkan Akun" yang berfungsi untuk mengubah status akun 
-        dari "NONAKTIF" menjadi "AKTIF" secara instan.
-     3. Menampilkan tombol aksi "Tolak dan Hapus Akun" yang berfungsi untuk menghapus 
-        permanen data akun dari sistem jika tidak memenuhi syarat verifikasi.
-     4. Sistem keamanan untuk memastikan bahwa akun SuperAdmin tidak akan pernah muncul 
-        di dalam tabel persetujuan ini.
-
-     Seluruh proses pengambilan data, pembaruan status, dan penghapusan data 
-     dilakukan secara langsung melalui localStorage dengan key "2r_akun", 
-     sehingga data selalu real-time dan terintegrasi dengan BLOK 11 (Pendaftaran). -->
+    <!-- ============ BLOK 12(1) - 01 HTML & CSS MENU PERSETUJUAN ============ -->
 <style>
     /* CSS Khusus untuk Halaman Menu Persetujuan Verifikasi Akun */
     .tabel-persetujuan-container {
@@ -2063,6 +2051,26 @@
     }
 </style>
 
+<!-- HTML untuk Halaman Menu Persetujuan Verifikasi Akun -->
+<div class="page" id="pagePersetujuan">
+    <div class="page-header">
+        <div>
+            <h2>Menu Persetujuan Verifikasi Akun</h2>
+            <p>Halaman ini khusus untuk SuperAdmin dalam melakukan verifikasi, aktivasi, atau penolakan terhadap akun Toko dan Ojek yang baru mendaftar.</p>
+        </div>
+    </div>
+
+    <!-- Tempat tabel persetujuan akan dirender oleh JavaScript -->
+    <div id="tabelPersetujuanContainer">
+        <div class="kosong-state-persetujuan">
+            <i class="fas fa-spinner fa-spin"></i>
+            <h3>Sedang Memuat Data</h3>
+            <p>Silakan tunggu sebentar...</p>
+        </div>
+    </div>
+</div>
+<!-- ============ AKHIR BLOK 12(1) - 01 HTML & CSS MENU PERSETUJUAN ============ -->
+<!-- ============ BLOK 12(2) - 01 JAVASCRIPT FUNGSI RENDER TABEL PERSETUJUAN ============ -->
 <script>
     // Fungsi untuk merender tabel persetujuan akun yang berstatus NONAKTIF
     function renderTabelPersetujuan() {
@@ -2159,7 +2167,10 @@
         // Memasukkan HTML tabel ke dalam container
         containerTabel.innerHTML = htmlTabel;
     }
-
+</script>
+<!-- ============ AKHIR BLOK 12(2) - 01 JAVASCRIPT FUNGSI RENDER TABEL PERSETUJUAN ============ -->
+<!-- ============ BLOK 12(3) - 01 JAVASCRIPT FUNGSI AKSI & EVENT LISTENER ============ -->
+<script>
     // Fungsi untuk mengaktifkan akun dari menu persetujuan
     function aktifkanAkunDariPersetujuan(idAkun) {
         // Mengambil data akun dari localStorage
@@ -2246,63 +2257,15 @@
 
     // Event listener saat halaman dimuat
     document.addEventListener('DOMContentLoaded', function() {
-        // Mengecek apakah kita berada di halaman daftar akun
+        // Mengecek apakah kita berada di halaman persetujuan
         var containerTabel = document.getElementById('tabelPersetujuanContainer');
         if (containerTabel) {
             renderTabelPersetujuan();
         }
     });
 </script>
-
-<!-- HTML untuk Halaman Menu Persetujuan Verifikasi Akun -->
-<div class="page" id="pagePersetujuan">
-    <div class="page-header">
-        <div>
-            <h2>Menu Persetujuan Verifikasi Akun</h2>
-            <p>Halaman ini khusus untuk SuperAdmin dalam melakukan verifikasi, aktivasi, atau penolakan terhadap akun Toko dan Ojek yang baru mendaftar.</p>
-        </div>
-    </div>
-
-    <!-- Tempat tabel persetujuan akan dirender oleh JavaScript -->
-    <div id="tabelPersetujuanContainer">
-        <div class="kosong-state-persetujuan">
-            <i class="fas fa-spinner fa-spin"></i>
-            <h3>Sedang Memuat Data</h3>
-            <p>Silakan tunggu sebentar...</p>
-        </div>
-    </div>
-</div>
-<!-- ============ AKHIR BLOK 12 MENU PERSETUJUAN VERIFIKASI AKUN ============ -->
-    <!-- ============ BLOK 13 MANAJEMEN DAN MONITORING SEMUA AKUN ============ -->
-<!-- PENJELASAN: 
-     Blok ini berisi kode HTML, CSS, dan JavaScript yang berfungsi sebagai halaman "Manajemen Semua Akun" 
-     untuk SuperAdmin dalam melakukan pengawasan, pengelolaan, dan pengaturan status terhadap 
-     seluruh akun yang pernah terdaftar di dalam sistem Toko Online 2R.
-
-     Halaman ini akan menampilkan daftar lengkap semua akun dari berbagai Role, 
-     mulai dari Customer, Toko, Ojek, Staf Admin, Staf Owner, Customer Service, Sponsor, hingga SuperAdmin 
-     dalam bentuk tabel interaktif yang terstruktur.
-
-     Fitur-fitur lengkap yang terdapat di dalam blok ini adalah:
-     1. Menampilkan data lengkap seluruh akun yang meliputi:
-        - Nomor Urut
-        - ID Akun
-        - Nama Lengkap
-        - Role (Peran)
-        - Status Akun saat ini (AKTIF / NONAKTIF)
-     2. Menyediakan Tombol Aksi untuk setiap baris akun, yaitu:
-        a. Tombol "Aktifkan Kembali" (Hanya muncul jika akun berstatus NONAKTIF).
-        b. Tombol "Nonaktifkan Akun" (Hanya muncul jika akun berstatus AKTIF).
-        c. Tombol "Hapus Akun" (Untuk menghapus permanen akun dari sistem).
-     3. Sistem keamanan proteksi yang ketat dengan aturan:
-        - Akun dengan Role "superadmin" TIDAK AKAN PERNAH memiliki tombol aksi apapun 
-          (tidak bisa dinonaktifkan dan tidak bisa dihapus).
-        - Sistem akan memunculkan peringatan konfirmasi ganda sebelum melakukan 
-          penghapusan akun untuk mencegah kesalahan.
-     4. Integrasi data secara real-time dengan localStorage key "2r_akun", 
-        sehingga setiap perubahan status di halaman ini akan terlihat langsung 
-        di menu Persetujuan (BLOK 12) dan sebaliknya. -->
-
+<!-- ============ AKHIR BLOK 12(3) - 01 JAVASCRIPT FUNGSI AKSI & EVENT LISTENER ============ -->
+    <!-- ============ BLOK 13(1) - 01 HTML & CSS MANAJEMEN AKUN LAMA ============ -->
 <style>
     /* CSS Khusus untuk Halaman Manajemen Semua Akun */
     .tabel-manajemen-akun-container {
@@ -2477,6 +2440,26 @@
     }
 </style>
 
+<!-- HTML untuk Halaman Manajemen Semua Akun (ID sudah diubah menjadi _Lama) -->
+<div class="page" id="pageKelolaAkun_Lama">
+    <div class="page-header">
+        <div>
+            <h2>Manajemen dan Monitoring Semua Akun</h2>
+            <p>Halaman ini khusus untuk SuperAdmin dalam mengelola, mengaktifkan, menonaktifkan, atau menghapus seluruh akun yang terdaftar di sistem. Akun SuperAdmin dilindungi dan tidak dapat dihapus.</p>
+        </div>
+    </div>
+
+    <!-- Tempat tabel manajemen akan dirender oleh JavaScript -->
+    <div id="tabelManajemenAkunContainer">
+        <div class="kosong-state-manajemen">
+            <i class="fas fa-spinner fa-spin"></i>
+            <h3>Sedang Memuat Data</h3>
+            <p>Silakan tunggu sebentar...</p>
+        </div>
+    </div>
+</div>
+<!-- ============ AKHIR BLOK 13(1) - 01 HTML & CSS MANAJEMEN AKUN LAMA ============ -->
+<!-- ============ BLOK 13(2) - 01 JAVASCRIPT FUNGSI RENDER TABEL SEMUA AKUN ============ -->
 <script>
     // Fungsi untuk merender tabel manajemen semua akun yang terdaftar
     function renderTabelSemuaAkun() {
@@ -2486,6 +2469,11 @@
 
         // Mendapatkan elemen tabel container
         var containerTabel = document.getElementById('tabelManajemenAkunContainer');
+
+        // Jika container tidak ditemukan, hentikan fungsi
+        if (!containerTabel) {
+            return;
+        }
 
         // Jika tidak ada akun yang terdaftar sama sekali
         if (daftarAkun.length === 0) {
@@ -2604,7 +2592,10 @@
         // Memasukkan HTML tabel ke dalam container
         containerTabel.innerHTML = htmlTabel;
     }
-
+</script>
+<!-- ============ AKHIR BLOK 13(2) - 01 JAVASCRIPT FUNGSI RENDER TABEL SEMUA AKUN ============ -->
+<!-- ============ BLOK 13(3) - 01 JAVASCRIPT FUNGSI AKSI & EVENT LISTENER ============ -->
+<script>
     // Fungsi untuk mengaktifkan kembali akun dari halaman manajemen
     function aktifkanAkunDariManajemen(idAkun) {
         // Mengambil data akun dari localStorage
@@ -2743,26 +2734,7 @@
         }
     });
 </script>
-
-<!-- HTML untuk Halaman Manajemen Semua Akun -->
-<div class="page" id="pageKelolaAkun">
-    <div class="page-header">
-        <div>
-            <h2>Manajemen dan Monitoring Semua Akun</h2>
-            <p>Halaman ini khusus untuk SuperAdmin dalam mengelola, mengaktifkan, menonaktifkan, atau menghapus seluruh akun yang terdaftar di sistem. Akun SuperAdmin dilindungi dan tidak dapat dihapus.</p>
-        </div>
-    </div>
-
-    <!-- Tempat tabel manajemen akan dirender oleh JavaScript -->
-    <div id="tabelManajemenAkunContainer">
-        <div class="kosong-state-manajemen">
-            <i class="fas fa-spinner fa-spin"></i>
-            <h3>Sedang Memuat Data</h3>
-            <p>Silakan tunggu sebentar...</p>
-        </div>
-    </div>
-</div>
-<!-- ============ AKHIR BLOK 13 MANAJEMEN DAN MONITORING SEMUA AKUN ============ -->
+<!-- ============ AKHIR BLOK 13(3) - 01 JAVASCRIPT FUNGSI AKSI & EVENT LISTENER ============ -->
    <!-- ============ BLOK 14 DASHBOARD STAF OWNER OJEK DAN STAF OWNER TOKO ============ -->
 <style>
     /* CSS Khusus untuk Halaman Dashboard Staf Owner */
