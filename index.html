@@ -99,7 +99,8 @@
         .sidebar-menu-title { font-size:12px; text-transform:uppercase; color:var(--gray-400); font-weight:700; padding:10px 20px; letter-spacing:1px; margin-top:0; }
         .sidebar-menu-item { display:flex; align-items:center; gap:12px; padding:12px 20px; cursor:pointer; transition:var(--transition-fast); color:var(--gray-700); font-size:14px; font-weight:500; position:relative; }
         .sidebar-menu-item:hover { background:var(--orange-pale); color:var(--orange-primary); }
-        .sidebar-menu-item.active { background:var(--orange-pale); color:var(--orange-primary); border-right:3px solid var(--orange-primary); }
+        /* REVISI DI SINI: Menghapus border-right agar tidak ada garis tebal penghalang */
+        .sidebar-menu-item.active { background:var(--orange-pale); color:var(--orange-primary); }
         .sidebar-menu-item i { width:20px; text-align:center; font-size:16px; }
         .sidebar-overlay { position:fixed; top:64px; left:0; right:0; bottom:0; background:rgba(0,0,0,0.3); z-index:998; display:none; }
         .sidebar-overlay.active { display:block; }
@@ -178,11 +179,11 @@
         .empty-state p { font-size:14px; }
     </style>
 </head>
-<body>
+<!-- ============ AKHIR BLOK 1 R1 HEAD & CSS ============ -->
 <!-- ============ BLOK 2 PRELOADER & TOAST ============ -->
 <div id="preloader"><div class="loader"></div></div>
 <div class="toast-container" id="toastContainer"></div>
-
+<!-- ============ AKHIR BLOK 2 PRELOADER & TOAST ============ -->
 <!-- ============ BLOK 3 AUTH CONTAINER ============ -->
 <div class="auth-container" id="pageAuth">
     <div class="auth-box">
@@ -245,7 +246,7 @@
         </form>
     </div>
 </div>
-
+<!-- ============ AKHIR BLOK 3 AUTH CONTAINER ============ -->
 <!-- ============ BLOK 4 NAVBAR ============ -->
 <nav class="navbar hidden" id="mainNavbar">
     <div class="navbar-brand"><i class="fas fa-store-alt"></i><span>Toko Online 2R</span></div>
@@ -262,7 +263,7 @@
         <button class="btn-logout" id="btnLogout"><i class="fas fa-sign-out-alt"></i> Keluar</button>
     </div>
 </nav>
-
+<!-- ============ AKHIR BLOK 4 NAVBAR ============ -->
 <!-- ============ BLOK 5 SIDEBAR ============ -->
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 <aside class="sidebar hidden closed" id="mainSidebar">
@@ -285,7 +286,7 @@
         <div class="sidebar-menu-item menu-admin" data-page="kelolaIklan"><i class="fas fa-ad"></i> Kelola Iklan</div>
     </div>
 </aside>
-
+<!-- ============ AKHIR BLOK 5 SIDEBAR ============ -->
 <!-- ============ BLOK 6 CONTENT AREA ============ -->
 <main class="content-area expanded hidden" id="contentArea">
     <!-- Dasbor -->
@@ -378,8 +379,8 @@
             </div>
         </div>
     </div>
-
-    <!-- BLOK 7 Placeholder halaman lainnya -->
+<!-- ============ AKHIR BLOK 6 CONTENT AREA ============ -->
+<!-- BLOK 7 Placeholder halaman lainnya -->
     <div class="page" id="pageLihatToko"><div class="page-header"><div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Lihat Semua Toko</span></div><h2>Daftar Toko</h2><p>Halaman untuk menampilkan semua toko yang terdaftar.</p></div><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-store" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div></div>
     <div class="page" id="pageLihatOjek"><div class="page-header"><div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Lihat Semua Ojek</span></div><h2>Daftar Ojek</h2><p>Halaman untuk menampilkan semua ojek yang terdaftar.</p></div><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-motorcycle" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div></div>
     <div class="page" id="pageLihatProduk"><div class="page-header"><div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Lihat Semua Produk</span></div><h2>Daftar Produk</h2><p>Halaman untuk menampilkan semua produk yang tersedia.</p></div><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-box" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div></div>
@@ -393,7 +394,7 @@
     <div class="page" id="pageSettingTarifOjek"><div class="page-header"><div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Setting Tarif Ojek</span></div><h2>Pengaturan Tarif Ojek</h2><p>Atur tarif per kilometer atau per zona.</p></div><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-cogs" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div></div>
     <div class="page" id="pageKelolaIklan"><div class="page-header"><div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Kelola Iklan</span></div><h2>Kelola Iklan</h2><p>Atur tampilan iklan di platform.</p></div><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-ad" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div></div>
 </main>
-
+<!-- AKHIR BLOK 7 Placeholder halaman lainnya -->
 <!-- ============ BLOK 8 MODALS ============ -->
 <div class="modal-overlay" id="modalKonfirmasi">
     <div class="modal"><div class="modal-header"><h3 id="modalKonfirmasiTitle">Konfirmasi</h3><button class="modal-close" onclick="tutupModal('modalKonfirmasi')"><i class="fas fa-times"></i></button></div>
@@ -410,7 +411,7 @@
     <div class="modal-body" id="modalFormBody"></div>
     <div class="modal-footer"><button class="btn btn-secondary" onclick="tutupModal('modalForm')">Batal</button><button class="btn btn-primary" id="modalFormSubmit">Simpan</button></div></div>
 </div>
-
+<!-- ============ AKHIR BLOK 8 MODALS ============ -->
 <!-- ============ BLOK 9 SCRIPTS (REVISI AUTO-CLOSE SIDEBAR) ============ -->
 <script>
     // Data akun & enkripsi
@@ -548,7 +549,7 @@
         updateIdPreview();
     });
 </script>
-<!-- ============ AKHIR BLOK 9 SCRIPTS ============ -->
+<!-- ============ BLOK 9 SCRIPTS (REVISI AUTO-CLOSE SIDEBAR) ============ -->
 <!-- ============ BLOK 10 PROFIL SCRIPTS ============ -->
 <script>
     const PROFILE_KEY='2r_superadmin_profile', DOCUMENTS_KEY='2r_superadmin_documents';
@@ -636,5 +637,6 @@
         if(orig){ window.navigasiHalaman=function(page){ orig(page); if(page==='profile'&&typeof loadProfil==='function') loadProfil(); }; }
     })();
 </script>
+<!-- ============ AKHIR BLOK 10 PROFIL SCRIPTS ============ -->
 </body>
 </html>
