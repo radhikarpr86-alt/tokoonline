@@ -826,38 +826,133 @@
 </main>
 <!-- ============ AKHIR BLOK 5(3) - 01 CONTENT AREA (PLACEHOLDER & PENUTUP) ============ -->
 
-<!-- ============ BLOK 6 MODALS ============ -->
+<!-- ============ BLOK 6 MODALS (REVISI DAN PENULISAN ULANG) ============ -->
+<!-- PENJELASAN: 
+     Blok ini berisi kode HTML untuk semua Modal (pop-up window) yang digunakan 
+     di dalam aplikasi. Terdapat tiga modal utama yang telah diperbaiki strukturnya 
+     agar lebih stabil dan responsif:
+     
+     1. Modal Edit Profil: 
+        - Berfungsi untuk mengubah data profil SuperAdmin (Nama, Alamat, Email, HP, Jabatan, Perusahaan).
+        - Dilengkapi dengan tombol Batal dan Simpan yang terhubung ke fungsi JavaScript simpanProfil().
+     
+     2. Modal Edit Dokumen: 
+        - Berfungsi untuk mengubah nama file dan keterangan dari dokumen yang sudah diunggah.
+        - Terdapat input tersembunyi (hidden) untuk menyimpan ID dokumen yang sedang diedit.
+        - Tombol Simpan terhubung ke fungsi JavaScript simpanEditDokumen().
+     
+     3. Modal Preview Gambar:
+        - Berfungsi untuk menampilkan gambar dokumen dalam ukuran besar (full preview).
+        - Judul modal akan berubah secara dinamis sesuai dengan nama file yang diklik.
+        - Gambar akan ditampilkan dengan latar belakang gelap agar lebih fokus.
+
+     Perbaikan utama pada blok ini adalah memastikan tidak ada duplikasi ID, 
+     struktur class yang sesuai dengan CSS di BLOK 1(3), dan memastikan 
+     semua tombol aksi terhubung dengan benar ke fungsi JavaScript yang ada di BLOK 8. -->
+
+<!-- Modal Edit Profil SuperAdmin -->
 <div class="modal-overlay" id="modalEditProfil">
-    <div class="modal"><div class="modal-header"><h3>Edit Profil</h3><button class="modal-close" onclick="tutupModal('modalEditProfil')"><i class="fas fa-times"></i></button></div>
-        <div class="modal-body">
-            <div class="form-group"><label>Nama Lengkap</label><input type="text" id="editNama"></div>
-            <div class="form-group"><label>Alamat</label><input type="text" id="editAlamat"></div>
-            <div class="form-group"><label>Email</label><input type="email" id="editEmail"></div>
-            <div class="form-group"><label>Nomor HP</label><input type="tel" id="editHp"></div>
-            <div class="form-group"><label>Jabatan</label><input type="text" id="editJabatan"></div>
-            <div class="form-group"><label>Perusahaan Penerbit</label><input type="text" id="editPerusahaan"></div>
+    <div class="modal">
+        <!-- Header Modal Edit Profil -->
+        <div class="modal-header">
+            <h3><i class="fas fa-user-edit" style="color: var(--orange-primary);"></i> Edit Profil</h3>
+            <button class="modal-close" onclick="tutupModal('modalEditProfil')">
+                <i class="fas fa-times"></i>
+            </button>
         </div>
-        <div class="modal-footer"><button class="btn btn-secondary" onclick="tutupModal('modalEditProfil')">Batal</button><button class="btn btn-primary" onclick="simpanProfil()">Simpan</button></div>
+        
+        <!-- Body Modal Edit Profil -->
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="editNama">Nama Lengkap</label>
+                <input type="text" id="editNama" placeholder="Masukkan nama lengkap">
+            </div>
+            <div class="form-group">
+                <label for="editAlamat">Alamat</label>
+                <input type="text" id="editAlamat" placeholder="Masukkan alamat">
+            </div>
+            <div class="form-group">
+                <label for="editEmail">Email</label>
+                <input type="email" id="editEmail" placeholder="Masukkan alamat email">
+            </div>
+            <div class="form-group">
+                <label for="editHp">Nomor HP</label>
+                <input type="tel" id="editHp" placeholder="Masukkan nomor HP">
+            </div>
+            <div class="form-group">
+                <label for="editJabatan">Jabatan</label>
+                <input type="text" id="editJabatan" placeholder="Masukkan jabatan">
+            </div>
+            <div class="form-group">
+                <label for="editPerusahaan">Perusahaan Penerbit</label>
+                <input type="text" id="editPerusahaan" placeholder="Masukkan nama perusahaan">
+            </div>
+        </div>
+        
+        <!-- Footer Modal Edit Profil -->
+        <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="tutupModal('modalEditProfil')">Batal</button>
+            <button class="btn btn-primary" onclick="simpanProfil()">
+                <i class="fas fa-save"></i> Simpan
+            </button>
+        </div>
     </div>
 </div>
 
+<!-- Modal Edit Dokumen -->
 <div class="modal-overlay" id="modalEditDokumen">
-    <div class="modal"><div class="modal-header"><h3>Edit Dokumen</h3><button class="modal-close" onclick="tutupModal('modalEditDokumen')"><i class="fas fa-times"></i></button></div>
-        <div class="modal-body">
-            <input type="hidden" id="editDocId">
-            <div class="form-group"><label>Nama File</label><input type="text" id="editDocName"></div>
-            <div class="form-group"><label>Keterangan</label><input type="text" id="editDocKeterangan"></div>
+    <div class="modal">
+        <!-- Header Modal Edit Dokumen -->
+        <div class="modal-header">
+            <h3><i class="fas fa-file-edit" style="color: var(--orange-primary);"></i> Edit Dokumen</h3>
+            <button class="modal-close" onclick="tutupModal('modalEditDokumen')">
+                <i class="fas fa-times"></i>
+            </button>
         </div>
-        <div class="modal-footer"><button class="btn btn-secondary" onclick="tutupModal('modalEditDokumen')">Batal</button><button class="btn btn-primary" onclick="simpanEditDokumen()">Simpan</button></div>
+        
+        <!-- Body Modal Edit Dokumen -->
+        <div class="modal-body">
+            <!-- Input tersembunyi untuk menyimpan ID dokumen yang sedang diedit -->
+            <input type="hidden" id="editDocId">
+            
+            <div class="form-group">
+                <label for="editDocName">Nama File</label>
+                <input type="text" id="editDocName" placeholder="Masukkan nama file baru">
+            </div>
+            <div class="form-group">
+                <label for="editDocKeterangan">Keterangan</label>
+                <input type="text" id="editDocKeterangan" placeholder="Tambahkan keterangan untuk file ini">
+            </div>
+        </div>
+        
+        <!-- Footer Modal Edit Dokumen -->
+        <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="tutupModal('modalEditDokumen')">Batal</button>
+            <button class="btn btn-primary" onclick="simpanEditDokumen()">
+                <i class="fas fa-save"></i> Simpan
+            </button>
+        </div>
     </div>
 </div>
 
+<!-- Modal Preview Gambar Besar -->
 <div class="modal-overlay modal-preview-gambar" id="modalPreviewGambar">
-    <div class="modal"><div class="modal-header"><h3 id="modalPreviewTitle">Preview Gambar</h3><button class="modal-close" onclick="tutupModal('modalPreviewGambar')"><i class="fas fa-times"></i></button></div>
-        <div class="modal-body"><img id="modalPreviewImage" src="" alt="Preview"></div>
+    <div class="modal">
+        <!-- Header Modal Preview Gambar -->
+        <div class="modal-header">
+            <h3 id="modalPreviewTitle"><i class="fas fa-image" style="color: var(--orange-primary);"></i> Preview Gambar</h3>
+            <button class="modal-close" onclick="tutupModal('modalPreviewGambar')">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <!-- Body Modal Preview Gambar (Background gelap agar gambar terlihat jelas) -->
+        <div class="modal-body" style="padding: 0; background: #1a1a1a; border-radius: 0 0 var(--radius-md) var(--radius-md); text-align: center;">
+            <img id="modalPreviewImage" src="" alt="Preview" style="max-width: 100%; max-height: 75vh; display: block; margin: 0 auto; border-radius: 0 0 var(--radius-md) var(--radius-md);">
+        </div>
     </div>
 </div>
-<!-- ============ AKHIR BLOK 6 ============ -->
+<!-- ============ AKHIR BLOK 6 MODALS (REVISI DAN PENULISAN ULANG) ============ -->
 
 <!-- ============ BLOK 7(1) - 01 SCRIPTS DATA AKUN & UTILITY ============ -->
 <script>
