@@ -570,18 +570,20 @@
         </div>
     </div>
 <!-- ============ AKHIR BLOK 5(1) - 01 CONTENT AREA (DASHBOARD & PROFIL) ============ -->
-<!-- ============ BLOK 5(2) - 01 CONTENT AREA (DAFTAR AKUN, PERSETUJUAN & KELOLA AKUN) ============ -->
+<!-- ============ BLOK 5(2) - 01 R2 CONTENT AREA (DAFTAR AKUN, PERSETUJUAN & KELOLA AKUN) ============ -->
 <!-- PENJELASAN: 
      Ini adalah bagian kedua dari area konten. Bagian ini berisi kode HTML untuk 
      Halaman Daftar Akun Baru, Halaman Persetujuan, dan Halaman Kelola Semua Akun.
      
-     PERBAIKAN PENTING: 
+     PERBAIKAN PENTING PADA R2: 
      1. Telah dihapus elemen <div id="tabelPersetujuanContainer"> yang berada di bawah 
         form Daftar Akun Baru, karena elemen tersebut sudah ada di dalam halaman 
         pagePersetujuan. Hal ini untuk menghilangkan duplikasi ID yang menyebabkan 
         JavaScript bingung dalam merender tabel.
-     2. Tag penutup </div> dan komentar akhir blok telah disatukan di bagian paling bawah 
-        untuk memastikan struktur HTML tetap valid dan tidak ada kode yang terpotong. -->
+     2. Telah DIHAPUS tag penutup </div> yang salah di bagian paling bawah. 
+        Tag ini menyebabkan penutupan paksa tag <main>, sehingga seluruh kode 
+        di bawahnya (BLOK 5(3), BLOK 6, dan BLOK 7, 8, dst) menjadi tidak terbaca 
+        oleh browser. Hal ini membuat halaman macet total. -->
 
     <!-- HALAMAN DAFTAR AKUN BARU -->
     <div class="page" id="pageDaftarAkun">
@@ -721,8 +723,7 @@
             </div>
         </div>
     </div>
-</div>
-<!-- ============ AKHIR BLOK 5(2) - 01 CONTENT AREA (DAFTAR AKUN, PERSETUJUAN & KELOLA AKUN) ============ -->
+<!-- ============ AKHIR BLOK 5(2) - 01 R2 CONTENT AREA (DAFTAR AKUN, PERSETUJUAN & KELOLA AKUN) ============ -->
 <!-- ============ BLOK 5(3) - 01 CONTENT AREA (PLACEHOLDER & PENUTUP) ============ -->
 <!-- PENJELASAN: 
      Ini adalah bagian ketiga dan terakhir dari BLOK 5 (Content Area). 
