@@ -93,44 +93,20 @@
         .btn-logout { background:transparent; border:1px solid var(--gray-300); padding:6px 14px; border-radius:var(--radius-sm); font-weight:500; color:var(--gray-700); cursor:pointer; transition:var(--transition-fast); font-size:13px; display:flex; align-items:center; gap:6px; }
         .btn-logout:hover { background:var(--error); color:white; border-color:var(--error); }
 
-                /* ============ SIDEBAR ============ */
-        .sidebar { 
-            position:fixed; 
-            top:64px; 
-            left:0; 
-            bottom:0; 
-            width:260px; 
-            background:white; 
-            box-shadow:var(--shadow-sm); 
-            overflow-y:auto; 
-            z-index:999; 
-            transition:transform var(--transition-normal); 
-            padding:0 0 20px 0; 
-            /* REVISI AGAR BISA DIGESER (SCROLL) */
-            max-height: calc(100vh - 64px); /* Mengurangi tinggi navbar */
-        }
+        /* ============ SIDEBAR ============ */
+        .sidebar { position:fixed; top:64px; left:0; bottom:0; width:260px; background:white; box-shadow:var(--shadow-sm); overflow-y:auto; z-index:999; transition:transform var(--transition-normal); padding:0 0 20px 0; }
         .sidebar.closed { transform:translateX(-100%); }
         .sidebar-menu-title { font-size:12px; text-transform:uppercase; color:var(--gray-400); font-weight:700; padding:10px 20px; letter-spacing:1px; margin-top:0; }
         .sidebar-menu-item { display:flex; align-items:center; gap:12px; padding:12px 20px; cursor:pointer; transition:var(--transition-fast); color:var(--gray-700); font-size:14px; font-weight:500; position:relative; }
         .sidebar-menu-item:hover { background:var(--orange-pale); color:var(--orange-primary); }
-        .sidebar-menu-item.active { background:var(--orange-pale); color:var(--orange-primary); border-right:3px solid var(--orange-primary); } /* Garis oranye tetap dipertahankan */
+        .sidebar-menu-item.active { background:var(--orange-pale); color:var(--orange-primary); border-right:3px solid var(--orange-primary); }
         .sidebar-menu-item i { width:20px; text-align:center; font-size:16px; }
         .sidebar-overlay { position:fixed; top:64px; left:0; right:0; bottom:0; background:rgba(0,0,0,0.3); z-index:998; display:none; }
         .sidebar-overlay.active { display:block; }
 
-               /* ============ CONTENT AREA ============ */
-        .content-area { 
-            margin-left: 260px; 
-            padding: 84px 25px 25px 25px; 
-            min-height: 100vh; 
-            transition: margin-left var(--transition-normal); /* Animasi geser halus */
-            background: #FFF8F3; 
-            width: calc(100% - 260px); /* Lebar dinamis */
-        }
-        .content-area.expanded { 
-            margin-left: 0; 
-            width: 100%; /* Jika sidebar tertutup, konten jadi lebar 100% */
-        }
+        /* ============ CONTENT AREA (REVISI AGAR BERGESER) ============ */
+        .content-area { margin-left:260px; padding:84px 25px 25px 25px; min-height:100vh; transition:margin-left var(--transition-normal); background:#FFF8F3; width:calc(100% - 260px); }
+        .content-area.expanded { margin-left:0; width:100%; }
         @media (max-width:768px) {
             .sidebar:not(.closed) + .sidebar-overlay.active { display:block; }
             .sidebar.closed { transform:translateX(-100%); }
@@ -142,6 +118,7 @@
             .sidebar.closed { transform:translateX(0); }
             .sidebar { width:260px; }
         }
+
         /* ============ PAGE HEADER ============ */
         .page-header { margin-bottom:25px; }
         .page-header .breadcrumb { display:flex; align-items:center; gap:8px; font-size:13px; color:var(--gray-500); margin-bottom:8px; }
@@ -202,10 +179,13 @@
     </style>
 </head>
 <!-- ============ AKHIR BLOK 1 R1 HEAD & CSS ============ -->
+
 <!-- ============ BLOK 2 PRELOADER & TOAST ============ -->
+<body>
 <div id="preloader"><div class="loader"></div></div>
 <div class="toast-container" id="toastContainer"></div>
 <!-- ============ AKHIR BLOK 2 PRELOADER & TOAST ============ -->
+
 <!-- ============ BLOK 3 AUTH CONTAINER ============ -->
 <div class="auth-container" id="pageAuth">
     <div class="auth-box">
@@ -269,6 +249,7 @@
     </div>
 </div>
 <!-- ============ AKHIR BLOK 3 AUTH CONTAINER ============ -->
+
 <!-- ============ BLOK 4 NAVBAR ============ -->
 <nav class="navbar hidden" id="mainNavbar">
     <div class="navbar-brand"><i class="fas fa-store-alt"></i><span>Toko Online 2R</span></div>
@@ -286,6 +267,7 @@
     </div>
 </nav>
 <!-- ============ AKHIR BLOK 4 NAVBAR ============ -->
+
 <!-- ============ BLOK 5 SIDEBAR ============ -->
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 <aside class="sidebar hidden closed" id="mainSidebar">
@@ -309,6 +291,7 @@
     </div>
 </aside>
 <!-- ============ AKHIR BLOK 5 SIDEBAR ============ -->
+
 <!-- ============ BLOK 6 CONTENT AREA ============ -->
 <main class="content-area expanded hidden" id="contentArea">
     <!-- Dasbor -->
@@ -401,8 +384,8 @@
             </div>
         </div>
     </div>
-<!-- ============ AKHIR BLOK 6 CONTENT AREA ============ -->
-<!-- BLOK 7 Placeholder halaman lainnya -->
+
+    <!-- Placeholder halaman lainnya -->
     <div class="page" id="pageLihatToko"><div class="page-header"><div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Lihat Semua Toko</span></div><h2>Daftar Toko</h2><p>Halaman untuk menampilkan semua toko yang terdaftar.</p></div><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-store" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div></div>
     <div class="page" id="pageLihatOjek"><div class="page-header"><div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Lihat Semua Ojek</span></div><h2>Daftar Ojek</h2><p>Halaman untuk menampilkan semua ojek yang terdaftar.</p></div><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-motorcycle" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div></div>
     <div class="page" id="pageLihatProduk"><div class="page-header"><div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Lihat Semua Produk</span></div><h2>Daftar Produk</h2><p>Halaman untuk menampilkan semua produk yang tersedia.</p></div><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-box" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div></div>
@@ -416,8 +399,9 @@
     <div class="page" id="pageSettingTarifOjek"><div class="page-header"><div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Setting Tarif Ojek</span></div><h2>Pengaturan Tarif Ojek</h2><p>Atur tarif per kilometer atau per zona.</p></div><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-cogs" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div></div>
     <div class="page" id="pageKelolaIklan"><div class="page-header"><div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Kelola Iklan</span></div><h2>Kelola Iklan</h2><p>Atur tampilan iklan di platform.</p></div><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-ad" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div></div>
 </main>
-<!-- AKHIR BLOK 7 Placeholder halaman lainnya -->
-<!-- ============ BLOK 8 MODALS ============ -->
+<!-- ============ AKHIR BLOK 6 CONTENT AREA ============ -->
+
+<!-- ============ BLOK 7 MODALS ============ -->
 <div class="modal-overlay" id="modalKonfirmasi">
     <div class="modal"><div class="modal-header"><h3 id="modalKonfirmasiTitle">Konfirmasi</h3><button class="modal-close" onclick="tutupModal('modalKonfirmasi')"><i class="fas fa-times"></i></button></div>
     <div class="modal-body"><p id="modalKonfirmasiPesan">Apakah Anda yakin?</p></div>
@@ -433,8 +417,9 @@
     <div class="modal-body" id="modalFormBody"></div>
     <div class="modal-footer"><button class="btn btn-secondary" onclick="tutupModal('modalForm')">Batal</button><button class="btn btn-primary" id="modalFormSubmit">Simpan</button></div></div>
 </div>
-<!-- ============ AKHIR BLOK 8 MODALS ============ -->
-<!-- ============ BLOK 9 SCRIPTS (REVISI SIDEBAR OTOMATIS TUTUP) ============ -->
+<!-- ============ AKHIR BLOK 7 MODALS ============ -->
+
+<!-- ============ BLOK 8 SCRIPTS UTAMA (REVISI KONTEN BERGESER) ============ -->
 <script>
     // Data akun & enkripsi
     function getDataAkun() { var d=localStorage.getItem('2r_akun'); return d?JSON.parse(d):[]; }
@@ -509,20 +494,12 @@
         else { selesai(null,null); }
     }
 
-    // ===== REVISI UTAMA: FUNGSI NAVIGASI & SIDEBAR =====
+    // Navigasi
     function navigasiHalaman(page) {
         document.querySelectorAll('.page').forEach(function(p){ p.classList.add('hidden'); });
         var target=document.getElementById('page'+page.charAt(0).toUpperCase()+page.slice(1));
-        if(target){ 
-            target.classList.remove('hidden'); 
-            setActiveMenu(page); 
-            if(page==='profile'&&typeof loadProfil==='function') loadProfil(); 
-        } else {
-            tampilkanToast('Halaman belum tersedia','warning');
-        }
-        
-        // REVISI: SIDEBAR DIPAKSA TUTUP SETELAH KLIK MENU (AGAR TIDAK MENGHALANGI HALAMAN)
-        tutupSidebar();
+        if(target){ target.classList.remove('hidden'); setActiveMenu(page); if(page==='profile'&&typeof loadProfil==='function') loadProfil(); }
+        else tampilkanToast('Halaman belum tersedia','warning');
     }
 
     function setActiveMenu(page) {
@@ -531,20 +508,25 @@
         if(menu) menu.classList.add('active');
     }
 
-    // Fungsi untuk menutup sidebar secara paksa
-    function tutupSidebar() {
-        var sidebar=document.getElementById('mainSidebar');
-        var overlay=document.getElementById('sidebarOverlay');
-        sidebar.classList.add('closed');
-        overlay.classList.remove('active');
-    }
-
-    // Fungsi untuk toggle (buka/tutup) sidebar saat tombol burger di klik
+    // ===== REVISI SIDEBAR TOGGLE (KONTEN IKUT BERGESER) =====
     function toggleSidebar() {
-        var sidebar=document.getElementById('mainSidebar');
-        var overlay=document.getElementById('sidebarOverlay');
+        var sidebar = document.getElementById('mainSidebar');
+        var overlay = document.getElementById('sidebarOverlay');
+        var content = document.getElementById('contentArea');
+        
+        // Toggle buka/tutup sidebar
         sidebar.classList.toggle('closed');
-        overlay.classList.toggle('active');
+        
+        // Jika sidebar tertutup (class 'closed' aktif), konten jadi lebar penuh
+        if (sidebar.classList.contains('closed')) {
+            content.classList.add('expanded');
+            overlay.classList.remove('active');
+        } 
+        // Jika sidebar terbuka (class 'closed' hilang), konten bergeser ke kanan
+        else {
+            content.classList.remove('expanded');
+            overlay.classList.add('active');
+        }
     }
 
     function logout(){ localStorage.removeItem('2r_user'); location.reload(); }
@@ -556,10 +538,9 @@
         document.body.style.display='block'; document.body.style.justifyContent='unset'; document.body.style.alignItems='unset';
         document.getElementById('pageAuth').style.display='none';
         document.getElementById('mainNavbar').classList.remove('hidden');
-        var sidebar=document.getElementById('mainSidebar'); sidebar.classList.remove('hidden'); 
-        // Sidebar awal ditutup agar tidak menutupi konten saat pertama kali login
-        sidebar.classList.add('closed');
-        document.getElementById('contentArea').classList.remove('hidden');
+        
+        var sidebar=document.getElementById('mainSidebar'); sidebar.classList.remove('hidden'); sidebar.classList.remove('closed'); // Sidebar terbuka saat login
+        var content=document.getElementById('contentArea'); content.classList.remove('expanded'); content.classList.remove('hidden'); // Konten bergeser ke kanan
 
         var avatar=document.getElementById('navbarAvatar'); avatar.textContent=user.nama.charAt(0).toUpperCase(); avatar.style.background='var(--orange-gradient)'; avatar.style.color='white';
         document.getElementById('navbarUserName').textContent=user.nama;
@@ -571,13 +552,10 @@
         document.getElementById('pageDashboard').classList.remove('hidden');
         setActiveMenu('dashboard');
 
-        // Event listener tombol burger (untuk membuka/tutup sidebar)
         document.getElementById('btnSidebarToggle').addEventListener('click', function(){ toggleSidebar(); });
-        // Event listener overlay (klik area gelap untuk menutup sidebar)
-        document.getElementById('sidebarOverlay').addEventListener('click', function(){ tutupSidebar(); });
+        document.getElementById('sidebarOverlay').addEventListener('click', function(){ toggleSidebar(); });
         document.getElementById('btnLogout').addEventListener('click', function(){ if(confirm('Yakin keluar?')){ logout(); } });
 
-        // Event listener untuk semua menu sidebar
         document.querySelectorAll('.sidebar-menu-item').forEach(function(item){
             item.addEventListener('click', function(){
                 var page=this.dataset.page;
@@ -586,7 +564,6 @@
         });
     }
 
-    // Inisialisasi halaman
     window.addEventListener('load', function(){ setTimeout(function(){ document.getElementById('preloader').classList.add('hidden'); },500); });
     window.addEventListener('DOMContentLoaded', function(){
         inisialisasiSuperAdmin();
@@ -595,8 +572,9 @@
         updateIdPreview();
     });
 </script>
-<!-- ============ AKHIR BLOK 9 SCRIPTS (REVISI SIDEBAR OTOMATIS TUTUP) ============ -->
-<!-- ============ BLOK 10 PROFIL SCRIPTS ============ -->
+<!-- ============ AKHIR BLOK 8 SCRIPTS UTAMA ============ -->
+
+<!-- ============ BLOK 9 SCRIPTS PROFIL ============ -->
 <script>
     const PROFILE_KEY='2r_superadmin_profile', DOCUMENTS_KEY='2r_superadmin_documents';
     function loadProfil(){
@@ -683,6 +661,6 @@
         if(orig){ window.navigasiHalaman=function(page){ orig(page); if(page==='profile'&&typeof loadProfil==='function') loadProfil(); }; }
     })();
 </script>
-<!-- ============ AKHIR BLOK 10 PROFIL SCRIPTS ============ -->
+<!-- ============ AKHIR BLOK 9 SCRIPTS PROFIL ============ -->
 </body>
 </html>
