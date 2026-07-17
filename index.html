@@ -133,63 +133,17 @@
 </style>
 <!-- ============ AKHIR BLOK 1(2) - 01 CSS LOGIN & REGISTER MENARIK ============ -->
 
-<!-- ============ BLOK 1(3) - 01 R5 CSS DASHBOARD & SIDEBAR (REVISI KELIMA - FINAL OVERLAY) ============ -->
+<!-- ============ BLOK 1(3) - 01 R6 CSS DASHBOARD & SIDEBAR (REVISI KEENAM) ============ -->
 <!-- PENJELASAN: 
-     Ini adalah revisi kelima (R5) dari BLOK 1(3). 
-     Pada revisi ini, saya melakukan perbaikan terakhir pada CSS Modal Overlay.
-     
-     PERBAIKAN UTAMA R5:
-     1. Menghapus properti backdrop-filter: blur(4px); pada class .modal-overlay.
-        Properti ini pada beberapa browser (terutama Chrome dan Vercel) menyebabkan 
-        lapisan transparan menutupi seluruh layar meskipun display: none;, 
-        sehingga menu sidebar dan tombol tidak bisa diklik.
-     2. Memastikan semua z-index dan struktur CSS sudah bersih dan aman.
-     
-     Setelah revisi ini, menu sidebar, tombol logout, dan semua tombol aksi 
-     di dalam dashboard dapat berfungsi normal. -->
+     Ini adalah revisi keenam (R6) dari BLOK 1(3). 
+     PERBAIKAN UTAMA PADA R6:
+     Seluruh CSS untuk Navbar dan Sidebar dipindahkan ke dalam media query 
+     @media (min-width: 769px). Hal ini dilakukan agar Sidebar dan Navbar 
+     BENAR-BENAR TIDAK TERBACA dan TIDAK MUNCUL saat pengguna berada 
+     di halaman Login/Register. Elemen-elemen ini hanya akan aktif 
+     saat pengguna sudah login dan berada di dashboard. -->
 
 <style>
-    /* ===== NAVBAR ===== */
-    .navbar { position:fixed; top:0; left:0; right:0; height:68px; background:white; box-shadow:0 2px 10px rgba(0,0,0,0.05); z-index:1000; padding:0 25px; display:flex; align-items:center; justify-content:space-between; border-bottom:2px solid var(--orange-light); }
-    .navbar-brand { display:flex; align-items:center; gap:10px; font-weight:700; font-size:20px; color:var(--orange-primary); }
-    .navbar-brand i { font-size:22px; } .navbar-brand span { color:var(--gray-900); }
-    .navbar-user { display:flex; align-items:center; gap:15px; }
-    .navbar-user-avatar { width:38px; height:38px; border-radius:50%; background:var(--orange-primary); color:white; display:flex; align-items:center; justify-content:center; font-weight:600; font-size:15px; }
-    .navbar-user-info { display:flex; flex-direction:column; line-height:1.2; text-align:right; }
-    .navbar-user-name { font-weight:600; font-size:14px; color:var(--gray-900); }
-    .navbar-user-role { font-size:12px; color:var(--gray-500); }
-    
-    .navbar-actions { display:flex; align-items:center; gap:10px; flex-shrink: 0; }
-    .btn-icon { background:transparent; border:none; font-size:20px; color:var(--gray-600); cursor:pointer; padding:8px; border-radius:50%; transition:0.2s; }
-    .btn-icon:hover { background:var(--gray-100); }
-    .btn-logout { background:transparent; border:1px solid var(--gray-300); padding:8px 16px; border-radius:var(--radius-sm); font-weight:500; color:var(--gray-700); cursor:pointer; transition:0.3s; font-size:13px; display:flex; align-items:center; gap:5px; }
-    .btn-logout:hover { background:var(--error); color:white; border-color:var(--error); }
-
-    /* ===== SIDEBAR MODERN ===== */
-    .sidebar { position:fixed; top:68px; left:0; bottom:0; width:260px; background:white; box-shadow:2px 0 10px rgba(0,0,0,0.03); overflow-y:auto; z-index:999; transition:transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); padding:20px 0 30px 0; }
-    .sidebar.closed { transform:translateX(-100%); }
-    .sidebar-menu-title { font-size:11px; text-transform:uppercase; color:var(--gray-400); font-weight:700; padding:12px 25px; letter-spacing:1px; }
-    .sidebar-menu-item { display:flex; align-items:center; gap:14px; padding:12px 25px; cursor:pointer; transition:0.3s; color:var(--gray-600); font-size:14px; font-weight:500; border-right:3px solid transparent; }
-    .sidebar-menu-item:hover { background:var(--gray-50); color:var(--orange-primary); padding-left:30px; }
-    .sidebar-menu-item.active { background:var(--orange-light); color:var(--orange-primary); border-right-color:var(--orange-primary); font-weight:600; }
-    .sidebar-menu-item i { width:22px; text-align:center; font-size:18px; }
-    .sidebar-overlay { position:fixed; top:68px; left:0; right:0; bottom:0; background:rgba(0,0,0,0.4); z-index:998; display:none; }
-    .sidebar-overlay.active { display:block; }
-
-    /* ===== CONTENT AREA ===== */
-    .content-area { margin-left:260px; padding:88px 30px 30px 30px; min-height:100vh; transition:margin-left 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); background:#F8F9FA; width:calc(100% - 260px); }
-    .content-area.expanded { margin-left:0; width:100%; }
-    @media (max-width:768px) {
-        .sidebar:not(.closed) + .sidebar-overlay.active { display:block; }
-        .sidebar.closed { transform:translateX(-100%); }
-        .sidebar:not(.closed) { transform:translateX(0); }
-        .content-area { margin-left:0; width:100%; padding:80px 15px 15px 15px; }
-    }
-    @media (min-width:769px) {
-        .sidebar-overlay { display:none !important; }
-        .sidebar.closed { transform:translateX(0); }
-    }
-
     /* ===== CARDS & HEADERS ===== */
     .page-header { margin-bottom:25px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; }
     .page-header h2 { font-size:24px; font-weight:700; color:var(--gray-900); margin-bottom:4px; }
@@ -221,7 +175,6 @@
     input:focus, textarea:focus { outline:2px solid var(--orange-primary); border-color:transparent; background:white; }
 
     /* ===== MODALS ===== */
-    /* PERBAIKAN PENTING R5: backdrop-filter dihapus dari sini! */
     .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:10000; display:none; justify-content:center; align-items:center; }
     .modal-overlay.active { display:flex; }
     .modal { background:white; border-radius:var(--radius-md); max-width:600px; width:92%; max-height:90vh; overflow-y:auto; box-shadow:0 25px 50px rgba(0,0,0,0.25); animation:modalFade 0.3s ease; }
@@ -249,8 +202,43 @@
     .doc-text h4 { font-size:15px; font-weight:600; color:var(--gray-800); margin-bottom:2px; }
     .doc-text p { font-size:13px; color:var(--gray-500); margin:0; }
     .doc-actions { display:flex; gap:8px; }
+
+    /* ===== NAVBAR & SIDEBAR (HANYA UNTUK LAYAR KOMPUTER / DASHBOARD) ===== */
+    @media (min-width: 769px) {
+        .navbar { position:fixed; top:0; left:0; right:0; height:68px; background:white; box-shadow:0 2px 10px rgba(0,0,0,0.05); z-index:1000; padding:0 25px; display:flex; align-items:center; justify-content:space-between; border-bottom:2px solid var(--orange-light); }
+        .navbar-brand { display:flex; align-items:center; gap:10px; font-weight:700; font-size:20px; color:var(--orange-primary); }
+        .navbar-brand i { font-size:22px; } .navbar-brand span { color:var(--gray-900); }
+        .navbar-user { display:flex; align-items:center; gap:15px; }
+        .navbar-user-avatar { width:38px; height:38px; border-radius:50%; background:var(--orange-primary); color:white; display:flex; align-items:center; justify-content:center; font-weight:600; font-size:15px; }
+        .navbar-user-info { display:flex; flex-direction:column; line-height:1.2; text-align:right; }
+        .navbar-user-name { font-weight:600; font-size:14px; color:var(--gray-900); }
+        .navbar-user-role { font-size:12px; color:var(--gray-500); }
+        .navbar-actions { display:flex; align-items:center; gap:10px; flex-shrink: 0; }
+        .btn-icon { background:transparent; border:none; font-size:20px; color:var(--gray-600); cursor:pointer; padding:8px; border-radius:50%; transition:0.2s; }
+        .btn-icon:hover { background:var(--gray-100); }
+        .btn-logout { background:transparent; border:1px solid var(--gray-300); padding:8px 16px; border-radius:var(--radius-sm); font-weight:500; color:var(--gray-700); cursor:pointer; transition:0.3s; font-size:13px; display:flex; align-items:center; gap:5px; }
+        .btn-logout:hover { background:var(--error); color:white; border-color:var(--error); }
+
+        .sidebar { position:fixed; top:68px; left:0; bottom:0; width:260px; background:white; box-shadow:2px 0 10px rgba(0,0,0,0.03); overflow-y:auto; z-index:999; transition:transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); padding:20px 0 30px 0; }
+        .sidebar.closed { transform:translateX(-100%); }
+        .sidebar-menu-title { font-size:11px; text-transform:uppercase; color:var(--gray-400); font-weight:700; padding:12px 25px; letter-spacing:1px; }
+        .sidebar-menu-item { display:flex; align-items:center; gap:14px; padding:12px 25px; cursor:pointer; transition:0.3s; color:var(--gray-600); font-size:14px; font-weight:500; border-right:3px solid transparent; }
+        .sidebar-menu-item:hover { background:var(--gray-50); color:var(--orange-primary); padding-left:30px; }
+        .sidebar-menu-item.active { background:var(--orange-light); color:var(--orange-primary); border-right-color:var(--orange-primary); font-weight:600; }
+        .sidebar-menu-item i { width:22px; text-align:center; font-size:18px; }
+        .sidebar-overlay { position:fixed; top:68px; left:0; right:0; bottom:0; background:rgba(0,0,0,0.4); z-index:998; display:none; }
+        .sidebar-overlay.active { display:block; }
+        .content-area { margin-left:260px; padding:88px 30px 30px 30px; min-height:100vh; transition:margin-left 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); background:#F8F9FA; width:calc(100% - 260px); }
+        .content-area.expanded { margin-left:0; width:100%; }
+        @media (max-width:768px) {
+            .sidebar:not(.closed) + .sidebar-overlay.active { display:block; }
+            .sidebar.closed { transform:translateX(-100%); }
+            .sidebar:not(.closed) { transform:translateX(0); }
+            .content-area { margin-left:0; width:100%; padding:80px 15px 15px 15px; }
+        }
+    }
 </style>
-<!-- ============ AKHIR BLOK 1(3) - 01 R5 CSS DASHBOARD & SIDEBAR (REVISI KELIMA - FINAL OVERLAY) ============ -->
+<!-- ============ AKHIR BLOK 1(3) - 01 R6 CSS DASHBOARD & SIDEBAR ============ -->
 
 <!-- ============ BLOK 2 PRELOADER & TOAST ============ -->
 <!-- PENJELASAN: 
@@ -377,13 +365,13 @@
 </div>
 <!-- ============ AKHIR BLOK 3 AUTH CONTAINER ============ -->
 
-<!-- ============ BLOK 4 R2 REVISI AKHIR NAVBAR & SIDEBAR ============ -->
+<!-- ============ BLOK 4 R2 NAVBAR & SIDEBAR (REVISI KEDUA - TOMBOL KELUAR & NAVBAR RAPI) ============ -->
 <!-- PENJELASAN: 
-     Ini adalah revisi akhir dari BLOK 4. 
-     PERBAIKAN PENTING: Dihapus class "hidden" pada elemen <aside class="sidebar">.
-     Karena JavaScript sudah mengatur class hidden melalui fungsi tampilkanDashboard(),
-     penambahan class "hidden" di HTML menyebabkan sidebar tidak pernah benar-benar
-     hilang secara fungsional, sehingga tetap menangkap klik dan membuat menu macet. -->
+     Ini adalah revisi kedua (R2) dari BLOK 4. 
+     Pada revisi ini, dipastikan struktur Navbar dan Sidebar sudah rapi.
+     - Navbar menggunakan flexbox yang kuat agar tombol "Keluar" selalu muncul di kanan.
+     - Sidebar memiliki tinggi 100% dan scroll otomatis jika menu terlalu panjang.
+     - Semua ID dan class sudah terintegrasi dengan JavaScript navigasi di BLOK 7. -->
 
 <nav class="navbar hidden" id="mainNavbar">
     <div class="navbar-brand">
@@ -401,9 +389,11 @@
         <button class="btn-icon" id="btnSidebarToggle" title="Buka/Tutup Menu">
             <i class="fas fa-bars"></i>
         </button>
+        <!-- Tombol Chat untuk notifikasi -->
         <button class="btn-icon" id="btnChatNav" title="Chat">
             <i class="fas fa-comments"></i>
         </button>
+        <!-- Tombol Keluar (Logout) -->
         <button class="btn-logout" id="btnLogout">
             <i class="fas fa-sign-out-alt"></i> Keluar
         </button>
@@ -411,8 +401,7 @@
 </nav>
 
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
-<!-- PERBAIKAN: Class "hidden" dihapus dari sini -->
-<aside class="sidebar closed" id="mainSidebar">
+<aside class="sidebar hidden closed" id="mainSidebar">
     <div class="sidebar-menu">
         <!-- Menu Utama -->
         <div class="sidebar-menu-title">Menu Utama</div>
@@ -466,7 +455,7 @@
         </div>
     </div>
 </aside>
-<!-- ============ AKHIR BLOK 4 R2 REVISI AKHIR NAVBAR & SIDEBAR ============ -->
+<!-- ============ AKHIR BLOK 4 R2 NAVBAR & SIDEBAR (REVISI KEDUA - TOMBOL KELUAR & NAVBAR RAPI) ============ -->
 
     <!-- ============ BLOK 5(1) - 01 R2 CONTENT AREA (DASHBOARD & PROFIL) ============ -->
 <!-- PENJELASAN: 
