@@ -293,6 +293,44 @@
 <!-- ============ AKHIR BLOK 5 SIDEBAR ============ -->
 
 <!-- ============ BLOK 6 CONTENT AREA ============ -->
+<nav class="navbar hidden" id="mainNavbar">
+    <div class="navbar-brand"><i class="fas fa-store-alt"></i><span>Toko Online 2R</span></div>
+    <div class="navbar-user">
+        <div class="navbar-user-avatar" id="navbarAvatar">SA</div>
+        <div class="navbar-user-info">
+            <span class="navbar-user-name" id="navbarUserName">SuperAdmin</span>
+            <span class="navbar-user-role" id="navbarUserRole">SuperAdmin</span>
+        </div>
+    </div>
+    <div class="navbar-actions">
+        <button class="btn-icon" id="btnSidebarToggle" title="Toggle Menu"><i class="fas fa-bars"></i></button>
+        <button class="btn-icon" id="btnChatNav" title="Chat"><i class="fas fa-comments"></i><span class="badge hidden" id="chatBadge">0</span></button>
+        <button class="btn-logout" id="btnLogout"><i class="fas fa-sign-out-alt"></i> Keluar</button>
+    </div>
+</nav>
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<aside class="sidebar hidden closed" id="mainSidebar">
+    <div class="sidebar-menu">
+        <div class="sidebar-menu-title">Menu Utama</div>
+        <div class="sidebar-menu-item active" data-page="dashboard" id="menuDashboard"><i class="fas fa-th-large"></i> Dasbor</div>
+        <div class="sidebar-menu-item" data-page="profile" id="menuProfile"><i class="fas fa-user-circle"></i> Profil</div>
+        <div class="sidebar-menu-item" data-page="lihatToko"><i class="fas fa-store"></i> Lihat Semua Toko</div>
+        <div class="sidebar-menu-item" data-page="lihatOjek"><i class="fas fa-motorcycle"></i> Lihat Semua Ojek</div>
+        <div class="sidebar-menu-item" data-page="lihatProduk"><i class="fas fa-box"></i> Lihat Semua Produk</div>
+        <div class="sidebar-menu-item" data-page="chat"><i class="fas fa-comments"></i> Chat</div>
+        <div class="sidebar-menu-title">Menu Admin</div>
+        <div class="sidebar-menu-item menu-admin" data-page="daftarAkun"><i class="fas fa-user-plus"></i> Daftar Akun Baru</div>
+        <div class="sidebar-menu-item menu-admin" data-page="transferMenu"><i class="fas fa-exchange-alt"></i> Transfer Menu</div>
+        <div class="sidebar-menu-item menu-admin" data-page="kelolaAkun"><i class="fas fa-users-cog"></i> Kelola Semua Akun</div>
+        <div class="sidebar-menu-item menu-admin" data-page="penagihan"><i class="fas fa-file-invoice-dollar"></i> Penagihan</div>
+        <div class="sidebar-menu-item menu-admin" data-page="settingRekening"><i class="fas fa-university"></i> Setting Rekening</div>
+        <div class="sidebar-menu-item menu-admin" data-page="kelolaUpgrade"><i class="fas fa-crown"></i> Kelola Upgrade</div>
+        <div class="sidebar-menu-item menu-admin" data-page="settingTarifOjek"><i class="fas fa-cogs"></i> Setting Tarif Ojek</div>
+        <div class="sidebar-menu-item menu-admin" data-page="kelolaIklan"><i class="fas fa-ad"></i> Kelola Iklan</div>
+    </div>
+</aside>
+
 <main class="content-area expanded hidden" id="contentArea">
     <!-- Dasbor -->
     <div class="page" id="pageDashboard">
@@ -333,14 +371,26 @@
                 </div>
             </div>
         </div>
+
+        <!-- REVISI BAGIAN DOKUMEN PERUSAHAAN -->
         <div class="card">
             <div class="card-header">
                 <h3><i class="fas fa-folder-open" style="color:var(--orange-primary)"></i> Dokumen Perusahaan</h3>
-                <button class="btn btn-primary btn-sm" onclick="document.getElementById('inputDokumen').click()"><i class="fas fa-upload"></i> Unggah Dokumen</button>
-                <input type="file" id="inputDokumen" multiple accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png" style="display:none" onchange="uploadDokumen(event)">
+                <button class="btn btn-primary btn-sm" id="btnUnggahDokumen" style="position:relative; z-index:10; cursor:pointer;">
+                    <i class="fas fa-upload"></i> Unggah Dokumen
+                </button>
+                <input type="file" id="inputDokumen" multiple accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png" style="display:none">
             </div>
-            <div class="card-body"><div id="daftarDokumen" class="empty-state"><i class="fas fa-cloud-upload-alt" style="font-size:40px; color:var(--gray-400);"></i><h3>Belum ada dokumen</h3><p>Klik tombol "Unggah Dokumen" untuk menambahkan.</p></div></div>
+            <div class="card-body">
+                <div id="daftarDokumen" class="empty-state">
+                    <i class="fas fa-cloud-upload-alt" style="font-size:40px; color:var(--gray-400);"></i>
+                    <h3>Belum ada dokumen</h3>
+                    <p>Klik tombol "Unggah Dokumen" untuk menambahkan.</p>
+                </div>
+            </div>
         </div>
+        <!-- AKHIR REVISI BAGIAN DOKUMEN PERUSAHAAN -->
+
         <div class="card">
             <div class="card-header"><h3><i class="fas fa-sticky-note" style="color:var(--orange-primary)"></i> Keterangan</h3></div>
             <div class="card-body">
@@ -399,6 +449,23 @@
     <div class="page" id="pageSettingTarifOjek"><div class="page-header"><div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Setting Tarif Ojek</span></div><h2>Pengaturan Tarif Ojek</h2><p>Atur tarif per kilometer atau per zona.</p></div><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-cogs" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div></div>
     <div class="page" id="pageKelolaIklan"><div class="page-header"><div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Kelola Iklan</span></div><h2>Kelola Iklan</h2><p>Atur tampilan iklan di platform.</p></div><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-ad" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div></div>
 </main>
+
+<!-- Modals Global -->
+<div class="modal-overlay" id="modalKonfirmasi">
+    <div class="modal"><div class="modal-header"><h3 id="modalKonfirmasiTitle">Konfirmasi</h3><button class="modal-close" onclick="tutupModal('modalKonfirmasi')"><i class="fas fa-times"></i></button></div>
+    <div class="modal-body"><p id="modalKonfirmasiPesan">Apakah Anda yakin?</p></div>
+    <div class="modal-footer"><button class="btn btn-secondary" onclick="tutupModal('modalKonfirmasi')">Batal</button><button class="btn btn-primary" id="modalKonfirmasiBtn">Ya, Lanjutkan</button></div></div>
+</div>
+<div class="modal-overlay" id="modalDetail">
+    <div class="modal"><div class="modal-header"><h3 id="modalDetailTitle">Detail</h3><button class="modal-close" onclick="tutupModal('modalDetail')"><i class="fas fa-times"></i></button></div>
+    <div class="modal-body" id="modalDetailBody"></div>
+    <div class="modal-footer"><button class="btn btn-secondary" onclick="tutupModal('modalDetail')">Tutup</button></div></div>
+</div>
+<div class="modal-overlay" id="modalForm">
+    <div class="modal"><div class="modal-header"><h3 id="modalFormTitle">Form</h3><button class="modal-close" onclick="tutupModal('modalForm')"><i class="fas fa-times"></i></button></div>
+    <div class="modal-body" id="modalFormBody"></div>
+    <div class="modal-footer"><button class="btn btn-secondary" onclick="tutupModal('modalForm')">Batal</button><button class="btn btn-primary" id="modalFormSubmit">Simpan</button></div></div>
+</div>
 <!-- ============ AKHIR BLOK 6 CONTENT AREA ============ -->
 
 <!-- ============ BLOK 7 MODALS ============ -->
