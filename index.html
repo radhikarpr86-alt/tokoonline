@@ -1,20 +1,18 @@
-<!-- ============ BLOK 1 R1 HEAD & CSS ============ -->
+<!-- ============ BLOK 1 HEAD & CSS (REVISI TOTAL) ============ -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Toko Online 2R - Login & Daftar</title>
-    <!-- Font Awesome -->
+    <title>Toko Online 2R - SuperAdmin</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* ============ RESET & GLOBAL ============ */
+        /* ===== RESET & ROOT ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #FFF8F3;
+            background: #F8F9FA;
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -22,169 +20,167 @@
             overflow-x: hidden;
         }
         :root {
-            --orange-primary: #FF6B00; --orange-secondary: #FF8C32; --orange-light: #FFA95C;
-            --orange-pale: #FFF0E5; --orange-dark: #CC5500; --orange-gradient: linear-gradient(135deg, #FF6B00, #FF8C32);
+            --orange-primary: #FF6B00; --orange-light: #FFF0E5;
             --white: #FFFFFF; --gray-50: #FAFAFA; --gray-100: #F5F5F5;
             --gray-200: #EEEEEE; --gray-300: #E0E0E0; --gray-400: #BDBDBD;
             --gray-500: #9E9E9E; --gray-600: #757575; --gray-700: #616161;
-            --gray-800: #424242; --gray-900: #333333;
-            --success: #4CAF50; --error: #F44336; --warning: #FF9800; --info: #2196F3;
-            --shadow-sm: 0 1px 3px rgba(0,0,0,0.12); --shadow-md: 0 4px 6px rgba(0,0,0,0.15);
-            --shadow-lg: 0 10px 25px rgba(0,0,0,0.2); --shadow-xl: 0 20px 50px rgba(0,0,0,0.3);
-            --radius-sm: 8px; --radius-md: 12px; --radius-lg: 16px; --radius-full: 50px;
-            --transition-fast: 0.2s ease; --transition-normal: 0.3s ease;
+            --gray-800: #424242; --gray-900: #212121;
+            --success: #4CAF50; --error: #F44336; --warning: #FF9800;
+            --radius-md: 12px; --radius-sm: 8px;
+            --transition: 0.3s ease;
         }
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--gray-200); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb { background: var(--orange-light); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--orange-primary); }
 
-        /* ============ PRELOADER ============ */
-        #preloader { position: fixed; top:0; left:0; width:100%; height:100%; background:var(--white); display:flex; justify-content:center; align-items:center; z-index:99999; transition: opacity 0.5s, visibility 0.5s; }
-        #preloader.hidden { opacity: 0; visibility: hidden; }
-        .loader { width: 50px; height: 50px; border: 5px solid var(--orange-pale); border-top: 5px solid var(--orange-primary); border-radius: 50%; animation: spin 0.8s linear infinite; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        /* ===== SCROLLBAR CANTIK ===== */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--gray-100); }
+        ::-webkit-scrollbar-thumb { background: var(--orange-primary); border-radius: 10px; }
 
-        /* ============ TOAST ============ */
-        .toast-container { position: fixed; top:20px; right:20px; z-index:10000; display:flex; flex-direction:column; gap:10px; }
-        .toast { padding: 15px 20px; border-radius:var(--radius-md); color:white; font-weight:500; font-size:14px; min-width:280px; max-width:400px; box-shadow:var(--shadow-lg); animation:slideInRight 0.3s; display:flex; align-items:center; gap:10px; }
-        .toast.success { background: var(--success); } .toast.error { background: var(--error); } .toast.warning { background: var(--warning); }
-        @keyframes slideInRight { from { transform: translateX(100%); opacity:0; } to { transform: translateX(0); opacity:1; } }
+        /* ===== PRELOADER ===== */
+        #preloader { position: fixed; inset:0; background:var(--white); display:flex; justify-content:center; align-items:center; z-index:99999; transition: 0.5s; }
+        #preloader.hidden { opacity:0; visibility:hidden; }
+        .loader { width: 40px; height: 40px; border: 4px solid var(--gray-200); border-top: 4px solid var(--orange-primary); border-radius: 50%; animation: spin 0.8s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* ============ AUTH (LOGIN/REGISTER) ============ */
-        .auth-container { width:100%; max-width:480px; padding:20px; }
-        .auth-box { background:white; border-radius:var(--radius-lg); padding:40px 30px; box-shadow:var(--shadow-lg); border:1px solid #f0f0f0; }
-        .auth-logo { text-align:center; margin-bottom:30px; }
-        .auth-logo i { font-size:48px; color:var(--orange-primary); display:block; margin-bottom:10px; }
-        .auth-logo h1 { font-size:28px; font-weight:800; color:var(--gray-900); }
+        /* ===== TOAST NOTIF ===== */
+        .toast-container { position:fixed; top:20px; right:20px; z-index:10000; display:flex; flex-direction:column; gap:10px; }
+        .toast { padding: 14px 20px; border-radius:var(--radius-sm); color:white; font-size:14px; min-width:250px; box-shadow:0 10px 20px rgba(0,0,0,0.15); animation:slideInRight 0.4s; display:flex; align-items:center; gap:10px; }
+        .toast.success { background:var(--success); } .toast.error { background:var(--error); } .toast.warning { background:var(--warning); }
+        @keyframes slideInRight { from { transform:translateX(100%); opacity:0; } to { transform:translateX(0); opacity:1; } }
+
+        /* ===== AUTH LOGIN/REGISTER ===== */
+        .auth-container { width:100%; max-width:440px; padding:20px; }
+        .auth-box { background:white; border-radius:var(--radius-md); padding:40px 30px; box-shadow:0 15px 30px rgba(0,0,0,0.08); border:1px solid var(--gray-200); }
+        .auth-logo { text-align:center; margin-bottom:25px; }
+        .auth-logo i { font-size:40px; color:var(--orange-primary); display:block; margin-bottom:5px; }
+        .auth-logo h1 { font-size:26px; font-weight:800; color:var(--gray-900); }
         .auth-logo h1 span { color:var(--orange-primary); }
-        .auth-logo p { color:var(--gray-500); font-size:14px; margin-top:5px; }
-        .auth-error { display:none; background:#FFEBEE; color:var(--error); padding:12px; border-radius:var(--radius-md); margin-bottom:20px; font-size:14px; font-weight:500; align-items:center; gap:10px; }
-        .auth-error i { font-size:18px; }
-        .form-group { margin-bottom:20px; }
-        .form-group label { display:block; font-weight:600; font-size:14px; color:var(--gray-900); margin-bottom:6px; }
-        .input-group { display:flex; align-items:center; background:#f5f5f5; border-radius:var(--radius-md); padding:0 15px; border:2px solid transparent; transition:0.3s; }
+        .auth-logo p { color:var(--gray-500); font-size:13px; margin-top:4px; }
+        .auth-error { display:none; background:#FFEBEE; color:var(--error); padding:12px; border-radius:var(--radius-sm); margin-bottom:20px; font-size:14px; align-items:center; gap:10px; }
+        .form-group { margin-bottom:18px; }
+        .form-group label { display:block; font-weight:600; font-size:14px; color:var(--gray-800); margin-bottom:5px; }
+        .input-group { display:flex; align-items:center; background:var(--gray-100); border-radius:var(--radius-sm); padding:0 14px; border:2px solid transparent; transition:0.3s; }
         .input-group:focus-within { border-color:var(--orange-primary); background:white; }
-        .input-group i { color:var(--gray-500); font-size:18px; }
-        .input-group input, .input-group select { border:none; background:transparent; padding:15px 12px; font-size:16px; width:100%; outline:none; font-family:inherit; }
-        .input-group select { padding:15px 0; }
-        .input-group input::placeholder { color:#bbb; }
-        .btn-submit { width:100%; padding:16px; background:var(--orange-gradient); color:white; border:none; border-radius:var(--radius-md); font-size:18px; font-weight:700; cursor:pointer; transition:0.3s; display:flex; justify-content:center; align-items:center; gap:10px; }
-        .btn-submit:hover { transform:scale(1.02); box-shadow:0 4px 15px rgba(255,107,0,0.4); }
-        .auth-footer { text-align:center; margin-top:25px; font-size:14px; color:var(--gray-500); }
+        .input-group i { color:var(--gray-500); font-size:16px; }
+        .input-group input, .input-group select { border:none; background:transparent; padding:13px 10px; font-size:15px; width:100%; outline:none; font-family:inherit; }
+        .btn-submit { width:100%; padding:14px; background:var(--orange-primary); color:white; border:none; border-radius:var(--radius-sm); font-size:16px; font-weight:700; cursor:pointer; transition:0.3s; }
+        .btn-submit:hover { transform:scale(1.02); box-shadow:0 5px 15px rgba(255,107,0,0.4); }
+        .auth-footer { text-align:center; margin-top:20px; font-size:14px; color:var(--gray-500); }
         .auth-footer a { color:var(--orange-primary); font-weight:600; cursor:pointer; text-decoration:none; }
-        .auth-footer a:hover { text-decoration:underline; }
         .hidden-form { display:none !important; }
-        @media (max-width:480px) { .auth-box { padding:30px 20px; } }
 
-        /* ============ NAVBAR ============ */
-        .navbar { position:fixed; top:0; left:0; right:0; height:64px; background:white; box-shadow:var(--shadow-sm); z-index:1000; padding:0 20px; display:flex; align-items:center; justify-content:space-between; border-bottom:2px solid var(--orange-pale); }
+        /* ===== NAVBAR ===== */
+        .navbar { position:fixed; top:0; left:0; right:0; height:68px; background:white; box-shadow:0 2px 10px rgba(0,0,0,0.05); z-index:1000; padding:0 25px; display:flex; align-items:center; justify-content:space-between; border-bottom:2px solid var(--orange-light); }
         .navbar-brand { display:flex; align-items:center; gap:10px; font-weight:700; font-size:20px; color:var(--orange-primary); }
-        .navbar-brand i { font-size:24px; } .navbar-brand span { color:var(--gray-900); }
-        .navbar-user { display:flex; align-items:center; gap:12px; }
-        .navbar-user-avatar { width:40px; height:40px; border-radius:50%; background:var(--orange-gradient); color:white; display:flex; align-items:center; justify-content:center; font-weight:600; font-size:16px; }
-        .navbar-user-info { display:flex; flex-direction:column; line-height:1.2; }
+        .navbar-brand i { font-size:22px; } .navbar-brand span { color:var(--gray-900); }
+        .navbar-user { display:flex; align-items:center; gap:15px; }
+        .navbar-user-avatar { width:38px; height:38px; border-radius:50%; background:var(--orange-primary); color:white; display:flex; align-items:center; justify-content:center; font-weight:600; font-size:15px; }
+        .navbar-user-info { display:flex; flex-direction:column; line-height:1.2; text-align:right; }
         .navbar-user-name { font-weight:600; font-size:14px; color:var(--gray-900); }
-        .navbar-user-role { font-size:11px; color:var(--gray-500); }
-        .navbar-actions { display:flex; align-items:center; gap:8px; }
-        .btn-icon { background:transparent; border:none; font-size:20px; color:var(--gray-600); cursor:pointer; padding:8px; border-radius:50%; transition:var(--transition-fast); position:relative; }
+        .navbar-user-role { font-size:12px; color:var(--gray-500); }
+        .navbar-actions { display:flex; align-items:center; gap:10px; }
+        .btn-icon { background:transparent; border:none; font-size:20px; color:var(--gray-600); cursor:pointer; padding:8px; border-radius:50%; transition:0.2s; }
         .btn-icon:hover { background:var(--gray-100); }
-        .btn-icon .badge { position:absolute; top:-4px; right:-4px; background:var(--error); color:white; font-size:10px; padding:2px 6px; border-radius:10px; font-weight:700; }
-        .btn-logout { background:transparent; border:1px solid var(--gray-300); padding:6px 14px; border-radius:var(--radius-sm); font-weight:500; color:var(--gray-700); cursor:pointer; transition:var(--transition-fast); font-size:13px; display:flex; align-items:center; gap:6px; }
+        .btn-logout { background:transparent; border:1px solid var(--gray-300); padding:8px 16px; border-radius:var(--radius-sm); font-weight:500; color:var(--gray-700); cursor:pointer; transition:0.3s; font-size:13px; }
         .btn-logout:hover { background:var(--error); color:white; border-color:var(--error); }
 
-        /* ============ SIDEBAR ============ */
-        .sidebar { position:fixed; top:64px; left:0; bottom:0; width:260px; background:white; box-shadow:var(--shadow-sm); overflow-y:auto; z-index:999; transition:transform var(--transition-normal); padding:0 0 20px 0; }
+        /* ===== SIDEBAR MODERN ===== */
+        .sidebar { position:fixed; top:68px; left:0; bottom:0; width:260px; background:white; box-shadow:2px 0 10px rgba(0,0,0,0.03); overflow-y:auto; z-index:999; transition:transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); padding:20px 0 30px 0; }
         .sidebar.closed { transform:translateX(-100%); }
-        .sidebar-menu-title { font-size:12px; text-transform:uppercase; color:var(--gray-400); font-weight:700; padding:10px 20px; letter-spacing:1px; margin-top:0; }
-        .sidebar-menu-item { display:flex; align-items:center; gap:12px; padding:12px 20px; cursor:pointer; transition:var(--transition-fast); color:var(--gray-700); font-size:14px; font-weight:500; position:relative; }
-        .sidebar-menu-item:hover { background:var(--orange-pale); color:var(--orange-primary); }
-        .sidebar-menu-item.active { background:var(--orange-pale); color:var(--orange-primary); border-right:3px solid var(--orange-primary); }
-        .sidebar-menu-item i { width:20px; text-align:center; font-size:16px; }
-        .sidebar-overlay { position:fixed; top:64px; left:0; right:0; bottom:0; background:rgba(0,0,0,0.3); z-index:998; display:none; }
+        .sidebar-menu-title { font-size:11px; text-transform:uppercase; color:var(--gray-400); font-weight:700; padding:12px 25px; letter-spacing:1px; }
+        .sidebar-menu-item { display:flex; align-items:center; gap:14px; padding:12px 25px; cursor:pointer; transition:0.3s; color:var(--gray-600); font-size:14px; font-weight:500; border-right:3px solid transparent; }
+        .sidebar-menu-item:hover { background:var(--gray-50); color:var(--orange-primary); padding-left:30px; }
+        .sidebar-menu-item.active { background:var(--orange-light); color:var(--orange-primary); border-right-color:var(--orange-primary); font-weight:600; }
+        .sidebar-menu-item i { width:22px; text-align:center; font-size:18px; }
+        .sidebar-overlay { position:fixed; top:68px; left:0; right:0; bottom:0; background:rgba(0,0,0,0.4); z-index:998; display:none; backdrop-filter:blur(4px); }
         .sidebar-overlay.active { display:block; }
 
-        /* ============ CONTENT AREA (REVISI AGAR BERGESER) ============ */
-        .content-area { margin-left:260px; padding:84px 25px 25px 25px; min-height:100vh; transition:margin-left var(--transition-normal); background:#FFF8F3; width:calc(100% - 260px); }
+        /* ===== CONTENT AREA (BERGESER OTOMATIS) ===== */
+        .content-area { margin-left:260px; padding:88px 30px 30px 30px; min-height:100vh; transition:margin-left 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); background:#F8F9FA; width:calc(100% - 260px); }
         .content-area.expanded { margin-left:0; width:100%; }
         @media (max-width:768px) {
             .sidebar:not(.closed) + .sidebar-overlay.active { display:block; }
             .sidebar.closed { transform:translateX(-100%); }
             .sidebar:not(.closed) { transform:translateX(0); }
-            .content-area { margin-left:0; width:100%; }
+            .content-area { margin-left:0; width:100%; padding:80px 15px 15px 15px; }
         }
         @media (min-width:769px) {
             .sidebar-overlay { display:none !important; }
             .sidebar.closed { transform:translateX(0); }
-            .sidebar { width:260px; }
         }
 
-        /* ============ PAGE HEADER ============ */
-        .page-header { margin-bottom:25px; }
-        .page-header .breadcrumb { display:flex; align-items:center; gap:8px; font-size:13px; color:var(--gray-500); margin-bottom:8px; }
-        .page-header .breadcrumb i { font-size:12px; }
-        .page-header .breadcrumb .active { color:var(--gray-900); font-weight:500; }
+        /* ===== PAGE HEADER ===== */
+        .page-header { margin-bottom:25px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; }
         .page-header h2 { font-size:24px; font-weight:700; color:var(--gray-900); margin-bottom:4px; }
         .page-header p { color:var(--gray-500); font-size:14px; }
+        .breadcrumb { display:flex; align-items:center; gap:6px; font-size:13px; color:var(--gray-500); }
+        .breadcrumb .active { color:var(--gray-800); font-weight:500; }
 
-        /* ============ CARDS & STATS ============ */
-        .card { background:white; border-radius:var(--radius-md); box-shadow:var(--shadow-sm); margin-bottom:20px; overflow:hidden; }
-        .card-header { padding:18px 20px; border-bottom:1px solid var(--gray-200); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; }
-        .card-header h3 { font-size:16px; font-weight:600; color:var(--gray-900); display:flex; align-items:center; gap:8px; }
-        .card-body { padding:20px; }
-        .stats-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:20px; margin-bottom:25px; }
-        .stat-card { background:white; border-radius:var(--radius-md); padding:20px; box-shadow:var(--shadow-sm); display:flex; align-items:center; gap:15px; cursor:pointer; transition:var(--transition-fast); }
-        .stat-card:hover { transform:translateY(-3px); box-shadow:var(--shadow-md); }
-        .stat-card-icon { width:50px; height:50px; border-radius:var(--radius-sm); display:flex; align-items:center; justify-content:center; font-size:24px; flex-shrink:0; }
-        .stat-card-icon.orange { background:var(--orange-pale); color:var(--orange-primary); }
-        .stat-card-icon.green { background:#E8F5E9; color:var(--success); }
-        .stat-card-icon.blue { background:#E3F2FD; color:var(--info); }
-        .stat-card-icon.yellow { background:#FFF3E0; color:var(--warning); }
-        .stat-card-content h3 { font-size:13px; font-weight:500; color:var(--gray-500); margin-bottom:4px; }
-        .stat-number { font-size:28px; font-weight:700; color:var(--gray-900); }
-        .stat-change { font-size:12px; margin-top:4px; display:flex; align-items:center; gap:4px; }
-        .stat-change.up { color:var(--success); } .stat-change.down { color:var(--error); }
+        /* ===== CARDS ===== */
+        .card { background:white; border-radius:var(--radius-md); box-shadow:0 2px 8px rgba(0,0,0,0.04); margin-bottom:24px; overflow:hidden; border:1px solid var(--gray-200); }
+        .card-header { padding:18px 24px; border-bottom:1px solid var(--gray-200); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; background:var(--gray-50); }
+        .card-header h3 { font-size:16px; font-weight:600; color:var(--gray-800); display:flex; align-items:center; gap:10px; }
+        .card-body { padding:24px; }
 
-        /* ============ BUTTONS ============ */
-        .btn { display:inline-block; padding:8px 18px; border-radius:var(--radius-sm); font-weight:500; font-size:14px; cursor:pointer; border:none; transition:var(--transition-fast); font-family:inherit; text-decoration:none; text-align:center; }
-        .btn-primary { background:var(--orange-gradient); color:white; }
-        .btn-primary:hover { opacity:0.9; transform:scale(1.02); }
-        .btn-secondary { background:var(--gray-300); color:var(--gray-700); }
-        .btn-secondary:hover { background:var(--gray-400); }
-        .btn-sm { padding:5px 12px; font-size:12px; }
+        /* ===== BUTTONS KECIL & CANTIK ===== */
+        .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:8px 16px; border-radius:var(--radius-sm); font-weight:500; font-size:14px; cursor:pointer; border:none; transition:0.3s; font-family:inherit; text-decoration:none; }
+        .btn-primary { background:var(--orange-primary); color:white; }
+        .btn-primary:hover { opacity:0.9; transform:translateY(-1px); box-shadow:0 4px 10px rgba(255,107,0,0.3); }
+        .btn-secondary { background:var(--gray-200); color:var(--gray-700); }
+        .btn-secondary:hover { background:var(--gray-300); }
+        .btn-danger { background:var(--error); color:white; }
+        .btn-danger:hover { background:#d32f2f; }
+        /* UKURAN TOMBOL KHUSUS UNTUK DAFTAR DOKUMEN (AGAR TIDAK KOTAK RAKSASA) */
+        .btn-xs { padding:5px 12px; font-size:12px; border-radius:6px; gap:6px; }
 
-        /* ============ MODALS ============ */
-        .modal-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:10000; display:none; justify-content:center; align-items:center; }
+        /* ===== DAFTAR DOKUMEN (REVISI TAMPILAN) ===== */
+        .doc-item { display:flex; justify-content:space-between; align-items:center; padding:16px 0; border-bottom:1px solid var(--gray-100); }
+        .doc-item:last-child { border-bottom:none; }
+        .doc-info { display:flex; align-items:center; gap:16px; flex:1; }
+        .doc-thumb { width:64px; height:64px; border-radius:var(--radius-sm); object-fit:cover; border:1px solid var(--gray-200); cursor:pointer; transition:0.3s; }
+        .doc-thumb:hover { transform:scale(1.05); box-shadow:0 4px 10px rgba(0,0,0,0.15); }
+        .doc-icon { width:64px; height:64px; border-radius:var(--radius-sm); background:var(--orange-light); color:var(--orange-primary); display:flex; align-items:center; justify-content:center; font-size:28px; }
+        .doc-text h4 { font-size:15px; font-weight:600; color:var(--gray-800); margin-bottom:2px; }
+        .doc-text p { font-size:13px; color:var(--gray-500); margin:0; }
+        .doc-actions { display:flex; gap:8px; }
+        
+        .empty-state { text-align:center; padding:40px 20px; color:var(--gray-500); }
+        .empty-state i { font-size:48px; color:var(--gray-300); display:block; margin-bottom:15px; }
+        .empty-state h3 { font-size:18px; font-weight:600; margin-bottom:5px; color:var(--gray-700); }
+
+        /* ===== MODALS CANTIK ===== */
+        .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:10000; display:none; justify-content:center; align-items:center; backdrop-filter:blur(4px); }
         .modal-overlay.active { display:flex; }
-        .modal { background:white; border-radius:var(--radius-lg); max-width:600px; width:90%; max-height:90vh; overflow-y:auto; box-shadow:var(--shadow-xl); animation:modalFadeIn 0.3s ease; }
-        @keyframes modalFadeIn { from { opacity:0; transform:translateY(-20px) scale(0.95); } to { opacity:1; transform:translateY(0) scale(1); } }
-        .modal-header { padding:18px 20px; border-bottom:1px solid var(--gray-200); display:flex; justify-content:space-between; align-items:center; }
-        .modal-header h3 { font-size:18px; font-weight:600; color:var(--gray-900); }
-        .modal-close { background:transparent; border:none; font-size:20px; cursor:pointer; color:var(--gray-500); transition:var(--transition-fast); }
+        .modal { background:white; border-radius:var(--radius-md); max-width:600px; width:92%; max-height:90vh; overflow-y:auto; box-shadow:0 25px 50px rgba(0,0,0,0.25); animation:modalFade 0.3s ease; }
+        @keyframes modalFade { from { opacity:0; transform:translateY(-20px) scale(0.95); } to { opacity:1; transform:translateY(0) scale(1); } }
+        .modal-header { padding:18px 24px; border-bottom:1px solid var(--gray-200); display:flex; justify-content:space-between; align-items:center; background:var(--gray-50); border-radius:var(--radius-md) var(--radius-md) 0 0; }
+        .modal-header h3 { font-size:18px; font-weight:600; color:var(--gray-800); }
+        .modal-close { background:transparent; border:none; font-size:22px; cursor:pointer; color:var(--gray-500); transition:0.3s; }
         .modal-close:hover { color:var(--error); transform:rotate(90deg); }
-        .modal-body { padding:20px; }
-        .modal-footer { padding:15px 20px; border-top:1px solid var(--gray-200); display:flex; justify-content:flex-end; gap:10px; }
-
-        /* ============ UTILITY ============ */
+        .modal-body { padding:24px; }
+        .modal-footer { padding:16px 24px; border-top:1px solid var(--gray-200); display:flex; justify-content:flex-end; gap:10px; background:var(--gray-50); border-radius:0 0 var(--radius-md) var(--radius-md); }
+        
+        /* ===== UTILITY ===== */
         .hidden { display:none !important; }
         .text-center { text-align:center; }
-
-        /* ============ PRODUCT GRID & EMPTY STATE ============ */
-        .product-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(180px, 1fr)); gap:15px; }
-        @media (max-width:600px) { .product-grid { grid-template-columns:repeat(auto-fill, minmax(140px, 1fr)); } }
-        .empty-state { text-align:center; padding:40px 20px; color:var(--gray-500); }
-        .empty-state i { font-size:50px; color:var(--gray-400); display:block; margin-bottom:15px; }
-        .empty-state h3 { font-size:18px; font-weight:600; margin-bottom:5px; color:var(--gray-700); }
-        .empty-state p { font-size:14px; }
+        .w-full { width:100%; }
+        .mt-10 { margin-top:10px; }
+        input[type="text"], input[type="email"], input[type="tel"], textarea { width:100%; padding:12px; border-radius:var(--radius-sm); border:1px solid var(--gray-300); font-family:inherit; font-size:14px; transition:0.3s; background:var(--gray-50); }
+        input:focus, textarea:focus { outline:2px solid var(--orange-primary); border-color:transparent; background:white; }
+        
+        /* ===== PREVIEW GAMBAR BESAR ===== */
+        .modal-preview-gambar .modal { max-width:800px; background:transparent; box-shadow:none; }
+        .modal-preview-gambar .modal-header { background:white; border-radius:var(--radius-md) var(--radius-md) 0 0; }
+        .modal-preview-gambar .modal-body { padding:0; background:#1a1a1a; border-radius:0 0 var(--radius-md) var(--radius-md); text-align:center; }
+        .modal-preview-gambar .modal-body img { max-width:100%; max-height:75vh; display:block; margin:0 auto; border-radius:0 0 var(--radius-md) var(--radius-md); }
     </style>
 </head>
-<!-- ============ AKHIR BLOK 1 R1 HEAD & CSS ============ -->
+<!-- ============ AKHIR BLOK 1 ============ -->
 
 <!-- ============ BLOK 2 PRELOADER & TOAST ============ -->
 <body>
 <div id="preloader"><div class="loader"></div></div>
 <div class="toast-container" id="toastContainer"></div>
-<!-- ============ AKHIR BLOK 2 PRELOADER & TOAST ============ -->
+<!-- ============ AKHIR BLOK 2 ============ -->
 
 <!-- ============ BLOK 3 AUTH CONTAINER ============ -->
 <div class="auth-container" id="pageAuth">
@@ -201,56 +197,40 @@
         <form class="auth-form" id="loginForm" onsubmit="prosesLogin(event)">
             <div class="form-group">
                 <label for="loginUsername">Username</label>
-                <div class="input-group"><i class="fas fa-user"></i><input type="text" id="loginUsername" placeholder="Masukkan username" autocomplete="username" required></div>
+                <div class="input-group"><i class="fas fa-user"></i><input type="text" id="loginUsername" placeholder="Masukkan username" required></div>
             </div>
             <div class="form-group">
                 <label for="loginPassword">Password</label>
-                <div class="input-group"><i class="fas fa-lock"></i><input type="password" id="loginPassword" placeholder="Masukkan password" autocomplete="current-password" required></div>
+                <div class="input-group"><i class="fas fa-lock"></i><input type="password" id="loginPassword" placeholder="Masukkan password" required></div>
             </div>
-            <div class="form-group" style="margin-top:25px;">
-                <button type="submit" class="btn-submit"><i class="fas fa-sign-in-alt"></i> Masuk</button>
-            </div>
+            <button type="submit" class="btn-submit"><i class="fas fa-sign-in-alt"></i> Masuk</button>
             <div class="auth-footer">Belum punya akun? <a onclick="toggleForm('register')">Daftar di sini</a></div>
         </form>
         <form class="auth-form hidden-form" id="registerForm" onsubmit="prosesRegister(event)">
             <div class="form-group">
-                <label>ID Akun (Otomatis)</label>
+                <label>ID Akun</label>
                 <div class="input-group" style="background:#f0f0f0; border:2px solid #ddd;">
                     <i class="fas fa-id-card"></i>
                     <span id="regIdPreview" style="padding:15px 12px; font-weight:600; color:var(--gray-700);">-</span>
                 </div>
             </div>
             <div class="form-group">
-                <label for="regRole">Pilih Role <span style="color:var(--error);">*</span></label>
-                <div class="input-group">
-                    <i class="fas fa-user-tag"></i>
-                    <select id="regRole" onchange="updateIdPreview()">
-                        <option value="customer">Customer</option>
-                        <option value="toko">Toko</option>
-                        <option value="ojek">Ojek</option>
-                        <option value="pedagang">Pedagang Pasar</option>
-                        <option value="codseller">COD Seller</option>
-                    </select>
-                </div>
+                <label for="regRole">Pilih Role</label>
+                <div class="input-group"><i class="fas fa-user-tag"></i><select id="regRole" onchange="updateIdPreview()"><option value="customer">Customer</option><option value="toko">Toko</option><option value="ojek">Ojek</option><option value="pedagang">Pedagang Pasar</option><option value="codseller">COD Seller</option></select></div>
             </div>
-            <div class="form-group"><label for="regUsername">Username <span style="color:var(--error);">*</span></label><div class="input-group"><i class="fas fa-user"></i><input type="text" id="regUsername" placeholder="Buat username (4-20 karakter)" required></div></div>
-            <div class="form-group"><label for="regPassword">Password <span style="color:var(--error);">*</span></label><div class="input-group"><i class="fas fa-lock"></i><input type="password" id="regPassword" placeholder="Buat password (minimal 6 karakter)" required></div></div>
-            <div class="form-group"><label for="regNama">Nama Lengkap <span style="color:var(--error);">*</span></label><div class="input-group"><i class="fas fa-id-card"></i><input type="text" id="regNama" placeholder="Nama lengkap Anda" required></div></div>
-            <div class="form-group"><label for="regEmail">Email (opsional)</label><div class="input-group"><i class="fas fa-envelope"></i><input type="email" id="regEmail" placeholder="Email"></div></div>
-            <div class="form-group"><label for="regHp">Nomor HP (opsional)</label><div class="input-group"><i class="fas fa-phone"></i><input type="tel" id="regHp" placeholder="Nomor HP"></div></div>
-            <div style="margin-bottom:20px; padding:12px; background:#FFF3E0; border-radius:8px; font-size:13px; color:var(--gray-700);">
-                <i class="fas fa-map-marker-alt" style="color:var(--orange-primary);"></i> Sistem akan merekam koordinat lokasi Anda.
-            </div>
-            <div class="form-group" style="margin-top:25px;">
-                <button type="submit" class="btn-submit"><i class="fas fa-user-plus"></i> Daftar</button>
-            </div>
+            <div class="form-group"><label>Username</label><div class="input-group"><i class="fas fa-user"></i><input type="text" id="regUsername" placeholder="Buat username" required></div></div>
+            <div class="form-group"><label>Password</label><div class="input-group"><i class="fas fa-lock"></i><input type="password" id="regPassword" placeholder="Buat password" required></div></div>
+            <div class="form-group"><label>Nama Lengkap</label><div class="input-group"><i class="fas fa-id-card"></i><input type="text" id="regNama" placeholder="Nama lengkap Anda" required></div></div>
+            <div class="form-group"><label>Email (Opsional)</label><div class="input-group"><i class="fas fa-envelope"></i><input type="email" id="regEmail" placeholder="Email"></div></div>
+            <div class="form-group"><label>No HP (Opsional)</label><div class="input-group"><i class="fas fa-phone"></i><input type="tel" id="regHp" placeholder="Nomor HP"></div></div>
+            <button type="submit" class="btn-submit"><i class="fas fa-user-plus"></i> Daftar</button>
             <div class="auth-footer">Sudah punya akun? <a onclick="toggleForm('login')">Login di sini</a></div>
         </form>
     </div>
 </div>
-<!-- ============ AKHIR BLOK 3 AUTH CONTAINER ============ -->
+<!-- ============ AKHIR BLOK 3 ============ -->
 
-<!-- ============ BLOK 4 NAVBAR ============ -->
+<!-- ============ BLOK 4 NAVBAR & SIDEBAR ============ -->
 <nav class="navbar hidden" id="mainNavbar">
     <div class="navbar-brand"><i class="fas fa-store-alt"></i><span>Toko Online 2R</span></div>
     <div class="navbar-user">
@@ -261,50 +241,8 @@
         </div>
     </div>
     <div class="navbar-actions">
-        <button class="btn-icon" id="btnSidebarToggle" title="Toggle Menu"><i class="fas fa-bars"></i></button>
-        <button class="btn-icon" id="btnChatNav" title="Chat"><i class="fas fa-comments"></i><span class="badge hidden" id="chatBadge">0</span></button>
-        <button class="btn-logout" id="btnLogout"><i class="fas fa-sign-out-alt"></i> Keluar</button>
-    </div>
-</nav>
-<!-- ============ AKHIR BLOK 4 NAVBAR ============ -->
-
-<!-- ============ BLOK 5 SIDEBAR ============ -->
-<div class="sidebar-overlay" id="sidebarOverlay"></div>
-<aside class="sidebar hidden closed" id="mainSidebar">
-    <div class="sidebar-menu">
-        <div class="sidebar-menu-title">Menu Utama</div>
-        <div class="sidebar-menu-item active" data-page="dashboard" id="menuDashboard"><i class="fas fa-th-large"></i> Dasbor</div>
-        <div class="sidebar-menu-item" data-page="profile" id="menuProfile"><i class="fas fa-user-circle"></i> Profil</div>
-        <div class="sidebar-menu-item" data-page="lihatToko"><i class="fas fa-store"></i> Lihat Semua Toko</div>
-        <div class="sidebar-menu-item" data-page="lihatOjek"><i class="fas fa-motorcycle"></i> Lihat Semua Ojek</div>
-        <div class="sidebar-menu-item" data-page="lihatProduk"><i class="fas fa-box"></i> Lihat Semua Produk</div>
-        <div class="sidebar-menu-item" data-page="chat"><i class="fas fa-comments"></i> Chat</div>
-        <div class="sidebar-menu-title">Menu Admin</div>
-        <div class="sidebar-menu-item menu-admin" data-page="daftarAkun"><i class="fas fa-user-plus"></i> Daftar Akun Baru</div>
-        <div class="sidebar-menu-item menu-admin" data-page="transferMenu"><i class="fas fa-exchange-alt"></i> Transfer Menu</div>
-        <div class="sidebar-menu-item menu-admin" data-page="kelolaAkun"><i class="fas fa-users-cog"></i> Kelola Semua Akun</div>
-        <div class="sidebar-menu-item menu-admin" data-page="penagihan"><i class="fas fa-file-invoice-dollar"></i> Penagihan</div>
-        <div class="sidebar-menu-item menu-admin" data-page="settingRekening"><i class="fas fa-university"></i> Setting Rekening</div>
-        <div class="sidebar-menu-item menu-admin" data-page="kelolaUpgrade"><i class="fas fa-crown"></i> Kelola Upgrade</div>
-        <div class="sidebar-menu-item menu-admin" data-page="settingTarifOjek"><i class="fas fa-cogs"></i> Setting Tarif Ojek</div>
-        <div class="sidebar-menu-item menu-admin" data-page="kelolaIklan"><i class="fas fa-ad"></i> Kelola Iklan</div>
-    </div>
-</aside>
-<!-- ============ AKHIR BLOK 5 SIDEBAR ============ -->
-
-<!-- ============ BLOK 6 CONTENT AREA (REVISI TOMBOL & PREVIEW GAMBAR) ============ -->
-<nav class="navbar hidden" id="mainNavbar">
-    <div class="navbar-brand"><i class="fas fa-store-alt"></i><span>Toko Online 2R</span></div>
-    <div class="navbar-user">
-        <div class="navbar-user-avatar" id="navbarAvatar">SA</div>
-        <div class="navbar-user-info">
-            <span class="navbar-user-name" id="navbarUserName">SuperAdmin</span>
-            <span class="navbar-user-role" id="navbarUserRole">SuperAdmin</span>
-        </div>
-    </div>
-    <div class="navbar-actions">
-        <button class="btn-icon" id="btnSidebarToggle" title="Toggle Menu"><i class="fas fa-bars"></i></button>
-        <button class="btn-icon" id="btnChatNav" title="Chat"><i class="fas fa-comments"></i><span class="badge hidden" id="chatBadge">0</span></button>
+        <button class="btn-icon" id="btnSidebarToggle"><i class="fas fa-bars"></i></button>
+        <button class="btn-icon" id="btnChatNav"><i class="fas fa-comments"></i></button>
         <button class="btn-logout" id="btnLogout"><i class="fas fa-sign-out-alt"></i> Keluar</button>
     </div>
 </nav>
@@ -313,193 +251,131 @@
 <aside class="sidebar hidden closed" id="mainSidebar">
     <div class="sidebar-menu">
         <div class="sidebar-menu-title">Menu Utama</div>
-        <div class="sidebar-menu-item active" data-page="dashboard" id="menuDashboard"><i class="fas fa-th-large"></i> Dasbor</div>
-        <div class="sidebar-menu-item" data-page="profile" id="menuProfile"><i class="fas fa-user-circle"></i> Profil</div>
+        <div class="sidebar-menu-item active" data-page="dashboard"><i class="fas fa-th-large"></i> Dasbor</div>
+        <div class="sidebar-menu-item" data-page="profile"><i class="fas fa-user-circle"></i> Profil</div>
         <div class="sidebar-menu-item" data-page="lihatToko"><i class="fas fa-store"></i> Lihat Semua Toko</div>
         <div class="sidebar-menu-item" data-page="lihatOjek"><i class="fas fa-motorcycle"></i> Lihat Semua Ojek</div>
         <div class="sidebar-menu-item" data-page="lihatProduk"><i class="fas fa-box"></i> Lihat Semua Produk</div>
         <div class="sidebar-menu-item" data-page="chat"><i class="fas fa-comments"></i> Chat</div>
         <div class="sidebar-menu-title">Menu Admin</div>
-        <div class="sidebar-menu-item menu-admin" data-page="daftarAkun"><i class="fas fa-user-plus"></i> Daftar Akun Baru</div>
-        <div class="sidebar-menu-item menu-admin" data-page="transferMenu"><i class="fas fa-exchange-alt"></i> Transfer Menu</div>
-        <div class="sidebar-menu-item menu-admin" data-page="kelolaAkun"><i class="fas fa-users-cog"></i> Kelola Semua Akun</div>
-        <div class="sidebar-menu-item menu-admin" data-page="penagihan"><i class="fas fa-file-invoice-dollar"></i> Penagihan</div>
-        <div class="sidebar-menu-item menu-admin" data-page="settingRekening"><i class="fas fa-university"></i> Setting Rekening</div>
-        <div class="sidebar-menu-item menu-admin" data-page="kelolaUpgrade"><i class="fas fa-crown"></i> Kelola Upgrade</div>
-        <div class="sidebar-menu-item menu-admin" data-page="settingTarifOjek"><i class="fas fa-cogs"></i> Setting Tarif Ojek</div>
-        <div class="sidebar-menu-item menu-admin" data-page="kelolaIklan"><i class="fas fa-ad"></i> Kelola Iklan</div>
+        <div class="sidebar-menu-item" data-page="daftarAkun"><i class="fas fa-user-plus"></i> Daftar Akun Baru</div>
+        <div class="sidebar-menu-item" data-page="transferMenu"><i class="fas fa-exchange-alt"></i> Transfer Menu</div>
+        <div class="sidebar-menu-item" data-page="kelolaAkun"><i class="fas fa-users-cog"></i> Kelola Semua Akun</div>
+        <div class="sidebar-menu-item" data-page="penagihan"><i class="fas fa-file-invoice-dollar"></i> Penagihan</div>
+        <div class="sidebar-menu-item" data-page="settingRekening"><i class="fas fa-university"></i> Setting Rekening</div>
+        <div class="sidebar-menu-item" data-page="kelolaUpgrade"><i class="fas fa-crown"></i> Kelola Upgrade</div>
+        <div class="sidebar-menu-item" data-page="settingTarifOjek"><i class="fas fa-cogs"></i> Setting Tarif Ojek</div>
+        <div class="sidebar-menu-item" data-page="kelolaIklan"><i class="fas fa-ad"></i> Kelola Iklan</div>
     </div>
 </aside>
+<!-- ============ AKHIR BLOK 4 ============ -->
 
+<!-- ============ BLOK 5 CONTENT AREA (DASHBOARD & PROFIL) ============ -->
 <main class="content-area expanded hidden" id="contentArea">
-    <!-- Dasbor -->
+    <!-- DASHBOARD -->
     <div class="page" id="pageDashboard">
         <div class="page-header">
-            <div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Dasbor</span></div>
-            <h2>Dasbor SuperAdmin</h2>
-            <p>Selamat datang, <strong id="dashboardNama">SuperAdmin</strong> — Anda memiliki kendali penuh atas sistem</p>
+            <div><h2>Dasbor SuperAdmin</h2><p>Selamat datang, <strong id="dashboardNama">SuperAdmin</strong> — Anda memiliki kendali penuh.</p></div>
         </div>
-        <div class="card">
-            <div class="card-body text-center" style="padding:60px 20px;">
-                <i class="fas fa-tachometer-alt" style="font-size:64px; color:var(--gray-400); margin-bottom:20px; display:block;"></i>
-                <h3 style="color:var(--gray-700); margin-bottom:8px;">Dasbor Siap Digunakan</h3>
-                <p style="color:var(--gray-500);">Tambahkan widget dan fitur di sini sesuai kebutuhan.</p>
-            </div>
-        </div>
+        <div class="card"><div class="card-body text-center" style="padding:60px 20px;">
+            <i class="fas fa-tachometer-alt" style="font-size:56px; color:var(--gray-300); margin-bottom:15px; display:block;"></i>
+            <h3 style="color:var(--gray-600);">Dasbor Siap Digunakan</h3>
+            <p style="color:var(--gray-500);">Tambahkan widget dan fitur di sini sesuai kebutuhan.</p>
+        </div></div>
     </div>
 
-    <!-- Profil (lengkap) -->
+    <!-- PROFIL -->
     <div class="page" id="pageProfile">
         <div class="page-header">
-            <div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Profil SuperAdmin</span></div>
-            <h2>Profil SuperAdmin</h2>
-            <p>Kelola data profil dan dokumen perusahaan <strong>Toko Online 2R</strong></p>
+            <div><h2>Profil SuperAdmin</h2><p>Kelola data profil dan dokumen perusahaan <strong>Toko Online 2R</strong></p></div>
         </div>
+        
         <div class="card">
-            <div class="card-header">
-                <h3><i class="fas fa-user-circle" style="color:var(--orange-primary)"></i> Informasi Profil</h3>
+            <div class="card-header"><h3><i class="fas fa-user-circle" style="color:var(--orange-primary)"></i> Informasi Profil</h3>
                 <button class="btn btn-primary btn-sm" onclick="bukaModalEditProfil()"><i class="fas fa-edit"></i> Edit Profil</button>
             </div>
             <div class="card-body">
-                <div class="profile-details" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap:15px;">
-                    <div class="profile-detail-item"><div class="profile-detail-icon"><i class="fas fa-user"></i></div><div class="profile-detail-text"><h4>Nama Lengkap</h4><p id="profilNama">-</p></div></div>
-                    <div class="profile-detail-item"><div class="profile-detail-icon"><i class="fas fa-map-marker-alt"></i></div><div class="profile-detail-text"><h4>Alamat</h4><p id="profilAlamat">-</p></div></div>
-                    <div class="profile-detail-item"><div class="profile-detail-icon"><i class="fas fa-envelope"></i></div><div class="profile-detail-text"><h4>Email</h4><p id="profilEmail">-</p></div></div>
-                    <div class="profile-detail-item"><div class="profile-detail-icon"><i class="fas fa-phone"></i></div><div class="profile-detail-text"><h4>Nomor HP</h4><p id="profilHp">-</p></div></div>
-                    <div class="profile-detail-item"><div class="profile-detail-icon"><i class="fas fa-briefcase"></i></div><div class="profile-detail-text"><h4>Jabatan</h4><p id="profilJabatan">-</p></div></div>
-                    <div class="profile-detail-item"><div class="profile-detail-icon"><i class="fas fa-building"></i></div><div class="profile-detail-text"><h4>Nama Perusahaan Penerbit</h4><p id="profilPerusahaan">-</p></div></div>
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:20px;">
+                    <div><p style="font-size:12px; color:var(--gray-500);">Nama Lengkap</p><p style="font-weight:600;" id="profilNama">-</p></div>
+                    <div><p style="font-size:12px; color:var(--gray-500);">Alamat</p><p style="font-weight:600;" id="profilAlamat">-</p></div>
+                    <div><p style="font-size:12px; color:var(--gray-500);">Email</p><p style="font-weight:600;" id="profilEmail">-</p></div>
+                    <div><p style="font-size:12px; color:var(--gray-500);">Nomor HP</p><p style="font-weight:600;" id="profilHp">-</p></div>
+                    <div><p style="font-size:12px; color:var(--gray-500);">Jabatan</p><p style="font-weight:600;" id="profilJabatan">-</p></div>
+                    <div><p style="font-size:12px; color:var(--gray-500);">Perusahaan Penerbit</p><p style="font-weight:600;" id="profilPerusahaan">-</p></div>
                 </div>
             </div>
         </div>
 
-        <!-- REVISI BAGIAN DOKUMEN PERUSAHAAN -->
+        <!-- DOKUMEN PERUSAHAAN -->
         <div class="card">
-            <div class="card-header">
-                <h3><i class="fas fa-folder-open" style="color:var(--orange-primary)"></i> Dokumen Perusahaan</h3>
-                <button class="btn btn-primary btn-sm" id="btnUnggahDokumen" style="position:relative; z-index:10; cursor:pointer;">
-                    <i class="fas fa-upload"></i> Unggah Dokumen
-                </button>
+            <div class="card-header"><h3><i class="fas fa-folder-open" style="color:var(--orange-primary)"></i> Dokumen Perusahaan</h3>
+                <button class="btn btn-primary btn-sm" id="btnUnggahDokumen"><i class="fas fa-upload"></i> Unggah Dokumen</button>
                 <input type="file" id="inputDokumen" multiple accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png" style="display:none">
             </div>
-            <div class="card-body">
-                <div id="daftarDokumen" class="empty-state">
-                    <i class="fas fa-cloud-upload-alt" style="font-size:40px; color:var(--gray-400);"></i>
-                    <h3>Belum ada dokumen</h3>
-                    <p>Klik tombol "Unggah Dokumen" untuk menambahkan.</p>
-                </div>
+            <div class="card-body" id="daftarDokumen">
+                <div class="empty-state"><i class="fas fa-cloud-upload-alt"></i><h3>Belum ada dokumen</h3><p>Klik tombol di atas untuk menambahkan.</p></div>
             </div>
         </div>
-        <!-- AKHIR REVISI BAGIAN DOKUMEN PERUSAHAAN -->
 
         <div class="card">
             <div class="card-header"><h3><i class="fas fa-sticky-note" style="color:var(--orange-primary)"></i> Keterangan</h3></div>
             <div class="card-body">
-                <textarea id="textKeterangan" rows="5" style="width:100%; padding:12px; border-radius:8px; border:1px solid var(--gray-300); font-family:inherit; resize:vertical;" placeholder="Isi keterangan perusahaan..."></textarea>
+                <textarea id="textKeterangan" rows="4" placeholder="Isi keterangan perusahaan..."></textarea>
                 <button class="btn btn-primary mt-10" onclick="simpanKeterangan()"><i class="fas fa-save"></i> Simpan Keterangan</button>
             </div>
         </div>
     </div>
 
-    <!-- Modal Edit Profil -->
-    <div class="modal-overlay" id="modalEditProfil">
-        <div class="modal">
-            <div class="modal-header"><h3>Edit Profil SuperAdmin</h3><button class="modal-close" onclick="tutupModal('modalEditProfil')"><i class="fas fa-times"></i></button></div>
-            <div class="modal-body">
-                <div class="form-group"><label>Nama Lengkap</label><input type="text" id="editNama"></div>
-                <div class="form-group"><label>Alamat</label><input type="text" id="editAlamat"></div>
-                <div class="form-group"><label>Email</label><input type="email" id="editEmail"></div>
-                <div class="form-group"><label>Nomor HP</label><input type="tel" id="editHp"></div>
-                <div class="form-group"><label>Jabatan</label><input type="text" id="editJabatan"></div>
-                <div class="form-group"><label>Nama Perusahaan Penerbit</label><input type="text" id="editPerusahaan"></div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" onclick="tutupModal('modalEditProfil')">Batal</button>
-                <button class="btn btn-primary" onclick="simpanProfil()"><i class="fas fa-save"></i> Simpan</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Edit Dokumen -->
-    <div class="modal-overlay" id="modalEditDokumen">
-        <div class="modal">
-            <div class="modal-header"><h3>Edit Dokumen</h3><button class="modal-close" onclick="tutupModal('modalEditDokumen')"><i class="fas fa-times"></i></button></div>
-            <div class="modal-body">
-                <input type="hidden" id="editDocId">
-                <div class="form-group"><label>Nama File</label><input type="text" id="editDocName"></div>
-                <div class="form-group"><label>Keterangan</label><input type="text" id="editDocKeterangan"></div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" onclick="tutupModal('modalEditDokumen')">Batal</button>
-                <button class="btn btn-primary" onclick="simpanEditDokumen()"><i class="fas fa-save"></i> Simpan</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- === TAMBAHAN: Modal Lihat Gambar Besar === -->
-    <div class="modal-overlay" id="modalPreviewGambar">
-        <div class="modal" style="max-width: 800px; background: transparent; box-shadow: none;">
-            <div class="modal-header" style="background: white; border-radius: 16px 16px 0 0;">
-                <h3 id="modalPreviewTitle">Preview Gambar</h3>
-                <button class="modal-close" onclick="tutupModal('modalPreviewGambar')"><i class="fas fa-times"></i></button>
-            </div>
-            <div class="modal-body" style="padding: 0; background: #f0f0f0; text-align: center; border-radius: 0 0 16px 16px;">
-                <img id="modalPreviewImage" src="" alt="Preview" style="max-width: 100%; max-height: 70vh; display: block; margin: 0 auto; border-radius: 0 0 16px 16px;">
-            </div>
-        </div>
-    </div>
-
-    <!-- Placeholder halaman lainnya -->
-    <div class="page" id="pageLihatToko"><div class="page-header"><div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Lihat Semua Toko</span></div><h2>Daftar Toko</h2><p>Halaman untuk menampilkan semua toko yang terdaftar.</p></div><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-store" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div></div>
-    <div class="page" id="pageLihatOjek"><div class="page-header"><div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Lihat Semua Ojek</span></div><h2>Daftar Ojek</h2><p>Halaman untuk menampilkan semua ojek yang terdaftar.</p></div><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-motorcycle" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div></div>
-    <div class="page" id="pageLihatProduk"><div class="page-header"><div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Lihat Semua Produk</span></div><h2>Daftar Produk</h2><p>Halaman untuk menampilkan semua produk yang tersedia.</p></div><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-box" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div></div>
-    <div class="page" id="pageChat"><div class="page-header"><div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Chat</span></div><h2>Percakapan</h2><p>Halaman untuk berkomunikasi dengan pengguna lain.</p></div><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-comments" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div></div>
-    <div class="page" id="pageDaftarAkun"><div class="page-header"><div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Daftar Akun Baru</span></div><h2>Pendaftaran Akun</h2><p>SuperAdmin dapat membuat akun untuk staf, owner, dan peran lainnya.</p></div><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-user-plus" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div></div>
-    <div class="page" id="pageTransferMenu"><div class="page-header"><div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Transfer Menu</span></div><h2>Transfer Menu</h2><p>Halaman untuk memindahkan menu atau akses antar pengguna.</p></div><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-exchange-alt" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div></div>
-    <div class="page" id="pageKelolaAkun"><div class="page-header"><div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Kelola Semua Akun</span></div><h2>Manajemen Akun</h2><p>Kelola, edit, atau hapus semua akun yang terdaftar.</p></div><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-users-cog" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div></div>
-    <div class="page" id="pagePenagihan"><div class="page-header"><div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Penagihan</span></div><h2>Penagihan</h2><p>Halaman untuk mengelola invoice dan penagihan.</p></div><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-file-invoice-dollar" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div></div>
-    <div class="page" id="pageSettingRekening"><div class="page-header"><div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Setting Rekening</span></div><h2>Pengaturan Rekening</h2><p>Atur rekening bank untuk transaksi.</p></div><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-university" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div></div>
-    <div class="page" id="pageKelolaUpgrade"><div class="page-header"><div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Kelola Upgrade</span></div><h2>Kelola Upgrade</h2><p>Halaman untuk mengatur paket upgrade layanan.</p></div><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-crown" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div></div>
-    <div class="page" id="pageSettingTarifOjek"><div class="page-header"><div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Setting Tarif Ojek</span></div><h2>Pengaturan Tarif Ojek</h2><p>Atur tarif per kilometer atau per zona.</p></div><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-cogs" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div></div>
-    <div class="page" id="pageKelolaIklan"><div class="page-header"><div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Kelola Iklan</span></div><h2>Kelola Iklan</h2><p>Atur tampilan iklan di platform.</p></div><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-ad" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div></div>
+    <!-- HALAMAN LAINNYA (PLACEHOLDER) -->
+    <div class="page" id="pageLihatToko"><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-store" style="font-size:48px;color:var(--gray-300);margin-bottom:15px;"></i><h3>Lihat Semua Toko</h3><p>Fitur dalam pengembangan.</p></div></div></div>
+    <div class="page" id="pageLihatOjek"><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-motorcycle" style="font-size:48px;color:var(--gray-300);margin-bottom:15px;"></i><h3>Lihat Semua Ojek</h3><p>Fitur dalam pengembangan.</p></div></div></div>
+    <div class="page" id="pageLihatProduk"><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-box" style="font-size:48px;color:var(--gray-300);margin-bottom:15px;"></i><h3>Lihat Semua Produk</h3><p>Fitur dalam pengembangan.</p></div></div></div>
+    <div class="page" id="pageChat"><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-comments" style="font-size:48px;color:var(--gray-300);margin-bottom:15px;"></i><h3>Chat</h3><p>Fitur dalam pengembangan.</p></div></div></div>
+    <div class="page" id="pageDaftarAkun"><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-user-plus" style="font-size:48px;color:var(--gray-300);margin-bottom:15px;"></i><h3>Daftar Akun Baru</h3><p>Fitur dalam pengembangan.</p></div></div></div>
+    <div class="page" id="pageTransferMenu"><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-exchange-alt" style="font-size:48px;color:var(--gray-300);margin-bottom:15px;"></i><h3>Transfer Menu</h3><p>Fitur dalam pengembangan.</p></div></div></div>
+    <div class="page" id="pageKelolaAkun"><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-users-cog" style="font-size:48px;color:var(--gray-300);margin-bottom:15px;"></i><h3>Kelola Semua Akun</h3><p>Fitur dalam pengembangan.</p></div></div></div>
+    <div class="page" id="pagePenagihan"><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-file-invoice-dollar" style="font-size:48px;color:var(--gray-300);margin-bottom:15px;"></i><h3>Penagihan</h3><p>Fitur dalam pengembangan.</p></div></div></div>
+    <div class="page" id="pageSettingRekening"><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-university" style="font-size:48px;color:var(--gray-300);margin-bottom:15px;"></i><h3>Setting Rekening</h3><p>Fitur dalam pengembangan.</p></div></div></div>
+    <div class="page" id="pageKelolaUpgrade"><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-crown" style="font-size:48px;color:var(--gray-300);margin-bottom:15px;"></i><h3>Kelola Upgrade</h3><p>Fitur dalam pengembangan.</p></div></div></div>
+    <div class="page" id="pageSettingTarifOjek"><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-cogs" style="font-size:48px;color:var(--gray-300);margin-bottom:15px;"></i><h3>Setting Tarif Ojek</h3><p>Fitur dalam pengembangan.</p></div></div></div>
+    <div class="page" id="pageKelolaIklan"><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-ad" style="font-size:48px;color:var(--gray-300);margin-bottom:15px;"></i><h3>Kelola Iklan</h3><p>Fitur dalam pengembangan.</p></div></div></div>
 </main>
+<!-- ============ AKHIR BLOK 5 ============ -->
 
-<!-- Modals Global -->
-<div class="modal-overlay" id="modalKonfirmasi">
-    <div class="modal"><div class="modal-header"><h3 id="modalKonfirmasiTitle">Konfirmasi</h3><button class="modal-close" onclick="tutupModal('modalKonfirmasi')"><i class="fas fa-times"></i></button></div>
-    <div class="modal-body"><p id="modalKonfirmasiPesan">Apakah Anda yakin?</p></div>
-    <div class="modal-footer"><button class="btn btn-secondary" onclick="tutupModal('modalKonfirmasi')">Batal</button><button class="btn btn-primary" id="modalKonfirmasiBtn">Ya, Lanjutkan</button></div></div>
+<!-- ============ BLOK 6 MODALS ============ -->
+<div class="modal-overlay" id="modalEditProfil">
+    <div class="modal"><div class="modal-header"><h3>Edit Profil</h3><button class="modal-close" onclick="tutupModal('modalEditProfil')"><i class="fas fa-times"></i></button></div>
+        <div class="modal-body">
+            <div class="form-group"><label>Nama Lengkap</label><input type="text" id="editNama"></div>
+            <div class="form-group"><label>Alamat</label><input type="text" id="editAlamat"></div>
+            <div class="form-group"><label>Email</label><input type="email" id="editEmail"></div>
+            <div class="form-group"><label>Nomor HP</label><input type="tel" id="editHp"></div>
+            <div class="form-group"><label>Jabatan</label><input type="text" id="editJabatan"></div>
+            <div class="form-group"><label>Perusahaan Penerbit</label><input type="text" id="editPerusahaan"></div>
+        </div>
+        <div class="modal-footer"><button class="btn btn-secondary" onclick="tutupModal('modalEditProfil')">Batal</button><button class="btn btn-primary" onclick="simpanProfil()">Simpan</button></div>
+    </div>
 </div>
-<div class="modal-overlay" id="modalDetail">
-    <div class="modal"><div class="modal-header"><h3 id="modalDetailTitle">Detail</h3><button class="modal-close" onclick="tutupModal('modalDetail')"><i class="fas fa-times"></i></button></div>
-    <div class="modal-body" id="modalDetailBody"></div>
-    <div class="modal-footer"><button class="btn btn-secondary" onclick="tutupModal('modalDetail')">Tutup</button></div></div>
-</div>
-<div class="modal-overlay" id="modalForm">
-    <div class="modal"><div class="modal-header"><h3 id="modalFormTitle">Form</h3><button class="modal-close" onclick="tutupModal('modalForm')"><i class="fas fa-times"></i></button></div>
-    <div class="modal-body" id="modalFormBody"></div>
-    <div class="modal-footer"><button class="btn btn-secondary" onclick="tutupModal('modalForm')">Batal</button><button class="btn btn-primary" id="modalFormSubmit">Simpan</button></div></div>
-</div>
-<!-- ============ AKHIR BLOK 6 CONTENT AREA (REVISI TOMBOL & PREVIEW GAMBAR) ============ -->
 
-<!-- ============ BLOK 7 MODALS ============ -->
-<div class="modal-overlay" id="modalKonfirmasi">
-    <div class="modal"><div class="modal-header"><h3 id="modalKonfirmasiTitle">Konfirmasi</h3><button class="modal-close" onclick="tutupModal('modalKonfirmasi')"><i class="fas fa-times"></i></button></div>
-    <div class="modal-body"><p id="modalKonfirmasiPesan">Apakah Anda yakin?</p></div>
-    <div class="modal-footer"><button class="btn btn-secondary" onclick="tutupModal('modalKonfirmasi')">Batal</button><button class="btn btn-primary" id="modalKonfirmasiBtn">Ya, Lanjutkan</button></div></div>
+<div class="modal-overlay" id="modalEditDokumen">
+    <div class="modal"><div class="modal-header"><h3>Edit Dokumen</h3><button class="modal-close" onclick="tutupModal('modalEditDokumen')"><i class="fas fa-times"></i></button></div>
+        <div class="modal-body">
+            <input type="hidden" id="editDocId">
+            <div class="form-group"><label>Nama File</label><input type="text" id="editDocName"></div>
+            <div class="form-group"><label>Keterangan</label><input type="text" id="editDocKeterangan"></div>
+        </div>
+        <div class="modal-footer"><button class="btn btn-secondary" onclick="tutupModal('modalEditDokumen')">Batal</button><button class="btn btn-primary" onclick="simpanEditDokumen()">Simpan</button></div>
+    </div>
 </div>
-<div class="modal-overlay" id="modalDetail">
-    <div class="modal"><div class="modal-header"><h3 id="modalDetailTitle">Detail</h3><button class="modal-close" onclick="tutupModal('modalDetail')"><i class="fas fa-times"></i></button></div>
-    <div class="modal-body" id="modalDetailBody"></div>
-    <div class="modal-footer"><button class="btn btn-secondary" onclick="tutupModal('modalDetail')">Tutup</button></div></div>
-</div>
-<div class="modal-overlay" id="modalForm">
-    <div class="modal"><div class="modal-header"><h3 id="modalFormTitle">Form</h3><button class="modal-close" onclick="tutupModal('modalForm')"><i class="fas fa-times"></i></button></div>
-    <div class="modal-body" id="modalFormBody"></div>
-    <div class="modal-footer"><button class="btn btn-secondary" onclick="tutupModal('modalForm')">Batal</button><button class="btn btn-primary" id="modalFormSubmit">Simpan</button></div></div>
-</div>
-<!-- ============ AKHIR BLOK 7 MODALS ============ -->
 
-<!-- ============ BLOK 8 SCRIPTS UTAMA (REVISI KONTEN BERGESER) ============ -->
+<div class="modal-overlay modal-preview-gambar" id="modalPreviewGambar">
+    <div class="modal"><div class="modal-header"><h3 id="modalPreviewTitle">Preview Gambar</h3><button class="modal-close" onclick="tutupModal('modalPreviewGambar')"><i class="fas fa-times"></i></button></div>
+        <div class="modal-body"><img id="modalPreviewImage" src="" alt="Preview"></div>
+    </div>
+</div>
+<!-- ============ AKHIR BLOK 6 ============ -->
+
+<!-- ============ BLOK 7 SCRIPTS UTAMA ============ -->
 <script>
     // Data akun & enkripsi
     function getDataAkun() { var d=localStorage.getItem('2r_akun'); return d?JSON.parse(d):[]; }
@@ -510,321 +386,197 @@
     // Inisialisasi SuperAdmin
     function inisialisasiSuperAdmin() {
         var akun = getDataAkun();
-        var sa = akun.find(function(a){ return a.role==='superadmin'; });
+        var sa = akun.find(a => a.role==='superadmin');
         if (!sa) {
             akun.push({ id:'SA-001', role:'superadmin', username:'TokoOnline2R', password:encodePassword('MyHand0286'), nama:'SuperAdmin', email:'superadmin@tokoonline2r.com', hp:'081234567890', alamat:'Kantor Pusat Toko Online 2R', jabatan:'Pemilik', perusahaan:'Toko Online 2R', latitude:null, longitude:null, registeredAt:new Date().toISOString() });
             simpanDataAkun(akun);
-        } else {
-            try { if(atob(sa.password)!=='MyHand0286') { sa.password=encodePassword('MyHand0286'); simpanDataAkun(akun); } }
-            catch(e) { sa.password=encodePassword(sa.password); simpanDataAkun(akun); }
         }
     }
 
-    // Generate ID
     function generateId(role) {
-        var akun = getDataAkun().filter(function(a){ return a.role===role; });
-        var n=1; akun.forEach(function(a){ var p=a.id.split('-'); if(p.length===2){ var x=parseInt(p[1]); if(!isNaN(x)&&x>=n) n=x+1; } });
+        var akun = getDataAkun().filter(a => a.role===role);
+        var n=1; akun.forEach(a => { var p=a.id.split('-'); if(p.length===2){ var x=parseInt(p[1]); if(!isNaN(x)&&x>=n) n=x+1; } });
         var prefix={'customer':'CUST','toko':'TOKO','ojek':'OJEK','pedagang':'PEDAGANG','codseller':'COD','superadmin':'SA'};
         return prefix[role]+'-'+String(n).padStart(3,'0');
     }
 
     function updateIdPreview() { document.getElementById('regIdPreview').textContent = generateId(document.getElementById('regRole').value) || '-'; }
-    function toggleForm(t) { document.getElementById('authError').style.display='none'; if(t==='register'){ document.getElementById('loginForm').classList.add('hidden-form'); document.getElementById('registerForm').classList.remove('hidden-form'); updateIdPreview(); } else { document.getElementById('registerForm').classList.add('hidden-form'); document.getElementById('loginForm').classList.remove('hidden-form'); } }
-    function tampilkanToast(pesan, tipe) {
-        tipe=tipe||'success'; var t=document.createElement('div'); t.className='toast '+tipe;
+    function toggleForm(t) { document.getElementById('authError').style.display='none'; document.getElementById('loginForm').classList.toggle('hidden-form', t!=='login'); document.getElementById('registerForm').classList.toggle('hidden-form', t!=='register'); if(t==='register') updateIdPreview(); }
+    function tampilkanToast(pesan, tipe='success') {
+        var t=document.createElement('div'); t.className='toast '+tipe;
         var icon=tipe==='success'?'fa-check-circle':tipe==='error'?'fa-times-circle':'fa-exclamation-triangle';
         t.innerHTML='<i class="fas '+icon+'"></i> '+pesan; document.getElementById('toastContainer').appendChild(t);
-        setTimeout(function(){ t.style.animation='slideInRight 0.3s ease reverse'; setTimeout(function(){ t.remove(); },300); },3500);
+        setTimeout(()=>{ t.style.animation='slideInRight 0.3s ease reverse'; setTimeout(()=>t.remove(),300); },3500);
     }
 
-    // Login
     function prosesLogin(e) {
         e.preventDefault();
-        var username=document.getElementById('loginUsername').value.trim();
-        var password=document.getElementById('loginPassword').value.trim();
-        var user=getDataAkun().find(function(a){ return a.username===username && decodePassword(a.password)===password; });
-        if(user){
-            tampilkanToast('Selamat datang, '+user.nama+'!');
-            localStorage.setItem('2r_user', JSON.stringify(user));
-            document.getElementById('loginUsername').value=''; document.getElementById('loginPassword').value='';
-            tampilkanDashboard(user);
-        } else {
-            document.getElementById('authError').style.display='flex';
-            document.getElementById('authErrorText').textContent='Username atau password salah!';
-        }
+        var user=getDataAkun().find(a => a.username===document.getElementById('loginUsername').value.trim() && decodePassword(a.password)===document.getElementById('loginPassword').value.trim());
+        if(user){ tampilkanToast('Selamat datang, '+user.nama+'!'); localStorage.setItem('2r_user', JSON.stringify(user)); tampilkanDashboard(user); }
+        else { document.getElementById('authError').style.display='flex'; document.getElementById('authErrorText').textContent='Username atau password salah!'; }
     }
 
-    // Register
     function prosesRegister(e) {
         e.preventDefault();
         var role=document.getElementById('regRole').value, username=document.getElementById('regUsername').value.trim(), password=document.getElementById('regPassword').value.trim(), nama=document.getElementById('regNama').value.trim(), email=document.getElementById('regEmail').value.trim(), hp=document.getElementById('regHp').value.trim();
         if(!role||!username||!password||!nama){ tampilkanToast('Data belum lengkap!','warning'); return; }
         var akun=getDataAkun();
-        if(akun.find(function(a){ return a.username===username; })){ tampilkanToast('Username sudah digunakan','error'); return; }
-        if(email && akun.find(function(a){ return a.email===email; })){ tampilkanToast('Email sudah digunakan','error'); return; }
-        if(hp && akun.find(function(a){ return a.hp===hp; })){ tampilkanToast('HP sudah digunakan','error'); return; }
+        if(akun.find(a=>a.username===username)){ tampilkanToast('Username sudah digunakan','error'); return; }
+        if(email && akun.find(a=>a.email===email)){ tampilkanToast('Email sudah digunakan','error'); return; }
+        if(hp && akun.find(a=>a.hp===hp)){ tampilkanToast('HP sudah digunakan','error'); return; }
         var id=generateId(role);
         function selesai(lat, lng) {
-            akun.push({ id:id, role:role, username:username, password:encodePassword(password), nama:nama, email:email||'', hp:hp||'', alamat:'', jabatan:'', perusahaan:'', latitude:lat, longitude:lng, registeredAt:new Date().toISOString() });
-            simpanDataAkun(akun); tampilkanToast('Akun berhasil dibuat! ID: '+id);
-            document.getElementById('regUsername').value=''; document.getElementById('regPassword').value=''; document.getElementById('regNama').value=''; document.getElementById('regEmail').value=''; document.getElementById('regHp').value='';
-            toggleForm('login');
+            akun.push({ id, role, username, password:encodePassword(password), nama, email:email||'', hp:hp||'', alamat:'', jabatan:'', perusahaan:'', latitude:lat, longitude:lng, registeredAt:new Date().toISOString() });
+            simpanDataAkun(akun); tampilkanToast('Akun berhasil dibuat! ID: '+id); toggleForm('login');
         }
-        if(navigator.geolocation){ navigator.geolocation.getCurrentPosition(function(p){ selesai(p.coords.latitude, p.coords.longitude); }, function(){ selesai(null,null); }); }
-        else { selesai(null,null); }
+        if(navigator.geolocation) navigator.geolocation.getCurrentPosition(p=>selesai(p.coords.latitude, p.coords.longitude), ()=>selesai(null,null));
+        else selesai(null,null);
     }
 
-    // Navigasi
     function navigasiHalaman(page) {
-        document.querySelectorAll('.page').forEach(function(p){ p.classList.add('hidden'); });
+        document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));
         var target=document.getElementById('page'+page.charAt(0).toUpperCase()+page.slice(1));
-        if(target){ target.classList.remove('hidden'); setActiveMenu(page); if(page==='profile'&&typeof loadProfil==='function') loadProfil(); }
+        if(target){ target.classList.remove('hidden'); setActiveMenu(page); if(page==='profile') loadProfil(); }
         else tampilkanToast('Halaman belum tersedia','warning');
     }
 
     function setActiveMenu(page) {
-        document.querySelectorAll('.sidebar-menu-item').forEach(function(el){ el.classList.remove('active'); });
-        var menu=document.getElementById('menu'+page.charAt(0).toUpperCase()+page.slice(1));
-        if(menu) menu.classList.add('active');
+        document.querySelectorAll('.sidebar-menu-item').forEach(el=>el.classList.remove('active'));
+        document.querySelectorAll('.sidebar-menu-item').forEach(el=>{ if(el.dataset.page===page) el.classList.add('active'); });
     }
 
-    // ===== REVISI SIDEBAR TOGGLE (KONTEN IKUT BERGESER) =====
     function toggleSidebar() {
-        var sidebar = document.getElementById('mainSidebar');
-        var overlay = document.getElementById('sidebarOverlay');
-        var content = document.getElementById('contentArea');
-        
-        // Toggle buka/tutup sidebar
-        sidebar.classList.toggle('closed');
-        
-        // Jika sidebar tertutup (class 'closed' aktif), konten jadi lebar penuh
-        if (sidebar.classList.contains('closed')) {
-            content.classList.add('expanded');
-            overlay.classList.remove('active');
-        } 
-        // Jika sidebar terbuka (class 'closed' hilang), konten bergeser ke kanan
-        else {
-            content.classList.remove('expanded');
-            overlay.classList.add('active');
-        }
+        var s=document.getElementById('mainSidebar'), o=document.getElementById('sidebarOverlay'), c=document.getElementById('contentArea');
+        s.classList.toggle('closed');
+        if(s.classList.contains('closed')){ c.classList.add('expanded'); o.classList.remove('active'); }
+        else { c.classList.remove('expanded'); o.classList.add('active'); }
     }
 
     function logout(){ localStorage.removeItem('2r_user'); location.reload(); }
     function bukaModal(id){ document.getElementById(id).classList.add('active'); }
     function tutupModal(id){ document.getElementById(id).classList.remove('active'); }
 
-    // Tampilkan dashboard
     function tampilkanDashboard(user) {
         document.body.style.display='block'; document.body.style.justifyContent='unset'; document.body.style.alignItems='unset';
         document.getElementById('pageAuth').style.display='none';
         document.getElementById('mainNavbar').classList.remove('hidden');
-        
-        var sidebar=document.getElementById('mainSidebar'); sidebar.classList.remove('hidden'); sidebar.classList.remove('closed'); // Sidebar terbuka saat login
-        var content=document.getElementById('contentArea'); content.classList.remove('expanded'); content.classList.remove('hidden'); // Konten bergeser ke kanan
+        var sidebar=document.getElementById('mainSidebar'); sidebar.classList.remove('hidden'); sidebar.classList.remove('closed');
+        var content=document.getElementById('contentArea'); content.classList.remove('expanded'); content.classList.remove('hidden');
 
-        var avatar=document.getElementById('navbarAvatar'); avatar.textContent=user.nama.charAt(0).toUpperCase(); avatar.style.background='var(--orange-gradient)'; avatar.style.color='white';
+        document.getElementById('navbarAvatar').textContent=user.nama.charAt(0).toUpperCase();
         document.getElementById('navbarUserName').textContent=user.nama;
-        var roleLabel=user.role==='superadmin'?'SuperAdmin':user.role==='toko'?'Toko':user.role==='ojek'?'Ojek':user.role==='pedagang'?'Pedagang':user.role==='codseller'?'COD Seller':user.role==='customer'?'Customer':user.role;
-        document.getElementById('navbarUserRole').textContent=roleLabel;
-        var dn=document.getElementById('dashboardNama'); if(dn) dn.textContent=user.nama;
+        document.getElementById('navbarUserRole').textContent=user.role==='superadmin'?'SuperAdmin':user.role;
+        document.getElementById('dashboardNama').textContent=user.nama;
 
-        document.querySelectorAll('.page').forEach(function(p){ p.classList.add('hidden'); });
+        document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));
         document.getElementById('pageDashboard').classList.remove('hidden');
         setActiveMenu('dashboard');
 
-        document.getElementById('btnSidebarToggle').addEventListener('click', function(){ toggleSidebar(); });
-        document.getElementById('sidebarOverlay').addEventListener('click', function(){ toggleSidebar(); });
-        document.getElementById('btnLogout').addEventListener('click', function(){ if(confirm('Yakin keluar?')){ logout(); } });
-
-        document.querySelectorAll('.sidebar-menu-item').forEach(function(item){
-            item.addEventListener('click', function(){
-                var page=this.dataset.page;
-                if(page){ navigasiHalaman(page); }
-            });
-        });
+        document.getElementById('btnSidebarToggle').onclick = toggleSidebar;
+        document.getElementById('sidebarOverlay').onclick = toggleSidebar;
+        document.getElementById('btnLogout').onclick = ()=>confirm('Yakin keluar?') && logout();
+        document.querySelectorAll('.sidebar-menu-item').forEach(item=>{ item.onclick = ()=>navigasiHalaman(item.dataset.page); });
     }
 
-    window.addEventListener('load', function(){ setTimeout(function(){ document.getElementById('preloader').classList.add('hidden'); },500); });
-    window.addEventListener('DOMContentLoaded', function(){
+    window.addEventListener('load', ()=>setTimeout(()=>document.getElementById('preloader').classList.add('hidden'),500));
+    window.addEventListener('DOMContentLoaded', ()=>{
         inisialisasiSuperAdmin();
         var stored=localStorage.getItem('2r_user');
-        if(stored){ tampilkanDashboard(JSON.parse(stored)); }
+        if(stored) tampilkanDashboard(JSON.parse(stored));
         updateIdPreview();
     });
 </script>
-<!-- ============ AKHIR BLOK 8 SCRIPTS UTAMA ============ -->
+<!-- ============ AKHIR BLOK 7 ============ -->
 
-<!-- ============ BLOK 9 SCRIPTS PROFIL (REVISI TOMBOL KECIL & PREVIEW BESAR) ============ -->
+<!-- ============ BLOK 8 SCRIPTS PROFIL & UPLOAD ============ -->
 <script>
-    const PROFILE_KEY = '2r_superadmin_profile';
-    const DOCUMENTS_KEY = '2r_superadmin_documents';
-
-    function loadProfil() {
-        var p = JSON.parse(localStorage.getItem(PROFILE_KEY) || '{}');
-        document.getElementById('profilNama').textContent = p.nama || '-';
-        document.getElementById('profilAlamat').textContent = p.alamat || '-';
-        document.getElementById('profilEmail').textContent = p.email || '-';
-        document.getElementById('profilHp').textContent = p.hp || '-';
-        document.getElementById('profilJabatan').textContent = p.jabatan || '-';
-        document.getElementById('profilPerusahaan').textContent = p.perusahaan || '-';
-        document.getElementById('textKeterangan').value = p.keterangan || '';
+    const PROFILE_KEY='2r_superadmin_profile', DOCUMENTS_KEY='2r_superadmin_documents';
+    function loadProfil(){
+        var p=JSON.parse(localStorage.getItem(PROFILE_KEY)||'{}');
+        document.getElementById('profilNama').textContent=p.nama||'-';
+        document.getElementById('profilAlamat').textContent=p.alamat||'-';
+        document.getElementById('profilEmail').textContent=p.email||'-';
+        document.getElementById('profilHp').textContent=p.hp||'-';
+        document.getElementById('profilJabatan').textContent=p.jabatan||'-';
+        document.getElementById('profilPerusahaan').textContent=p.perusahaan||'-';
+        document.getElementById('textKeterangan').value=p.keterangan||'';
         renderDokumen();
     }
 
-    function bukaModalEditProfil() {
-        var p = JSON.parse(localStorage.getItem(PROFILE_KEY) || '{}');
-        document.getElementById('editNama').value = p.nama || '';
-        document.getElementById('editAlamat').value = p.alamat || '';
-        document.getElementById('editEmail').value = p.email || '';
-        document.getElementById('editHp').value = p.hp || '';
-        document.getElementById('editJabatan').value = p.jabatan || '';
-        document.getElementById('editPerusahaan').value = p.perusahaan || '';
+    function bukaModalEditProfil(){
+        var p=JSON.parse(localStorage.getItem(PROFILE_KEY)||'{}');
+        ['editNama','editAlamat','editEmail','editHp','editJabatan','editPerusahaan'].forEach(id=>document.getElementById(id).value=p[id.replace('edit','').toLowerCase()]||'');
         bukaModal('modalEditProfil');
     }
 
-    function simpanProfil() {
-        var profil = {
-            nama: document.getElementById('editNama').value.trim(),
-            alamat: document.getElementById('editAlamat').value.trim(),
-            email: document.getElementById('editEmail').value.trim(),
-            hp: document.getElementById('editHp').value.trim(),
-            jabatan: document.getElementById('editJabatan').value.trim(),
-            perusahaan: document.getElementById('editPerusahaan').value.trim(),
-            keterangan: document.getElementById('textKeterangan').value
+    function simpanProfil(){
+        var profil={
+            nama:document.getElementById('editNama').value.trim(),
+            alamat:document.getElementById('editAlamat').value.trim(),
+            email:document.getElementById('editEmail').value.trim(),
+            hp:document.getElementById('editHp').value.trim(),
+            jabatan:document.getElementById('editJabatan').value.trim(),
+            perusahaan:document.getElementById('editPerusahaan').value.trim(),
+            keterangan:document.getElementById('textKeterangan').value
         };
-        if (!profil.nama) { tampilkanToast('Nama tidak boleh kosong!', 'error'); return; }
+        if(!profil.nama){ tampilkanToast('Nama tidak boleh kosong!','error'); return; }
         localStorage.setItem(PROFILE_KEY, JSON.stringify(profil));
-        loadProfil();
-        tutupModal('modalEditProfil');
-        tampilkanToast('Profil berhasil disimpan!');
+        loadProfil(); tutupModal('modalEditProfil'); tampilkanToast('Profil berhasil disimpan!');
     }
 
-    function simpanKeterangan() {
-        var p = JSON.parse(localStorage.getItem(PROFILE_KEY) || '{}');
-        p.keterangan = document.getElementById('textKeterangan').value;
-        localStorage.setItem(PROFILE_KEY, JSON.stringify(p));
-        tampilkanToast('Keterangan disimpan!');
+    function simpanKeterangan(){
+        var p=JSON.parse(localStorage.getItem(PROFILE_KEY)||'{}');
+        p.keterangan=document.getElementById('textKeterangan').value;
+        localStorage.setItem(PROFILE_KEY, JSON.stringify(p)); tampilkanToast('Keterangan disimpan!');
     }
 
-    // ===== FUNGSI DOKUMEN =====
-    function getDocuments() { return JSON.parse(localStorage.getItem(DOCUMENTS_KEY) || '[]'); }
-    function saveDocuments(docs) { localStorage.setItem(DOCUMENTS_KEY, JSON.stringify(docs)); }
+    function getDocuments(){ return JSON.parse(localStorage.getItem(DOCUMENTS_KEY)||'[]'); }
+    function saveDocuments(docs){ localStorage.setItem(DOCUMENTS_KEY, JSON.stringify(docs)); }
 
     document.addEventListener('DOMContentLoaded', function() {
-        var btnUnggah = document.getElementById('btnUnggahDokumen');
-        var inputFile = document.getElementById('inputDokumen');
-        
-        if (btnUnggah && inputFile) {
-            btnUnggah.addEventListener('click', function(e) {
-                e.preventDefault();
-                inputFile.click();
-            });
-
-            inputFile.addEventListener('change', function(e) {
-                uploadDokumen(e);
-            });
-        }
+        var btn=document.getElementById('btnUnggahDokumen'), input=document.getElementById('inputDokumen');
+        if(btn&&input){ btn.onclick = ()=>{ input.click(); }; input.onchange = (e)=>uploadDokumen(e); }
     });
 
     function uploadDokumen(event) {
-        var files = event.target.files;
-        if (!files || files.length === 0) return;
-
-        var docs = getDocuments();
-        var loaded = 0;
-        tampilkanToast('Sedang mengunggah ' + files.length + ' file...', 'info');
-
-        Array.from(files).forEach(function(file) {
-            if (file.size > 10 * 1024 * 1024) {
-                tampilkanToast('File ' + file.name + ' terlalu besar (max 10MB)', 'warning');
+        var files=event.target.files; if(!files||!files.length) return;
+        var docs=getDocuments(), loaded=0;
+        tampilkanToast('Mengunggah '+files.length+' file...','info');
+        Array.from(files).forEach(file=>{
+            if(file.size>10*1024*1024){ tampilkanToast('File '+file.name+' terlalu besar (max 10MB)','warning'); loaded++; if(loaded===files.length){ event.target.value=''; renderDokumen(); } return; }
+            var reader=new FileReader();
+            reader.onload = (e)=>{
+                docs.push({ id:Date.now()+'-'+Math.random().toString(36).substr(2,9), name:file.name, type:file.type, data:e.target.result, keterangan:'' });
                 loaded++;
-                if (loaded === files.length) { 
-                    event.target.value = ''; 
-                    renderDokumen(); 
-                }
-                return;
-            }
-
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                docs.push({ 
-                    id: Date.now() + '-' + Math.random().toString(36).substr(2, 9), 
-                    name: file.name, 
-                    type: file.type, 
-                    data: e.target.result, 
-                    keterangan: '' 
-                });
-                loaded++;
-                
-                if (loaded === files.length) {
-                    saveDocuments(docs);
-                    renderDokumen();
-                    tampilkanToast(loaded + ' dokumen berhasil diunggah!');
-                    event.target.value = ''; 
-                }
+                if(loaded===files.length){ saveDocuments(docs); renderDokumen(); tampilkanToast(loaded+' dokumen berhasil diunggah!'); event.target.value=''; }
             };
-            reader.onerror = function() {
-                tampilkanToast('Gagal membaca file ' + file.name, 'error');
-                loaded++;
-                if (loaded === files.length) { 
-                    event.target.value = ''; 
-                    renderDokumen(); 
-                }
-            };
+            reader.onerror = ()=>{ tampilkanToast('Gagal membaca file '+file.name,'error'); loaded++; if(loaded===files.length){ event.target.value=''; renderDokumen(); } };
             reader.readAsDataURL(file);
         });
     }
 
-    // FUNGSI UNTUK MEMPERBESAR GAMBAR SAAT DI KLIK
     function bukaPreviewGambar(src, nama) {
         document.getElementById('modalPreviewImage').src = src;
         document.getElementById('modalPreviewTitle').textContent = 'Preview: ' + nama;
         bukaModal('modalPreviewGambar');
     }
 
-    // REVISI TAMPILAN DAFTAR DOKUMEN (TOMBOL KECIL & GAMBAR BISA DIKLIK)
-    function renderDokumen() {
-        var docs = getDocuments();
-        var container = document.getElementById('daftarDokumen');
+    function renderDokumen(){
+        var docs=getDocuments(), container=document.getElementById('daftarDokumen');
+        if(!container) return;
+        if(docs.length===0){ container.innerHTML='<div class="empty-state"><i class="fas fa-cloud-upload-alt"></i><h3>Belum ada dokumen</h3><p>Klik tombol di atas untuk menambahkan.</p></div>'; return; }
         
-        if (!container) return;
-
-        if (docs.length === 0) {
-            container.innerHTML = `
-                <div class="empty-state">
-                    <i class="fas fa-cloud-upload-alt" style="font-size:40px; color:var(--gray-400);"></i>
-                    <h3>Belum ada dokumen</h3>
-                    <p>Klik tombol "Unggah Dokumen" untuk menambahkan.</p>
-                </div>
-            `;
-            return;
-        }
-
-        var html = '';
-        docs.forEach(function(doc) {
-            var isImage = doc.type && doc.type.startsWith('image/');
-            
-            var previewElement = '';
-            if (isImage) {
-                // Tampilkan gambar asli (bisa diklik untuk diperbesar)
-                previewElement = `<img src="${doc.data}" alt="${doc.name}" onclick="bukaPreviewGambar('${doc.data}', '${doc.name}')" style="width:60px; height:60px; object-fit:cover; border-radius:8px; border:1px solid #eee; cursor:pointer;">`;
-            } else {
-                previewElement = `<div class="profile-detail-icon" style="background:var(--orange-pale); color:var(--orange-primary); width:60px; height:60px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:24px;"><i class="fas fa-file-alt"></i></div>`;
-            }
-
-            html += `
-                <div class="profile-detail-item" style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #eee; padding:15px 0;">
-                    <div style="display:flex; align-items:center; gap:15px; flex:1;">
-                        ${previewElement}
-                        <div class="profile-detail-text">
-                            <h4 style="font-size:15px; margin:0; font-weight:600; color:var(--gray-800);">${doc.name}</h4>
-                            <p style="font-size:13px; color:var(--gray-500); margin:4px 0 0 0;">${doc.keterangan || 'Tidak ada keterangan'}</p>
-                        </div>
-                    </div>
-                    <div style="display:flex; gap:8px;">
-                        <button class="btn btn-sm btn-secondary" onclick="editDokumen('${doc.id}')" style="padding:6px 12px; font-size:13px; border-radius:6px;"><i class="fas fa-edit"></i> Edit</button>
-                        <a href="${doc.data}" download="${doc.name}" class="btn btn-sm btn-primary" style="padding:6px 12px; font-size:13px; border-radius:6px; text-decoration:none;"><i class="fas fa-download"></i></a>
-                        <button class="btn btn-sm btn-danger" onclick="hapusDokumen('${doc.id}')" style="padding:6px 12px; font-size:13px; border-radius:6px; background:var(--error); color:white; border:none;"><i class="fas fa-trash"></i></button>
+        var html='';
+        docs.forEach(doc=>{
+            var isImage=doc.type&&doc.type.startsWith('image/');
+            var preview = isImage ? `<img src="${doc.data}" alt="${doc.name}" onclick="bukaPreviewGambar('${doc.data}','${doc.name}')" class="doc-thumb">` : `<div class="doc-icon"><i class="fas fa-file-alt"></i></div>`;
+            html+=`
+                <div class="doc-item">
+                    <div class="doc-info">${preview}<div class="doc-text"><h4>${doc.name}</h4><p>${doc.keterangan||'Tidak ada keterangan'}</p></div></div>
+                    <div class="doc-actions">
+                        <button class="btn btn-secondary btn-xs" onclick="editDokumen('${doc.id}')"><i class="fas fa-edit"></i></button>
+                        <a href="${doc.data}" download="${doc.name}" class="btn btn-primary btn-xs"><i class="fas fa-download"></i></a>
+                        <button class="btn btn-danger btn-xs" onclick="hapusDokumen('${doc.id}')"><i class="fas fa-trash"></i></button>
                     </div>
                 </div>
             `;
@@ -832,53 +584,29 @@
         container.innerHTML = html;
     }
 
-    function editDokumen(id) {
-        var doc = getDocuments().find(function(d) { return d.id == id; });
-        if (!doc) return;
-        document.getElementById('editDocId').value = id;
-        document.getElementById('editDocName').value = doc.name;
-        document.getElementById('editDocKeterangan').value = doc.keterangan || '';
+    function editDokumen(id){
+        var doc=getDocuments().find(d=>d.id==id); if(!doc) return;
+        document.getElementById('editDocId').value=id; document.getElementById('editDocName').value=doc.name; document.getElementById('editDocKeterangan').value=doc.keterangan||'';
         bukaModal('modalEditDokumen');
     }
 
-    function simpanEditDokumen() {
-        var id = document.getElementById('editDocId').value;
-        var name = document.getElementById('editDocName').value.trim();
-        var ket = document.getElementById('editDocKeterangan').value.trim();
-        if (!name) { tampilkanToast('Nama file tidak boleh kosong!', 'error'); return; }
-        
-        var docs = getDocuments();
-        var doc = docs.find(function(d) { return d.id == id; });
-        if (doc) {
-            doc.name = name;
-            doc.keterangan = ket;
-            saveDocuments(docs);
-            renderDokumen();
-            tutupModal('modalEditDokumen');
-            tampilkanToast('Dokumen diperbarui!');
-        }
+    function simpanEditDokumen(){
+        var id=document.getElementById('editDocId').value, name=document.getElementById('editDocName').value.trim(), ket=document.getElementById('editDocKeterangan').value.trim();
+        if(!name){ tampilkanToast('Nama file tidak boleh kosong!','error'); return; }
+        var docs=getDocuments(), doc=docs.find(d=>d.id==id);
+        if(doc){ doc.name=name; doc.keterangan=ket; saveDocuments(docs); renderDokumen(); tutupModal('modalEditDokumen'); tampilkanToast('Dokumen diperbarui!'); }
     }
 
-    function hapusDokumen(id) {
-        if (!confirm('Yakin ingin menghapus dokumen ini?')) return;
-        var docs = getDocuments().filter(function(d) { return d.id != id; });
-        saveDocuments(docs);
-        renderDokumen();
-        tampilkanToast('Dokumen dihapus!');
+    function hapusDokumen(id){
+        if(!confirm('Yakin ingin menghapus dokumen ini?')) return;
+        var docs=getDocuments().filter(d=>d.id!=id);
+        saveDocuments(docs); renderDokumen(); tampilkanToast('Dokumen dihapus!');
     }
 
     document.addEventListener('DOMContentLoaded', loadProfil);
-    
-    (function() {
-        var orig = window.navigasiHalaman;
-        if (orig) {
-            window.navigasiHalaman = function(page) {
-                orig(page);
-                if (page === 'profile' && typeof loadProfil === 'function') loadProfil();
-            };
-        }
-    })();
+    (function(){ var orig=window.navigasiHalaman; if(orig) window.navigasiHalaman = (page)=>{ orig(page); if(page==='profile'&&typeof loadProfil==='function') loadProfil(); }; })();
 </script>
-<!-- ============ AKHIR BLOK 9 SCRIPTS PROFIL (REVISI TOMBOL KECIL & PREVIEW BESAR) ============ -->
+<!-- ============ AKHIR BLOK 8 ============ -->
+
 </body>
 </html>
