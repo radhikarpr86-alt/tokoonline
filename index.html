@@ -1391,125 +1391,323 @@
 </script>
 <!-- ============ AKHIR BLOK 7(3) - 01 SCRIPTS DASHBOARD LOADER & EVENT LISTENER ============ -->
 
-<!-- ============ BLOK 8 SCRIPTS PROFIL & UPLOAD ============ -->
+<!-- ============ BLOK 8 SCRIPTS PROFIL & UPLOAD (REVISI SUPERLENGKAP) ============ -->
+<!-- PENJELASAN: 
+     Blok ini berisi seluruh logika JavaScript untuk mengelola halaman Profil SuperAdmin 
+     dan fitur Unggah Dokumen Perusahaan.
+     
+     Fitur-fitur lengkap di dalam blok ini meliputi:
+     1. loadProfil()        : Memuat data profil dari localStorage ke dalam tampilan.
+     2. bukaModalEditProfil(): Membuka pop-up form edit profil dengan data yang sudah ada.
+     3. simpanProfil()       : Menyimpan perubahan data profil ke localStorage.
+     4. simpanKeterangan()   : Menyimpan teks keterangan perusahaan ke localStorage.
+     5. uploadDokumen()      : Membaca file yang diunggah, mengubahnya menjadi base64, 
+                               lalu menyimpannya ke localStorage.
+     6. renderDokumen()      : Menampilkan daftar dokumen yang sudah tersimpan. 
+                               Jika file adalah gambar, akan ditampilkan sebagai thumbnail 
+                               yang bisa diklik untuk diperbesar.
+     7. bukaPreviewGambar()  : Membuka modal pop-up untuk menampilkan gambar dalam ukuran besar.
+     8. editDokumen()        : Membuka modal edit untuk mengubah nama dan keterangan file.
+     9. simpanEditDokumen()  : Menyimpan perubahan nama dan keterangan file.
+     10. hapusDokumen()      : Menghapus file dari localStorage setelah konfirmasi ganda.
+     
+     Semua data disimpan menggunakan localStorage dengan key:
+     - '2r_superadmin_profile' untuk data profil.
+     - '2r_superadmin_documents' untuk data dokumen. -->
+
 <script>
-    const PROFILE_KEY='2r_superadmin_profile', DOCUMENTS_KEY='2r_superadmin_documents';
-    function loadProfil(){
-        var p=JSON.parse(localStorage.getItem(PROFILE_KEY)||'{}');
-        document.getElementById('profilNama').textContent=p.nama||'-';
-        document.getElementById('profilAlamat').textContent=p.alamat||'-';
-        document.getElementById('profilEmail').textContent=p.email||'-';
-        document.getElementById('profilHp').textContent=p.hp||'-';
-        document.getElementById('profilJabatan').textContent=p.jabatan||'-';
-        document.getElementById('profilPerusahaan').textContent=p.perusahaan||'-';
-        document.getElementById('textKeterangan').value=p.keterangan||'';
+    // Konstanta key untuk menyimpan data di localStorage
+    const PROFILE_KEY = '2r_superadmin_profile';
+    const DOCUMENTS_KEY = '2r_superadmin_documents';
+
+    // ===== 1. LOAD DATA PROFIL =====
+    // Memuat data profil dari localStorage dan menampilkannya ke halaman
+    function loadProfil() {
+        var dataProfil = JSON.parse(localStorage.getItem(PROFILE_KEY) || '{}');
+        
+        document.getElementById('profilNama').textContent = dataProfil.nama || '-';
+        document.getElementById('profilAlamat').textContent = dataProfil.alamat || '-';
+        document.getElementById('profilEmail').textContent = dataProfil.email || '-';
+        document.getElementById('profilHp').textContent = dataProfil.hp || '-';
+        document.getElementById('profilJabatan').textContent = dataProfil.jabatan || '-';
+        document.getElementById('profilPerusahaan').textContent = dataProfil.perusahaan || '-';
+        document.getElementById('textKeterangan').value = dataProfil.keterangan || '';
+        
+        // Render ulang daftar dokumen
         renderDokumen();
     }
 
-    function bukaModalEditProfil(){
-        var p=JSON.parse(localStorage.getItem(PROFILE_KEY)||'{}');
-        ['editNama','editAlamat','editEmail','editHp','editJabatan','editPerusahaan'].forEach(id=>document.getElementById(id).value=p[id.replace('edit','').toLowerCase()]||'');
+    // ===== 2. BUKA MODAL EDIT PROFIL =====
+    // Mengisi form modal dengan data profil yang sudah tersimpan
+    function bukaModalEditProfil() {
+        var dataProfil = JSON.parse(localStorage.getItem(PROFILE_KEY) || '{}');
+        
+        document.getElementById('editNama').value = dataProfil.nama || '';
+        document.getElementById('editAlamat').value = dataProfil.alamat || '';
+        document.getElementById('editEmail').value = dataProfil.email || '';
+        document.getElementById('editHp').value = dataProfil.hp || '';
+        document.getElementById('editJabatan').value = dataProfil.jabatan || '';
+        document.getElementById('editPerusahaan').value = dataProfil.perusahaan || '';
+        
         bukaModal('modalEditProfil');
     }
 
-    function simpanProfil(){
-        var profil={
-            nama:document.getElementById('editNama').value.trim(),
-            alamat:document.getElementById('editAlamat').value.trim(),
-            email:document.getElementById('editEmail').value.trim(),
-            hp:document.getElementById('editHp').value.trim(),
-            jabatan:document.getElementById('editJabatan').value.trim(),
-            perusahaan:document.getElementById('editPerusahaan').value.trim(),
-            keterangan:document.getElementById('textKeterangan').value
+    // ===== 3. SIMPAN PERUBAHAN PROFIL =====
+    // Menyimpan data yang diedit ke localStorage dan memperbarui tampilan
+    function simpanProfil() {
+        var dataProfil = {
+            nama: document.getElementById('editNama').value.trim(),
+            alamat: document.getElementById('editAlamat').value.trim(),
+            email: document.getElementById('editEmail').value.trim(),
+            hp: document.getElementById('editHp').value.trim(),
+            jabatan: document.getElementById('editJabatan').value.trim(),
+            perusahaan: document.getElementById('editPerusahaan').value.trim(),
+            keterangan: document.getElementById('textKeterangan').value
         };
-        if(!profil.nama){ tampilkanToast('Nama tidak boleh kosong!','error'); return; }
-        localStorage.setItem(PROFILE_KEY, JSON.stringify(profil));
-        loadProfil(); tutupModal('modalEditProfil'); tampilkanToast('Profil berhasil disimpan!');
+        
+        if (!dataProfil.nama) {
+            tampilkanToast('Nama lengkap tidak boleh kosong!', 'error');
+            return;
+        }
+        
+        localStorage.setItem(PROFILE_KEY, JSON.stringify(dataProfil));
+        loadProfil();
+        tutupModal('modalEditProfil');
+        tampilkanToast('Profil berhasil diperbarui!', 'success');
     }
 
-    function simpanKeterangan(){
-        var p=JSON.parse(localStorage.getItem(PROFILE_KEY)||'{}');
-        p.keterangan=document.getElementById('textKeterangan').value;
-        localStorage.setItem(PROFILE_KEY, JSON.stringify(p)); tampilkanToast('Keterangan disimpan!');
+    // ===== 4. SIMPAN KETERANGAN =====
+    // Menyimpan teks keterangan perusahaan secara terpisah
+    function simpanKeterangan() {
+        var dataProfil = JSON.parse(localStorage.getItem(PROFILE_KEY) || '{}');
+        dataProfil.keterangan = document.getElementById('textKeterangan').value;
+        localStorage.setItem(PROFILE_KEY, JSON.stringify(dataProfil));
+        tampilkanToast('Keterangan berhasil disimpan!', 'success');
     }
 
-    function getDocuments(){ return JSON.parse(localStorage.getItem(DOCUMENTS_KEY)||'[]'); }
-    function saveDocuments(docs){ localStorage.setItem(DOCUMENTS_KEY, JSON.stringify(docs)); }
+    // ===== 5. FUNGSI BANTUAN DOKUMEN =====
+    // Mengambil dan menyimpan data dokumen dari/ke localStorage
+    function getDocuments() { 
+        return JSON.parse(localStorage.getItem(DOCUMENTS_KEY) || '[]'); 
+    }
+    function saveDocuments(dokumen) { 
+        localStorage.setItem(DOCUMENTS_KEY, JSON.stringify(dokumen)); 
+    }
 
-    document.addEventListener('DOMContentLoaded', function() {
-        var btn=document.getElementById('btnUnggahDokumen'), input=document.getElementById('inputDokumen');
-        if(btn&&input){ btn.onclick = ()=>{ input.click(); }; input.onchange = (e)=>uploadDokumen(e); }
-    });
-
+    // ===== 6. UPLOAD DOKUMEN =====
+    // Membaca file, mengubahnya ke base64, dan menyimpannya ke localStorage
     function uploadDokumen(event) {
-        var files=event.target.files; if(!files||!files.length) return;
-        var docs=getDocuments(), loaded=0;
-        tampilkanToast('Mengunggah '+files.length+' file...','info');
-        Array.from(files).forEach(file=>{
-            if(file.size>10*1024*1024){ tampilkanToast('File '+file.name+' terlalu besar (max 10MB)','warning'); loaded++; if(loaded===files.length){ event.target.value=''; renderDokumen(); } return; }
-            var reader=new FileReader();
-            reader.onload = (e)=>{
-                docs.push({ id:Date.now()+'-'+Math.random().toString(36).substr(2,9), name:file.name, type:file.type, data:e.target.result, keterangan:'' });
-                loaded++;
-                if(loaded===files.length){ saveDocuments(docs); renderDokumen(); tampilkanToast(loaded+' dokumen berhasil diunggah!'); event.target.value=''; }
+        var fileList = event.target.files;
+        if (!fileList || fileList.length === 0) return;
+
+        var dokumenTersimpan = getDocuments();
+        var jumlahBerhasil = 0;
+
+        tampilkanToast('Sedang mengunggah ' + fileList.length + ' file...', 'info');
+
+        Array.from(fileList).forEach(function(file) {
+            // Batas ukuran file 10MB
+            if (file.size > 10 * 1024 * 1024) {
+                tampilkanToast('File ' + file.name + ' terlalu besar (maksimal 10MB)', 'warning');
+                jumlahBerhasil++;
+                if (jumlahBerhasil === fileList.length) {
+                    event.target.value = '';
+                    renderDokumen();
+                }
+                return;
+            }
+
+            var pembacaFile = new FileReader();
+            pembacaFile.onload = function(e) {
+                dokumenTersimpan.push({
+                    id: Date.now() + '-' + Math.random().toString(36).substr(2, 9),
+                    name: file.name,
+                    type: file.type,
+                    data: e.target.result, // Data dalam format base64
+                    keterangan: ''
+                });
+                jumlahBerhasil++;
+                
+                if (jumlahBerhasil === fileList.length) {
+                    saveDocuments(dokumenTersimpan);
+                    renderDokumen();
+                    tampilkanToast(jumlahBerhasil + ' dokumen berhasil diunggah!', 'success');
+                    event.target.value = ''; // Reset input file
+                }
             };
-            reader.onerror = ()=>{ tampilkanToast('Gagal membaca file '+file.name,'error'); loaded++; if(loaded===files.length){ event.target.value=''; renderDokumen(); } };
-            reader.readAsDataURL(file);
+            pembacaFile.onerror = function() {
+                tampilkanToast('Gagal membaca file ' + file.name, 'error');
+                jumlahBerhasil++;
+                if (jumlahBerhasil === fileList.length) {
+                    event.target.value = '';
+                    renderDokumen();
+                }
+            };
+            pembacaFile.readAsDataURL(file);
         });
     }
 
-    function bukaPreviewGambar(src, nama) {
-        document.getElementById('modalPreviewImage').src = src;
-        document.getElementById('modalPreviewTitle').textContent = 'Preview: ' + nama;
+    // ===== 7. BUKA PREVIEW GAMBAR =====
+    // Menampilkan gambar dalam modal besar saat thumbnail diklik
+    function bukaPreviewGambar(sumberGambar, namaGambar) {
+        document.getElementById('modalPreviewImage').src = sumberGambar;
+        document.getElementById('modalPreviewTitle').textContent = 'Preview: ' + namaGambar;
         bukaModal('modalPreviewGambar');
     }
 
-    function renderDokumen(){
-        var docs=getDocuments(), container=document.getElementById('daftarDokumen');
-        if(!container) return;
-        if(docs.length===0){ container.innerHTML='<div class="empty-state"><i class="fas fa-cloud-upload-alt"></i><h3>Belum ada dokumen</h3><p>Klik tombol di atas untuk menambahkan.</p></div>'; return; }
-        
-        var html='';
-        docs.forEach(doc=>{
-            var isImage=doc.type&&doc.type.startsWith('image/');
-            var preview = isImage ? `<img src="${doc.data}" alt="${doc.name}" onclick="bukaPreviewGambar('${doc.data}','${doc.name}')" class="doc-thumb">` : `<div class="doc-icon"><i class="fas fa-file-alt"></i></div>`;
-            html+=`
+    // ===== 8. RENDER DAFTAR DOKUMEN =====
+    // Menampilkan daftar dokumen yang sudah diunggah dengan ikon atau thumbnail
+    function renderDokumen() {
+        var dokumenTersimpan = getDocuments();
+        var containerDokumen = document.getElementById('daftarDokumen');
+        if (!containerDokumen) return;
+
+        // Jika belum ada dokumen
+        if (dokumenTersimpan.length === 0) {
+            containerDokumen.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <h3>Belum ada dokumen</h3>
+                    <p>Klik tombol "Unggah Dokumen" untuk menambahkan file.</p>
+                </div>
+            `;
+            return;
+        }
+
+        var htmlDaftar = '';
+        dokumenTersimpan.forEach(function(dokumen) {
+            var isImage = dokumen.type && dokumen.type.startsWith('image/');
+            var elemenPreview = '';
+
+            // Jika file adalah gambar, tampilkan thumbnail yang bisa diklik
+            if (isImage) {
+                elemenPreview = `
+                    <img src="${dokumen.data}" 
+                         alt="${dokumen.name}" 
+                         onclick="bukaPreviewGambar('${dokumen.data}', '${dokumen.name}')" 
+                         class="doc-thumb">
+                `;
+            } else {
+                // Jika bukan gambar, tampilkan ikon file
+                elemenPreview = `
+                    <div class="doc-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                `;
+            }
+
+            htmlDaftar += `
                 <div class="doc-item">
-                    <div class="doc-info">${preview}<div class="doc-text"><h4>${doc.name}</h4><p>${doc.keterangan||'Tidak ada keterangan'}</p></div></div>
+                    <div class="doc-info">
+                        ${elemenPreview}
+                        <div class="doc-text">
+                            <h4>${dokumen.name}</h4>
+                            <p>${dokumen.keterangan || 'Tidak ada keterangan'}</p>
+                        </div>
+                    </div>
                     <div class="doc-actions">
-                        <button class="btn btn-secondary btn-xs" onclick="editDokumen('${doc.id}')"><i class="fas fa-edit"></i></button>
-                        <a href="${doc.data}" download="${doc.name}" class="btn btn-primary btn-xs"><i class="fas fa-download"></i></a>
-                        <button class="btn btn-danger btn-xs" onclick="hapusDokumen('${doc.id}')"><i class="fas fa-trash"></i></button>
+                        <button class="btn btn-secondary btn-xs" onclick="editDokumen('${dokumen.id}')">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <a href="${dokumen.data}" download="${dokumen.name}" class="btn btn-primary btn-xs">
+                            <i class="fas fa-download"></i>
+                        </a>
+                        <button class="btn btn-danger btn-xs" onclick="hapusDokumen('${dokumen.id}')">
+                            <i class="fas fa-trash"></i>
+                        </button>
                     </div>
                 </div>
             `;
         });
-        container.innerHTML = html;
+
+        containerDokumen.innerHTML = htmlDaftar;
     }
 
-    function editDokumen(id){
-        var doc=getDocuments().find(d=>d.id==id); if(!doc) return;
-        document.getElementById('editDocId').value=id; document.getElementById('editDocName').value=doc.name; document.getElementById('editDocKeterangan').value=doc.keterangan||'';
-        bukaModal('modalEditDokumen');
+    // ===== 9. EDIT DOKUMEN =====
+    // Membuka modal edit untuk mengubah nama dan keterangan file
+    function editDokumen(idDokumen) {
+        var dokumenTersimpan = getDocuments();
+        var dokumenTarget = dokumenTersimpan.find(function(d) { return d.id === idDokumen; });
+        
+        if (dokumenTarget) {
+            document.getElementById('editDocId').value = idDokumen;
+            document.getElementById('editDocName').value = dokumenTarget.name;
+            document.getElementById('editDocKeterangan').value = dokumenTarget.keterangan || '';
+            bukaModal('modalEditDokumen');
+        }
     }
 
-    function simpanEditDokumen(){
-        var id=document.getElementById('editDocId').value, name=document.getElementById('editDocName').value.trim(), ket=document.getElementById('editDocKeterangan').value.trim();
-        if(!name){ tampilkanToast('Nama file tidak boleh kosong!','error'); return; }
-        var docs=getDocuments(), doc=docs.find(d=>d.id==id);
-        if(doc){ doc.name=name; doc.keterangan=ket; saveDocuments(docs); renderDokumen(); tutupModal('modalEditDokumen'); tampilkanToast('Dokumen diperbarui!'); }
+    // ===== 10. SIMPAN PERUBAHAN DOKUMEN =====
+    // Menyimpan perubahan nama dan keterangan file
+    function simpanEditDokumen() {
+        var idDokumen = document.getElementById('editDocId').value;
+        var namaBaru = document.getElementById('editDocName').value.trim();
+        var keteranganBaru = document.getElementById('editDocKeterangan').value.trim();
+
+        if (!namaBaru) {
+            tampilkanToast('Nama file tidak boleh kosong!', 'error');
+            return;
+        }
+
+        var dokumenTersimpan = getDocuments();
+        var dokumenTarget = dokumenTersimpan.find(function(d) { return d.id === idDokumen; });
+
+        if (dokumenTarget) {
+            dokumenTarget.name = namaBaru;
+            dokumenTarget.keterangan = keteranganBaru;
+            saveDocuments(dokumenTersimpan);
+            renderDokumen();
+            tutupModal('modalEditDokumen');
+            tampilkanToast('Dokumen berhasil diperbarui!', 'success');
+        }
     }
 
-    function hapusDokumen(id){
-        if(!confirm('Yakin ingin menghapus dokumen ini?')) return;
-        var docs=getDocuments().filter(d=>d.id!=id);
-        saveDocuments(docs); renderDokumen(); tampilkanToast('Dokumen dihapus!');
+    // ===== 11. HAPUS DOKUMEN =====
+    // Menghapus dokumen dari localStorage setelah konfirmasi
+    function hapusDokumen(idDokumen) {
+        if (!confirm('Apakah Anda yakin ingin menghapus dokumen ini? Tindakan ini tidak dapat dibatalkan.')) return;
+
+        var dokumenTersimpan = getDocuments();
+        var dokumenBaru = dokumenTersimpan.filter(function(d) { return d.id !== idDokumen; });
+        saveDocuments(dokumenBaru);
+        renderDokumen();
+        tampilkanToast('Dokumen berhasil dihapus!', 'warning');
     }
 
-    document.addEventListener('DOMContentLoaded', loadProfil);
-    (function(){ var orig=window.navigasiHalaman; if(orig) window.navigasiHalaman = (page)=>{ orig(page); if(page==='profile'&&typeof loadProfil==='function') loadProfil(); }; })();
+    // ===== 12. EVENT LISTENER SAAT HALAMAN DIMUAT =====
+    // Menghubungkan tombol unggah dengan fungsi upload
+    document.addEventListener('DOMContentLoaded', function() {
+        var tombolUnggah = document.getElementById('btnUnggahDokumen');
+        var inputFile = document.getElementById('inputDokumen');
+        
+        if (tombolUnggah && inputFile) {
+            tombolUnggah.onclick = function() {
+                inputFile.click();
+            };
+            inputFile.onchange = function(e) {
+                uploadDokumen(e);
+            };
+        }
+        
+        // Memuat data profil saat halaman pertama kali dibuka
+        loadProfil();
+    });
+
+    // ===== 13. OVERRIDE NAVIGASI =====
+    // Memastikan profil termuat saat berpindah ke halaman Profil
+    (function() {
+        var fungsiNavigasiAsli = window.navigasiHalaman;
+        if (fungsiNavigasiAsli) {
+            window.navigasiHalaman = function(halamanTujuan) {
+                fungsiNavigasiAsli(halamanTujuan);
+                if (halamanTujuan === 'profile' && typeof loadProfil === 'function') {
+                    loadProfil();
+                }
+            };
+        }
+    })();
 </script>
-<!-- ============ AKHIR BLOK 8 ============ -->
+<!-- ============ AKHIR BLOK 8 SCRIPTS PROFIL & UPLOAD (REVISI SUPERLENGKAP) ============ -->
     <!-- ============ BLOK 9 FUNGSI RENDER TABEL SEMUA AKUN ============ -->
 <script>
     // Fungsi untuk merender tabel manajemen semua akun yang terdaftar
