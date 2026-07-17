@@ -1,9 +1,11 @@
-<!-- ============ BLOK 1(1) - 02 R1 HEAD & CSS GLOBAL (REVISI UNTUK VERCEL) ============ -->
+<!-- ============ BLOK 1(1) - 02 R2 HEAD & CSS GLOBAL (REVISI KEDUA - PERBAIKAN CDN) ============ -->
 <!-- PENJELASAN: 
-     Ini adalah revisi ke-2 (R1) dari BLOK 1(1). 
-     Perbaikan utama: Memastikan tidak ada komentar HTML (<!-- -->) yang berada 
-     di dalam tag <style>. Semua komentar blok diletakkan di LUAR tag <style> 
-     agar CSS terbaca dengan benar oleh Vercel dan tidak menyebabkan halaman kosong. -->
+     Ini adalah revisi kedua (R2) dari BLOK 1(1). 
+     Pada revisi ini, link CDN Font Awesome diubah dari cdnjs.cloudflare.com 
+     ke jsdelivr.net. Perubahan ini dilakukan karena Cloudflare kerap mengalami 
+     pemblokiran atau keterlambatan saat diakses melalui server Vercel, 
+     yang menyebabkan ikon (logo) tidak muncul (menjadi kotak abu-abu) 
+     dan memunculkan teks error di layar login. -->
 
 <!DOCTYPE html>
 <html lang="id">
@@ -12,8 +14,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Toko Online 2R - SuperAdmin</title>
     
-    <!-- Load Font Awesome untuk Ikon -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Load Font Awesome dari jsDelivr (Lebih Stabil untuk Vercel) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css">
     
     <!-- Load Google Fonts (Poppins) -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -76,7 +78,7 @@
         .page { display: none; }
     </style>
 </head>
-<!-- ============ AKHIR BLOK 1(1) - 02 R1 HEAD & CSS GLOBAL ============ -->
+<!-- ============ AKHIR BLOK 1(1) - 02 R2 HEAD & CSS GLOBAL ============ -->
 <!-- ============ BLOK 1(1) - 02 R2 HEAD & CSS GLOBAL (REVISI KEDUA - PERBAIKAN CDN) ============ -->
 <!-- PENJELASAN: 
      Ini adalah revisi kedua (R2) dari BLOK 1(1). 
