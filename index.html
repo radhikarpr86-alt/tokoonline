@@ -292,7 +292,7 @@
 </aside>
 <!-- ============ AKHIR BLOK 5 SIDEBAR ============ -->
 
-<!-- ============ BLOK 6 CONTENT AREA ============ -->
+<!-- ============ BLOK 6 CONTENT AREA (REVISI TOMBOL & PREVIEW GAMBAR) ============ -->
 <nav class="navbar hidden" id="mainNavbar">
     <div class="navbar-brand"><i class="fas fa-store-alt"></i><span>Toko Online 2R</span></div>
     <div class="navbar-user">
@@ -435,6 +435,19 @@
         </div>
     </div>
 
+    <!-- === TAMBAHAN: Modal Lihat Gambar Besar === -->
+    <div class="modal-overlay" id="modalPreviewGambar">
+        <div class="modal" style="max-width: 800px; background: transparent; box-shadow: none;">
+            <div class="modal-header" style="background: white; border-radius: 16px 16px 0 0;">
+                <h3 id="modalPreviewTitle">Preview Gambar</h3>
+                <button class="modal-close" onclick="tutupModal('modalPreviewGambar')"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body" style="padding: 0; background: #f0f0f0; text-align: center; border-radius: 0 0 16px 16px;">
+                <img id="modalPreviewImage" src="" alt="Preview" style="max-width: 100%; max-height: 70vh; display: block; margin: 0 auto; border-radius: 0 0 16px 16px;">
+            </div>
+        </div>
+    </div>
+
     <!-- Placeholder halaman lainnya -->
     <div class="page" id="pageLihatToko"><div class="page-header"><div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Lihat Semua Toko</span></div><h2>Daftar Toko</h2><p>Halaman untuk menampilkan semua toko yang terdaftar.</p></div><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-store" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div></div>
     <div class="page" id="pageLihatOjek"><div class="page-header"><div class="breadcrumb"><i class="fas fa-home"></i> <span>Home</span> <i class="fas fa-chevron-right"></i> <span class="active">Lihat Semua Ojek</span></div><h2>Daftar Ojek</h2><p>Halaman untuk menampilkan semua ojek yang terdaftar.</p></div><div class="card"><div class="card-body text-center" style="padding:60px;"><i class="fas fa-motorcycle" style="font-size:48px;color:var(--gray-400);margin-bottom:15px;"></i><h3>Halaman dalam pengembangan</h3><p>Fitur ini akan segera tersedia.</p></div></div></div>
@@ -466,7 +479,7 @@
     <div class="modal-body" id="modalFormBody"></div>
     <div class="modal-footer"><button class="btn btn-secondary" onclick="tutupModal('modalForm')">Batal</button><button class="btn btn-primary" id="modalFormSubmit">Simpan</button></div></div>
 </div>
-<!-- ============ AKHIR BLOK 6 CONTENT AREA ============ -->
+<!-- ============ AKHIR BLOK 6 CONTENT AREA (REVISI TOMBOL & PREVIEW GAMBAR) ============ -->
 
 <!-- ============ BLOK 7 MODALS ============ -->
 <div class="modal-overlay" id="modalKonfirmasi">
@@ -641,7 +654,7 @@
 </script>
 <!-- ============ AKHIR BLOK 8 SCRIPTS UTAMA ============ -->
 
-<!-- ============ BLOK 9 SCRIPTS PROFIL (REVISI PREVIEW GAMBAR) ============ -->
+<!-- ============ BLOK 9 SCRIPTS PROFIL (REVISI TOMBOL KECIL & PREVIEW BESAR) ============ -->
 <script>
     const PROFILE_KEY = '2r_superadmin_profile';
     const DOCUMENTS_KEY = '2r_superadmin_documents';
@@ -762,7 +775,14 @@
         });
     }
 
-    // REVISI UTAMA DI SINI (FUNGSI RENDER DOKUMEN UNTUK PREVIEW GAMBAR)
+    // FUNGSI UNTUK MEMPERBESAR GAMBAR SAAT DI KLIK
+    function bukaPreviewGambar(src, nama) {
+        document.getElementById('modalPreviewImage').src = src;
+        document.getElementById('modalPreviewTitle').textContent = 'Preview: ' + nama;
+        bukaModal('modalPreviewGambar');
+    }
+
+    // REVISI TAMPILAN DAFTAR DOKUMEN (TOMBOL KECIL & GAMBAR BISA DIKLIK)
     function renderDokumen() {
         var docs = getDocuments();
         var container = document.getElementById('daftarDokumen');
@@ -782,32 +802,29 @@
 
         var html = '';
         docs.forEach(function(doc) {
-            // CEK APAKAH FILE INI GAMBAR?
             var isImage = doc.type && doc.type.startsWith('image/');
             
-            // Tentukan ikon atau tag img
             var previewElement = '';
             if (isImage) {
-                // Jika gambar, tampilkan thumbnail kecil
-                previewElement = `<img src="${doc.data}" alt="${doc.name}" style="width:50px; height:50px; object-fit:cover; border-radius:8px; border:1px solid #eee;">`;
+                // Tampilkan gambar asli (bisa diklik untuk diperbesar)
+                previewElement = `<img src="${doc.data}" alt="${doc.name}" onclick="bukaPreviewGambar('${doc.data}', '${doc.name}')" style="width:60px; height:60px; object-fit:cover; border-radius:8px; border:1px solid #eee; cursor:pointer;">`;
             } else {
-                // Jika bukan gambar, tampilkan ikon file
-                previewElement = `<div class="profile-detail-icon" style="background:var(--orange-pale); color:var(--orange-primary); width:50px; height:50px; border-radius:8px; display:flex; align-items:center; justify-content:center;"><i class="fas fa-file-alt"></i></div>`;
+                previewElement = `<div class="profile-detail-icon" style="background:var(--orange-pale); color:var(--orange-primary); width:60px; height:60px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:24px;"><i class="fas fa-file-alt"></i></div>`;
             }
 
             html += `
-                <div class="profile-detail-item" style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #eee; padding:10px 0;">
-                    <div style="display:flex; align-items:center; gap:12px; flex:1;">
+                <div class="profile-detail-item" style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #eee; padding:15px 0;">
+                    <div style="display:flex; align-items:center; gap:15px; flex:1;">
                         ${previewElement}
                         <div class="profile-detail-text">
-                            <h4 style="font-size:14px; margin:0;">${doc.name}</h4>
-                            <p style="font-size:12px; color:var(--gray-500); margin:0;">${doc.keterangan || 'Tidak ada keterangan'}</p>
+                            <h4 style="font-size:15px; margin:0; font-weight:600; color:var(--gray-800);">${doc.name}</h4>
+                            <p style="font-size:13px; color:var(--gray-500); margin:4px 0 0 0;">${doc.keterangan || 'Tidak ada keterangan'}</p>
                         </div>
                     </div>
-                    <div style="display:flex; gap:6px;">
-                        <button class="btn btn-sm btn-secondary" onclick="editDokumen('${doc.id}')"><i class="fas fa-edit"></i></button>
-                        <a href="${doc.data}" download="${doc.name}" class="btn btn-sm btn-primary" style="text-decoration:none;"><i class="fas fa-download"></i></a>
-                        <button class="btn btn-sm btn-danger" style="background:var(--error); color:white; border:none;" onclick="hapusDokumen('${doc.id}')"><i class="fas fa-trash"></i></button>
+                    <div style="display:flex; gap:8px;">
+                        <button class="btn btn-sm btn-secondary" onclick="editDokumen('${doc.id}')" style="padding:6px 12px; font-size:13px; border-radius:6px;"><i class="fas fa-edit"></i> Edit</button>
+                        <a href="${doc.data}" download="${doc.name}" class="btn btn-sm btn-primary" style="padding:6px 12px; font-size:13px; border-radius:6px; text-decoration:none;"><i class="fas fa-download"></i></a>
+                        <button class="btn btn-sm btn-danger" onclick="hapusDokumen('${doc.id}')" style="padding:6px 12px; font-size:13px; border-radius:6px; background:var(--error); color:white; border:none;"><i class="fas fa-trash"></i></button>
                     </div>
                 </div>
             `;
@@ -862,6 +879,6 @@
         }
     })();
 </script>
-<!-- ============ AKHIR BLOK 9 SCRIPTS PROFIL (REVISI PREVIEW GAMBAR) ============ -->
+<!-- ============ AKHIR BLOK 9 SCRIPTS PROFIL (REVISI TOMBOL KECIL & PREVIEW BESAR) ============ -->
 </body>
 </html>
