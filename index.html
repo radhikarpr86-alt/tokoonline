@@ -574,93 +574,224 @@
 </script>
 <!-- ============ AKHIR BLOK 8 SCRIPTS UTAMA ============ -->
 
-<!-- ============ BLOK 9 SCRIPTS PROFIL ============ -->
+<!-- ============ BLOK 9 SCRIPTS PROFIL (REVISI UPLOAD) ============ -->
 <script>
-    const PROFILE_KEY='2r_superadmin_profile', DOCUMENTS_KEY='2r_superadmin_documents';
-    function loadProfil(){
-        var p=JSON.parse(localStorage.getItem(PROFILE_KEY)||'{}');
-        document.getElementById('profilNama').textContent=p.nama||'-';
-        document.getElementById('profilAlamat').textContent=p.alamat||'-';
-        document.getElementById('profilEmail').textContent=p.email||'-';
-        document.getElementById('profilHp').textContent=p.hp||'-';
-        document.getElementById('profilJabatan').textContent=p.jabatan||'-';
-        document.getElementById('profilPerusahaan').textContent=p.perusahaan||'-';
-        document.getElementById('textKeterangan').value=p.keterangan||'';
+    const PROFILE_KEY = '2r_superadmin_profile';
+    const DOCUMENTS_KEY = '2r_superadmin_documents';
+
+    function loadProfil() {
+        var p = JSON.parse(localStorage.getItem(PROFILE_KEY) || '{}');
+        document.getElementById('profilNama').textContent = p.nama || '-';
+        document.getElementById('profilAlamat').textContent = p.alamat || '-';
+        document.getElementById('profilEmail').textContent = p.email || '-';
+        document.getElementById('profilHp').textContent = p.hp || '-';
+        document.getElementById('profilJabatan').textContent = p.jabatan || '-';
+        document.getElementById('profilPerusahaan').textContent = p.perusahaan || '-';
+        document.getElementById('textKeterangan').value = p.keterangan || '';
         renderDokumen();
     }
-    function bukaModalEditProfil(){
-        var p=JSON.parse(localStorage.getItem(PROFILE_KEY)||'{}');
-        document.getElementById('editNama').value=p.nama||'';
-        document.getElementById('editAlamat').value=p.alamat||'';
-        document.getElementById('editEmail').value=p.email||'';
-        document.getElementById('editHp').value=p.hp||'';
-        document.getElementById('editJabatan').value=p.jabatan||'';
-        document.getElementById('editPerusahaan').value=p.perusahaan||'';
+
+    function bukaModalEditProfil() {
+        var p = JSON.parse(localStorage.getItem(PROFILE_KEY) || '{}');
+        document.getElementById('editNama').value = p.nama || '';
+        document.getElementById('editAlamat').value = p.alamat || '';
+        document.getElementById('editEmail').value = p.email || '';
+        document.getElementById('editHp').value = p.hp || '';
+        document.getElementById('editJabatan').value = p.jabatan || '';
+        document.getElementById('editPerusahaan').value = p.perusahaan || '';
         bukaModal('modalEditProfil');
     }
-    function simpanProfil(){
-        var profil={
-            nama:document.getElementById('editNama').value.trim(),
-            alamat:document.getElementById('editAlamat').value.trim(),
-            email:document.getElementById('editEmail').value.trim(),
-            hp:document.getElementById('editHp').value.trim(),
-            jabatan:document.getElementById('editJabatan').value.trim(),
-            perusahaan:document.getElementById('editPerusahaan').value.trim(),
-            keterangan:document.getElementById('textKeterangan').value
+
+    function simpanProfil() {
+        var profil = {
+            nama: document.getElementById('editNama').value.trim(),
+            alamat: document.getElementById('editAlamat').value.trim(),
+            email: document.getElementById('editEmail').value.trim(),
+            hp: document.getElementById('editHp').value.trim(),
+            jabatan: document.getElementById('editJabatan').value.trim(),
+            perusahaan: document.getElementById('editPerusahaan').value.trim(),
+            keterangan: document.getElementById('textKeterangan').value
         };
-        if(!profil.nama){ tampilkanToast('Nama tidak boleh kosong!','error'); return; }
+        if (!profil.nama) { tampilkanToast('Nama tidak boleh kosong!', 'error'); return; }
         localStorage.setItem(PROFILE_KEY, JSON.stringify(profil));
-        loadProfil(); tutupModal('modalEditProfil'); tampilkanToast('Profil berhasil disimpan!');
+        loadProfil();
+        tutupModal('modalEditProfil');
+        tampilkanToast('Profil berhasil disimpan!');
     }
-    function simpanKeterangan(){
-        var p=JSON.parse(localStorage.getItem(PROFILE_KEY)||'{}'); p.keterangan=document.getElementById('textKeterangan').value;
-        localStorage.setItem(PROFILE_KEY, JSON.stringify(p)); tampilkanToast('Keterangan disimpan!');
+
+    function simpanKeterangan() {
+        var p = JSON.parse(localStorage.getItem(PROFILE_KEY) || '{}');
+        p.keterangan = document.getElementById('textKeterangan').value;
+        localStorage.setItem(PROFILE_KEY, JSON.stringify(p));
+        tampilkanToast('Keterangan disimpan!');
     }
-    function getDocuments(){ return JSON.parse(localStorage.getItem(DOCUMENTS_KEY)||'[]'); }
-    function saveDocuments(docs){ localStorage.setItem(DOCUMENTS_KEY, JSON.stringify(docs)); }
-    function uploadDokumen(event){
-        var files=event.target.files; if(!files.length) return;
-        var docs=getDocuments(), loaded=0;
-        Array.from(files).forEach(function(file){
-            if(file.size>10*1024*1024){ tampilkanToast('File '+file.name+' terlalu besar','warning'); return; }
-            var reader=new FileReader();
-            reader.onload=function(e){
-                docs.push({ id:Date.now()+Math.random(), name:file.name, type:file.type, data:e.target.result, keterangan:'' });
-                loaded++; if(loaded===files.length){ saveDocuments(docs); renderDokumen(); tampilkanToast(loaded+' dokumen berhasil diunggah'); }
+
+    // ===== FUNGSI DOKUMEN =====
+    function getDocuments() { return JSON.parse(localStorage.getItem(DOCUMENTS_KEY) || '[]'); }
+    function saveDocuments(docs) { localStorage.setItem(DOCUMENTS_KEY, JSON.stringify(docs)); }
+
+    // PERBAIKAN: Event listener untuk tombol unggah (agar lebih responsif)
+    document.addEventListener('DOMContentLoaded', function() {
+        var btnUnggah = document.getElementById('btnUnggahDokumen');
+        var inputFile = document.getElementById('inputDokumen');
+        
+        if (btnUnggah && inputFile) {
+            // Saat tombol diklik, pancing klik pada input file
+            btnUnggah.addEventListener('click', function(e) {
+                e.preventDefault();
+                inputFile.click();
+            });
+
+            // Saat file dipilih, jalankan upload
+            inputFile.addEventListener('change', function(e) {
+                uploadDokumen(e);
+            });
+        }
+    });
+
+    function uploadDokumen(event) {
+        var files = event.target.files;
+        if (!files || files.length === 0) return;
+
+        var docs = getDocuments();
+        var loaded = 0;
+
+        // Tampilkan loading toast
+        tampilkanToast('Sedang mengunggah ' + files.length + ' file...', 'info');
+
+        Array.from(files).forEach(function(file) {
+            // Batasi ukuran file (10MB)
+            if (file.size > 10 * 1024 * 1024) {
+                tampilkanToast('File ' + file.name + ' terlalu besar (max 10MB)', 'warning');
+                loaded++;
+                if (loaded === files.length) { 
+                    event.target.value = ''; // Reset input
+                    renderDokumen(); 
+                }
+                return;
+            }
+
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                docs.push({ 
+                    id: Date.now() + '-' + Math.random().toString(36).substr(2, 9), 
+                    name: file.name, 
+                    type: file.type, 
+                    data: e.target.result, // Data base64 file
+                    keterangan: '' 
+                });
+                loaded++;
+                
+                // Jika semua file sudah selesai dibaca
+                if (loaded === files.length) {
+                    saveDocuments(docs);
+                    renderDokumen();
+                    tampilkanToast(loaded + ' dokumen berhasil diunggah!');
+                    event.target.value = ''; // Reset input file agar bisa upload file yang sama lagi
+                }
+            };
+            reader.onerror = function() {
+                tampilkanToast('Gagal membaca file ' + file.name, 'error');
+                loaded++;
+                if (loaded === files.length) { 
+                    event.target.value = ''; 
+                    renderDokumen(); 
+                }
             };
             reader.readAsDataURL(file);
         });
-        event.target.value='';
     }
-    function renderDokumen(){
-        var docs=getDocuments(), container=document.getElementById('daftarDokumen');
-        if(docs.length===0){ container.innerHTML='<div class="empty-state"><i class="fas fa-cloud-upload-alt" style="font-size:40px; color:var(--gray-400);"></i><h3>Belum ada dokumen</h3><p>Klik tombol "Unggah Dokumen" untuk menambahkan.</p></div>'; return; }
-        container.innerHTML=docs.map(function(doc){
-            return '<div class="profile-detail-item" style="justify-content:space-between; align-items:center;"><div style="display:flex; align-items:center; gap:12px; flex:1;"><div class="profile-detail-icon" style="background:var(--orange-pale); color:var(--orange-primary);"><i class="fas fa-file-alt"></i></div><div class="profile-detail-text"><h4>'+doc.name+'</h4><p>'+(doc.keterangan||'Tidak ada keterangan')+'</p></div></div><div style="display:flex; gap:6px;"><button class="btn btn-sm btn-secondary" onclick="editDokumen(\''+doc.id+'\')"><i class="fas fa-edit"></i></button><a href="'+doc.data+'" download="'+doc.name+'" class="btn btn-sm btn-primary"><i class="fas fa-download"></i></a><button class="btn btn-sm btn-danger" onclick="hapusDokumen(\''+doc.id+'\')"><i class="fas fa-trash"></i></button></div></div>';
-        }).join('');
+
+    function renderDokumen() {
+        var docs = getDocuments();
+        var container = document.getElementById('daftarDokumen');
+        
+        if (!container) return;
+
+        if (docs.length === 0) {
+            container.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-cloud-upload-alt" style="font-size:40px; color:var(--gray-400);"></i>
+                    <h3>Belum ada dokumen</h3>
+                    <p>Klik tombol "Unggah Dokumen" untuk menambahkan.</p>
+                </div>
+            `;
+            return;
+        }
+
+        var html = '';
+        docs.forEach(function(doc) {
+            html += `
+                <div class="profile-detail-item" style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #eee; padding:10px 0;">
+                    <div style="display:flex; align-items:center; gap:12px; flex:1;">
+                        <div class="profile-detail-icon" style="background:var(--orange-pale); color:var(--orange-primary); width:40px; height:40px; border-radius:8px; display:flex; align-items:center; justify-content:center;">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <div class="profile-detail-text">
+                            <h4 style="font-size:14px; margin:0;">${doc.name}</h4>
+                            <p style="font-size:12px; color:var(--gray-500); margin:0;">${doc.keterangan || 'Tidak ada keterangan'}</p>
+                        </div>
+                    </div>
+                    <div style="display:flex; gap:6px;">
+                        <button class="btn btn-sm btn-secondary" onclick="editDokumen('${doc.id}')"><i class="fas fa-edit"></i></button>
+                        <a href="${doc.data}" download="${doc.name}" class="btn btn-sm btn-primary" style="text-decoration:none;"><i class="fas fa-download"></i></a>
+                        <button class="btn btn-sm btn-danger" style="background:var(--error); color:white; border:none;" onclick="hapusDokumen('${doc.id}')"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+            `;
+        });
+        container.innerHTML = html;
     }
-    function editDokumen(id){
-        var doc=getDocuments().find(function(d){ return d.id==id; }); if(!doc) return;
-        document.getElementById('editDocId').value=id; document.getElementById('editDocName').value=doc.name; document.getElementById('editDocKeterangan').value=doc.keterangan||'';
+
+    function editDokumen(id) {
+        var doc = getDocuments().find(function(d) { return d.id == id; });
+        if (!doc) return;
+        document.getElementById('editDocId').value = id;
+        document.getElementById('editDocName').value = doc.name;
+        document.getElementById('editDocKeterangan').value = doc.keterangan || '';
         bukaModal('modalEditDokumen');
     }
-    function simpanEditDokumen(){
-        var id=document.getElementById('editDocId').value, name=document.getElementById('editDocName').value.trim(), ket=document.getElementById('editDocKeterangan').value.trim();
-        if(!name){ tampilkanToast('Nama file tidak boleh kosong!','error'); return; }
-        var docs=getDocuments(), doc=docs.find(function(d){ return d.id==id; });
-        if(doc){ doc.name=name; doc.keterangan=ket; saveDocuments(docs); renderDokumen(); tutupModal('modalEditDokumen'); tampilkanToast('Dokumen diperbarui!'); }
+
+    function simpanEditDokumen() {
+        var id = document.getElementById('editDocId').value;
+        var name = document.getElementById('editDocName').value.trim();
+        var ket = document.getElementById('editDocKeterangan').value.trim();
+        if (!name) { tampilkanToast('Nama file tidak boleh kosong!', 'error'); return; }
+        
+        var docs = getDocuments();
+        var doc = docs.find(function(d) { return d.id == id; });
+        if (doc) {
+            doc.name = name;
+            doc.keterangan = ket;
+            saveDocuments(docs);
+            renderDokumen();
+            tutupModal('modalEditDokumen');
+            tampilkanToast('Dokumen diperbarui!');
+        }
     }
-    function hapusDokumen(id){
-        if(!confirm('Yakin ingin menghapus dokumen ini?')) return;
-        var docs=getDocuments().filter(function(d){ return d.id!=id; });
-        saveDocuments(docs); renderDokumen(); tampilkanToast('Dokumen dihapus!');
+
+    function hapusDokumen(id) {
+        if (!confirm('Yakin ingin menghapus dokumen ini?')) return;
+        var docs = getDocuments().filter(function(d) { return d.id != id; });
+        saveDocuments(docs);
+        renderDokumen();
+        tampilkanToast('Dokumen dihapus!');
     }
+
+    // Jalankan load profil saat halaman dimuat
     document.addEventListener('DOMContentLoaded', loadProfil);
-    (function(){
-        var orig=window.navigasiHalaman;
-        if(orig){ window.navigasiHalaman=function(page){ orig(page); if(page==='profile'&&typeof loadProfil==='function') loadProfil(); }; }
+    
+    // Override navigasi agar profil ter-load saat pindah halaman
+    (function() {
+        var orig = window.navigasiHalaman;
+        if (orig) {
+            window.navigasiHalaman = function(page) {
+                orig(page);
+                if (page === 'profile' && typeof loadProfil === 'function') loadProfil();
+            };
+        }
     })();
 </script>
-<!-- ============ AKHIR BLOK 9 SCRIPTS PROFIL ============ -->
+<!-- ============ AKHIR BLOK 9 SCRIPTS PROFIL (REVISI UPLOAD) ============ -->
 </body>
 </html>
