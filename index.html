@@ -1867,9 +1867,39 @@
     }
 </script>
 <!-- ============ AKHIR BLOK 9 FUNGSI RENDER TABEL SEMUA AKUN (REVISI SUPERLENGKAP) ============ -->
-    <!-- ============ BLOK 10 FUNGSI AKSI MANAJEMEN AKUN ============ -->
+    <!-- ============ BLOK 10 FUNGSI AKSI MANAJEMEN AKUN (REVISI SUPERLENGKAP) ============ -->
+<!-- PENJELASAN: 
+     Blok ini berisi tiga fungsi utama yang digunakan sebagai aksi manajemen 
+     pada tabel "Kelola Semua Akun". Fungsi-fungsi ini akan dipanggil 
+     saat SuperAdmin mengklik tombol "Aktifkan Kembali", "Nonaktifkan Akun", 
+     atau "Hapus Akun" di dalam tabel.
+
+     Rincian fungsi:
+     1. aktifkanAkunDariManajemen(idAkun):
+        - Mengambil data akun berdasarkan ID.
+        - Mengubah status akun menjadi "AKTIF".
+        - Menyimpan kembali data ke localStorage.
+        - Memanggil renderTabelSemuaAkun() untuk memperbarui tampilan.
+
+     2. nonaktifkanAkunDariManajemen(idAkun):
+        - Mengambil data akun berdasarkan ID.
+        - Mengubah status akun menjadi "NONAKTIF (Dinonaktifkan oleh SuperAdmin)".
+        - Menyimpan kembali data ke localStorage.
+        - Memanggil renderTabelSemuaAkun() untuk memperbarui tampilan.
+
+     3. hapusAkunDariManajemen(idAkun):
+        - Mengambil data akun berdasarkan ID.
+        - Menampilkan konfirmasi ganda (proteksi) sebelum menghapus data.
+        - Menghapus akun dari array daftarAkun.
+        - Menyimpan kembali data ke localStorage.
+        - Memanggil renderTabelSemuaAkun() untuk memperbarui tampilan.
+
+     Setiap fungsi dilengkapi dengan sistem notifikasi Toast dan konfirmasi 
+     untuk memastikan keamanan data dan memberikan umpan balik kepada SuperAdmin. -->
+
 <script>
-    // Fungsi untuk mengaktifkan kembali akun dari halaman manajemen
+    // ===== 1. FUNGSI AKTIFKAN KEMBALI AKUN =====
+    // Mengubah status akun dari NONAKTIF menjadi AKTIF
     function aktifkanAkunDariManajemen(idAkun) {
         // Mengambil data akun dari localStorage
         var dataAkunSaatIni = localStorage.getItem('2r_akun');
@@ -1900,13 +1930,19 @@
 
                 // Merender ulang tabel manajemen semua akun
                 renderTabelSemuaAkun();
+
+                // Jika fungsi render tabel persetujuan sudah ada, refresh juga
+                if (typeof renderTabelPersetujuan === 'function') {
+                    renderTabelPersetujuan();
+                }
             }
         } else {
             tampilkanToast("Akun dengan ID " + idAkun + " tidak ditemukan dalam sistem.", "error");
         }
     }
 
-    // Fungsi untuk menonaktifkan akun dari halaman manajemen
+    // ===== 2. FUNGSI NONAKTIFKAN AKUN =====
+    // Mengubah status akun dari AKTIF menjadi NONAKTIF
     function nonaktifkanAkunDariManajemen(idAkun) {
         // Mengambil data akun dari localStorage
         var dataAkunSaatIni = localStorage.getItem('2r_akun');
@@ -1937,13 +1973,19 @@
 
                 // Merender ulang tabel manajemen semua akun
                 renderTabelSemuaAkun();
+
+                // Jika fungsi render tabel persetujuan sudah ada, refresh juga
+                if (typeof renderTabelPersetujuan === 'function') {
+                    renderTabelPersetujuan();
+                }
             }
         } else {
             tampilkanToast("Akun dengan ID " + idAkun + " tidak ditemukan dalam sistem.", "error");
         }
     }
 
-    // Fungsi untuk menghapus akun dari halaman manajemen
+    // ===== 3. FUNGSI HAPUS AKUN =====
+    // Menghapus permanen akun dari sistem (dengan proteksi konfirmasi ganda)
     function hapusAkunDariManajemen(idAkun) {
         // Mengambil data akun dari localStorage
         var dataAkunSaatIni = localStorage.getItem('2r_akun');
@@ -1976,6 +2018,11 @@
 
                     // Merender ulang tabel manajemen semua akun
                     renderTabelSemuaAkun();
+
+                    // Jika fungsi render tabel persetujuan sudah ada, refresh juga
+                    if (typeof renderTabelPersetujuan === 'function') {
+                        renderTabelPersetujuan();
+                    }
                 }
             }
         } else {
@@ -1983,7 +2030,7 @@
         }
     }
 </script>
-<!-- ============ AKHIR BLOK 10 FUNGSI AKSI MANAJEMEN AKUN ============ -->
+<!-- ============ AKHIR BLOK 10 FUNGSI AKSI MANAJEMEN AKUN (REVISI SUPERLENGKAP) ============ -->
 <!-- ============ BLOK 11(1) - 01 R1 HTML & CSS DAFTAR AKUN LAMA (REVISI PERTAMA) ============ -->
 <!-- PENJELASAN: 
      Ini adalah revisi pertama (R1) dari BLOK 11(1). 
