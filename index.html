@@ -425,7 +425,7 @@
     <div class="modal-footer"><button class="btn btn-secondary" onclick="tutupModal('modalForm')">Batal</button><button class="btn btn-primary" id="modalFormSubmit">Simpan</button></div></div>
 </div>
 <!-- ============ AKHIR BLOK 8 MODALS ============ -->
-<!-- ============ BLOK 9 SCRIPTS (REVISI AUTO-CLOSE SIDEBAR) ============ -->
+<!-- ============ BLOK 9 SCRIPTS (REVISI SIDEBAR OTOMATIS TUTUP) ============ -->
 <script>
     // Data akun & enkripsi
     function getDataAkun() { var d=localStorage.getItem('2r_akun'); return d?JSON.parse(d):[]; }
@@ -500,25 +500,44 @@
         else { selesai(null,null); }
     }
 
-    // Navigasi & sidebar
+    // ===== REVISI UTAMA: FUNGSI NAVIGASI & SIDEBAR =====
     function navigasiHalaman(page) {
         document.querySelectorAll('.page').forEach(function(p){ p.classList.add('hidden'); });
         var target=document.getElementById('page'+page.charAt(0).toUpperCase()+page.slice(1));
-        if(target){ target.classList.remove('hidden'); setActiveMenu(page); if(page==='profile'&&typeof loadProfil==='function') loadProfil(); }
-        else tampilkanToast('Halaman belum tersedia','warning');
-        // ✅ SELALU tutup sidebar setelah menu diklik (tanpa syarat lebar layar)
-        toggleSidebar(true);
+        if(target){ 
+            target.classList.remove('hidden'); 
+            setActiveMenu(page); 
+            if(page==='profile'&&typeof loadProfil==='function') loadProfil(); 
+        } else {
+            tampilkanToast('Halaman belum tersedia','warning');
+        }
+        
+        // REVISI: SIDEBAR DIPAKSA TUTUP SETELAH KLIK MENU (AGAR TIDAK MENGHALANGI HALAMAN)
+        tutupSidebar();
     }
+
     function setActiveMenu(page) {
         document.querySelectorAll('.sidebar-menu-item').forEach(function(el){ el.classList.remove('active'); });
         var menu=document.getElementById('menu'+page.charAt(0).toUpperCase()+page.slice(1));
         if(menu) menu.classList.add('active');
     }
-    function toggleSidebar(forceClose) {
-        var sidebar=document.getElementById('mainSidebar'), overlay=document.getElementById('sidebarOverlay');
-        if(forceClose){ sidebar.classList.add('closed'); overlay.classList.remove('active'); }
-        else { sidebar.classList.toggle('closed'); overlay.classList.toggle('active'); }
+
+    // Fungsi untuk menutup sidebar secara paksa
+    function tutupSidebar() {
+        var sidebar=document.getElementById('mainSidebar');
+        var overlay=document.getElementById('sidebarOverlay');
+        sidebar.classList.add('closed');
+        overlay.classList.remove('active');
     }
+
+    // Fungsi untuk toggle (buka/tutup) sidebar saat tombol burger di klik
+    function toggleSidebar() {
+        var sidebar=document.getElementById('mainSidebar');
+        var overlay=document.getElementById('sidebarOverlay');
+        sidebar.classList.toggle('closed');
+        overlay.classList.toggle('active');
+    }
+
     function logout(){ localStorage.removeItem('2r_user'); location.reload(); }
     function bukaModal(id){ document.getElementById(id).classList.add('active'); }
     function tutupModal(id){ document.getElementById(id).classList.remove('active'); }
@@ -528,7 +547,9 @@
         document.body.style.display='block'; document.body.style.justifyContent='unset'; document.body.style.alignItems='unset';
         document.getElementById('pageAuth').style.display='none';
         document.getElementById('mainNavbar').classList.remove('hidden');
-        var sidebar=document.getElementById('mainSidebar'); sidebar.classList.remove('hidden'); sidebar.classList.remove('closed');
+        var sidebar=document.getElementById('mainSidebar'); sidebar.classList.remove('hidden'); 
+        // Sidebar awal ditutup agar tidak menutupi konten saat pertama kali login
+        sidebar.classList.add('closed');
         document.getElementById('contentArea').classList.remove('hidden');
 
         var avatar=document.getElementById('navbarAvatar'); avatar.textContent=user.nama.charAt(0).toUpperCase(); avatar.style.background='var(--orange-gradient)'; avatar.style.color='white';
@@ -541,10 +562,13 @@
         document.getElementById('pageDashboard').classList.remove('hidden');
         setActiveMenu('dashboard');
 
+        // Event listener tombol burger (untuk membuka/tutup sidebar)
         document.getElementById('btnSidebarToggle').addEventListener('click', function(){ toggleSidebar(); });
-        document.getElementById('sidebarOverlay').addEventListener('click', function(){ toggleSidebar(true); });
+        // Event listener overlay (klik area gelap untuk menutup sidebar)
+        document.getElementById('sidebarOverlay').addEventListener('click', function(){ tutupSidebar(); });
         document.getElementById('btnLogout').addEventListener('click', function(){ if(confirm('Yakin keluar?')){ logout(); } });
 
+        // Event listener untuk semua menu sidebar
         document.querySelectorAll('.sidebar-menu-item').forEach(function(item){
             item.addEventListener('click', function(){
                 var page=this.dataset.page;
@@ -562,7 +586,7 @@
         updateIdPreview();
     });
 </script>
-<!-- ============ BLOK 9 SCRIPTS (REVISI AUTO-CLOSE SIDEBAR) ============ -->
+<!-- ============ AKHIR BLOK 9 SCRIPTS (REVISI SIDEBAR OTOMATIS TUTUP) ============ -->
 <!-- ============ BLOK 10 PROFIL SCRIPTS ============ -->
 <script>
     const PROFILE_KEY='2r_superadmin_profile', DOCUMENTS_KEY='2r_superadmin_documents';
