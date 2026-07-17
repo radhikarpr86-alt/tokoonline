@@ -377,13 +377,13 @@
 </div>
 <!-- ============ AKHIR BLOK 3 AUTH CONTAINER ============ -->
 
-<!-- ============ BLOK 4 R2 NAVBAR & SIDEBAR (REVISI KEDUA - TOMBOL KELUAR & NAVBAR RAPI) ============ -->
+<!-- ============ BLOK 4 R2 REVISI AKHIR NAVBAR & SIDEBAR ============ -->
 <!-- PENJELASAN: 
-     Ini adalah revisi kedua (R2) dari BLOK 4. 
-     Pada revisi ini, dipastikan struktur Navbar dan Sidebar sudah rapi.
-     - Navbar menggunakan flexbox yang kuat agar tombol "Keluar" selalu muncul di kanan.
-     - Sidebar memiliki tinggi 100% dan scroll otomatis jika menu terlalu panjang.
-     - Semua ID dan class sudah terintegrasi dengan JavaScript navigasi di BLOK 7. -->
+     Ini adalah revisi akhir dari BLOK 4. 
+     PERBAIKAN PENTING: Dihapus class "hidden" pada elemen <aside class="sidebar">.
+     Karena JavaScript sudah mengatur class hidden melalui fungsi tampilkanDashboard(),
+     penambahan class "hidden" di HTML menyebabkan sidebar tidak pernah benar-benar
+     hilang secara fungsional, sehingga tetap menangkap klik dan membuat menu macet. -->
 
 <nav class="navbar hidden" id="mainNavbar">
     <div class="navbar-brand">
@@ -401,11 +401,9 @@
         <button class="btn-icon" id="btnSidebarToggle" title="Buka/Tutup Menu">
             <i class="fas fa-bars"></i>
         </button>
-        <!-- Tombol Chat untuk notifikasi -->
         <button class="btn-icon" id="btnChatNav" title="Chat">
             <i class="fas fa-comments"></i>
         </button>
-        <!-- Tombol Keluar (Logout) -->
         <button class="btn-logout" id="btnLogout">
             <i class="fas fa-sign-out-alt"></i> Keluar
         </button>
@@ -413,7 +411,8 @@
 </nav>
 
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
-<aside class="sidebar hidden closed" id="mainSidebar">
+<!-- PERBAIKAN: Class "hidden" dihapus dari sini -->
+<aside class="sidebar closed" id="mainSidebar">
     <div class="sidebar-menu">
         <!-- Menu Utama -->
         <div class="sidebar-menu-title">Menu Utama</div>
@@ -467,7 +466,7 @@
         </div>
     </div>
 </aside>
-<!-- ============ AKHIR BLOK 4 R2 NAVBAR & SIDEBAR (REVISI KEDUA - TOMBOL KELUAR & NAVBAR RAPI) ============ -->
+<!-- ============ AKHIR BLOK 4 R2 REVISI AKHIR NAVBAR & SIDEBAR ============ -->
 
     <!-- ============ BLOK 5(1) - 01 R2 CONTENT AREA (DASHBOARD & PROFIL) ============ -->
 <!-- PENJELASAN: 
