@@ -1,4 +1,11 @@
-<!-- ============ BLOK 1(1) - 02 R2 HEAD & CSS GLOBAL (REVISI KEDUA - PERBAIKAN CDN) ============ -->
+<!-- ============ BLOK 1(1) - 01 R3 HEAD & CSS GLOBAL (REVISI KETIGA - GABUNGAN VALID) ============ -->
+<!-- PENJELASAN: 
+     Ini adalah revisi ketiga (R3) dari BLOK 1(1). 
+     Pada revisi ini, saya menggabungkan seluruh elemen menjadi satu kesatuan yang valid.
+     - Menghapus duplikasi DOCTYPE, HTML, dan HEAD yang menyebabkan halaman macet.
+     - Menggunakan CDN Font Awesome dari jsDelivr yang lebih stabil untuk Vercel.
+     - Memastikan tidak ada komentar HTML di dalam tag <style>. -->
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -70,7 +77,7 @@
         .page { display: none; }
     </style>
 </head>
-<!-- ============ AKHIR BLOK 1(1) - 02 R2 HEAD & CSS GLOBAL ============ -->
+<!-- ============ AKHIR BLOK 1(1) - 01 R3 HEAD & CSS GLOBAL ============ -->
 <!-- ============ BLOK 1(3) - 01 R3 CSS DASHBOARD & SIDEBAR (REVISI KETIGA - HAPUS BACKDROP) ============ -->
 <!-- PENJELASAN: 
      Ini adalah revisi ketiga (R3) dari BLOK 1(3). 
@@ -430,16 +437,18 @@
         </div>
     </div>
 <!-- ============ AKHIR BLOK 5(1) - 01 CONTENT AREA (DASHBOARD & PROFIL) ============ -->
-    <!-- ============ BLOK 5(2) - 01 CONTENT AREA (DAFTAR AKUN, PERSETUJUAN & KELOLA AKUN) ============ -->
+<!-- ============ BLOK 5(2) - 01 CONTENT AREA (DAFTAR AKUN, PERSETUJUAN & KELOLA AKUN) ============ -->
 <!-- PENJELASAN: 
      Ini adalah bagian kedua dari revisi BLOK 5. Bagian ini berisi kode HTML untuk 
      Halaman Daftar Akun Baru, Halaman Persetujuan, dan Halaman Kelola Semua Akun.
      
      PERBAIKAN PENTING: 
-     Telah dihapus elemen <div id="tabelPersetujuanContainer"> yang berada di bawah 
-     form Daftar Akun Baru, karena elemen tersebut sudah ada di dalam halaman 
-     pagePersetujuan. Hal ini untuk menghilangkan duplikasi ID yang menyebabkan 
-     JavaScript bingung dalam merender tabel. -->
+     1. Telah dihapus elemen <div id="tabelPersetujuanContainer"> yang berada di bawah 
+        form Daftar Akun Baru, karena elemen tersebut sudah ada di dalam halaman 
+        pagePersetujuan. Hal ini untuk menghilangkan duplikasi ID yang menyebabkan 
+        JavaScript bingung dalam merender tabel.
+     2. Tag penutup </div> dan komentar akhir blok telah disatukan di bagian paling bawah 
+        untuk memastikan struktur HTML tetap valid dan tidak ada kode yang terpotong. -->
 
     <!-- HALAMAN DAFTAR AKUN BARU -->
     <div class="page" id="pageDaftarAkun">
@@ -579,6 +588,7 @@
             </div>
         </div>
     </div>
+</div>
 <!-- ============ AKHIR BLOK 5(2) - 01 CONTENT AREA (DAFTAR AKUN, PERSETUJUAN & KELOLA AKUN) ============ -->
 <!-- ============ BLOK 5(3) - 01 CONTENT AREA (PLACEHOLDER & PENUTUP) ============ -->
 <!-- PENJELASAN: 
