@@ -716,118 +716,418 @@
 </div>
 <!-- ============ AKHIR BLOK 6 ============ -->
 
-<!-- ============ BLOK 7 SCRIPTS UTAMA ============ -->
+<!-- ============ BLOK 7(1) - 01 SCRIPTS DATA AKUN & UTILITY ============ -->
 <script>
-    // Data akun & enkripsi
-    function getDataAkun() { var d=localStorage.getItem('2r_akun'); return d?JSON.parse(d):[]; }
-    function simpanDataAkun(akun) { localStorage.setItem('2r_akun', JSON.stringify(akun)); }
-    function encodePassword(p) { return btoa(p); }
-    function decodePassword(p) { return atob(p); }
+    // ===== DATA AKUN & ENKRIPSI =====
+    // Mengambil data akun dari localStorage
+    function getDataAkun() { 
+        var dataAkun = localStorage.getItem('2r_akun'); 
+        return dataAkun ? JSON.parse(dataAkun) : []; 
+    }
+    
+    // Menyimpan data akun ke localStorage
+    function simpanDataAkun(akun) { 
+        localStorage.setItem('2r_akun', JSON.stringify(akun)); 
+    }
+    
+    // Enkripsi password menggunakan Base64
+    function encodePassword(password) { 
+        return btoa(password); 
+    }
+    
+    // Dekripsi password dari Base64
+    function decodePassword(password) { 
+        return atob(password); 
+    }
 
-    // Inisialisasi SuperAdmin
+    // ===== INISIALISASI SUPERADMIN DEFAULT =====
+    // Jika belum ada akun SuperAdmin, sistem akan otomatis membuatnya
     function inisialisasiSuperAdmin() {
-        var akun = getDataAkun();
-        var sa = akun.find(a => a.role==='superadmin');
-        if (!sa) {
-            akun.push({ id:'SA-001', role:'superadmin', username:'TokoOnline2R', password:encodePassword('MyHand0286'), nama:'SuperAdmin', email:'superadmin@tokoonline2r.com', hp:'081234567890', alamat:'Kantor Pusat Toko Online 2R', jabatan:'Pemilik', perusahaan:'Toko Online 2R', latitude:null, longitude:null, registeredAt:new Date().toISOString() });
-            simpanDataAkun(akun);
+        var daftarAkun = getDataAkun();
+        var superAdmin = daftarAkun.find(function(akun) {
+            return akun.role === 'superadmin';
+        });
+        
+        // Jika SuperAdmin belum ada, buat akun default
+        if (!superAdmin) {
+            daftarAkun.push({
+                id: 'SA-001',
+                role: 'superadmin',
+                username: 'TokoOnline2R',
+                password: encodePassword('MyHand0286'),
+                nama: 'SuperAdmin',
+                email: 'superadmin@tokoonline2r.com',
+                hp: '081234567890',
+                alamat: 'Kantor Pusat Toko Online 2R',
+                jabatan: 'Pemilik',
+                perusahaan: 'Toko Online 2R',
+                latitude: null,
+                longitude: null,
+                status: 'AKTIF',
+                registeredAt: new Date().toISOString()
+            });
+            simpanDataAkun(daftarAkun);
         }
     }
 
+    // ===== GENERATE ID OTOMATIS =====
+    // Membuat ID unik berdasarkan Role yang dipilih (misal: CUST-001, TOKO-002, dll)
     function generateId(role) {
-        var akun = getDataAkun().filter(a => a.role===role);
-        var n=1; akun.forEach(a => { var p=a.id.split('-'); if(p.length===2){ var x=parseInt(p[1]); if(!isNaN(x)&&x>=n) n=x+1; } });
-        var prefix={'customer':'CUST','toko':'TOKO','ojek':'OJEK','pedagang':'PEDAGANG','codseller':'COD','superadmin':'SA'};
-        return prefix[role]+'-'+String(n).padStart(3,'0');
+        var daftarAkun = getDataAkun();
+        
+        // Filter akun berdasarkan role yang sama
+        var akunDenganRoleSama = daftarAkun.filter(function(akun) {
+            return akun.role === role;
+        });
+        
+        // Menentukan nomor urut berikutnya
+        var nomorUrut = 1;
+        akunDenganRoleSama.forEach(function(akun) {
+            var bagianId = akun.id.split('-');
+            if (bagianId.length === 2) {
+                var angka = parseInt(bagianId[1]);
+                if (!isNaN(angka) && angka >= nomorUrut) {
+                    nomorUrut = angka + 1;
+                }
+            }
+        });
+        
+        // Menentukan prefix berdasarkan role
+        var prefix = {
+            'customer': 'CUST',
+            'toko': 'TOKO',
+            'ojek': 'OJEK',
+            'pedagang': 'PEDAGANG',
+            'codseller': 'COD',
+            'superadmin': 'SA',
+            'staf_admin': 'STA',
+            'staf_owner_ojek': 'SOO',
+            'staf_owner_toko': 'SOT',
+            'customer_service': 'CS',
+            'sponsor': 'SPN'
+        };
+        
+        var prefixRole = prefix[role] || 'USR';
+        return prefixRole + '-' + String(nomorUrut).padStart(3, '0');
     }
 
-    function updateIdPreview() { document.getElementById('regIdPreview').textContent = generateId(document.getElementById('regRole').value) || '-'; }
-    function toggleForm(t) { document.getElementById('authError').style.display='none'; document.getElementById('loginForm').classList.toggle('hidden-form', t!=='login'); document.getElementById('registerForm').classList.toggle('hidden-form', t!=='register'); if(t==='register') updateIdPreview(); }
-    function tampilkanToast(pesan, tipe='success') {
-        var t=document.createElement('div'); t.className='toast '+tipe;
-        var icon=tipe==='success'?'fa-check-circle':tipe==='error'?'fa-times-circle':'fa-exclamation-triangle';
-        t.innerHTML='<i class="fas '+icon+'"></i> '+pesan; document.getElementById('toastContainer').appendChild(t);
-        setTimeout(()=>{ t.style.animation='slideInRight 0.3s ease reverse'; setTimeout(()=>t.remove(),300); },3500);
+    // Update preview ID di form registrasi publik
+    function updateIdPreview() { 
+        var roleTerpilih = document.getElementById('regRole').value;
+        document.getElementById('regIdPreview').textContent = generateId(roleTerpilih) || '-'; 
     }
 
-    function prosesLogin(e) {
-        e.preventDefault();
-        var user=getDataAkun().find(a => a.username===document.getElementById('loginUsername').value.trim() && decodePassword(a.password)===document.getElementById('loginPassword').value.trim());
-        if(user){ tampilkanToast('Selamat datang, '+user.nama+'!'); localStorage.setItem('2r_user', JSON.stringify(user)); tampilkanDashboard(user); }
-        else { document.getElementById('authError').style.display='flex'; document.getElementById('authErrorText').textContent='Username atau password salah!'; }
+    // ===== TOAST NOTIFICATION =====
+    // Menampilkan notifikasi pop-up di pojok kanan atas
+    function tampilkanToast(pesan, tipe) {
+        tipe = tipe || 'success';
+        var toastElement = document.createElement('div');
+        toastElement.className = 'toast ' + tipe;
+        
+        var icon = tipe === 'success' ? 'fa-check-circle' : 
+                   (tipe === 'error' ? 'fa-times-circle' : 'fa-exclamation-triangle');
+        toastElement.innerHTML = '<i class="fas ' + icon + '"></i> ' + pesan;
+        
+        document.getElementById('toastContainer').appendChild(toastElement);
+        
+        // Hapus toast setelah 3.5 detik
+        setTimeout(function() {
+            toastElement.style.animation = 'slideInRight 0.3s ease reverse';
+            setTimeout(function() {
+                toastElement.remove();
+            }, 300);
+        }, 3500);
     }
-
-    function prosesRegister(e) {
-        e.preventDefault();
-        var role=document.getElementById('regRole').value, username=document.getElementById('regUsername').value.trim(), password=document.getElementById('regPassword').value.trim(), nama=document.getElementById('regNama').value.trim(), email=document.getElementById('regEmail').value.trim(), hp=document.getElementById('regHp').value.trim();
-        if(!role||!username||!password||!nama){ tampilkanToast('Data belum lengkap!','warning'); return; }
-        var akun=getDataAkun();
-        if(akun.find(a=>a.username===username)){ tampilkanToast('Username sudah digunakan','error'); return; }
-        if(email && akun.find(a=>a.email===email)){ tampilkanToast('Email sudah digunakan','error'); return; }
-        if(hp && akun.find(a=>a.hp===hp)){ tampilkanToast('HP sudah digunakan','error'); return; }
-        var id=generateId(role);
-        function selesai(lat, lng) {
-            akun.push({ id, role, username, password:encodePassword(password), nama, email:email||'', hp:hp||'', alamat:'', jabatan:'', perusahaan:'', latitude:lat, longitude:lng, registeredAt:new Date().toISOString() });
-            simpanDataAkun(akun); tampilkanToast('Akun berhasil dibuat! ID: '+id); toggleForm('login');
+</script>
+<!-- ============ AKHIR BLOK 7(1) - 01 SCRIPTS DATA AKUN & UTILITY ============ -->
+    <!-- ============ BLOK 7(2) - 01 SCRIPTS LOGIN, REGISTER & NAVIGASI ============ -->
+<script>
+    // ===== TOGGLE FORM LOGIN / REGISTER =====
+    // Fungsi untuk berpindah antara form Login dan Register di halaman publik
+    function toggleForm(tipe) {
+        document.getElementById('authError').style.display = 'none';
+        
+        var formLogin = document.getElementById('loginForm');
+        var formRegister = document.getElementById('registerForm');
+        
+        if (tipe === 'register') {
+            formLogin.classList.add('hidden-form');
+            formRegister.classList.remove('hidden-form');
+            updateIdPreview();
+        } else {
+            formRegister.classList.add('hidden-form');
+            formLogin.classList.remove('hidden-form');
         }
-        if(navigator.geolocation) navigator.geolocation.getCurrentPosition(p=>selesai(p.coords.latitude, p.coords.longitude), ()=>selesai(null,null));
-        else selesai(null,null);
     }
 
-    function navigasiHalaman(page) {
-        document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));
-        var target=document.getElementById('page'+page.charAt(0).toUpperCase()+page.slice(1));
-        if(target){ target.classList.remove('hidden'); setActiveMenu(page); if(page==='profile') loadProfil(); }
-        else tampilkanToast('Halaman belum tersedia','warning');
+    // ===== PROSES LOGIN =====
+    function prosesLogin(event) {
+        event.preventDefault();
+        
+        var inputUsername = document.getElementById('loginUsername').value.trim();
+        var inputPassword = document.getElementById('loginPassword').value.trim();
+        
+        var daftarAkun = getDataAkun();
+        var userDitemukan = daftarAkun.find(function(akun) {
+            return akun.username === inputUsername && decodePassword(akun.password) === inputPassword;
+        });
+        
+        if (userDitemukan) {
+            tampilkanToast('Selamat datang, ' + userDitemukan.nama + '!');
+            localStorage.setItem('2r_user', JSON.stringify(userDitemukan));
+            tampilkanDashboard(userDitemukan);
+        } else {
+            document.getElementById('authError').style.display = 'flex';
+            document.getElementById('authErrorText').textContent = 'Username atau password salah!';
+        }
     }
 
-    function setActiveMenu(page) {
-        document.querySelectorAll('.sidebar-menu-item').forEach(el=>el.classList.remove('active'));
-        document.querySelectorAll('.sidebar-menu-item').forEach(el=>{ if(el.dataset.page===page) el.classList.add('active'); });
+    // ===== PROSES REGISTER PUBLIK =====
+    function prosesRegister(event) {
+        event.preventDefault();
+        
+        var role = document.getElementById('regRole').value;
+        var username = document.getElementById('regUsername').value.trim();
+        var password = document.getElementById('regPassword').value.trim();
+        var nama = document.getElementById('regNama').value.trim();
+        var email = document.getElementById('regEmail').value.trim();
+        var hp = document.getElementById('regHp').value.trim();
+        
+        // Validasi data
+        if (!role || !username || !password || !nama) {
+            tampilkanToast('Data belum lengkap!', 'warning');
+            return;
+        }
+        
+        var daftarAkun = getDataAkun();
+        
+        // Cek apakah username sudah ada
+        if (daftarAkun.find(function(akun) { return akun.username === username; })) {
+            tampilkanToast('Username sudah digunakan', 'error');
+            return;
+        }
+        
+        // Cek apakah email sudah ada (jika diisi)
+        if (email && daftarAkun.find(function(akun) { return akun.email === email; })) {
+            tampilkanToast('Email sudah digunakan', 'error');
+            return;
+        }
+        
+        // Cek apakah HP sudah ada (jika diisi)
+        if (hp && daftarAkun.find(function(akun) { return akun.hp === hp; })) {
+            tampilkanToast('HP sudah digunakan', 'error');
+            return;
+        }
+        
+        var idBaru = generateId(role);
+        
+        // Fungsi untuk menyelesaikan pendaftaran (dengan atau tanpa koordinat)
+        function selesaiDaftar(latitude, longitude) {
+            var akunBaru = {
+                id: idBaru,
+                role: role,
+                username: username,
+                password: encodePassword(password),
+                nama: nama,
+                email: email || '',
+                hp: hp || '',
+                alamat: '',
+                jabatan: '',
+                perusahaan: '',
+                latitude: latitude,
+                longitude: longitude,
+                status: 'AKTIF',
+                registeredAt: new Date().toISOString()
+            };
+            
+            daftarAkun.push(akunBaru);
+            simpanDataAkun(daftarAkun);
+            tampilkanToast('Akun berhasil dibuat! ID: ' + idBaru);
+            
+            // Reset form
+            document.getElementById('regUsername').value = '';
+            document.getElementById('regPassword').value = '';
+            document.getElementById('regNama').value = '';
+            document.getElementById('regEmail').value = '';
+            document.getElementById('regHp').value = '';
+            
+            toggleForm('login');
+        }
+        
+        // Mencoba mengambil lokasi geolokasi
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                function(posisi) {
+                    selesaiDaftar(posisi.coords.latitude, posisi.coords.longitude);
+                },
+                function() {
+                    selesaiDaftar(null, null);
+                }
+            );
+        } else {
+            selesaiDaftar(null, null);
+        }
     }
 
+    // ===== NAVIGASI HALAMAN & SIDEBAR =====
+    // Fungsi untuk berpindah antar halaman di dalam dashboard
+    function navigasiHalaman(namaHalaman) {
+        // Sembunyikan semua halaman
+        document.querySelectorAll('.page').forEach(function(halaman) {
+            halaman.classList.add('hidden');
+        });
+        
+        // Tampilkan halaman yang dituju
+        var halamanTujuan = document.getElementById('page' + namaHalaman.charAt(0).toUpperCase() + namaHalaman.slice(1));
+        if (halamanTujuan) {
+            halamanTujuan.classList.remove('hidden');
+            setActiveMenu(namaHalaman);
+            
+            // Jika halaman yang dibuka adalah Profil, muat data profil
+            if (namaHalaman === 'profile' && typeof loadProfil === 'function') {
+                loadProfil();
+            }
+        } else {
+            tampilkanToast('Halaman belum tersedia', 'warning');
+        }
+    }
+
+    // Fungsi untuk menyorot menu yang sedang aktif di sidebar
+    function setActiveMenu(namaHalaman) {
+        document.querySelectorAll('.sidebar-menu-item').forEach(function(item) {
+            item.classList.remove('active');
+        });
+        
+        var menuAktif = document.getElementById('menu' + namaHalaman.charAt(0).toUpperCase() + namaHalaman.slice(1));
+        if (menuAktif) {
+            menuAktif.classList.add('active');
+        }
+    }
+
+    // Fungsi untuk membuka dan menutup sidebar
     function toggleSidebar() {
-        var s=document.getElementById('mainSidebar'), o=document.getElementById('sidebarOverlay'), c=document.getElementById('contentArea');
-        s.classList.toggle('closed');
-        if(s.classList.contains('closed')){ c.classList.add('expanded'); o.classList.remove('active'); }
-        else { c.classList.remove('expanded'); o.classList.add('active'); }
+        var sidebar = document.getElementById('mainSidebar');
+        var overlay = document.getElementById('sidebarOverlay');
+        var konten = document.getElementById('contentArea');
+        
+        sidebar.classList.toggle('closed');
+        
+        if (sidebar.classList.contains('closed')) {
+            konten.classList.add('expanded');
+            overlay.classList.remove('active');
+        } else {
+            konten.classList.remove('expanded');
+            overlay.classList.add('active');
+        }
     }
 
-    function logout(){ localStorage.removeItem('2r_user'); location.reload(); }
-    function bukaModal(id){ document.getElementById(id).classList.add('active'); }
-    function tutupModal(id){ document.getElementById(id).classList.remove('active'); }
-
+    // ===== MODALS UTILITY =====
+    function bukaModal(idModal) {
+        document.getElementById(idModal).classList.add('active');
+    }
+    
+    function tutupModal(idModal) {
+        document.getElementById(idModal).classList.remove('active');
+    }
+    
+    function logout() {
+        if (confirm('Apakah Anda yakin ingin keluar?')) {
+            localStorage.removeItem('2r_user');
+            location.reload();
+        }
+    }
+</script>
+<!-- ============ AKHIR BLOK 7(2) - 01 SCRIPTS LOGIN, REGISTER & NAVIGASI ============ -->
+    <!-- ============ BLOK 7(3) - 01 SCRIPTS DASHBOARD LOADER & EVENT LISTENER ============ -->
+<script>
+    // ===== TAMPILKAN DASHBOARD =====
+    // Fungsi utama untuk mengubah tampilan dari halaman Login ke Dashboard SuperAdmin
     function tampilkanDashboard(user) {
-        document.body.style.display='block'; document.body.style.justifyContent='unset'; document.body.style.alignItems='unset';
-        document.getElementById('pageAuth').style.display='none';
+        // 1. Reset layout body
+        document.body.style.display = 'block';
+        document.body.style.justifyContent = 'unset';
+        document.body.style.alignItems = 'unset';
+        
+        // 2. Sembunyikan halaman Auth (Login/Register)
+        document.getElementById('pageAuth').style.display = 'none';
+        
+        // 3. Tampilkan Navbar
         document.getElementById('mainNavbar').classList.remove('hidden');
-        var sidebar=document.getElementById('mainSidebar'); sidebar.classList.remove('hidden'); sidebar.classList.remove('closed');
-        var content=document.getElementById('contentArea'); content.classList.remove('expanded'); content.classList.remove('hidden');
-
-        document.getElementById('navbarAvatar').textContent=user.nama.charAt(0).toUpperCase();
-        document.getElementById('navbarUserName').textContent=user.nama;
-        document.getElementById('navbarUserRole').textContent=user.role==='superadmin'?'SuperAdmin':user.role;
-        document.getElementById('dashboardNama').textContent=user.nama;
-
-        document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));
+        
+        // 4. Siapkan Sidebar (tampilkan, tapi dalam keadaan tertutup agar konten leluasa)
+        var sidebar = document.getElementById('mainSidebar');
+        sidebar.classList.remove('hidden');
+        sidebar.classList.add('closed');
+        
+        // 5. Siapkan Area Konten (pastikan lebar penuh karena sidebar tertutup)
+        var konten = document.getElementById('contentArea');
+        konten.classList.remove('hidden');
+        konten.classList.add('expanded');
+        
+        // 6. Isi data user ke Navbar
+        var avatar = document.getElementById('navbarAvatar');
+        avatar.textContent = user.nama.charAt(0).toUpperCase();
+        
+        document.getElementById('navbarUserName').textContent = user.nama;
+        
+        var labelRole = user.role === 'superadmin' ? 'SuperAdmin' : user.role;
+        document.getElementById('navbarUserRole').textContent = labelRole;
+        
+        // 7. Sembunyikan SEMUA halaman terlebih dahulu (FIX MASALAH BERTUMPUK)
+        document.querySelectorAll('.page').forEach(function(halaman) {
+            halaman.classList.add('hidden');
+        });
+        
+        // 8. HANYA TAMPILKAN DASHBOARD (Halaman awal)
         document.getElementById('pageDashboard').classList.remove('hidden');
         setActiveMenu('dashboard');
-
+        
+        // 9. Event Listener untuk Toggle Sidebar
         document.getElementById('btnSidebarToggle').onclick = toggleSidebar;
+        
+        // 10. Event Listener untuk Overlay (klik area gelap untuk menutup sidebar)
         document.getElementById('sidebarOverlay').onclick = toggleSidebar;
-        document.getElementById('btnLogout').onclick = ()=>confirm('Yakin keluar?') && logout();
-        document.querySelectorAll('.sidebar-menu-item').forEach(item=>{ item.onclick = ()=>navigasiHalaman(item.dataset.page); });
+        
+        // 11. Event Listener untuk Tombol Logout
+        document.getElementById('btnLogout').onclick = logout;
+        
+        // 12. Event Listener untuk Semua Item Menu Sidebar
+        document.querySelectorAll('.sidebar-menu-item').forEach(function(item) {
+            item.onclick = function() {
+                var halamanTujuan = this.dataset.page;
+                if (halamanTujuan) {
+                    navigasiHalaman(halamanTujuan);
+                }
+            };
+        });
     }
 
-    window.addEventListener('load', ()=>setTimeout(()=>document.getElementById('preloader').classList.add('hidden'),500));
-    window.addEventListener('DOMContentLoaded', ()=>{
+    // ===== INISIALISASI SAAT HALAMAN DIMUAT =====
+    // 1. Jalankan Preloader
+    window.addEventListener('load', function() {
+        setTimeout(function() {
+            document.getElementById('preloader').classList.add('hidden');
+        }, 500);
+    });
+    
+    // 2. Jalankan inisialisasi utama saat DOM siap
+    window.addEventListener('DOMContentLoaded', function() {
+        // Inisialisasi akun SuperAdmin jika belum ada
         inisialisasiSuperAdmin();
-        var stored=localStorage.getItem('2r_user');
-        if(stored) tampilkanDashboard(JSON.parse(stored));
+        
+        // Cek apakah ada user yang sedang login
+        var dataUserTersimpan = localStorage.getItem('2r_user');
+        if (dataUserTersimpan) {
+            // Jika ada, langsung tampilkan dashboard
+            var user = JSON.parse(dataUserTersimpan);
+            tampilkanDashboard(user);
+        }
+        
+        // Update preview ID di form registrasi
         updateIdPreview();
     });
 </script>
-<!-- ============ AKHIR BLOK 7 ============ -->
+<!-- ============ AKHIR BLOK 7(3) - 01 SCRIPTS DASHBOARD LOADER & EVENT LISTENER ============ -->
 
 <!-- ============ BLOK 8 SCRIPTS PROFIL & UPLOAD ============ -->
 <script>
